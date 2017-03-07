@@ -1,0 +1,40 @@
+{
+  "name": "sanderrondewebsite",
+  "version": "1.0.0",
+  "description": "Sander Ronde Website",
+  "main": "app/server/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SanderRonde/sanderrondewebsite.git"
+  },
+  "keywords": [
+    "personal",
+    "website",
+    "portfolio",
+    "sander",
+    "ronde"
+  ],
+  "author": "Sander Ronde <awsdfgvhbjn@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SanderRonde/sanderrondewebsite/issues"
+  },
+  "homepage": "https://github.com/SanderRonde/sanderrondewebsite#readme",
+  "dependencies": {
+    "compression": "^1.6.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.1",
+    "finalhandler": "^1.0.0",
+    "http2": "^3.3.6",
+    "jade": "^1.11.0",
+    "letsencrypt-express": "^2.0.6",
+    "mongodb": "^2.2.24",
+    "path": "^0.12.7",
+    "router": "^1.3.0",
+    "serve-favicon": "^2.4.1",
+    "serve-static": "^1.12.0"
+  }
+}

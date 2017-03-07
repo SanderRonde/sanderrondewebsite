@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"module": "commonjs",
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
+		"noImplicitAny": true,
+        "alwaysStrict": true,
+		"noUnusedLocals": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "listFiles": true,
+        "pretty": true,
+        "target": "es5",
+        "watch": true,
+        "sourceRoot": "../../typings"
+	},
+	"compileOnSave": true,
+	"include": [
+		"./"
+	]
+}
