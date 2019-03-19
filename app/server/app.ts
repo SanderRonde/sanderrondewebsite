@@ -3,8 +3,12 @@ import * as express from 'express';
 import * as path from 'path';
 import * as http from 'http';
 
+const THESIS_FILE = path.join(__dirname, '../', 'repos',
+	'bachelor-thesis', 'docs/assets', 'thesis.pdf');
+
 class WebServer {
 	public app!: express.Express;
+
 	private _http: number;
 
 	constructor({
@@ -36,6 +40,9 @@ class WebServer {
 			extensions: ['pdf'],
 			index: false
 		}));
+		this.app.get('/thesis(.pdf)?', (_req, res, _next) => {
+			res.sendFile(THESIS_FILE);
+		});
 		this.app.use((_req, res, _next) => {
 			res.status(404).send('404');
 		});
@@ -53,6 +60,8 @@ function getArg(name: string): string|void {
 	for (let i = 0; i < process.argv.length; i++) {
 		if (process.argv[i] === `--${name}`) {
 			return process.argv[i + 1];
+		} else if (process.argv[i].startsWith(`--${name}=`)) {
+			return process.argv[i].slice(3 + name.length);
 		}
 	}
 	return void 0;
