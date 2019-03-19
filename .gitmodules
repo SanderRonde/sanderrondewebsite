@@ -1,0 +1,3 @@
+[submodule "app/repos/bachelor-thesis"]
+	path = app/repos/bachelor-thesis
+	url = https://github.com/SanderRonde/bachelor-thesis
