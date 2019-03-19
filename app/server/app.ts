@@ -1,93 +1,72 @@
-/// <reference path="../../typings/index.d.ts" />
+import * as serveStatic from 'serve-static';
+import * as express from 'express';
+import * as path from 'path';
+import * as http from 'http';
 
-import express = require('express');
-import path = require('path');
-import http = require('http');
+class WebServer {
+	public app!: express.Express;
+	private _http: number;
 
-const http2 = require('http2');
-
-type Request = http.IncomingMessage & {
-	params: {
-		[key: string]: string;
-	}
-}
-type RequestHandler = (req: Request, res: http.ServerResponse, next: () => void) => void;
-interface RouterInstance {
-	(req: Request, res: http.ServerResponse, next: () => void): void;
-	use(handler: (err: Error|null, req: Request, res: http.ServerResponse, next: () => void) => void): void;
-	use(path: string, handler: (err: Error|null, req: Request, res: http.ServerResponse, next: () => void) => void): void;
-	get(path: string, handler: RequestHandler, ...handlers: Array<RequestHandler>): void;
-	post(path: string, handler: RequestHandler, ...handlers: Array<RequestHandler>): void;
-}
-const Router: {
-	new(): RouterInstance;
-} = require('router');
-const favicon = require('serve-favicon');
-const cookieParser = require('cookie-parser');
-const compression = require('compression');
-const LEX = require('letsencrypt-express');
-const finalhandler = require('finalhandler');
-
-const ports = {
-	http: 1337,
-	https: 1338
-};
-
-
-new Promise((resolve, reject) => {
-	// le.register(opts).then((certs: any) => {
-	// 	resolve(certs);
-	// }, (err: Error) => {
-	// 	console.log('le error', err);
-	// 	reject(err);
-	// })
-	resolve({});
-}).then((certs) => {
-	const app = express();
-	const router = new Router();
-
-	app.set('port', process.env.PORT || 3000);
-	app.set('views', path.join(__dirname, 'views/'));
-	app.set('view engine', 'jade');
-
-	router.use(favicon(path.join(__dirname, '../client/public/favicon.ico')));
-	router.use(cookieParser());
-	router.use(compression());
-	//router.use('/', le.middleware());
-	router.use(express.static(
-		path.join(
-			__dirname, '../client/public'
-		), {
-			maxAge: 3600 //TODO change
+	constructor({
+		ports: {
+			http = 1234
+		} = {
+			http: 1234,
+			https: 1235
 		}
-	));
-
-	function render(view: string) {
-		return (req: Request, res: http.ServerResponse) => {
-			app.render(view, {}, (err: Error|null, html: string) => {
-				if (err) {
-					console.log('err', err);
-					res.writeHead(500);
-				}
-				res.setHeader('Content-type', 'text/html');
-				res.end(html);
-			});
+	}: {
+		ports?: {
+			http?: number;
+			https?: number;
 		}
+	} = {}) {
+		this._http = http;
+
+		this._initVars();
+		this._initRoutes();
+		this._listen();
 	}
 
-	router.get('/', render('index'));
+	private _initVars() {
+		this.app = express();
+	}
 
-	router.use((err, req, res, next) => {
-		if (err) {
-			console.log(err);
-			res.writeHead(500);
+	private _initRoutes() {
+		this.app.use(serveStatic(path.join(__dirname, '../client/public'), {
+			extensions: ['pdf'],
+			index: false
+		}));
+		this.app.use((_req, res, _next) => {
+			res.status(404).send('404');
+		});
+	}
+
+	private _listen() {
+		// HTTPS is unused for now
+		http.createServer(this.app).listen(this._http, () => {
+			console.log(`HTTP server listening on port ${this._http}`);
+		});
+	}
+}
+
+function getArg(name: string): string|void {
+	for (let i = 0; i < process.argv.length; i++) {
+		if (process.argv[i] === `--${name}`) {
+			return process.argv[i + 1];
 		}
-		render('404')(req, res);
-	});
+	}
+	return void 0;
+}
 
-	http.createServer((req, res) => {
-		router(req as Request, res, finalhandler(req, res));
-	}).listen(ports.http, () => {
-		console.log(`HTTP server listening on port ${ports.http}`);
-	});
+function getNumArg(name: string): number|void {
+	const arg = getArg(name);
+	if (arg === void 0) return void 0;
+	return ~~arg;
+}
+
+new WebServer({
+	ports: {
+		http: getNumArg('http') || undefined,
+		https: getNumArg('https') || undefined
+	}
 });
