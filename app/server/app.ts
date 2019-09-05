@@ -1,4 +1,5 @@
 import * as serveStatic from 'serve-static';
+import { getIO, IO } from './lib/io';
 import * as express from 'express';
 import * as path from 'path';
 import * as http from 'http';
@@ -18,12 +19,7 @@ class WebServer {
 			http: 1234,
 			https: 1235
 		}
-	}: {
-		ports?: {
-			http?: number;
-			https?: number;
-		}
-	} = {}) {
+	}: IO) {
 		this._http = http;
 
 		this._initVars();
@@ -56,26 +52,4 @@ class WebServer {
 	}
 }
 
-function getArg(name: string): string|void {
-	for (let i = 0; i < process.argv.length; i++) {
-		if (process.argv[i] === `--${name}`) {
-			return process.argv[i + 1];
-		} else if (process.argv[i].startsWith(`--${name}=`)) {
-			return process.argv[i].slice(3 + name.length);
-		}
-	}
-	return void 0;
-}
-
-function getNumArg(name: string): number|void {
-	const arg = getArg(name);
-	if (arg === void 0) return void 0;
-	return ~~arg;
-}
-
-new WebServer({
-	ports: {
-		http: getNumArg('http') || undefined,
-		https: getNumArg('https') || undefined
-	}
-});
+new WebServer(getIO());
