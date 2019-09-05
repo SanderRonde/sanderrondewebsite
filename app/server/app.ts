@@ -1,11 +1,7 @@
-import * as serveStatic from 'serve-static';
+import { initRoutes } from './lib/routes';
 import { getIO, IO } from './lib/io';
 import * as express from 'express';
-import * as path from 'path';
 import * as http from 'http';
-
-const THESIS_FILE = path.join(__dirname, '../', 'repos',
-	'bachelor-thesis', 'docs/assets', 'thesis.pdf');
 
 class WebServer {
 	public app!: express.Express;
@@ -29,16 +25,7 @@ class WebServer {
 	}
 
 	private _initRoutes() {
-		this.app.use(serveStatic(path.join(__dirname, '../client/public'), {
-			extensions: ['pdf'],
-			index: false
-		}));
-		this.app.get('/thesis(.pdf)?', (_req, res, _next) => {
-			res.sendFile(THESIS_FILE);
-		});
-		this.app.use((_req, res, _next) => {
-			res.status(404).send('404');
-		});
+		initRoutes(this.app);
 	}
 
 	private _listen() {
