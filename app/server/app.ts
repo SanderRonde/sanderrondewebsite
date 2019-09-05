@@ -45,7 +45,7 @@ class WebServer {
 	}
 
 	private _listen() {
-		// HTTPS is unused for now
+		// HTTPS is unused for now since this is behind a proxy
 		http.createServer(this.app).listen(this._http, () => {
 			console.log(`HTTP server listening on port ${this._http}`);
 		});
