@@ -15,9 +15,6 @@ class WebServer {
 	constructor({
 		ports: {
 			http = 1234
-		} = {
-			http: 1234,
-			https: 1235
 		}
 	}: IO) {
 		this._http = http;
