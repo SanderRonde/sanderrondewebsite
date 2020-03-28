@@ -2,7 +2,7 @@
 	"compilerOptions": {
 		"alwaysStrict": true,
         "forceConsistentCasingInFileNames": true,
-        "module": "es6",
+        "module": "esnext",
         "moduleResolution": "node",
         "noImplicitAny": true,
         "noImplicitThis": true,
@@ -13,14 +13,17 @@
         "noImplicitReturns": true,
         "noUnusedLocals": true,
         "target": "es6",
+        "jsx": "react",
+        "jsxFactory": "html.jsx",
         "noUnusedParameters": true,
         "experimentalDecorators": true,
         "strictPropertyInitialization": true,
         "strictNullChecks": true,
-        "strictBindCallApply": true
+        "strictBindCallApply": true,
+        "allowJs": true
 	},
-	"compileOnSave": true,
+    "compileOnSave": true,
 	"include": [
-		"./"
+		"./src"
 	]
 }
