@@ -3,9 +3,6 @@
 	"version": "1.0.0",
 	"description": "Sander Ronde Website",
 	"main": "app/server/app.js",
-	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
-	},
 	"nodemonConfig": {
 		"ext": "js",
 		"exec": "node app/server/app.js --dev --http 1234",
@@ -46,5 +43,11 @@
 		"nodemon": "^2.0.2",
 		"ts-node": "^8.8.1",
 		"typescript": "^3.6.2"
+	},
+	"scripts": {
+		"compile:server": "tsc -w -p app/server/tsconfig.json",
+		"compile:client": "tsc -w -p app/client/tsconfig.json",
+		"watch:server": "npm run compile:server -- -w",
+		"watch:client": "npm run compile:client -- -w"
 	}
 }
