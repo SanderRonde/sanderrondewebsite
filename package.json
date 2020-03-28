@@ -48,9 +48,7 @@
 		"typescript": "^3.6.2"
 	},
 	"scripts": {
-		"compile:server": "tsc -w -p app/server/tsconfig.json",
-		"compile:client": "tsc -w -p app/client/tsconfig.json",
-		"watch:server": "npm run compile:server -- -w",
-		"watch:client": "npm run compile:client -- -w"
+		"compile": "tsc",
+		"watch": "tsc -w"
 	}
 }
