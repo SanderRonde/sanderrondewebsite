@@ -83,7 +83,7 @@ export function initRoutes({ app, io }: WebServer) {
     if (io.dev) {
         app.use(
             serveStatic(path.join(CLIENT_DIR, 'src'), {
-                index: ['index.html'],
+                index: ['entrypoints/index/index.html'],
             })
         );
         const litHTMLSubpath = 'node_modules/lit-html';
