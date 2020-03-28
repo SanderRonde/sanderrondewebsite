@@ -81,7 +81,6 @@ export function initRoutes({ app, io }: WebServer) {
         })
 	);
     if (io.dev) {
-        console.log(CLIENT_DIR, path.join(CLIENT_DIR, 'src'));
         app.use(
             serveStatic(path.join(CLIENT_DIR, 'src'), {
                 index: ['index.html'],
