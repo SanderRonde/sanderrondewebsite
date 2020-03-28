@@ -76,7 +76,7 @@ function serve(
  */
 export function initRoutes({ app, io }: WebServer) {
     app.use(
-        serveStatic(path.join(CLIENT_DIR, 'public'), {
+        serveStatic(path.join(CLIENT_DIR, 'static'), {
             extensions: ['pdf'],
             index: false,
         })
