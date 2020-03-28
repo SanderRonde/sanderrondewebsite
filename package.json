@@ -6,6 +6,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "nodemonConfig": {
+    "ext": "js",
+    "exec": "node app/server/app.js --dev --http 1234",
+    "watch": [
+      "app/server/"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SanderRonde/sanderrondewebsite.git"
@@ -32,6 +39,7 @@
     "@types/express": "^4.16.1",
     "@types/node": "^11.11.3",
     "@types/serve-static": "^1.13.2",
+    "nodemon": "^2.0.2",
     "typescript": "^3.6.2"
   }
 }
