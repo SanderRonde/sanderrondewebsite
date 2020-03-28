@@ -1,7 +1,7 @@
-import { initRoutes } from './lib/routes';
-import { getIO, IO } from './lib/io';
-import * as express from 'express';
-import * as http from 'http';
+import { initRoutes } from './lib/routes.js';
+import { getIO, IO } from './lib/io.js';
+import express from 'express';
+import http from 'http';
 
 /**
  * The main app class used to wrap everything up

@@ -3,9 +3,10 @@
 	"version": "1.0.0",
 	"description": "Sander Ronde Website",
 	"main": "app/server/app.js",
+	"type": "module",
 	"nodemonConfig": {
 		"ext": "js",
-		"exec": "node app/server/app.js --dev --http 1234",
+		"exec": "node --experimental-modules app/server/app.js --dev --http 1234",
 		"watch": [
 			"app/server/"
 		]

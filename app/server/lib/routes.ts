@@ -1,11 +1,10 @@
-import * as serveStatic from 'serve-static';
-import { WebServer } from '../app';
-import * as express from 'express';
-import * as fs from 'fs-extra';
-import * as path from 'path';
+import { ROOT_DIR, CLIENT_DIR } from './constants.js';
+import serveStatic from 'serve-static';
+import { WebServer } from '../app.js';
+import express from 'express';
+import fs from 'fs-extra';
+import path from 'path';
 
-const ROOT_DIR = path.join(__dirname, '../../../');
-const CLIENT_DIR = path.join(ROOT_DIR, 'app/client');
 const THESIS_FILE = path.join(
     ROOT_DIR,
     'app/repos',
@@ -82,6 +81,7 @@ export function initRoutes({ app, io }: WebServer) {
         })
 	);
     if (io.dev) {
+        console.log(CLIENT_DIR, path.join(CLIENT_DIR, 'src'));
         app.use(
             serveStatic(path.join(CLIENT_DIR, 'src'), {
                 index: ['index.html'],
