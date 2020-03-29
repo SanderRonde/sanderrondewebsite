@@ -102,9 +102,37 @@ gulp.task('prep-ssr', async function prepSSR() {
                     name: dashesToCasing(entrypoint),
                     format: 'esm',
                 });
-            } catch(e) {
+            } catch (e) {
                 console.log(e);
             }
         })
     );
 });
+
+gulp.task(
+    'modules',
+    gulp.series(
+        function copyDefinitions() {
+            return gulp
+                .src(['node_modules/lit-html/**/*.js', 'node_modules/lit-html/**/*.d.ts', '!node_modules/lit-html/ts3.4/**'])
+                .pipe(gulp.dest('app/server/build/modules/lit-html'));
+        },
+        async function prepSSR() {
+            const bundle = await rollup.rollup({
+                input: path.join(
+                    __dirname,
+                    'node_modules/lit-html/lit-html.js'
+                ),
+            });
+            await bundle.write({
+                file: path.join(
+                    __dirname,
+                    'app/server/build/modules/lit-html',
+                    `lit-html.js`
+                ),
+                name: 'lit-html',
+                format: 'esm',
+            });
+        }
+    )
+);
