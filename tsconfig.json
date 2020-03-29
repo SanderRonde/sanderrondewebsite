@@ -1,6 +1,6 @@
 {
-	"compilerOptions": {
-		"alwaysStrict": true,
+    "compilerOptions": {
+        "alwaysStrict": true,
         "forceConsistentCasingInFileNames": true,
         "module": "ESNext",
         "moduleResolution": "node",
@@ -20,11 +20,9 @@
         "strictPropertyInitialization": true,
         "strictNullChecks": true,
         "strictBindCallApply": true,
-        "allowSyntheticDefaultImports": true
-	},
-	"compileOnSave": true,
-	"include": [
-        "./app/server",
-        "./app/client/src"
-	]
+        "allowSyntheticDefaultImports": true,
+        "declaration": true
+    },
+    "compileOnSave": true,
+    "include": ["./app/server", "./app/client/src"]
 }
