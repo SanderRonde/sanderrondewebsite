@@ -42,5 +42,7 @@ typings/
 app/**/*.js
 
 app/client/public/mc
+app/server/build
+app/**/*.d.ts
 TODO
 TODO.md
