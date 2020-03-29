@@ -88,7 +88,6 @@ gulp.task('prep-ssr', async function prepSSR() {
                 entrypoint,
                 `exports.bundled.js`
             );
-            console.log(outFile);
             try {
                 const bundle = await rollup.rollup({
                     input: path.join(
