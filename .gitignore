@@ -39,7 +39,7 @@ jspm_packages
 
 typings/
 **/*.map
-**/*.js
+app/**/*.js
 
 app/client/public/mc
 TODO
