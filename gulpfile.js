@@ -1,5 +1,6 @@
 // @ts-check
 
+const resolve = require('@rollup/plugin-node-resolve');
 const uglify = require('uglify-es');
 const rollup = require('rollup');
 const fs = require('fs-extra');
@@ -83,12 +84,7 @@ gulp.task('bundle', async function bundle() {
 gulp.task('prep-ssr', async function prepSSR() {
     await Promise.all(
         ENTRYPOINTS.map(async (entrypoint) => {
-            const outFile = path.join(
-                __dirname,
-                'app/client/build/entrypoints/',
-                entrypoint,
-                `exports.bundled.js`
-            );
+            // Bundle
             try {
                 const bundle = await rollup.rollup({
                     input: path.join(
@@ -100,13 +96,46 @@ gulp.task('prep-ssr', async function prepSSR() {
                     plugins: [resolve()],
                 });
                 await bundle.write({
-                    file: outFile,
+                    file: path.join(
+                        __dirname,
+                        'app/client/build/entrypoints/',
+                        entrypoint,
+                        `exports.bundled.js`
+                    ),
                     name: dashesToCasing(entrypoint),
                     format: 'esm',
                 });
             } catch (e) {
                 console.log(e);
             }
+
+            // Now copy the definitions
+            let definitions = await fs.readFile(
+                path.join(
+                    __dirname,
+                    'app/client/src/entrypoints/',
+                    entrypoint,
+                    `exports.d.ts`
+                ),
+                {
+                    encoding: 'utf8',
+                }
+            );
+
+            // Fix the import
+            definitions = definitions.replace(/'..\/..\/components\//, '\'../../../src/components/')
+            await fs.writeFile(
+                path.join(
+                    __dirname,
+                    'app/client/build/entrypoints/',
+                    entrypoint,
+                    'exports.bundled.d.ts'
+                ),
+                definitions,
+                {
+                    encoding: 'utf8',
+                }
+            );
         })
     );
 });
@@ -116,7 +145,11 @@ gulp.task(
     gulp.series(
         function copyDefinitions() {
             return gulp
-                .src(['node_modules/lit-html/**/*.js', 'node_modules/lit-html/**/*.d.ts', '!node_modules/lit-html/ts3.4/**'])
+                .src([
+                    'node_modules/lit-html/**/*.js',
+                    'node_modules/lit-html/**/*.d.ts',
+                    '!node_modules/lit-html/ts3.4/**',
+                ])
                 .pipe(gulp.dest('app/server/build/modules/lit-html'));
         },
         async function prepSSR() {
