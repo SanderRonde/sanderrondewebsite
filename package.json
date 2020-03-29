@@ -53,6 +53,6 @@
 	"scripts": {
 		"compile": "tsc",
 		"watch": "tsc -w",
-		"build": "yarn compile && gulp bundle"
+		"build": "yarn compile && gulp bundle && gulp prep-ssr"
 	}
 }

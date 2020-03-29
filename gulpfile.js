@@ -78,3 +78,34 @@ gulp.task('bundle', async function bundle() {
         })
     );
 });
+
+gulp.task('prep-ssr', async function prepSSR() {
+    await Promise.all(
+        ENTRYPOINTS.map(async (entrypoint) => {
+            const outFile = path.join(
+                __dirname,
+                'app/client/build/entrypoints/',
+                entrypoint,
+                `exports.bundled.js`
+            );
+            console.log(outFile);
+            try {
+                const bundle = await rollup.rollup({
+                    input: path.join(
+                        __dirname,
+                        'app/client/src/entrypoints/',
+                        entrypoint,
+                        `exports.js`
+                    ),
+                });
+                await bundle.write({
+                    file: outFile,
+                    name: dashesToCasing(entrypoint),
+                    format: 'esm',
+                });
+            } catch(e) {
+                console.log(e);
+            }
+        })
+    );
+});
