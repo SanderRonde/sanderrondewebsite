@@ -43,7 +43,7 @@ gulp.task('bundle', async function bundle() {
                 entrypoint,
                 `index.js`
             );
-            await rollup.rollup({
+            const bundle = await rollup.rollup({
                 input: path.join(
                     __dirname,
                     'app/client/src/entrypoints/',
@@ -57,10 +57,17 @@ gulp.task('bundle', async function bundle() {
                 },
             });
 
-            const content = await fs.readFile(outFile, {
-                encoding: 'utf8',
+            const { output } = await bundle.generate({
+                file: outFile,
+                name: dashesToCasing(entrypoint),
+                format: 'iife',
             });
-            const { error, code } = uglify.minify(content);
+
+            if (output.length === 0) {
+                throw new Error('No output generated');
+            }
+
+            const { error, code } = uglify.minify(output[0].code);
             if (error) {
                 throw error;
             }
