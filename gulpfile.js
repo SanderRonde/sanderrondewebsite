@@ -55,6 +55,7 @@ gulp.task('bundle', async function bundle() {
                     name: dashesToCasing(entrypoint),
                     format: 'iife',
                 },
+                plugins: [resolve()],
             });
 
             const { output } = await bundle.generate({
@@ -96,6 +97,7 @@ gulp.task('prep-ssr', async function prepSSR() {
                         entrypoint,
                         `exports.js`
                     ),
+                    plugins: [resolve()],
                 });
                 await bundle.write({
                     file: outFile,
