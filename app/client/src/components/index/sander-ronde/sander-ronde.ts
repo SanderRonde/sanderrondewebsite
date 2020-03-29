@@ -3,11 +3,8 @@ import {
     config,
     TemplateFn,
     CHANGE_TYPE,
-} from '../../../../../../node_modules/wc-lib/build/es/wc-lib.js';
-import {
-    render,
-    html,
-} from '../../../../../../node_modules/lit-html/lit-html.js';
+} from 'wc-lib';
+import { render, html } from 'lit-html';
 
 @config({
     is: 'sander-ronde',
