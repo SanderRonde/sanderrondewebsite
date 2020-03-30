@@ -115,6 +115,7 @@ export namespace Entrypoints {
             res: express.Response,
             next: express.NextFunction
         ) {
+			res.startTime('entrypoint-info', 'Getting entrypoint info');
             const info = Info.getInfo(entrypoint);
             if (!info) {
                 // return control to next handler
@@ -122,13 +123,18 @@ export namespace Entrypoints {
                 return;
             }
 
-            const props = Info.getProps(entrypoint, info, req);
-            const cached = renderCacheStore.getCache({ entrypoint });
+			const props = Info.getProps(entrypoint, info, req);
+			res.endTime('entrypoint-info');
+			res.startTime('check-cache', 'Checking cache');
+			const cached = renderCacheStore.getCache({ entrypoint });
+			res.endTime('check-cache');
 
             const html = (() => {
 				if (cached) return cached;
 
+				res.startTime('server-side-render', 'Server-side rendering');
 				const renderedHTML = getRenderedText(info, props);
+				res.endTime('server-side-render');
 				renderCacheStore.setCache({ entrypoint }, renderedHTML);
 				return renderedHTML;
 			})();
@@ -151,10 +157,12 @@ export namespace Entrypoints {
             entrypointRoutes.forEach((route) => {
                 if (!noSSR) {
                     app.get(route, (req, res, next) => {
+						res.endTime('route-resolution');
                         Rendering.render(entrypoint, req, res, next);
                     });
                 }
                 app.get(route, (_req, res, next) => {
+					res.endTime('route-resolution');
                     renderHTMLFile(entrypoint, res, next);
                 });
             });
@@ -175,8 +183,11 @@ export namespace Entrypoints {
         }
 
         res.status(200);
-        res.contentType('.html');
-        res.write(htmlRenderer({}));
+		res.contentType('.html');
+		res.startTime('html-render', 'Rendering of simple HTML file');
+		const html = htmlRenderer({});
+		res.endTime('html-render');
+		res.write(html);
         res.end();
     }
 }

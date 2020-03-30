@@ -94,8 +94,14 @@ export namespace Routes {
      */
     function rewriteModuleImports(content: string) {
         return content
-            .replace(/['"]wc-lib['"]/g, '\'/node_modules/wc-lib/build/es/wc-lib.js\'')
-            .replace(/['"]lit-html['"]/g, '\'/node_modules/lit-html/lit-html.js\'');
+            .replace(
+                /['"]wc-lib['"]/g,
+                "'/node_modules/wc-lib/build/es/wc-lib.js'"
+            )
+            .replace(
+                /['"]lit-html['"]/g,
+                "'/node_modules/lit-html/lit-html.js'"
+            );
     }
 
     /**
@@ -139,6 +145,8 @@ export namespace Routes {
             })
         );
         app.get('/thesis(.pdf)?', (_req, res, _next) => {
+            res.endTime('route-resolution');
+            res.startTime('send-file', 'Sending file');
             res.sendFile(THESIS_FILE);
         });
         app.use((_req, res, _next) => {

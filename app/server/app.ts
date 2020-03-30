@@ -1,4 +1,5 @@
 import { Entrypoints } from './lib/entrypoints.js';
+import serverTiming from 'server-timing';
 import { Routes } from './lib/routes.js';
 import { IO } from './lib/io.js';
 import express from 'express';
@@ -23,10 +24,19 @@ export class WebServer {
         this.app = express();
     }
 
+    private _markSendMethods() {
+        this.app.use((_req, res, next) => {
+            res.startTime('route-resolution', 'Resolving matching route');
+            next();
+        });
+    }
+
 	/**
 	 * Initialize all routes to the website
 	 */
     private _initRoutes() {
+        this.app.use(serverTiming() as express.RequestHandler);
+        this._markSendMethods();
         Entrypoints.registerEntrypointHandlers(this);
         Routes.initRoutes(this);
     }
