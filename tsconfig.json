@@ -24,5 +24,6 @@
         "declaration": true
     },
     "compileOnSave": true,
-    "include": ["./app/server", "./app/client/src"]
+    "include": ["./app/server", "./app/client/src"],
+    "exclude": ["./app/server/build"]
 }
