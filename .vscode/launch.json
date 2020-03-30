@@ -8,26 +8,35 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Launch Server",
-			"program": "${workspaceRoot}/app/server/app.ts",
+			"program": "${workspaceRoot}/app/server/app.js",
+			"cwd": "${workspaceRoot}",
+			"sourceMaps": true,
+			"stopOnEntry": false,
+			"runtimeArgs": [
+				"--experimental-modules"
+			],
+            "args": [
+				"--http", "1234"
+			],
+		},
+		{
+			"type": "node",
+			"request": "launch",
+			"name": "Launch Server (dev)",
+			"program": "${workspaceRoot}/app/server/app.js",
 			"cwd": "${workspaceRoot}",
 			"sourceMaps": true,
 			"outFiles": [
 				"${workspaceRoot}/app/server/app.js.map"
 			],
-            "stopOnEntry": false,
-            "args": [],
-            "runtimeArgs": [
-                "--nolazy"
-            ],
-            "outDir": null
-		},
-		{
-			"type": "node",
-			"request": "attach",
-			"name": "Attach to Process",
-			"address": "localhost",
-			"port": 5858,
-			"outFiles": []
+			"stopOnEntry": false,
+			"runtimeArgs": [
+				"--experimental-modules"
+			],
+            "args": [
+				"--dev",
+				"--http", "1234"
+			],
 		}
 	]
 }

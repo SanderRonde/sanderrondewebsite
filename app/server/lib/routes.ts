@@ -116,35 +116,20 @@ export namespace Routes {
                     rewrite: rewriteModuleImports,
                 })
             );
-            app.get('/', async (_req, res) => {
-                const filePath = path.join(
-                    CLIENT_DIR,
-                    'src',
-                    'entrypoints/index/index.html'
-                );
-                const content = await fs.readFile(filePath, {
-                    encoding: 'utf8',
-                });
-                res.contentType(path.basename(filePath));
-                res.send(rewriteModuleImports(content));
-                res.end();
-            });
-    
+
             const litHTMLSubpath = 'node_modules/lit-html';
-            app.use(serve(path.join(ROOT_DIR, litHTMLSubpath), {
-                extensions: ['js'],
-                prefix: `/${litHTMLSubpath}`,
-            }));
-    
-            const wcLibSubpath = 'node_modules/wc-lib';
-            app.use(serve(path.join(ROOT_DIR, wcLibSubpath), {
-                extensions: ['js'],
-                prefix: `/${wcLibSubpath}`,
-            }));
-        } else {
             app.use(
-                serveStatic(path.join(CLIENT_DIR, 'build'), {
-                    index: false,
+                serve(path.join(ROOT_DIR, litHTMLSubpath), {
+                    extensions: ['js'],
+                    prefix: `/${litHTMLSubpath}`,
+                })
+            );
+
+            const wcLibSubpath = 'node_modules/wc-lib';
+            app.use(
+                serve(path.join(ROOT_DIR, wcLibSubpath), {
+                    extensions: ['js'],
+                    prefix: `/${wcLibSubpath}`,
                 })
             );
         }

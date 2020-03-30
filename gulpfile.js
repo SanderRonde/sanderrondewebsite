@@ -1,6 +1,9 @@
 // @ts-check
 
+const builtins = require('rollup-plugin-node-builtins');
 const resolve = require('@rollup/plugin-node-resolve');
+const commonjs = require('@rollup/plugin-commonjs');
+const json = require('@rollup/plugin-json');
 const uglify = require('uglify-es');
 const rollup = require('rollup');
 const fs = require('fs-extra');
@@ -42,14 +45,14 @@ gulp.task('bundle', async function bundle() {
                 __dirname,
                 'app/client/build/entrypoints/',
                 entrypoint,
-                `index.js`
+                `${entrypoint}.js`
             );
             const bundle = await rollup.rollup({
                 input: path.join(
                     __dirname,
                     'app/client/src/entrypoints/',
                     entrypoint,
-                    `index.js`
+                    `${entrypoint}.js`
                 ),
                 output: {
                     file: outFile,
@@ -123,7 +126,10 @@ gulp.task('prep-ssr', async function prepSSR() {
             );
 
             // Fix the import
-            definitions = definitions.replace(/'..\/..\/components\//, '\'../../../src/components/')
+            definitions = definitions.replace(
+                /'..\/..\/components\//,
+                "'../../../src/components/"
+            );
             await fs.writeFile(
                 path.join(
                     __dirname,
@@ -142,32 +148,82 @@ gulp.task('prep-ssr', async function prepSSR() {
 
 gulp.task(
     'modules',
-    gulp.series(
-        function copyDefinitions() {
-            return gulp
-                .src([
-                    'node_modules/lit-html/**/*.js',
-                    'node_modules/lit-html/**/*.d.ts',
-                    '!node_modules/lit-html/ts3.4/**',
-                ])
-                .pipe(gulp.dest('app/server/build/modules/lit-html'));
-        },
-        async function prepSSR() {
-            const bundle = await rollup.rollup({
-                input: path.join(
-                    __dirname,
-                    'node_modules/lit-html/lit-html.js'
-                ),
-            });
-            await bundle.write({
-                file: path.join(
-                    __dirname,
-                    'app/server/build/modules/lit-html',
-                    `lit-html.js`
-                ),
-                name: 'lit-html',
-                format: 'esm',
-            });
-        }
+    gulp.parallel(
+        gulp.series(
+            function copyDefinitionsWCLib() {
+                return gulp
+                    .src([
+                        'node_modules/wc-lib/**/*.js',
+                        'node_modules/wc-lib/**/*.d.ts',
+                    ])
+                    .pipe(gulp.dest('app/server/build/modules/wc-lib'));
+            },
+            async function bundleWCLib() {
+                const bundle = await rollup.rollup({
+                    input: path.join(
+                        __dirname,
+                        'node_modules/wc-lib/build/es/wc-lib.js'
+                    ),
+                });
+                await bundle.write({
+                    file: path.join(
+                        __dirname,
+                        'app/server/build/modules/wc-lib',
+                        `build/es/wc-lib.js`
+                    ),
+                    name: 'wc-lib',
+                    format: 'esm',
+                });
+            },
+            async function bundleWCLibSSR() {
+                const bundle = await rollup.rollup({
+                    input: path.join(
+                        __dirname,
+                        'node_modules/wc-lib/build/es/wc-lib-ssr.js'
+                    ),
+                    plugins: [resolve({
+                        preferBuiltins: true,
+                        mainFields: ['module','main']
+                    }), commonjs(), builtins(), json()],
+                });
+                await bundle.write({
+                    file: path.join(
+                        __dirname,
+                        'app/server/build/modules/wc-lib',
+                        `build/es/wc-lib-ssr.js`
+                    ),
+                    name: 'wc-lib',
+                    format: 'esm',
+                });
+            }
+        ),
+        gulp.series(
+            function copyDefinitionsLitHTML() {
+                return gulp
+                    .src([
+                        'node_modules/lit-html/**/*.js',
+                        'node_modules/lit-html/**/*.d.ts',
+                        '!node_modules/lit-html/ts3.4/**',
+                    ])
+                    .pipe(gulp.dest('app/server/build/modules/lit-html'));
+            },
+            async function bundleLitHTML() {
+                const bundle = await rollup.rollup({
+                    input: path.join(
+                        __dirname,
+                        'node_modules/lit-html/lit-html.js'
+                    ),
+                });
+                await bundle.write({
+                    file: path.join(
+                        __dirname,
+                        'app/server/build/modules/lit-html',
+                        `lit-html.js`
+                    ),
+                    name: 'lit-html',
+                    format: 'esm',
+                });
+            }
+        )
     )
 );

@@ -60,6 +60,7 @@ export namespace IO {
     export function getIO() {
         return {
             dev: hasArg('dev', 'd'),
+            noSSR: hasArg('no-ssr'),
             ports: {
                 http: getNumArg('http') || undefined,
                 https: getNumArg('https') || undefined,
