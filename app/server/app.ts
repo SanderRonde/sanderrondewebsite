@@ -1,5 +1,6 @@
-import { initRoutes } from './lib/routes.js';
-import { getIO, IO } from './lib/io.js';
+import { Entrypoints } from './lib/entrypoints.js';
+import { Routes } from './lib/routes.js';
+import { IO } from './lib/io.js';
 import express from 'express';
 import http from 'http';
 
@@ -9,7 +10,7 @@ import http from 'http';
 export class WebServer {
     public app!: express.Express;
 
-    constructor(public io: IO) {
+    constructor(public io: IO.IO) {
         this._initVars();
         this._initRoutes();
         this._listen();
@@ -26,7 +27,8 @@ export class WebServer {
 	 * Initialize all routes to the website
 	 */
     private _initRoutes() {
-        initRoutes(this);
+        Entrypoints.registerEntrypointHandlers(this);
+        Routes.initRoutes(this);
     }
 
 	/**
@@ -40,4 +42,4 @@ export class WebServer {
     }
 }
 
-new WebServer(getIO());
+new WebServer(IO.getIO());
