@@ -16,6 +16,7 @@ import express from 'express';
 
 import * as index from '../../client/build/entrypoints/index/exports.bundled.js';
 import indexHTML from '../../client/src/entrypoints/index/index.html.js';
+import { Caching } from './cache.js';
 
 export namespace Entrypoints {
     export interface EntrpointHTMLFileOptions {
@@ -65,50 +66,78 @@ export namespace Entrypoints {
         }
     }
 
-    function render(
-        entrypoint: ENTRYPOINTS,
-        req: express.Request,
-		res: express.Response,
-		next: express.NextFunction
-    ) {
-        const info = Info.getInfo(entrypoint);
-        if (!info) {
-			// return control to next handler
-			next();
-            return;
-        }
-
-        const { Component, getHTML } = info;
-
-        if ('initComplexTemplateProvider' in Component) {
-            Component.initComplexTemplateProvider({
-                TemplateResult,
-                PropertyCommitter,
-                EventPart,
-                BooleanAttributePart,
-                AttributeCommitter,
-                NodePart,
-                isDirective,
-                noChange,
-            });
-        }
-
-        const rendered = ssr(Component as SSR.BaseTypes.BaseClass, {
-            props: Info.getProps(entrypoint, info, req),
-            attributes: {
-                'server-side-rendered': true,
+    namespace Rendering {
+		const renderCacheStore = new Caching.CacheStore<
+            {
+                entrypoint: string;
             },
+            string
+        >((stored, current) => {
+            return stored.entrypoint === current.entrypoint;
         });
+        function getRenderedText(
+            info: ReturnType<typeof Info.getInfo>,
+            props: ReturnType<typeof Info.getProps>
+        ) {
+            const { Component, getHTML } = info!;
 
-        const html = getHTML({
-            defer: true,
-            mainTag: rendered,
-        });
+            if ('initComplexTemplateProvider' in Component) {
+                Component.initComplexTemplateProvider({
+                    TemplateResult,
+                    PropertyCommitter,
+                    EventPart,
+                    BooleanAttributePart,
+                    AttributeCommitter,
+                    NodePart,
+                    isDirective,
+                    noChange,
+                });
+            }
 
-        res.status(200);
-        res.contentType('.html');
-        res.write(html);
-        res.end();
+            const rendered = ssr(Component as SSR.BaseTypes.BaseClass, {
+                props: props,
+                attributes: {
+                    'server-side-rendered': true,
+                },
+            });
+
+            const html = getHTML({
+                defer: true,
+                mainTag: rendered,
+			});
+
+            return html;
+        }
+
+        export function render(
+            entrypoint: ENTRYPOINTS,
+            req: express.Request,
+            res: express.Response,
+            next: express.NextFunction
+        ) {
+            const info = Info.getInfo(entrypoint);
+            if (!info) {
+                // return control to next handler
+                next();
+                return;
+            }
+
+            const props = Info.getProps(entrypoint, info, req);
+            const cached = renderCacheStore.getCache({ entrypoint });
+
+            const html = (() => {
+				if (cached) return cached;
+
+				const renderedHTML = getRenderedText(info, props);
+				renderCacheStore.setCache({ entrypoint }, renderedHTML);
+				return renderedHTML;
+			})();
+
+            res.status(200);
+            res.contentType('.html');
+            res.write(html);
+            res.end();
+        }
     }
 
     export function registerEntrypointHandlers({
@@ -122,7 +151,7 @@ export namespace Entrypoints {
             entrypointRoutes.forEach((route) => {
                 if (!noSSR) {
                     app.get(route, (req, res, next) => {
-                        render(entrypoint, req, res, next);
+                        Rendering.render(entrypoint, req, res, next);
                     });
                 }
                 app.get(route, (_req, res, next) => {
