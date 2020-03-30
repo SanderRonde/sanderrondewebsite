@@ -31,14 +31,14 @@ export default ENTRYPOINTS.map((entrypoint) => {
             __dirname,
             'app/client/src/entrypoints/',
             entrypoint,
-            `index.js`
+            `${entrypoint}.js`
         ),
         output: {
             file: path.join(
                 __dirname,
-				'app/client/build/entrypoints/',
-				entrypoint,
-				`index.js`
+                'app/client/build/entrypoints/',
+                entrypoint,
+                `${entrypoint}.js`
             ),
             name: dashesToCasing(entrypoint),
             format: 'iife',
