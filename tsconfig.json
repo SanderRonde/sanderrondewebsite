@@ -24,6 +24,37 @@
         "declaration": true
     },
     "compileOnSave": true,
-    "include": ["./app/server", "./app/client/src"],
-    "exclude": ["./app/server/build"]
+    "include": ["./app/server", "./app/shared"],
+    "exclude": ["./app/server/build"],
+    "references": [
+        {
+            "path": "app/tsconfig.client.json"
+        }
+    ],
+    "ts-node": {
+        "compilerOptions": {
+            "alwaysStrict": true,
+            "forceConsistentCasingInFileNames": true,
+            "module": "CommonJS",
+            "moduleResolution": "node",
+            "noImplicitAny": true,
+            "noImplicitThis": true,
+            "preserveConstEnums": false,
+            "listFiles": false,
+            "pretty": true,
+            "noFallthroughCasesInSwitch": true,
+            "noImplicitReturns": true,
+            "noUnusedLocals": true,
+            "target": "es6",
+            "jsx": "react",
+            "jsxFactory": "html.jsx",
+            "noUnusedParameters": true,
+            "experimentalDecorators": true,
+            "strictPropertyInitialization": true,
+            "strictNullChecks": true,
+            "strictBindCallApply": true,
+            "allowSyntheticDefaultImports": true,
+            "declaration": true
+        }
+    }
 }
