@@ -46,3 +46,5 @@ app/server/build
 app/**/*.d.ts
 TODO
 TODO.md
+
+.vscode/settings.json
