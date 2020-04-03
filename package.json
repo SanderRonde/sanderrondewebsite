@@ -58,7 +58,8 @@
 	},
 	"scripts": {
 		"compile": "tsc",
+		"compile:force": "tsc || echo failed",
 		"watch": "tsc -w",
-		"build": "gulp modules && yarn compile && gulp bundle && gulp prep-ssr"
+		"build": "gulp modules && yarn compile:force && gulp bundle && gulp prep-ssr && yarn compile"
 	}
 }
