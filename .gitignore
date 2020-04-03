@@ -48,3 +48,4 @@ TODO
 TODO.md
 
 .vscode/settings.json
+*.tsbuildinfo
