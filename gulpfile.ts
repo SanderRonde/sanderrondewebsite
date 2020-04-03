@@ -1,14 +1,16 @@
-import * as _builtins from 'rollup-plugin-node-builtins';
-import resolve from '@rollup/plugin-node-resolve';
-import commonjs from '@rollup/plugin-commonjs';
-import json from '@rollup/plugin-json';
-import uglify from 'uglify-es';
+import * as builtins from 'rollup-plugin-node-builtins';
+import * as _resolve from '@rollup/plugin-node-resolve';
+import * as _commonjs from '@rollup/plugin-commonjs';
+import * as _json from '@rollup/plugin-json';
+import * as uglify from 'uglify-es';
 import * as rollup from 'rollup';
-import fs from 'fs-extra';
-import path from 'path';
-import gulp from 'gulp';
+import * as fs from 'fs-extra';
+import * as path from 'path';
+import * as gulp from 'gulp';
 
-const builtins = (_builtins as any).default as typeof _builtins;
+const json = _json as unknown as typeof _json.default;
+const resolve = _resolve as unknown as typeof _resolve.default;
+const commonjs = _commonjs as unknown as typeof _commonjs.default;
 
 const ENTRYPOINTS = ['index'];
 
