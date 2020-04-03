@@ -1,11 +1,11 @@
-import { Entrypoints } from '../../../../server/lib/entrypoints.js';
-import { Util } from '../../../../server/lib/util.js';
+import { EntrypointHTMLFileOptions } from '../../../../shared/types.js';
+import { SharedUtil } from '../../../../shared/util.js';
 
 export default function indexHTML({
 	defer = false,
-	mainTag = Util.html`<sander-ronde></sander-ronde>`
-}: Entrypoints.EntrpointHTMLFileOptions = {}) {
-    return Util.html`
+	mainTag = SharedUtil.html`<sander-ronde></sander-ronde>`
+}: EntrypointHTMLFileOptions = {}) {
+    return SharedUtil.html`
 		<!DOCTYPE html>
 		<html lang="en">
 			<head>

@@ -1,4 +1,4 @@
-export namespace Util {
+export namespace SharedUtil {
 	/**
 	 * Function used to transform a template literal back into
 	 * a string.

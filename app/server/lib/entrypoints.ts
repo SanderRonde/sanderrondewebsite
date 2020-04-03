@@ -19,11 +19,6 @@ import indexHTML from '../../client/src/entrypoints/index/index.html.js';
 import { Caching } from './cache.js';
 
 export namespace Entrypoints {
-    export interface EntrpointHTMLFileOptions {
-        defer?: boolean;
-        mainTag?: string;
-    }
-
     namespace Info {
         export function getHTML(entrypoint: ENTRYPOINTS) {
             switch (entrypoint) {
@@ -190,4 +185,4 @@ export namespace Entrypoints {
 		res.write(html);
         res.end();
     }
-}
+};
