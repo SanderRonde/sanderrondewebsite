@@ -1,14 +1,14 @@
-// @ts-check
+import * as _builtins from 'rollup-plugin-node-builtins';
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import uglify from 'uglify-es';
+import * as rollup from 'rollup';
+import fs from 'fs-extra';
+import path from 'path';
+import gulp from 'gulp';
 
-const builtins = require('rollup-plugin-node-builtins');
-const resolve = require('@rollup/plugin-node-resolve');
-const commonjs = require('@rollup/plugin-commonjs');
-const json = require('@rollup/plugin-json');
-const uglify = require('uglify-es');
-const rollup = require('rollup');
-const fs = require('fs-extra');
-const path = require('path');
-const gulp = require('gulp');
+const builtins = (_builtins as any).default as typeof _builtins;
 
 const ENTRYPOINTS = ['index'];
 
@@ -22,7 +22,7 @@ const ENTRYPOINTS = ['index'];
  *
  * @returns {string} - The converted string
  */
-function dashesToCasing(str) {
+function dashesToCasing(str: string): string {
     let newStr = '';
     for (let i = 0; i < str.length; i++) {
         if (str[i] === '-') {
@@ -184,7 +184,7 @@ gulp.task(
                     plugins: [resolve({
                         preferBuiltins: true,
                         mainFields: ['module','main']
-                    }), commonjs(), builtins(), json()],
+                    }), commonjs(), builtins() as any, json()],
                 });
                 await bundle.write({
                     file: path.join(

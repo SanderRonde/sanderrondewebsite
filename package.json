@@ -46,8 +46,10 @@
 		"@types/fs-extra": "^8.1.0",
 		"@types/gulp": "^4.0.6",
 		"@types/node": "^11.11.3",
+		"@types/rollup-plugin-node-builtins": "^2.1.1",
 		"@types/serve-static": "^1.13.2",
 		"@types/uglify-es": "^3.0.0",
+		"esm": "^3.2.25",
 		"gulp": "^4.0.2",
 		"nodemon": "^2.0.2",
 		"rollup": "^2.2.0",
@@ -57,9 +59,10 @@
 		"uglify-es": "^3.3.9"
 	},
 	"scripts": {
+		"gulp": "node -r esm ./node_modules/gulp/bin/gulp.js",
 		"compile": "tsc",
 		"compile:force": "tsc || echo failed",
 		"watch": "tsc -w",
-		"build": "gulp modules && yarn compile:force && gulp bundle && gulp prep-ssr && yarn compile"
+		"build": "npm run gulp -- modules && yarn compile:force && npm run gulp -- bundle && npm run gulp -- prep-ssr && yarn compile"
 	}
 }
