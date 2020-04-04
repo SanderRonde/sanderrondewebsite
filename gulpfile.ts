@@ -79,6 +79,7 @@ gulp.task('bundle', async function bundle() {
                 throw error;
             }
 
+            await fs.mkdirp(path.dirname(outFile));
             await fs.writeFile(outFile, code, {
                 encoding: 'utf8',
             });
@@ -132,13 +133,15 @@ gulp.task('prep-ssr', async function prepSSR() {
                 /'..\/..\/components\//,
                 "'../../../src/components/"
             );
+            const definitionsOutPath = path.join(
+                __dirname,
+                'app/client/build/entrypoints/',
+                entrypoint,
+                'exports.bundled.d.ts'
+            );
+            await fs.mkdirp(path.dirname(definitionsOutPath));
             await fs.writeFile(
-                path.join(
-                    __dirname,
-                    'app/client/build/entrypoints/',
-                    entrypoint,
-                    'exports.bundled.d.ts'
-                ),
+                definitionsOutPath,
                 definitions,
                 {
                     encoding: 'utf8',
@@ -167,12 +170,14 @@ gulp.task(
                         'node_modules/wc-lib/build/es/wc-lib.js'
                     ),
                 });
+                const outDir = path.join(
+                    __dirname,
+                    'app/server/build/modules/wc-lib',
+                    `build/es/wc-lib.js`
+                    );
+                    await fs.mkdirp(path.dirname(outDir));
                 await bundle.write({
-                    file: path.join(
-                        __dirname,
-                        'app/server/build/modules/wc-lib',
-                        `build/es/wc-lib.js`
-                    ),
+                    file: outDir,
                     name: 'wc-lib',
                     format: 'esm',
                 });
@@ -188,12 +193,14 @@ gulp.task(
                         mainFields: ['module','main']
                     }), commonjs(), builtins() as any, json()],
                 });
+                const outDir = path.join(
+                    __dirname,
+                    'app/server/build/modules/wc-lib',
+                    `build/es/wc-lib-ssr.js`
+                );
+                await fs.mkdirp(path.dirname(outDir));
                 await bundle.write({
-                    file: path.join(
-                        __dirname,
-                        'app/server/build/modules/wc-lib',
-                        `build/es/wc-lib-ssr.js`
-                    ),
+                    file: outDir,
                     name: 'wc-lib',
                     format: 'esm',
                 });
@@ -216,12 +223,10 @@ gulp.task(
                         'node_modules/lit-html/lit-html.js'
                     ),
                 });
+                const outDir = path.join(__dirname, 'app/server/build/modules/lit-html', `lit-html.js`);
+                await fs.mkdirp(path.dirname(outDir));
                 await bundle.write({
-                    file: path.join(
-                        __dirname,
-                        'app/server/build/modules/lit-html',
-                        `lit-html.js`
-                    ),
+                    file: outDir,
                     name: 'lit-html',
                     format: 'esm',
                 });
