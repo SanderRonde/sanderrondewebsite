@@ -87,6 +87,10 @@ gulp.task('bundle', async function bundle() {
     );
 });
 
+/**
+ * Prepare rendering through server-side rendering
+ * by bundling all component files
+ */ 
 gulp.task('prep-ssr', async function prepSSR() {
     await Promise.all(
         ENTRYPOINTS.map(async (entrypoint) => {
@@ -151,6 +155,9 @@ gulp.task('prep-ssr', async function prepSSR() {
     );
 });
 
+/**
+ * Bundle modules into a single file
+ */
 gulp.task(
     'modules',
     gulp.parallel(
