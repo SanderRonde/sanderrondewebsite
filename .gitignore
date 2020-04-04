@@ -49,3 +49,4 @@ TODO.md
 
 .vscode/settings.json
 *.tsbuildinfo
+app/client/build
