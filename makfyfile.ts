@@ -71,10 +71,10 @@ cmd('build')
         await exec('@compile --dir client --build');
 
         await exec(
-            '? creating frontend bundles and preparing for server-side-rendering'
+            '? creating frontend bundles etc'
         );
-        await exec(['gulp bundle', 'gulp prep-ssr']);
+        await exec(['gulp frontend']);
 
-        await exec('? compiling all code');
+        await exec('? compiling all code (backend as well)');
         await exec('@compile --dir root --build');
     });

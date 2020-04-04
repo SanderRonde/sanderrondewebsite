@@ -8,9 +8,9 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as gulp from 'gulp';
 
-const json = _json as unknown as typeof _json.default;
-const resolve = _resolve as unknown as typeof _resolve.default;
-const commonjs = _commonjs as unknown as typeof _commonjs.default;
+const json = (_json as unknown) as typeof _json.default;
+const resolve = (_resolve as unknown) as typeof _resolve.default;
+const commonjs = (_commonjs as unknown) as typeof _commonjs.default;
 
 const ENTRYPOINTS = ['index'];
 
@@ -90,7 +90,8 @@ gulp.task('bundle', async function bundle() {
 /**
  * Prepare rendering through server-side rendering
  * by bundling all component files
- */ 
+ */
+
 gulp.task('prep-ssr', async function prepSSR() {
     await Promise.all(
         ENTRYPOINTS.map(async (entrypoint) => {
@@ -144,13 +145,9 @@ gulp.task('prep-ssr', async function prepSSR() {
                 'exports.bundled.d.ts'
             );
             await fs.mkdirp(path.dirname(definitionsOutPath));
-            await fs.writeFile(
-                definitionsOutPath,
-                definitions,
-                {
-                    encoding: 'utf8',
-                }
-            );
+            await fs.writeFile(definitionsOutPath, definitions, {
+                encoding: 'utf8',
+            });
         })
     );
 });
@@ -181,8 +178,8 @@ gulp.task(
                     __dirname,
                     'app/server/build/modules/wc-lib',
                     `build/es/wc-lib.js`
-                    );
-                    await fs.mkdirp(path.dirname(outDir));
+                );
+                await fs.mkdirp(path.dirname(outDir));
                 await bundle.write({
                     file: outDir,
                     name: 'wc-lib',
@@ -195,10 +192,15 @@ gulp.task(
                         __dirname,
                         'node_modules/wc-lib/build/es/wc-lib-ssr.js'
                     ),
-                    plugins: [resolve({
-                        preferBuiltins: true,
-                        mainFields: ['module','main']
-                    }), commonjs(), builtins() as any, json()],
+                    plugins: [
+                        resolve({
+                            preferBuiltins: true,
+                            mainFields: ['module', 'main'],
+                        }),
+                        commonjs(),
+                        builtins() as any,
+                        json(),
+                    ],
                 });
                 const outDir = path.join(
                     __dirname,
@@ -230,7 +232,11 @@ gulp.task(
                         'node_modules/lit-html/lit-html.js'
                     ),
                 });
-                const outDir = path.join(__dirname, 'app/server/build/modules/lit-html', `lit-html.js`);
+                const outDir = path.join(
+                    __dirname,
+                    'app/server/build/modules/lit-html',
+                    `lit-html.js`
+                );
                 await fs.mkdirp(path.dirname(outDir));
                 await bundle.write({
                     file: outDir,
@@ -241,3 +247,8 @@ gulp.task(
         )
     )
 );
+
+/**
+ * Handle all frontend bundling etc
+ */
+gulp.task('frontend', gulp.series('bundle', 'prep-ssr'));
