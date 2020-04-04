@@ -14,7 +14,7 @@ import { ENTRYPOINTS } from './constants.js';
 import { WebServer } from '../app.js';
 import express from 'express';
 
-import * as index from '../../client/build/entrypoints/index/exports.bundled.js';
+import * as index from '../../client/build/private/entrypoints/index/exports.bundled.js';
 import indexHTML from '../../client/src/entrypoints/index/index.html.js';
 import { Caching } from './cache.js';
 

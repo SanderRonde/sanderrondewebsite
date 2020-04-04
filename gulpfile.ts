@@ -45,7 +45,7 @@ gulp.task('bundle', async function bundle() {
         ENTRYPOINTS.map(async (entrypoint) => {
             const outFile = path.join(
                 __dirname,
-                'app/client/build/entrypoints/',
+                'app/client/build/public/entrypoints/',
                 entrypoint,
                 `${entrypoint}.js`
             );
@@ -108,7 +108,7 @@ gulp.task('prep-ssr', async function prepSSR() {
                 await bundle.write({
                     file: path.join(
                         __dirname,
-                        'app/client/build/entrypoints/',
+                        'app/client/build/private/entrypoints/',
                         entrypoint,
                         `exports.bundled.js`
                     ),
@@ -135,11 +135,11 @@ gulp.task('prep-ssr', async function prepSSR() {
             // Fix the import
             definitions = definitions.replace(
                 /'..\/..\/components\//,
-                "'../../../src/components/"
+                "'../../../../src/components/"
             );
             const definitionsOutPath = path.join(
                 __dirname,
-                'app/client/build/entrypoints/',
+                'app/client/build/private/entrypoints/',
                 entrypoint,
                 'exports.bundled.d.ts'
             );
