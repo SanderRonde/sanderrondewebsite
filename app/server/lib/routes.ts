@@ -140,7 +140,7 @@ export namespace Routes {
             );
         }
         app.use(
-            serveStatic(path.join(CLIENT_DIR, 'build'), {
+            serveStatic(path.join(CLIENT_DIR, 'build/public'), {
                 index: false,
             })
         );
