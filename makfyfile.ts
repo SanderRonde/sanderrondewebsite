@@ -68,7 +68,7 @@ cmd('build')
         await exec('gulp modules');
 
         await exec('? compiling client-side code');
-        await exec('@compile --dir client');
+        await exec('@compile --dir client --build');
 
         await exec(
             '? creating frontend bundles and preparing for server-side-rendering'

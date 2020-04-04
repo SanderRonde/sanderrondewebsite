@@ -1,0 +1,8 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"composite": true,
+		"lib": ["webworker"]
+	},
+    "include": ["./client/src/serviceworker.ts", "./shared"]
+}

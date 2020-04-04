@@ -1,7 +1,12 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"composite": true
+		"composite": true,
+		"lib": ["DOM"]
 	},
-    "include": ["./client/src", "./shared"]
+	"include": ["./client/src", "./shared"],
+	"exclude": ["./client/src/serviceworker.ts"],
+	"references": [{
+		"path": "./tsconfig.serviceworker.json"
+	}]
 }
