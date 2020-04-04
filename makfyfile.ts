@@ -52,7 +52,18 @@ cmd('compile')
 
 cmd('build')
     .desc('Build and bundle all files')
-    .run(async (exec) => {
+    .args({
+        fresh: flag(),
+    })
+    .argsDesc({
+        fresh: 'Do a fresh build (clean first)'
+    })
+    .run(async (exec, { fresh }) => {
+        if (fresh) {
+            await exec('? cleaning');
+            await exec('@clean');
+        }
+
         await exec('? building and bundling modules');
         await exec('gulp modules');
 
