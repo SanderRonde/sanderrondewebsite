@@ -25,7 +25,6 @@ export namespace Entrypoints {
                 case 'index':
                     return indexHTML;
             }
-            return undefined;
         }
 
         function getImport(entrypoint: ENTRYPOINTS) {
@@ -33,7 +32,6 @@ export namespace Entrypoints {
                 case 'index':
                     return index;
             }
-            return undefined;
         }
 
         export function getInfo(entrypoint: ENTRYPOINTS) {
@@ -57,7 +55,6 @@ export namespace Entrypoints {
                 case 'index':
                     return {};
             }
-            return {};
         }
     }
 
