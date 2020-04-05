@@ -64,17 +64,14 @@ cmd('build')
             await exec('@clean');
         }
 
-        await exec('? building and bundling modules');
-        await exec('gulp modules');
+        await exec('? creating pre-build requirements');
+        await exec('gulp pre-build');
 
-        await exec('? compiling client-side code');
-        await exec('@compile --dir client --build');
+        await exec('? compiling code');
+        await exec('@compile --dir root --build');
 
         await exec(
             '? creating frontend bundles etc'
         );
         await exec(['gulp frontend']);
-
-        await exec('? compiling all code (backend as well)');
-        await exec('@compile --dir root --build');
     });

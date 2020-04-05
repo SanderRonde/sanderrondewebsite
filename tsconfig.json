@@ -21,7 +21,8 @@
         "strictNullChecks": true,
         "strictBindCallApply": true,
         "allowSyntheticDefaultImports": true,
-        "declaration": true
+        "declaration": true,
+        "resolveJsonModule": true
     },
     "compileOnSave": true,
     "include": ["./app/server", "./app/shared"],
@@ -54,7 +55,8 @@
             "strictNullChecks": true,
             "strictBindCallApply": true,
             "allowSyntheticDefaultImports": true,
-            "declaration": true
+            "declaration": true,
+            "resolveJsonModule": true
         }
     }
 }

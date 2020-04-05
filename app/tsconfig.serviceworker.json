@@ -1,8 +1,14 @@
 {
-	"extends": "../tsconfig.json",
-	"compilerOptions": {
-		"composite": true,
-		"lib": ["webworker"]
-	},
-    "include": ["./client/src/serviceworker.ts", "./shared"]
+    "extends": "../tsconfig.json",
+    "compilerOptions": {
+        "composite": true,
+        "lib": ["webworker"],
+        "resolveJsonModule": true
+    },
+    "include": [
+        "./client/src/serviceworker.ts",
+        "./shared",
+        "./client/build/private/swconfig.json",
+        "./client/build/public/versions.json"
+    ]
 }

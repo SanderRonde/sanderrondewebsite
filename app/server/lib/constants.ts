@@ -9,7 +9,3 @@ const DIR_NAME = os.platform() === 'win32' ? DIR_FULL.slice(1) : DIR_FULL;
 export const ROOT_DIR = path.join(DIR_NAME, '../../../');
 export const APP_DIR = path.join(ROOT_DIR, 'app');
 export const CLIENT_DIR = path.join(APP_DIR, 'client');
-
-// Entrypoints
-export type ENTRYPOINTS = 'index';
-export const ENTRYPOINTS: ENTRYPOINTS[] = ['index'];

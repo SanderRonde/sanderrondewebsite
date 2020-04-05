@@ -10,7 +10,8 @@ import {
 } from '../build/modules/lit-html/lit-html.js';
 import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
-import { ENTRYPOINTS } from './constants.js';
+import * as ENTRYPOINTS from '../../shared/entrypoints.json';
+import { ENTRYPOINTS_TYPE } from '../../shared/types';
 import { WebServer } from '../app.js';
 import express from 'express';
 
@@ -20,21 +21,21 @@ import { Caching } from './cache.js';
 
 export namespace Entrypoints {
     namespace Info {
-        export function getHTML(entrypoint: ENTRYPOINTS) {
+        export function getHTML(entrypoint: ENTRYPOINTS_TYPE) {
             switch (entrypoint) {
                 case 'index':
                     return indexHTML;
             }
         }
 
-        function getImport(entrypoint: ENTRYPOINTS) {
+        function getImport(entrypoint: ENTRYPOINTS_TYPE) {
             switch (entrypoint) {
                 case 'index':
                     return index;
             }
         }
 
-        export function getInfo(entrypoint: ENTRYPOINTS) {
+        export function getInfo(entrypoint: ENTRYPOINTS_TYPE) {
             const info = getImport(entrypoint);
             const html = getHTML(entrypoint);
             if (info && html) {
@@ -47,7 +48,7 @@ export namespace Entrypoints {
         }
 
         export function getProps(
-            entrypoint: ENTRYPOINTS,
+            entrypoint: ENTRYPOINTS_TYPE,
             _info: ReturnType<typeof getInfo>,
             _req: express.Request
         ) {
@@ -102,7 +103,7 @@ export namespace Entrypoints {
         }
 
         export function render(
-            entrypoint: ENTRYPOINTS,
+            entrypoint: ENTRYPOINTS_TYPE,
             req: express.Request,
             res: express.Response,
             next: express.NextFunction
@@ -142,7 +143,7 @@ export namespace Entrypoints {
         app,
         io: { noSSR },
     }: WebServer) {
-        ENTRYPOINTS.forEach((entrypoint) => {
+        ENTRYPOINTS.forEach((entrypoint: ENTRYPOINTS_TYPE) => {
             const baseRoute = `/${entrypoint}`;
             const entrypointRoutes =
                 entrypoint === 'index' ? [baseRoute, '/'] : [baseRoute];
@@ -162,7 +163,7 @@ export namespace Entrypoints {
     }
 
     export function renderHTMLFile(
-        entrypoint: ENTRYPOINTS,
+        entrypoint: ENTRYPOINTS_TYPE,
         res: express.Response,
         next: express.NextFunction
     ) {

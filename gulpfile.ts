@@ -1,18 +1,40 @@
+import {
+    SWConfig,
+    SERVE_STATEGY,
+    VersionMap,
+    ENTRYPOINTS_TYPE,
+} from './app/shared/types';
+import * as ENTRYPOINTS from './app/shared/entrypoints.json';
 import * as builtins from 'rollup-plugin-node-builtins';
 import * as _resolve from '@rollup/plugin-node-resolve';
 import * as _commonjs from '@rollup/plugin-commonjs';
 import * as _json from '@rollup/plugin-json';
 import * as uglify from 'uglify-es';
+import * as crypto from 'crypto';
 import * as rollup from 'rollup';
 import * as fs from 'fs-extra';
 import * as path from 'path';
+import * as glob from 'glob';
 import * as gulp from 'gulp';
 
 const json = (_json as unknown) as typeof _json.default;
 const resolve = (_resolve as unknown) as typeof _resolve.default;
 const commonjs = (_commonjs as unknown) as typeof _commonjs.default;
 
-const ENTRYPOINTS = ['index'];
+const CACHE_EXTENSIONS = [
+    'js',
+    'html',
+    'ico',
+    'json',
+    'css',
+    'png',
+    'jpg',
+    'jpeg',
+];
+const CACHE_IGNORE = [
+    path.resolve(__dirname, 'app/client/build/public/versions.json'),
+];
+const EXTENSION_GLOB = `{${CACHE_EXTENSIONS.join(',')}}`;
 
 /**
  * Converts a string with dashes in
@@ -38,51 +60,102 @@ function dashesToCasing(str: string): string {
 }
 
 /**
+ * Glob but promisified
+ * @param {string} pattern - The pattern to use
+ * @param {glob.IOptions} [options] - Optional options
+ *
+ * @returns {Promise<string[]>} The matches
+ */
+function globPromise(
+    pattern: string,
+    options?: glob.IOptions
+): Promise<string[]> {
+    return new Promise<string[]>((resolve, reject) => {
+        glob(pattern, options || {}, (error, matches) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(matches);
+            }
+        });
+    });
+}
+
+/**
+ * Create a simple rollup bundle and uglify it
+ */
+async function createBundle(
+    inPath: string,
+    outPath: string,
+    name: string,
+    {
+        format = 'iife',
+        plugins = [resolve(), json()],
+        uglify: doUglify = true,
+    }: {
+        format?: rollup.ModuleFormat;
+        plugins?: rollup.Plugin[];
+        uglify?: boolean;
+    } = {}
+) {
+    const bundle = await rollup.rollup({
+        input: inPath,
+        output: {
+            file: outPath,
+            name: name,
+            format,
+        },
+        plugins,
+    });
+
+    const { output } = await bundle.generate({
+        file: outPath,
+        name: name,
+        format,
+    });
+
+    if (output.length === 0) {
+        throw new Error('No output generated');
+    }
+
+    const code = (() => {
+        if (!doUglify) {
+            return output[0].code;
+        }
+        const { error, code } = uglify.minify(output[0].code);
+        if (error) {
+            throw error;
+        }
+        return code;
+    })();
+
+    await fs.mkdirp(path.dirname(outPath));
+    await fs.writeFile(outPath, code, {
+        encoding: 'utf8',
+    });
+}
+
+/**
  * Bundle all components into a single file
  */
 gulp.task('bundle', async function bundle() {
     await Promise.all(
-        ENTRYPOINTS.map(async (entrypoint) => {
-            const outFile = path.join(
-                __dirname,
-                'app/client/build/public/entrypoints/',
-                entrypoint,
-                `${entrypoint}.js`
-            );
-            const bundle = await rollup.rollup({
-                input: path.join(
+        ENTRYPOINTS.map(async (entrypoint: ENTRYPOINTS_TYPE) => {
+            await createBundle(
+                path.join(
                     __dirname,
                     'app/client/src/entrypoints/',
                     entrypoint,
                     `${entrypoint}.js`
                 ),
-                output: {
-                    file: outFile,
-                    name: dashesToCasing(entrypoint),
-                    format: 'iife',
-                },
-                plugins: [resolve()],
-            });
-
-            const { output } = await bundle.generate({
-                file: outFile,
-                name: dashesToCasing(entrypoint),
-                format: 'iife',
-            });
-
-            if (output.length === 0) {
-                throw new Error('No output generated');
-            }
-
-            const { error, code } = uglify.minify(output[0].code);
-            if (error) {
-                throw error;
-            }
-
-            await fs.mkdirp(path.dirname(outFile));
-            await fs.writeFile(outFile, code, {
-                encoding: 'utf8',
-            });
+                path.join(
+                    __dirname,
+                    'app/client/build/public/entrypoints/',
+                    entrypoint,
+                    `${entrypoint}.js`
+                ),
+                dashesToCasing(entrypoint)
+            );
         })
     );
 });
@@ -94,28 +167,28 @@ gulp.task('bundle', async function bundle() {
 
 gulp.task('prep-ssr', async function prepSSR() {
     await Promise.all(
-        ENTRYPOINTS.map(async (entrypoint) => {
+        ENTRYPOINTS.map(async (entrypoint: ENTRYPOINTS_TYPE) => {
             // Bundle
             try {
-                const bundle = await rollup.rollup({
-                    input: path.join(
+                await createBundle(
+                    path.join(
                         __dirname,
                         'app/client/src/entrypoints/',
                         entrypoint,
-                        `exports.js`
+                        `${entrypoint}.js`
                     ),
-                    plugins: [resolve()],
-                });
-                await bundle.write({
-                    file: path.join(
+                    path.join(
                         __dirname,
-                        'app/client/build/private/entrypoints/',
+                        'app/client/build/public/entrypoints/',
                         entrypoint,
-                        `exports.bundled.js`
+                        `${entrypoint}.js`
                     ),
-                    name: dashesToCasing(entrypoint),
-                    format: 'esm',
-                });
+                    dashesToCasing(entrypoint),
+                    {
+                        uglify: false,
+                        format: 'esm',
+                    }
+                );
             } catch (e) {
                 console.log(e);
             }
@@ -168,51 +241,49 @@ gulp.task(
                     .pipe(gulp.dest('app/server/build/modules/wc-lib'));
             },
             async function bundleWCLib() {
-                const bundle = await rollup.rollup({
-                    input: path.join(
+                await createBundle(
+                    path.join(
                         __dirname,
                         'node_modules/wc-lib/build/es/wc-lib.js'
                     ),
-                });
-                const outDir = path.join(
-                    __dirname,
-                    'app/server/build/modules/wc-lib',
-                    `build/es/wc-lib.js`
+                    path.join(
+                        __dirname,
+                        'app/server/build/modules/wc-lib',
+                        `build/es/wc-lib.js`
+                    ),
+                    'wc-lib',
+                    {
+                        uglify: false,
+                        format: 'esm',
+                    }
                 );
-                await fs.mkdirp(path.dirname(outDir));
-                await bundle.write({
-                    file: outDir,
-                    name: 'wc-lib',
-                    format: 'esm',
-                });
             },
             async function bundleWCLibSSR() {
-                const bundle = await rollup.rollup({
-                    input: path.join(
+                await createBundle(
+                    path.join(
                         __dirname,
                         'node_modules/wc-lib/build/es/wc-lib-ssr.js'
                     ),
-                    plugins: [
-                        resolve({
-                            preferBuiltins: true,
-                            mainFields: ['module', 'main'],
-                        }),
-                        commonjs(),
-                        builtins() as any,
-                        json(),
-                    ],
-                });
-                const outDir = path.join(
-                    __dirname,
-                    'app/server/build/modules/wc-lib',
-                    `build/es/wc-lib-ssr.js`
+                    path.join(
+                        __dirname,
+                        'app/server/build/modules/wc-lib',
+                        `build/es/wc-lib-ssr.js`
+                    ),
+                    'wc-lib',
+                    {
+                        uglify: false,
+                        format: 'esm',
+                        plugins: [
+                            resolve({
+                                preferBuiltins: true,
+                                mainFields: ['module', 'main'],
+                            }),
+                            commonjs(),
+                            builtins() as any,
+                            json(),
+                        ],
+                    }
                 );
-                await fs.mkdirp(path.dirname(outDir));
-                await bundle.write({
-                    file: outDir,
-                    name: 'wc-lib',
-                    format: 'esm',
-                });
             }
         ),
         gulp.series(
@@ -226,29 +297,244 @@ gulp.task(
                     .pipe(gulp.dest('app/server/build/modules/lit-html'));
             },
             async function bundleLitHTML() {
-                const bundle = await rollup.rollup({
-                    input: path.join(
+                await createBundle(
+                    path.join(__dirname, 'node_modules/lit-html/lit-html.js'),
+                    path.join(
                         __dirname,
-                        'node_modules/lit-html/lit-html.js'
+                        'app/server/build/modules/lit-html',
+                        `lit-html.js`
                     ),
-                });
-                const outDir = path.join(
-                    __dirname,
-                    'app/server/build/modules/lit-html',
-                    `lit-html.js`
+                    'lit-html',
+                    {
+                        uglify: false,
+                        format: 'esm',
+                    }
                 );
-                await fs.mkdirp(path.dirname(outDir));
-                await bundle.write({
-                    file: outDir,
-                    name: 'lit-html',
-                    format: 'esm',
-                });
             }
         )
     )
 );
 
+gulp.task('stubs', async function writeStubs() {
+    // Write stubs for app/server/lib/entrypoints.ts
+    await Promise.all(
+        ENTRYPOINTS.map(async (entrypoint: ENTRYPOINTS_TYPE) => {
+            await Promise.all([
+                fs.writeFile(
+                    path.join(
+                        __dirname,
+                        `app/client/build/private/entrypoints/${entrypoint}/exports.bundled.js`
+                    ),
+                    'const Component = {};\n export { Component };',
+                    {
+                        encoding: 'utf8',
+                    }
+                ),
+                fs.writeFile(
+                    path.join(
+                        __dirname,
+                        `app/client/build/private/entrypoints/${entrypoint}/exports.bundled.d.ts`
+                    ),
+                    'export declare const Component: any;',
+                    {
+                        encoding: 'utf8',
+                    }
+                ),
+            ]);
+        })
+    );
+
+    // Write stubs for serviceworker file
+    await fs.writeFile(
+        path.join(__dirname, 'app/client/build/private/swconfig.json'),
+        '{}',
+        {
+            encoding: 'utf8',
+        }
+    );
+    await fs.writeFile(
+        path.join(__dirname, 'app/client/build/public/versions.json'),
+        '{}',
+        {
+            encoding: 'utf8',
+        }
+    );
+});
+
+/**
+ * Generate a serviceworker config file
+ * and bundle it with the serviceworker
+ */
+gulp.task(
+    'serviceworker',
+    gulp.series(
+        gulp.parallel(
+            async function swConfig() {
+                // Find all static files
+                const staticDir = 'app/client/static';
+                const staticFiles = (
+                    await globPromise(`${staticDir}/**/*.${EXTENSION_GLOB}`)
+                )
+                    .filter((f) => !CACHE_IGNORE.includes(path.resolve(f)))
+                    .map((f) => path.relative(staticDir, f));
+
+                // Find all bundles
+                const publicDir = 'app/client/build/public';
+                const bundles = (
+                    await globPromise(`${publicDir}/**/*.${EXTENSION_GLOB}`)
+                )
+                    .filter((f) => !CACHE_IGNORE.includes(path.resolve(f)))
+                    .map((f) => path.relative(publicDir, f));
+
+                // Generate all routes
+                const routes = ENTRYPOINTS.map(
+                    (entrypoint: ENTRYPOINTS_TYPE): SWConfig['routes'][0] => {
+                        const entrypointRoutes = [`/${entrypoint}`];
+                        if (entrypoint === 'index') {
+                            entrypointRoutes.push('/');
+                        }
+                        return {
+                            aliases: entrypointRoutes,
+                            src: `/${entrypoint}`,
+                        };
+                    }
+                );
+
+                const swConfig: SWConfig = {
+                    groups: [
+                        {
+                            // Static files
+                            attemptUpdate: true,
+                            notifyOnUpdate: false,
+                            serveStategy: SERVE_STATEGY.OFFLINE_FIRST,
+                            files: staticFiles,
+                        },
+                        {
+                            // Bundled files
+                            attemptUpdate: true,
+                            notifyOnUpdate: true,
+                            serveStategy: SERVE_STATEGY.OFFLINE_FIRST,
+                            files: bundles,
+                        },
+                    ],
+                    routes,
+                };
+
+                await fs.writeFile(
+                    path.join(
+                        __dirname,
+                        'app/client/build/private/swconfig.json'
+                    ),
+                    JSON.stringify(swConfig, null, '\t'),
+                    {
+                        encoding: 'utf8',
+                    }
+                );
+            },
+            async function versions() {
+                // Find all static files
+                const staticDir = 'app/client/static';
+                const staticFiles = (
+                    await globPromise(`${staticDir}/**/*.${EXTENSION_GLOB}`)
+                )
+                    .filter((f) => !CACHE_IGNORE.includes(path.resolve(f)))
+                    .map((filePath) => ({
+                        srcPaths: [filePath],
+                        servePath: `/${path.relative(staticDir, filePath)}`,
+                    }));
+
+                // Find all bundles
+                const publicDir = 'app/client/build/public';
+                const bundles = (
+                    await globPromise(`${publicDir}/**/*.${EXTENSION_GLOB}`)
+                )
+                    .filter((f) => !CACHE_IGNORE.includes(path.resolve(f)))
+                    .map((filePath) => ({
+                        srcPaths: [filePath],
+                        servePath: `/${path.relative(publicDir, filePath)}`,
+                    }));
+
+                // Find all "html" files and their corresponding
+                // bundles
+                const files = ENTRYPOINTS.map(
+                    (entrypoint: ENTRYPOINTS_TYPE) => {
+                        return {
+                            srcPaths: [
+                                path.join(
+                                    __dirname,
+                                    `app/client/src/entrypoints/${entrypoint}/${entrypoint}.html.ts`
+                                ),
+                                path.join(
+                                    publicDir,
+                                    `/entrypoints/${entrypoint}/${entrypoint}.js`
+                                ),
+                            ],
+                            servePath: `/${entrypoint}`,
+                        };
+                    }
+                );
+
+                const versions: VersionMap = {};
+                await Promise.all(
+                    [...staticFiles, ...bundles, ...files].map(
+                        async (fileConfig) => {
+                            const hashes = await Promise.all(
+                                fileConfig.srcPaths.map((srcPath) => {
+                                    return new Promise<string>((resolve) => {
+                                        const stream = fs.createReadStream(
+                                            srcPath
+                                        );
+                                        const hash = crypto.createHash('md5');
+                                        hash.setEncoding('hex');
+
+                                        stream.on('end', () => {
+                                            hash.end();
+                                            resolve(hash.read());
+                                        });
+
+                                        stream.pipe(hash);
+                                    });
+                                })
+                            );
+                            const hash = hashes.join('-');
+
+                            versions[fileConfig.servePath] = hash;
+                        }
+                    )
+                );
+
+                await fs.writeFile(
+                    path.join(
+                        __dirname,
+                        'app/client/build/public/versions.json'
+                    ),
+                    JSON.stringify(versions, null, '\t'),
+                    {
+                        encoding: 'utf8',
+                    }
+                );
+            }
+        ),
+        async function bundle() {
+            await createBundle(
+                path.join(__dirname, 'app/client/src/serviceworker.js'),
+                path.join(
+                    __dirname,
+                    'app/client/build/public/serviceworker.js'
+                ),
+                'serviceworker'
+            );
+        }
+    )
+);
+
+/**
+ * Handle all pre-build stuff like modules for the
+ * backend and some stubs
+ */
+gulp.task('pre-build', gulp.series('modules', 'stubs'));
+
 /**
  * Handle all frontend bundling etc
  */
-gulp.task('frontend', gulp.series('bundle', 'prep-ssr'));
+gulp.task('frontend', gulp.series('bundle', 'prep-ssr', 'serviceworker'));
