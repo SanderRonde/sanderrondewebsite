@@ -1,11 +1,11 @@
 import { EntrypointHTMLFileOptions } from '../../../../shared/types.js';
-import { SharedUtil } from '../../../../shared/util.js';
+import { html } from '../../../../shared/util.js';
 
 export default function indexHTML({
 	defer = false,
-	mainTag = SharedUtil.html`<sander-ronde></sander-ronde>`
+	mainTag = html`<sander-ronde></sander-ronde>`
 }: EntrypointHTMLFileOptions = {}) {
-    return SharedUtil.html`
+    return html`
 		<!DOCTYPE html>
 		<html lang="en">
 			<head>
