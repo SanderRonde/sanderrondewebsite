@@ -12,7 +12,7 @@ export default function indexHTML({
 				<title>Sander Ronde</title>
 				<meta charset="utf-8" />
 				<meta name="description" content="Sander Ronde" />
-				<!-- <meta name="manifest" href="/static/manifest.json" /> -->
+				<!-- <meta name="manifest" href="/manifest.json" /> -->
 				<link rel="icon" href="/favicon.ico" type="images/x-icon" />
 			</head>
 			<body style="margin: 0;">
