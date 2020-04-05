@@ -319,22 +319,28 @@ gulp.task('stubs', async function writeStubs() {
     // Write stubs for app/server/lib/entrypoints.ts
     await Promise.all(
         ENTRYPOINTS.map(async (entrypoint: ENTRYPOINTS_TYPE) => {
+            const bundlePath = path.join(
+                __dirname,
+                `app/client/build/private/entrypoints/${entrypoint}/exports.bundled.js`
+            );
+            const definitionsPath = path.join(
+                __dirname,
+                `app/client/build/private/entrypoints/${entrypoint}/exports.bundled.d.ts`
+            );
+            await Promise.all([
+                fs.mkdirp(path.dirname(bundlePath)),
+                fs.mkdirp(path.dirname(definitionsPath)),
+            ]);
             await Promise.all([
                 fs.writeFile(
-                    path.join(
-                        __dirname,
-                        `app/client/build/private/entrypoints/${entrypoint}/exports.bundled.js`
-                    ),
+                    bundlePath,
                     'const Component = {};\n export { Component };',
                     {
                         encoding: 'utf8',
                     }
                 ),
                 fs.writeFile(
-                    path.join(
-                        __dirname,
-                        `app/client/build/private/entrypoints/${entrypoint}/exports.bundled.d.ts`
-                    ),
+                    definitionsPath,
                     'export declare const Component: any;',
                     {
                         encoding: 'utf8',
@@ -344,21 +350,29 @@ gulp.task('stubs', async function writeStubs() {
         })
     );
 
+    const configPath = path.join(
+        __dirname,
+        'app/client/build/private/swconfig.json'
+    );
+    const versionsPath = path.join(
+        __dirname,
+        'app/client/build/public/versions.json'
+    );
+
+    await Promise.all([
+        fs.mkdirp(path.dirname(configPath)),
+        fs.mkdirp(path.dirname(versionsPath)),
+    ]);
+
     // Write stubs for serviceworker file
-    await fs.writeFile(
-        path.join(__dirname, 'app/client/build/private/swconfig.json'),
-        '{}',
-        {
+    await Promise.all([
+        fs.writeFile(configPath, '{}', {
             encoding: 'utf8',
-        }
-    );
-    await fs.writeFile(
-        path.join(__dirname, 'app/client/build/public/versions.json'),
-        '{}',
-        {
+        }),
+        fs.writeFile(versionsPath, '{}', {
             encoding: 'utf8',
-        }
-    );
+        }),
+    ]);
 });
 
 /**
@@ -489,7 +503,7 @@ gulp.task(
 
                                         stream.on('end', () => {
                                             hash.end();
-                                            resolve(hash.read());
+                                            resolve(hash.read().toString());
                                         });
 
                                         stream.pipe(hash);
@@ -503,11 +517,13 @@ gulp.task(
                     )
                 );
 
+                const versionsPath = path.join(
+                    __dirname,
+                    'app/client/build/public/versions.json'
+                );
+                await fs.mkdirp(path.dirname(versionsPath));
                 await fs.writeFile(
-                    path.join(
-                        __dirname,
-                        'app/client/build/public/versions.json'
-                    ),
+                    versionsPath,
                     JSON.stringify(versions, null, '\t'),
                     {
                         encoding: 'utf8',
