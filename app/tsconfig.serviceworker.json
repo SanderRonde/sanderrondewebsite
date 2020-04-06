@@ -3,6 +3,7 @@
     "compilerOptions": {
         "composite": true,
         "lib": ["webworker"],
+        "sourceMap": true,
         "resolveJsonModule": true
     },
     "include": [

@@ -6,7 +6,7 @@
 	"type": "module",
 	"nodemonConfig": {
 		"ext": "js",
-		"exec": "node --experimental-modules app/server/app.js --dev --http 1234",
+		"exec": "node --experimental-modules app/server/app.js --http 1234",
 		"watch": [
 			"app/server/"
 		]
@@ -60,6 +60,7 @@
 		"rimraf": "^3.0.2",
 		"rollup": "^2.2.0",
 		"rollup-plugin-node-builtins": "^2.1.2",
+		"rollup-plugin-sourcemaps": "^0.5.0",
 		"ts-node": "^8.8.1",
 		"ts-toolbelt": "^6.3.12",
 		"typescript": "^3.8.3",

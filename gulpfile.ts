@@ -6,6 +6,7 @@ import {
 } from './app/shared/types';
 import * as builtins from 'rollup-plugin-node-builtins';
 import * as _resolve from '@rollup/plugin-node-resolve';
+import * as _sourcemaps from 'rollup-plugin-sourcemaps';
 import * as _commonjs from '@rollup/plugin-commonjs';
 import * as _json from '@rollup/plugin-json';
 import * as uglify from 'uglify-es';
@@ -21,6 +22,7 @@ const ENTRYPOINTS: ENTRYPOINTS_TYPE[] = ['index'];
 const json = (_json as unknown) as typeof _json.default;
 const resolve = (_resolve as unknown) as typeof _resolve.default;
 const commonjs = (_commonjs as unknown) as typeof _commonjs.default;
+const sourcemaps = (_sourcemaps as unknown) as typeof _sourcemaps.default;
 
 const CACHE_EXTENSIONS = [
     'js',
@@ -103,7 +105,10 @@ async function createBundle(
             name: name,
             format,
         },
-        plugins,
+        plugins: [
+            ...plugins,
+            ...(process.env.ENV === 'dev' ? [sourcemaps()] : []),
+        ],
     });
 
     const { output } = await bundle.generate({
@@ -117,7 +122,7 @@ async function createBundle(
     }
 
     const code = (() => {
-        if (!doUglify) {
+        if (!doUglify || process.env.ENV === 'dev') {
             return output[0].code;
         }
         const { error, code } = uglify.minify(output[0].code);
