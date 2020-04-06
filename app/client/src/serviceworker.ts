@@ -3,12 +3,10 @@ declare var self: DedicatedWorkerGlobalScope;
 export {};
 
 import _config from '../build/private/swconfig.json';
-// import _versions from '../build/public/versions.json';
 import { SWConfig, SERVE_STATEGY } from '../../shared/types';
 import { flat } from '../../shared/util.js';
 
 const config = _config as SWConfig;
-// const versions = _versions as VersionMap;
 
 const CACHE_NAME = 'sander-ronde-cache';
 
