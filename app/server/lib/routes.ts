@@ -117,11 +117,16 @@ export namespace Routes {
             })
         );
         if (io.dev) {
-            app.use(
-                serve(path.join(CLIENT_DIR, 'src'), {
-                    rewrite: rewriteModuleImports,
-                })
-            );
+            const serveSrc = serve(path.join(CLIENT_DIR, 'src'), {
+                rewrite: rewriteModuleImports,
+            });
+            app.use((req, res, next) => {
+                if (req.url.startsWith('/serviceworker.js')) {
+                    next();
+                    return;
+                }
+                serveSrc(req, res, next);
+            });
 
             const litHTMLSubpath = 'node_modules/lit-html';
             app.use(
@@ -138,6 +143,12 @@ export namespace Routes {
                     prefix: `/${wcLibSubpath}`,
                 })
             );
+
+            app.use(
+                serveStatic(path.join(CLIENT_DIR, 'build/private'), {
+                    index: false,
+                })
+            );
         }
         app.use(
             serveStatic(path.join(CLIENT_DIR, 'build/public'), {
@@ -150,7 +161,8 @@ export namespace Routes {
             res.sendFile(THESIS_FILE);
         });
         app.get('/404', (_req, res) => {
-            res.status(404).send('404');
+            // TODO: implement better 404 page
+            res.status(200).send('404');
         });
         app.use((_req, res, _next) => {
             res.status(404).send('404');
