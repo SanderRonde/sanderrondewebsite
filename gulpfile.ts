@@ -172,13 +172,13 @@ gulp.task('prep-ssr', async function prepSSR() {
                         __dirname,
                         'app/client/src/entrypoints/',
                         entrypoint,
-                        `${entrypoint}.js`
+                        `exports.js`
                     ),
                     path.join(
                         __dirname,
-                        'app/client/build/public/entrypoints/',
+                        'app/client/build/private/entrypoints/',
                         entrypoint,
-                        `${entrypoint}.js`
+                        `exports.bundled.js`
                     ),
                     dashesToCasing(entrypoint),
                     {
