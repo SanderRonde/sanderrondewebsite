@@ -4,7 +4,6 @@ import {
     VersionMap,
     ENTRYPOINTS_TYPE,
 } from './app/shared/types';
-import * as ENTRYPOINTS from './app/shared/entrypoints.json';
 import * as builtins from 'rollup-plugin-node-builtins';
 import * as _resolve from '@rollup/plugin-node-resolve';
 import * as _commonjs from '@rollup/plugin-commonjs';
@@ -16,6 +15,8 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as glob from 'glob';
 import * as gulp from 'gulp';
+
+const ENTRYPOINTS: ENTRYPOINTS_TYPE[] = ['index'];
 
 const json = (_json as unknown) as typeof _json.default;
 const resolve = (_resolve as unknown) as typeof _resolve.default;

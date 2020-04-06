@@ -10,7 +10,7 @@ import {
 } from '../build/modules/lit-html/lit-html.js';
 import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
-import * as ENTRYPOINTS from '../../shared/entrypoints.json';
+import ENTRYPOINTS from '../../shared/entrypoints.js';
 import { ENTRYPOINTS_TYPE } from '../../shared/types';
 import { WebServer } from '../app.js';
 import express from 'express';
