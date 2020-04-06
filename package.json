@@ -69,6 +69,7 @@
 		"makfy": "makfy",
 		"compile": "makfy compile --build",
 		"watch": "makfy compile --build --watch",
+		"build-frontend": "makfy frontend",
 		"build": "makfy build"
 	}
 }

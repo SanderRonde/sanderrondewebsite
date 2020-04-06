@@ -50,6 +50,12 @@ cmd('compile')
         }
     });
 
+cmd('frontend')
+    .desc('Build just the frontend')
+    .run(async (exec) => {
+        await exec(['gulp frontend']);
+    });
+
 cmd('build')
     .desc('Build and bundle all files')
     .args({
@@ -73,5 +79,5 @@ cmd('build')
         await exec(
             '? creating frontend bundles etc'
         );
-        await exec(['gulp frontend']);
+        await exec('@frontend');
     });
