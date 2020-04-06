@@ -3,6 +3,7 @@ import serverTiming from 'server-timing';
 import { Routes } from './lib/routes.js';
 import { IO } from './lib/io.js';
 import express from 'express';
+import morgan from 'morgan';
 import http from 'http';
 
 /**
@@ -36,6 +37,7 @@ export class WebServer {
 	 */
     private _initRoutes() {
         this.app.use(serverTiming() as express.RequestHandler);
+        this.app.use(morgan('dev'))
         this._markSendMethods();
         Entrypoints.registerEntrypointHandlers(this);
         Routes.initRoutes(this);
