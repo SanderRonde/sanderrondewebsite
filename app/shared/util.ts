@@ -1,3 +1,5 @@
+import { List } from 'ts-toolbelt';
+
 /**
  * Function used to transform a template literal back into
  * a string.
@@ -9,4 +11,16 @@ export function html(strings: TemplateStringsArray, ...values: any[]) {
         string += `${values[i]}${strings[i + 1]}`;
     }
     return string;
+}
+
+export function flat<A extends any[]>(arr: A): List.Flatten<A> {
+	const flattened = [] as unknown as List.Flatten<A>;
+	for (const element of arr) {
+		if (Array.isArray(element)) {
+			flattened.push(...flat(element));
+		} else {
+			flattened.push(element);
+		}
+	}
+	return flattened;
 }

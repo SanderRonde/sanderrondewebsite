@@ -31,9 +31,6 @@ const CACHE_EXTENSIONS = [
     'jpg',
     'jpeg',
 ];
-const CACHE_IGNORE = [
-    path.resolve(__dirname, 'app/client/build/public/versions.json'),
-];
 const EXTENSION_GLOB = `{${CACHE_EXTENSIONS.join(',')}}`;
 
 /**
@@ -354,25 +351,13 @@ gulp.task('stubs', async function writeStubs() {
         __dirname,
         'app/client/build/private/swconfig.json'
     );
-    const versionsPath = path.join(
-        __dirname,
-        'app/client/build/public/versions.json'
-    );
 
-    await Promise.all([
-        fs.mkdirp(path.dirname(configPath)),
-        fs.mkdirp(path.dirname(versionsPath)),
-    ]);
+    await fs.mkdirp(path.dirname(configPath));
 
     // Write stubs for serviceworker file
-    await Promise.all([
-        fs.writeFile(configPath, '{}', {
-            encoding: 'utf8',
-        }),
-        fs.writeFile(versionsPath, '{}', {
-            encoding: 'utf8',
-        }),
-    ]);
+    await fs.writeFile(configPath, '{}', {
+        encoding: 'utf8',
+    });
 });
 
 /**
@@ -388,17 +373,13 @@ gulp.task(
                 const staticDir = 'app/client/static';
                 const staticFiles = (
                     await globPromise(`${staticDir}/**/*.${EXTENSION_GLOB}`)
-                )
-                    .filter((f) => !CACHE_IGNORE.includes(path.resolve(f)))
-                    .map((f) => path.relative(staticDir, f));
+                ).map((f) => path.relative(staticDir, f));
 
                 // Find all bundles
                 const publicDir = 'app/client/build/public';
                 const bundles = (
                     await globPromise(`${publicDir}/**/*.${EXTENSION_GLOB}`)
-                )
-                    .filter((f) => !CACHE_IGNORE.includes(path.resolve(f)))
-                    .map((f) => path.relative(publicDir, f));
+                ).map((f) => path.relative(publicDir, f));
 
                 // Generate all routes
                 const routes = ENTRYPOINTS.map(
@@ -409,6 +390,7 @@ gulp.task(
                         }
                         return {
                             aliases: entrypointRoutes,
+                            isEntrypoint: true,
                             src: `/${entrypoint}`,
                         };
                     }
@@ -418,16 +400,14 @@ gulp.task(
                     groups: [
                         {
                             // Static files
-                            attemptUpdate: true,
                             notifyOnUpdate: false,
-                            serveStategy: SERVE_STATEGY.OFFLINE_FIRST,
+                            serveStategy: SERVE_STATEGY.FASTEST,
                             files: staticFiles,
                         },
                         {
                             // Bundled files
-                            attemptUpdate: true,
                             notifyOnUpdate: true,
-                            serveStategy: SERVE_STATEGY.OFFLINE_FIRST,
+                            serveStategy: SERVE_STATEGY.FASTEST,
                             files: bundles,
                         },
                     ],
@@ -450,23 +430,19 @@ gulp.task(
                 const staticDir = 'app/client/static';
                 const staticFiles = (
                     await globPromise(`${staticDir}/**/*.${EXTENSION_GLOB}`)
-                )
-                    .filter((f) => !CACHE_IGNORE.includes(path.resolve(f)))
-                    .map((filePath) => ({
-                        srcPaths: [filePath],
-                        servePath: `/${path.relative(staticDir, filePath)}`,
-                    }));
+                ).map((filePath) => ({
+                    srcPaths: [filePath],
+                    servePath: `/${path.relative(staticDir, filePath)}`,
+                }));
 
                 // Find all bundles
                 const publicDir = 'app/client/build/public';
                 const bundles = (
                     await globPromise(`${publicDir}/**/*.${EXTENSION_GLOB}`)
-                )
-                    .filter((f) => !CACHE_IGNORE.includes(path.resolve(f)))
-                    .map((filePath) => ({
-                        srcPaths: [filePath],
-                        servePath: `/${path.relative(publicDir, filePath)}`,
-                    }));
+                ).map((filePath) => ({
+                    srcPaths: [filePath],
+                    servePath: `/${path.relative(publicDir, filePath)}`,
+                }));
 
                 // Find all "html" files and their corresponding
                 // bundles

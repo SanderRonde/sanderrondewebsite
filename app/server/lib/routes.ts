@@ -149,6 +149,9 @@ export namespace Routes {
             res.startTime('send-file', 'Sending file');
             res.sendFile(THESIS_FILE);
         });
+        app.get('/404', (_req, res) => {
+            res.status(404).send('404');
+        });
         app.use((_req, res, _next) => {
             res.status(404).send('404');
         });

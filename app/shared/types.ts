@@ -8,7 +8,7 @@ export const enum SERVE_STATEGY {
      * First serve the (offline) cached version of the file.
      * If that fails, serve the remote (online) version
      */
-    OFFLINE_FIRST,
+    FASTEST,
 }
 
 export interface SWConfig {
@@ -16,11 +16,6 @@ export interface SWConfig {
      * Groups of to-be-cached files
      */
     groups: {
-        /**
-         * Attempt to update the file by asking the
-         * server if a new version exists
-         */
-        attemptUpdate: boolean;
         /**
          * Notify the client that a new version is
          * available if a file has been updated
@@ -52,6 +47,10 @@ export interface SWConfig {
          * get the file
          */
         src: string;
+        /**
+         * Whether this is an entrypoint
+         */
+        isEntrypoint: boolean;
     }[];
 }
 
