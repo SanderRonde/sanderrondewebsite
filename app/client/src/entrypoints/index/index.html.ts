@@ -1,5 +1,6 @@
 import { EntrypointHTMLFileOptions } from '../../../../shared/types.js';
 import { html } from '../../../../shared/util.js';
+import { head } from '../../shared/html.js';
 
 export default function indexHTML({
 	defer = false,
@@ -10,10 +11,7 @@ export default function indexHTML({
 		<html lang="en">
 			<head>
 				<title>Sander Ronde</title>
-				<meta charset="utf-8" />
-				<meta name="description" content="Sander Ronde" />
-				<!-- <meta name="manifest" href="/manifest.json" /> -->
-				<link rel="icon" href="/favicon.ico" type="images/x-icon" />
+				${head()}
 			</head>
 			<body style="margin: 0;">
 				${mainTag}
