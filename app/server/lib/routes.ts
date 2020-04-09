@@ -104,6 +104,29 @@ export namespace Routes {
             );
     }
 
+    function initImageRoutes(app: WebServer['app']) {
+        let isDay = new Date().getMonth() === 3 && new Date().getDate() === 29;
+        setInterval(() => {
+            isDay = new Date().getMonth() === 3 && new Date().getDate() === 29;
+        }, 1000 * 60 * 60 * 3);
+
+        const serveImages = serve(path.join(CLIENT_DIR, 'images/src'), {
+            extensions: ['pdf'],
+            prefix: '/images',
+        });
+        const serveSpecialImages = serve(path.join(CLIENT_DIR, 'images/hat'), {
+            extensions: ['pdf'],
+            prefix: '/images',
+        });
+        app.use((req, res, next) => {
+            if (isDay) {
+                serveSpecialImages(req, res, next);
+            } else {
+                serveImages(req, res, next);
+            }
+        });
+    }
+
     /**
      * Initialize all serving routes
      *
@@ -116,6 +139,7 @@ export namespace Routes {
                 index: false,
             })
         );
+        initImageRoutes(app);
         if (io.dev) {
             const serveSrc = serve(path.join(CLIENT_DIR, 'src'), {
                 rewrite: rewriteModuleImports,
