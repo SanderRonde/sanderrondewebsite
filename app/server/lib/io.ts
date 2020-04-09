@@ -62,8 +62,8 @@ export namespace IO {
             dev: hasArg('dev', 'd'),
             noSSR: hasArg('no-ssr'),
             ports: {
-                http: getNumArg('http') || undefined,
-                https: getNumArg('https') || undefined,
+                http: getNumArg('http') || 1234,
+                https: getNumArg('https') || 1235,
             },
         };
     }
