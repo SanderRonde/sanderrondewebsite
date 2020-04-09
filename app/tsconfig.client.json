@@ -4,7 +4,8 @@
 		"composite": true,
 		"lib": ["DOM"],
 		"sourceMap": true,
-		"resolveJsonModule": true
+		"resolveJsonModule": true,
+		"experimentalDecorators": true
 	},
 	"include": ["./client/src", "./shared"],
 	"exclude": ["./client/src/serviceworker.ts"],
