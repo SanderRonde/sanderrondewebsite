@@ -26,7 +26,7 @@ export namespace IO {
      * @returns {string|void} The argument's value or undefined
      */
     function getArg(name: string, short?: string): string | void {
-        for (let i = 0; i < process.argv.length; i++) {
+        for (let i = process.argv.length - 1; i; i--) {
             const arg = process.argv[i];
             if (arg === `--${name}` || (short && arg === `-${short}`)) {
                 return process.argv[i + 1];
