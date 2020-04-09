@@ -81,7 +81,7 @@ const _head = html`
 	<meta charset="utf-8" />
 	<meta name="description" content="Sander Ronde" />
 	${icons()}
-	<meta name="manifest" href="/manifest.json" />
+	<link rel="manifest" href="/manifest.json" />
 	<link rel="icon" href="/images/favicon.ico" type="images/x-icon" />
 `;
 export function head() {
