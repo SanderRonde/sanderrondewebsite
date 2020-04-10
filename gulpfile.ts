@@ -1,9 +1,11 @@
+/// <reference path="./types/minimize.d.ts" />
 import {
 	SWConfig,
 	SERVE_STATEGY,
 	VersionMap,
 	ENTRYPOINTS_TYPE,
 } from './app/shared/types';
+const HTMLMinimize = require('minimize') as typeof import('minimize');
 import { inlineTypedCSSPipe } from 'wc-lib/build/cjs/tasks/tasks';
 import * as builtins from 'rollup-plugin-node-builtins';
 import * as _resolve from '@rollup/plugin-node-resolve';
@@ -190,13 +192,13 @@ gulp.task(
 				const srcDir = path.join(__dirname, 'app/client/src');
 				const destDir = path.join(__dirname, 'app/client/temp');
 				return gulp
-					.src(['**/*.js', '**/*.json', '!**/*.css.js'], {
+					.src(['**/*.js', '**/*.json', '!**/*.css.js', '!**/*.html.js'], {
 						cwd: srcDir,
 						base: srcDir,
 					})
 					.pipe(gulp.dest(destDir));
 			},
-			async function inlineCSS() {
+			async function minifyCSS() {
 				const srcDir = path.join(__dirname, 'app/client/src');
 				const destDir = path.join(__dirname, 'app/client/temp');
 				return gulp
@@ -216,6 +218,30 @@ gulp.task(
 									).styles}</style>`;
 								}
 							);
+						})
+					)
+					.pipe(gulp.dest(destDir));
+			},
+			async function minifyHTML() {
+				const srcDir = path.join(__dirname, 'app/client/src');
+				const destDir = path.join(__dirname, 'app/client/temp');
+				return gulp
+					.src(['**/*.html.js'], {
+						cwd: srcDir,
+						base: srcDir,
+					})
+					.pipe(
+						createPipable(async (content) => {
+							return new Promise<string>((resolve, reject) => {
+								const minimize = new HTMLMinimize();
+								minimize.parse(content, (error: Error|void, data: string) => {
+									if (error) {
+										reject(error);
+									} else {
+										resolve(data);
+									}
+								})
+							});
 						})
 					)
 					.pipe(gulp.dest(destDir));
