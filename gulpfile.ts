@@ -106,6 +106,13 @@ async function createBundle(
 			name: name,
 			format,
 		},
+		onwarn: (warning, defaultHandler) => {
+			if (warning.code === 'THIS_IS_UNDEFINED') {
+				// Ignore
+				return;
+			}
+			defaultHandler(warning);
+		},
 		plugins: [
 			...plugins,
 			...(process.env.ENV === 'dev' ? [sourcemaps()] : []),
