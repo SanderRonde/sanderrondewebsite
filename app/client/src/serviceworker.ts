@@ -56,8 +56,18 @@ const pathMaps = [
 	),
 ];
 
+async function sendMessageToClients(message: string) {
+	const foundClients = await self.clients.matchAll({
+		includeUncontrolled: true,
+		type: 'window',
+	});
+	foundClients.forEach((client) => {
+		client.postMessage(message);
+	});
+}
+
 async function updateNotify() {
-	// TODO: communicate to frontend that a new version is available
+	await sendMessageToClients('update-ready');
 }
 
 async function shouldNotify(file: string) {

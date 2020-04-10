@@ -38,5 +38,25 @@ export async function registerServiceworker() {
 					});
 			});
 		}
+
+		navigator.serviceWorker.addEventListener('message', (event) => {
+			const msg: {
+				type: string;
+				data: any;
+			} = event.data;
+			if (msg.type === 'offlineServe') {
+				if (localStorage.getItem('msgOnOfflineServe')) {
+					MessageToast.define();
+					MessageToast.create({
+						message: 'Page can be updated',
+						button: 'RELOAD',
+						duration: 5000,
+						onClick() {
+							location.reload();
+						},
+					});
+				}
+			}
+		});
 	}
 }
