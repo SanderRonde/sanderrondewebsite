@@ -213,7 +213,7 @@ gulp.task(
 								(_, innerContent) => {
 									return `<style>${minifier.minify(
 										innerContent
-									)}</style>`;
+									).styles}</style>`;
 								}
 							);
 						})
