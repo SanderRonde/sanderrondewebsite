@@ -4,12 +4,15 @@ import {
 	VersionMap,
 	ENTRYPOINTS_TYPE,
 } from './app/shared/types';
+import { inlineTypedCSSPipe } from 'wc-lib/build/cjs/tasks/tasks';
 import * as builtins from 'rollup-plugin-node-builtins';
 import * as _resolve from '@rollup/plugin-node-resolve';
 import * as _sourcemaps from 'rollup-plugin-sourcemaps';
 import * as _commonjs from '@rollup/plugin-commonjs';
 import * as _json from '@rollup/plugin-json';
 import * as htmlTypings from 'html-typings';
+import * as CleanCSS from 'clean-css';
+import * as through2 from 'through2';
 import * as uglify from 'uglify-es';
 import * as crypto from 'crypto';
 import * as rollup from 'rollup';
@@ -146,30 +149,101 @@ async function createBundle(
 	});
 }
 
+function createPipable(fn: (content: string) => string | Promise<string>) {
+	return through2.obj(
+		async (
+			file: Buffer | { contents: Buffer },
+			_: any,
+			cb: (
+				error: Error | null,
+				file: Buffer | { contents: Buffer }
+			) => void
+		) => {
+			const content = Buffer.isBuffer(file)
+				? file.toString()
+				: file.contents.toString();
+
+			try {
+				const transformed = await fn(content);
+
+				if (Buffer.isBuffer(file)) {
+					file = Buffer.from(transformed);
+				} else {
+					file.contents = Buffer.from(transformed);
+				}
+				cb(null, file);
+			} catch (e) {
+				cb(e, file);
+			}
+		}
+	);
+}
+
 /**
  * Bundle all components into a single file
  */
-gulp.task('bundle', async function bundle() {
-	await Promise.all(
-		ENTRYPOINTS.map(async (entrypoint: ENTRYPOINTS_TYPE) => {
-			await createBundle(
-				path.join(
-					__dirname,
-					'app/client/src/entrypoints/',
-					entrypoint,
-					`${entrypoint}.js`
-				),
-				path.join(
-					__dirname,
-					'app/client/build/public/entrypoints/',
-					entrypoint,
-					`${entrypoint}.js`
-				),
-				dashesToCasing(entrypoint)
+gulp.task(
+	'bundle',
+	gulp.series(
+		gulp.parallel(
+			async function copy() {
+				const srcDir = path.join(__dirname, 'app/client/src');
+				const destDir = path.join(__dirname, 'app/client/temp');
+				return gulp
+					.src(['**/*.js', '**/*.json', '!**/*.css.js'], {
+						cwd: srcDir,
+						base: srcDir,
+					})
+					.pipe(gulp.dest(destDir));
+			},
+			async function inlineCSS() {
+				const srcDir = path.join(__dirname, 'app/client/src');
+				const destDir = path.join(__dirname, 'app/client/temp');
+				return gulp
+					.src(['**/*.css.js'], {
+						cwd: srcDir,
+						base: srcDir,
+					})
+					.pipe(inlineTypedCSSPipe())
+					.pipe(
+						createPipable(async (content) => {
+							const minifier = new CleanCSS();
+							return content.replace(
+								/<style>((.|\n|\r)*?)<\/style>/g,
+								(_, innerContent) => {
+									return `<style>${minifier.minify(
+										innerContent
+									)}</style>`;
+								}
+							);
+						})
+					)
+					.pipe(gulp.dest(destDir));
+			}
+		),
+		async function bundle() {
+			await Promise.all(
+				ENTRYPOINTS.map(async (entrypoint: ENTRYPOINTS_TYPE) => {
+					await createBundle(
+						path.join(
+							__dirname,
+							'app/client/temp/entrypoints/',
+							entrypoint,
+							`${entrypoint}.js`
+						),
+						path.join(
+							__dirname,
+							'app/client/build/public/entrypoints/',
+							entrypoint,
+							`${entrypoint}.js`
+						),
+						dashesToCasing(entrypoint)
+					);
+				})
 			);
-		})
-	);
-});
+		}
+	)
+);
 
 /**
  * Prepare rendering through server-side rendering
