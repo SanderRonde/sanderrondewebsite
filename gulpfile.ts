@@ -22,6 +22,8 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as glob from 'glob';
 import * as gulp from 'gulp';
+// @ts-ignore
+import * as esm from 'esm';
 
 const ENTRYPOINTS: ENTRYPOINTS_TYPE[] = ['index'];
 
@@ -192,10 +194,18 @@ gulp.task(
 				const srcDir = path.join(__dirname, 'app/client/src');
 				const destDir = path.join(__dirname, 'app/client/temp');
 				return gulp
-					.src(['**/*.js', '**/*.json', '!**/*.css.js', '!**/*.html.js'], {
-						cwd: srcDir,
-						base: srcDir,
-					})
+					.src(
+						[
+							'**/*.js',
+							'**/*.json',
+							'!**/*.css.js',
+							'!**/*.html.js',
+						],
+						{
+							cwd: srcDir,
+							base: srcDir,
+						}
+					)
 					.pipe(gulp.dest(destDir));
 			},
 			async function minifyCSS() {
@@ -213,9 +223,9 @@ gulp.task(
 							return content.replace(
 								/<style>((.|\n|\r)*?)<\/style>/g,
 								(_, innerContent) => {
-									return `<style>${minifier.minify(
-										innerContent
-									).styles}</style>`;
+									return `<style>${
+										minifier.minify(innerContent).styles
+									}</style>`;
 								}
 							);
 						})
@@ -234,13 +244,16 @@ gulp.task(
 						createPipable(async (content) => {
 							return new Promise<string>((resolve, reject) => {
 								const minimize = new HTMLMinimize();
-								minimize.parse(content, (error: Error|void, data: string) => {
-									if (error) {
-										reject(error);
-									} else {
-										resolve(data);
+								minimize.parse(
+									content,
+									(error: Error | void, data: string) => {
+										if (error) {
+											reject(error);
+										} else {
+											resolve(data);
+										}
 									}
-								})
+								);
 							});
 						})
 					)
@@ -657,11 +670,244 @@ gulp.task(
 	)
 );
 
+namespace I18N {
+	type Change = {
+		direction: 'forwards' | 'backwards';
+		name: string;
+	};
+
+	interface I18NMessage {
+		message: string;
+		description?: string;
+		placeholders?: {
+			[key: string]: {
+				content: string;
+				example?: string;
+			};
+		};
+	}
+
+	type I18NRoot = {
+		[key: string]: I18NRoot | I18NMessage;
+	};
+
+	function isMessage(
+		descriptor: I18NMessage | I18NRoot
+	): descriptor is I18NMessage {
+		if (!('message' in descriptor)) return false;
+		return typeof descriptor.message === 'string';
+	}
+
+	function isIgnored(key: string) {
+		return key === '$schema' || key === 'comments';
+	}
+
+	function walkMessages(
+		root: I18NRoot,
+		fn: (message: I18NMessage, currentPath: string[], key: string) => void,
+		currentPath: string[] = []
+	) {
+		for (const key in root) {
+			const message = root[key];
+			if (isIgnored(key)) continue;
+			if (isMessage(message)) {
+				fn(message, currentPath, key);
+			} else {
+				walkMessages(message, fn, [...currentPath, key]);
+			}
+		}
+	}
+
+	function genPath(currentPath: string[], key: string) {
+		if (currentPath.length === 0) {
+			// First item, return key by itself
+			return key;
+		}
+		// Requires an @ and dots for the rest
+		return [
+			currentPath.slice(0, 2).join('_'),
+			...currentPath.slice(2),
+			key,
+		].join('_');
+	}
+
+	export function getMessageFiles(): Promise<[any, string][]> {
+		return new Promise<[any, string][]>((resolve, reject) => {
+			glob('./app/client/src/i18n/locales/*.js', async (err, matches) => {
+				if (err) {
+					reject();
+					return;
+				}
+				const importES = esm(module);
+				resolve(
+					matches.map((file) => {
+						return [importES(file).default, file] as [any, string];
+					})
+				);
+			});
+		});
+	}
+
+	export namespace Enums {
+		function getMatches(a: string[], b: string[]): number {
+			let matches: number = 0;
+			for (let i = 0; i < Math.max(a.length, b.length); i++) {
+				if (a[i] === b[i]) {
+					matches++;
+				} else {
+					return matches;
+				}
+			}
+			return matches;
+		}
+
+		function indent(length: number) {
+			return '\t'.repeat(length);
+		}
+
+		function getDiffPath(a: string[], b: string[]): Change[] {
+			let matches = getMatches(a, b);
+
+			if (a.length === b.length && matches === a.length) return [];
+			return [
+				...a
+					.slice(matches)
+					.reverse()
+					.map((item) => {
+						return {
+							direction: 'backwards',
+							name: item,
+						} as Change;
+					}),
+				...b.slice(matches).map((item) => {
+					return {
+						direction: 'forwards',
+						name: item,
+					} as Change;
+				}),
+			];
+		}
+
+		export function genEnumMessages(root: I18NRoot) {
+			let str: string[] = [];
+			let tree: string[] = [];
+			walkMessages(root, (_message, currentPath, finalKey) => {
+				const diff = getDiffPath(tree, currentPath);
+				if (diff.length) {
+					for (let i = 0; i < diff.length; i++) {
+						const change = diff[i];
+						if (change.direction === 'backwards') {
+							str.push(indent(tree.length - 1) + '}');
+							tree.pop();
+						} else if (i === diff.length - 1) {
+							// Last one, this is an enum instead
+							str.push(
+								indent(tree.length) +
+									`export const enum ${change.name} {`
+							);
+							tree.push(change.name);
+						} else {
+							str.push(
+								indent(tree.length) +
+									`export namespace ${change.name} {`
+							);
+							tree.push(change.name);
+						}
+					}
+				}
+				str.push(
+					`${indent(tree.length)}"${finalKey}" = '${genPath(
+						currentPath,
+						finalKey
+					)}',`
+				);
+			});
+			for (let i = 0; i < tree.length; i++) {
+				str.push(indent(tree.length - 1) + '}');
+			}
+			return `export namespace I18NKeys {\n${str
+				.map((i) => indent(1) + i)
+				.join('\n')}\n}`;
+		}
+	}
+
+	export namespace GenJSON {
+		function removeMetadata(message: I18NMessage) {
+			const cleanedMessage: Partial<I18NMessage> = {};
+			cleanedMessage.message = message.message;
+			if (message.placeholders) {
+				cleanedMessage.placeholders = {};
+			}
+			for (const placeholder in message.placeholders || {}) {
+				cleanedMessage.placeholders![placeholder] = {
+					content: message.placeholders![placeholder].content,
+				};
+			}
+			return cleanedMessage as I18NMessage;
+		}
+
+		function normalizeMessages(root: I18NRoot) {
+			const normalized: {
+				[key: string]: I18NMessage;
+			} = {};
+			walkMessages(root, (message, currentPath, key) => {
+				normalized[genPath(currentPath, key)] = removeMetadata(message);
+			});
+			return normalized;
+		}
+
+		function getFreshFileExport(file: string) {
+			const resolved = require.resolve(`./${file}`);
+			if (resolved in require.cache) {
+				delete require.cache[resolved];
+			}
+			const { Messages } = require(`./${file}`);
+			return Messages;
+		}
+
+		export async function compileI18NFile(file: string, data?: any) {
+			const normalized = normalizeMessages(
+				data || getFreshFileExport(file)
+			);
+			await fs.writeFile(
+				path.join(path.dirname(file), `${path.parse(file).name}.json`),
+				JSON.stringify(normalized, null, '\t')
+			);
+		}
+	}
+}
+
+gulp.task(
+	'i18n',
+	gulp.parallel(
+		async function genEnums() {
+			const files = await I18N.getMessageFiles();
+			if (files.length === 0) {
+				console.log('No source files to generate enums from');
+				return;
+			}
+			const enums = I18N.Enums.genEnumMessages(files[0][0]);
+			await fs.writeFile(
+				path.join(__dirname, 'app/client/src/i18n/i18n-keys.d.ts'),
+				enums
+			);
+		},
+		async function genJSON() {
+			const files = await I18N.getMessageFiles();
+			await Promise.all(
+				files.map(async ([data, fileName]) => {
+					await I18N.GenJSON.compileI18NFile(fileName, data);
+				})
+			);
+		}
+	)
+);
+
 /**
  * Handle all pre-build stuff like modules for the
  * backend and some stubs
  */
-gulp.task('pre-build', gulp.series('modules', 'stubs'));
+gulp.task('pre-build', gulp.series('modules', 'stubs', 'i18n'));
 
 /**
  * Handle all frontend bundling etc
