@@ -17,15 +17,15 @@ type ClientMatchTypes = "window" | "worker" | "sharedworker" | "all";
 type WindowClientState = "hidden" | "visible" | "prerender" | "unloaded";
 
 interface Client {
-	frameType: ClientFrameType;
-	id: string;
-	url: string;
+	readonly frameType: ClientFrameType;
+	readonly id: string;
+	readonly url: string;
 	postMessage(message: any): void;
 }
 
 interface WindowClient extends Client {
-	focused: boolean;
-	visibilityState: WindowClientState;
+	readonly focused: boolean;
+	readonly visibilityState: VisibilityState;
 	focus(): Promise<WindowClient>;
 	navigate(url: string): Promise<WindowClient>;
 }
