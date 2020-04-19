@@ -564,16 +564,23 @@ gulp.task(
 					routes,
 				};
 
-				await fs.writeFile(
-					path.join(
-						__dirname,
-						'app/client/build/private/swconfig.json'
-					),
-					JSON.stringify(swConfig, null, '\t'),
-					{
-						encoding: 'utf8',
-					}
+				const outFile = path.join(
+					__dirname,
+					'app/client/build/private/swconfig.json'
 				);
+				if (process.env.ENV === 'dev') {
+					await fs.writeFile(
+						outFile,
+						JSON.stringify(swConfig, null, '\t'),
+						{
+							encoding: 'utf8',
+						}
+					);
+				} else {
+					await fs.writeFile(outFile, JSON.stringify(swConfig), {
+						encoding: 'utf8',
+					});
+				}
 			},
 			async function versions() {
 				// Find all static files
@@ -648,13 +655,19 @@ gulp.task(
 					'app/client/build/public/versions.json'
 				);
 				await fs.mkdirp(path.dirname(versionsPath));
-				await fs.writeFile(
-					versionsPath,
-					JSON.stringify(versions, null, '\t'),
-					{
+				if (process.env.ENV === 'dev') {
+					await fs.writeFile(
+						versionsPath,
+						JSON.stringify(versions, null, '\t'),
+						{
+							encoding: 'utf8',
+						}
+					);
+				} else {
+					await fs.writeFile(versionsPath, JSON.stringify(versions), {
 						encoding: 'utf8',
-					}
-				);
+					});
+				}
 			}
 		),
 		async function bundle() {
@@ -869,10 +882,18 @@ namespace I18N {
 			const normalized = normalizeMessages(
 				data || getFreshFileExport(file)
 			);
-			await fs.writeFile(
-				path.join(path.dirname(file), `${path.parse(file).name}.json`),
-				JSON.stringify(normalized, null, '\t')
+			const outFile = path.join(
+				path.dirname(file),
+				`${path.parse(file).name}.json`
 			);
+			if (process.env.ENV === 'dev') {
+				await fs.writeFile(
+					outFile,
+					JSON.stringify(normalized, null, '\t')
+				);
+			} else {
+				await fs.writeFile(outFile, JSON.stringify(normalized));
+			}
 		}
 	}
 }
