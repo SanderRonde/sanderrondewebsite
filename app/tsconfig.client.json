@@ -7,7 +7,7 @@
 		"resolveJsonModule": true,
 		"experimentalDecorators": true
 	},
-	"include": ["./client/src", "./shared"],
+	"include": ["./client/src/**/*", "./shared/**/*", "./client/src/**/*.json"],
 	"exclude": ["./client/src/serviceworker.ts"],
 	"references": [{
 		"path": "./tsconfig.serviceworker.json"
