@@ -285,6 +285,21 @@ gulp.task(
 );
 
 /**
+ * Copy built files
+ */
+gulp.task(
+	'copy',
+	gulp.parallel(function copyI18N() {
+		return gulp
+			.src('*.json', {
+				cwd: 'app/client/src/i18n/locales',
+				base: 'app/client/src/i18n/locales',
+			})
+			.pipe(gulp.dest('app/client/build/public/i18n/locales/'));
+	})
+);
+
+/**
  * Prepare rendering through server-side rendering
  * by bundling all component files
  */
@@ -844,31 +859,31 @@ namespace I18N {
 		}
 	}
 
+	function removeMetadata(message: I18NMessage) {
+		const cleanedMessage: Partial<I18NMessage> = {};
+		cleanedMessage.message = message.message;
+		if (message.placeholders) {
+			cleanedMessage.placeholders = {};
+		}
+		for (const placeholder in message.placeholders || {}) {
+			cleanedMessage.placeholders![placeholder] = {
+				content: message.placeholders![placeholder].content,
+			};
+		}
+		return cleanedMessage as I18NMessage;
+	}
+
+	function normalizeMessages(root: I18NRoot) {
+		const normalized: {
+			[key: string]: I18NMessage;
+		} = {};
+		walkMessages(root, (message, currentPath, key) => {
+			normalized[genPath(currentPath, key)] = removeMetadata(message);
+		});
+		return normalized;
+	}
+
 	export namespace GenJSON {
-		function removeMetadata(message: I18NMessage) {
-			const cleanedMessage: Partial<I18NMessage> = {};
-			cleanedMessage.message = message.message;
-			if (message.placeholders) {
-				cleanedMessage.placeholders = {};
-			}
-			for (const placeholder in message.placeholders || {}) {
-				cleanedMessage.placeholders![placeholder] = {
-					content: message.placeholders![placeholder].content,
-				};
-			}
-			return cleanedMessage as I18NMessage;
-		}
-
-		function normalizeMessages(root: I18NRoot) {
-			const normalized: {
-				[key: string]: I18NMessage;
-			} = {};
-			walkMessages(root, (message, currentPath, key) => {
-				normalized[genPath(currentPath, key)] = removeMetadata(message);
-			});
-			return normalized;
-		}
-
 		function getFreshFileExport(file: string) {
 			const resolved = require.resolve(`./${file}`);
 			if (resolved in require.cache) {
@@ -896,8 +911,25 @@ namespace I18N {
 			}
 		}
 	}
+
+	export namespace GenType {
+		export async function genType(root: I18NRoot) {
+			const normalized = normalizeMessages(root);
+			const text = `import { I18NMessage } from './spec';\n\nexport interface I18NType {\n${Object.keys(
+				normalized
+			)
+				.map((key) => {
+					return `\t${key}: I18NMessage;`;
+				})
+				.join('\n')}\n}\n`;
+			return text;
+		}
+	}
 }
 
+/**
+ * Generate both development and output files for I18N files
+ */
 gulp.task(
 	'i18n',
 	gulp.parallel(
@@ -920,6 +952,18 @@ gulp.task(
 					await I18N.GenJSON.compileI18NFile(fileName, data);
 				})
 			);
+		},
+		async function genType() {
+			const files = await I18N.getMessageFiles();
+			if (files.length === 0) {
+				console.log('No source files to generate enums from');
+				return;
+			}
+			const defs = await I18N.GenType.genType(files[0][0]);
+			await fs.writeFile(
+				path.join(__dirname, 'app/client/src/i18n/i18n-defs.d.ts'),
+				defs
+			);
 		}
 	)
 );
@@ -933,4 +977,7 @@ gulp.task('pre-build', gulp.series('modules', 'stubs', 'i18n'));
 /**
  * Handle all frontend bundling etc
  */
-gulp.task('frontend', gulp.series('bundle', 'prep-ssr', 'serviceworker'));
+gulp.task(
+	'frontend',
+	gulp.series('bundle', 'copy', 'prep-ssr', 'serviceworker')
+);
