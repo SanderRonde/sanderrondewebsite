@@ -1,5 +1,6 @@
 import { Entrypoints } from './lib/entrypoints.js';
 import serverTiming from 'server-timing';
+import cookieParser from 'cookie-parser';
 import { Routes } from './lib/routes.js';
 import { IO } from './lib/io.js';
 import express from 'express';
@@ -38,6 +39,7 @@ export class WebServer {
 	private _initRoutes() {
 		this.app.use(serverTiming() as express.RequestHandler);
 		this.app.use(morgan('dev'));
+		this.app.use(cookieParser());
 		this._markSendMethods();
 		Entrypoints.registerEntrypointHandlers(this);
 		Routes.initRoutes(this);
