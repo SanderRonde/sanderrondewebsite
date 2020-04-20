@@ -52,3 +52,4 @@ TODO.md
 app/client/build
 
 app/client/src/i18n/locales/*.json
+app/client/temp
