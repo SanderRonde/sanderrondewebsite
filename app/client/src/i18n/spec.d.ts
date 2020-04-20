@@ -1,9 +1,5 @@
 export interface I18NMessage {
 	message: string;
-	description?: string;
-	placeholderDescriptions?: {
-		[key: string]: string;
-	};
 }
 
 export type I18NTree = {

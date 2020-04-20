@@ -706,13 +706,6 @@ namespace I18N {
 
 	interface I18NMessage {
 		message: string;
-		description?: string;
-		placeholders?: {
-			[key: string]: {
-				content: string;
-				example?: string;
-			};
-		};
 	}
 
 	type I18NRoot = {
@@ -859,26 +852,12 @@ namespace I18N {
 		}
 	}
 
-	function removeMetadata(message: I18NMessage) {
-		const cleanedMessage: Partial<I18NMessage> = {};
-		cleanedMessage.message = message.message;
-		if (message.placeholders) {
-			cleanedMessage.placeholders = {};
-		}
-		for (const placeholder in message.placeholders || {}) {
-			cleanedMessage.placeholders![placeholder] = {
-				content: message.placeholders![placeholder].content,
-			};
-		}
-		return cleanedMessage as I18NMessage;
-	}
-
 	function normalizeMessages(root: I18NRoot) {
 		const normalized: {
 			[key: string]: I18NMessage;
 		} = {};
 		walkMessages(root, (message, currentPath, key) => {
-			normalized[genPath(currentPath, key)] = removeMetadata(message);
+			normalized[genPath(currentPath, key)] = message;
 		});
 		return normalized;
 	}
