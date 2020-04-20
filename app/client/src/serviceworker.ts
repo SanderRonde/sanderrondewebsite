@@ -162,6 +162,22 @@ async function fastest(req: Request): Promise<Response> {
 	)) as Response;
 }
 
+async function networkOrFallback(
+	req: Request,
+	fallback: Request | Response
+): Promise<Response> {
+	try {
+		return fetch(req, {
+			credentials: 'include',
+		});
+	} catch (e) {
+		if (fallback instanceof Response) {
+			return fallback;
+		}
+		return cacheMatch(fallback);
+	}
+}
+
 self.addEventListener('fetch', async (event) => {
 	const { pathname, hostname } = new URL(event.request.url);
 
@@ -173,16 +189,14 @@ self.addEventListener('fetch', async (event) => {
 
 	const match = pathMaps.find((pathMap) => pathMap.path === pathname);
 	if (!match) {
-		// Return 404
-		if (event.request.method === 'GET') {
-			event.respondWith(fastest(new Request('/404')));
-		} else {
-			event.respondWith(
-				new Response(null, {
-					status: 404,
-				})
-			);
-		}
+		// Try to reach the network, otherwise return 404
+		const fallback =
+			event.request.method === 'GET'
+				? new Request('/404')
+				: new Response(null, {
+						status: 404,
+				  });
+		await networkOrFallback(event.request, fallback);
 		return;
 	}
 
