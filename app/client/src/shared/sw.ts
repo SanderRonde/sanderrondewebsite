@@ -1,4 +1,6 @@
 import { MessageToast } from '../components/shared/message-toast/message-toast.js';
+import { WebComponent } from 'wc-lib';
+import { I18NKeys } from '../i18n/i18n-keys.js';
 
 export function onIdle(fn: () => void) {
 	if ('requestIdleCallback' in window) {
@@ -30,8 +32,14 @@ export async function registerServiceworker() {
 							// Success
 							MessageToast.define();
 							MessageToast.create({
-								message: 'Works offline now',
-								button: 'DISMISS',
+								message: await WebComponent.__prom(
+									I18NKeys.shared.sw.works_offline
+								),
+								button: (
+									await WebComponent.__prom(
+										I18NKeys.generic.dismiss
+									)
+								).toUpperCase(),
 								duration: 5000,
 							});
 						}
@@ -39,7 +47,7 @@ export async function registerServiceworker() {
 			});
 		}
 
-		navigator.serviceWorker.addEventListener('message', (event) => {
+		navigator.serviceWorker.addEventListener('message', async (event) => {
 			const msg: {
 				type: string;
 				data: any;
@@ -48,8 +56,12 @@ export async function registerServiceworker() {
 				if (localStorage.getItem('msgOnOfflineServe')) {
 					MessageToast.define();
 					MessageToast.create({
-						message: 'Page can be updated',
-						button: 'RELOAD',
+						message: await WebComponent.__prom(
+							I18NKeys.shared.sw.update_ready
+						),
+						button: (
+							await WebComponent.__prom(I18NKeys.generic.reload)
+						).toUpperCase(),
 						duration: 5000,
 						onClick() {
 							location.reload();
