@@ -189,7 +189,7 @@ export namespace Routes {
             res.status(200).send('404');
         });
         app.use((_req, res, _next) => {
-            res.status(404).send('404');
+            res.status(404).end();
         });
     }
 }
