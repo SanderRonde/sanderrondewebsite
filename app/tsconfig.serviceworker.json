@@ -12,5 +12,8 @@
         "./shared/**/*.json",
         "./client/build/private/swconfig.json",
         "./client/build/public/versions.json"
+    ],
+    "exclude": [
+        "./shared/i18n.ts"
     ]
 }

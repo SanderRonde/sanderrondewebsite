@@ -24,13 +24,13 @@ import express from 'express';
 
 import * as index from '../../client/build/private/entrypoints/index/exports.bundled.js';
 import indexHTML from '../../client/src/entrypoints/index/index.html.js';
-import { I18NRoot } from '../../shared/spec.js';
+import { I18NType } from '../../client/src/i18n/i18n-defs.js';
 
 import en from '../../client/src/i18n/locales/en.json.js';
 import nl from '../../client/src/i18n/locales/nl.json.js';
 
 const langFiles: {
-	[key in LANGUAGE]: I18NRoot;
+	[key in LANGUAGE]: I18NType;
 } = {
 	en,
 	nl,

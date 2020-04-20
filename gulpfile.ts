@@ -896,7 +896,7 @@ namespace I18N {
 					? JSON.stringify(normalized, null, '\t')
 					: JSON.stringify(normalized);
 			const jsContent = `export default ${jsonContent};`;
-			const defContent = ` import { I18NType } from '../i18n-defs';\ndeclare const _default: I18NType;\nexport default _default;\n`;
+			const defContent = `import { I18NType } from '../i18n-defs';\ndeclare const _default: I18NType;\nexport default _default;\n`;
 
 			await fs.writeFile(jsonOutFile, jsonContent, {
 				encoding: 'utf8',

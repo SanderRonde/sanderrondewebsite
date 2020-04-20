@@ -1,15 +1,5 @@
-import { Part, directive } from '../server/build/modules/lit-html/lit-html.js';
 import { I18NType } from '../client/src/i18n/i18n-defs';
 import { I18NMessage } from './spec';
-
-export const I18NReturner = directive(
-	(promise: Promise<any>, placeholder: string) => (part: Part) => {
-		promise.then((str) => {
-			part.setValue(str);
-			part.commit();
-		});
-	}
-);
 
 function doReplacements(
 	message: string,
