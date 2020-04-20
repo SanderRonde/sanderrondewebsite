@@ -11,11 +11,33 @@ export const I18NReturner = directive(
 	}
 );
 
-export async function I18NGetMessage(
-	langFile: I18NType,
-	key: string,
-	values: any[]
-) {
+function doReplacements(
+	message: string,
+	replacements: [string, any][]
+): string | Promise<string> {
+	const promises: Promise<any>[] = [];
+
+	let result: string = message;
+	for (const [key, value] of replacements) {
+		const regexp = new RegExp(`{{${key}}}`, 'g');
+		if (value instanceof Promise) {
+			promises.push(
+				(async () => {
+					result = result.replace(regexp, String(await value));
+				})()
+			);
+		} else {
+			result = result.replace(regexp, String(value));
+		}
+	}
+
+	if (promises.length) {
+		return Promise.all(promises).then(() => result);
+	}
+	return result;
+}
+
+export function I18NGetMessage(langFile: I18NType, key: string, values: any[]) {
 	if (!(key in langFile)) {
 		return '???';
 	}
@@ -24,28 +46,19 @@ export async function I18NGetMessage(
 	const item = langFile[key as keyof typeof langFile] as I18NMessage;
 	const { message } = item;
 
-	const replacements = await Promise.all(
-		Object.keys(values[0] || {})
-			.map((key): [string, any] => {
-				return [key, values[0][key]];
-			})
-			.map(
-				async ([key, value]): Promise<[string, any]> => {
-					return [key, await value];
-				}
-			)
-	);
+	const replacements = Object.keys(values[0] || {}).map((key): [
+		string,
+		any
+	] => {
+		return [key, values[0][key]];
+	});
 
-	let result: string = message;
-	for (const [key, value] of replacements) {
-		const regexp = new RegExp(`{{${key}}}`, 'g');
-		result = result.replace(regexp, String(value));
-	}
+	if (replacements.length === 0) return message;
 
-	return result;
+	return doReplacements(message, replacements);
 }
 
-export type LANGUAGE = 'en'|'nl';
+export type LANGUAGE = 'en' | 'nl';
 export const LANGUAGES: LANGUAGE[] = ['en', 'nl'];
 
 export const DEFAULT_LANG: LANGUAGE = 'en';
