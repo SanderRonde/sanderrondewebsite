@@ -1,4 +1,4 @@
-import { I18NRoot } from '../spec';
+import { I18NRoot } from '../../../../shared/spec';
 
 export const messages = {
 	generic: {

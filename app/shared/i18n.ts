@@ -1,4 +1,4 @@
-import { I18NType } from './i18n-defs';
+import { I18NType } from '../client/src/i18n/i18n-defs';
 import { Part, directive } from 'lit-html';
 import { I18NMessage } from './spec';
 
@@ -49,7 +49,7 @@ export async function I18NGetMessage(
 export type LANGUAGE = 'en'|'nl';
 export const LANGUAGES: LANGUAGE[] = ['en', 'nl'];
 
-const DEFAULT_LANG: LANGUAGE = 'en';
+export const DEFAULT_LANG: LANGUAGE = 'en';
 export function getLang(): string {
 	if (typeof document === undefined || !('cookie' in document)) {
 		return DEFAULT_LANG;
