@@ -759,6 +759,8 @@ namespace I18N {
 					reject();
 					return;
 				}
+				matches = matches.filter((m) => !m.includes('json'));
+
 				const importES = esm(module);
 				resolve(
 					matches.map((file) => {
@@ -876,18 +878,27 @@ namespace I18N {
 			const normalized = normalizeMessages(
 				data || getFreshFileExport(file)
 			);
-			const outFile = path.join(
+			const jsonOutFile = path.join(
 				path.dirname(file),
 				`${path.parse(file).name}.json`
 			);
-			if (process.env.ENV === 'dev') {
-				await fs.writeFile(
-					outFile,
-					JSON.stringify(normalized, null, '\t')
-				);
-			} else {
-				await fs.writeFile(outFile, JSON.stringify(normalized));
-			}
+			const jsOutFile = path.join(
+				path.dirname(file),
+				`${path.parse(file).name}.json.js`
+			);
+
+			const jsonContent =
+				process.env.ENV === 'dev'
+					? JSON.stringify(normalized, null, '\t')
+					: JSON.stringify(normalized);
+			const jsContent = `export default ${jsonContent};`;
+
+			await fs.writeFile(jsonOutFile, jsonContent, {
+				encoding: 'utf8',
+			});
+			await fs.writeFile(jsOutFile, jsContent, {
+				encoding: 'utf8',
+			});
 		}
 	}
 
