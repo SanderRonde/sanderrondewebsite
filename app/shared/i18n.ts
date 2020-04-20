@@ -4,7 +4,6 @@ import { I18NMessage } from './spec';
 
 export const I18NReturner = directive(
 	(promise: Promise<any>, placeholder: string) => (part: Part) => {
-		part.setValue(placeholder);
 		promise.then((str) => {
 			part.setValue(str);
 			part.commit();
