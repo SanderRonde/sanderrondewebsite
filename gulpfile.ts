@@ -886,17 +886,25 @@ namespace I18N {
 				path.dirname(file),
 				`${path.parse(file).name}.json.js`
 			);
+			const defFile = path.join(
+				path.dirname(file),
+				`${path.parse(file).name}.json.d.ts`
+			);
 
 			const jsonContent =
 				process.env.ENV === 'dev'
 					? JSON.stringify(normalized, null, '\t')
 					: JSON.stringify(normalized);
 			const jsContent = `export default ${jsonContent};`;
+			const defContent = ` import { I18NRoot } from '../../../../shared/spec';\ndeclare const _default: I18NRoot;\nexport default _default;\n`;
 
 			await fs.writeFile(jsonOutFile, jsonContent, {
 				encoding: 'utf8',
 			});
 			await fs.writeFile(jsOutFile, jsContent, {
+				encoding: 'utf8',
+			});
+			await fs.writeFile(defFile, defContent, {
 				encoding: 'utf8',
 			});
 		}
@@ -905,7 +913,7 @@ namespace I18N {
 	export namespace GenType {
 		export async function genType(root: I18NRoot) {
 			const normalized = normalizeMessages(root);
-			const text = `import { I18NMessage } from './spec';\n\nexport interface I18NType {\n${Object.keys(
+			const text = `import { I18NMessage } from '../../../shared/spec';\n\nexport interface I18NType {\n${Object.keys(
 				normalized
 			)
 				.map((key) => {

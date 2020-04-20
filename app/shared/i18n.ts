@@ -1,5 +1,5 @@
+import { Part, directive } from '../server/build/modules/lit-html/lit-html.js';
 import { I18NType } from '../client/src/i18n/i18n-defs';
-import { Part, directive } from 'lit-html';
 import { I18NMessage } from './spec';
 
 export const I18NReturner = directive(

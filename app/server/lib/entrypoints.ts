@@ -13,7 +13,7 @@ import {
 	LANGUAGE,
 	LANGUAGES,
 	DEFAULT_LANG,
-} from '../../shared/i18n';
+} from '../../shared/i18n.js';
 import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
 import ENTRYPOINTS from '../../shared/entrypoints.js';
@@ -26,8 +26,8 @@ import * as index from '../../client/build/private/entrypoints/index/exports.bun
 import indexHTML from '../../client/src/entrypoints/index/index.html.js';
 import { I18NRoot } from '../../shared/spec.js';
 
-const en = require('../../client/src/i18n/locales/en.json.js');
-const nl = require('../../client/src/i18n/locales/nl.json.js');
+import en from '../../client/src/i18n/locales/en.json.js';
+import nl from '../../client/src/i18n/locales/nl.json.js';
 
 const langFiles: {
 	[key in LANGUAGE]: I18NRoot;
