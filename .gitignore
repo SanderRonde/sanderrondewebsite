@@ -51,5 +51,5 @@ TODO.md
 *.tsbuildinfo
 app/client/build
 
-app/client/src/i18n/locales/*.json
+app/i18n/locales/*.json
 app/client/temp
