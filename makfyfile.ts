@@ -116,19 +116,15 @@ cmd('html-typings')
 cmd('build')
 	.desc('Build and bundle all files')
 	.args({
-		fresh: flag(),
 		dev: flag(),
 	})
 	.argsDesc({
-		fresh: 'Do a fresh build (clean first)',
 		dev: 'Development mode, keeps code pretty',
 	})
-	.run(async (exec, { fresh, dev }) => {
+	.run(async (exec, { dev }) => {
 		const env = setEnvVar('ENV', dev ? 'dev' : 'prod');
-		if (fresh) {
-			await exec('? cleaning');
-			await exec('@clean');
-		}
+		await exec('? cleaning');
+		await exec('@clean');
 
 		await exec('? generating HTML typings');
 		await exec('@html-typings');
