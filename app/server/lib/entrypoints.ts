@@ -13,9 +13,15 @@ import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
 import { ENTRYPOINTS_TYPE } from '../../shared/types';
 import ENTRYPOINTS from '../../shared/entrypoints.js';
+import { SpdyExpressResponse } from './routes.js';
+import { CLIENT_DIR } from './constants.js';
 import { WebServer } from '../app.js';
 import { Caching } from './cache.js';
+import { Duplex } from 'stream';
 import express from 'express';
+import fs from 'fs-extra';
+import chalk from 'chalk';
+import path from 'path';
 
 import * as index from '../../client/build/private/entrypoints/index/exports.bundled.js';
 import indexHTML from '../../client/src/entrypoints/index/index.html.js';
@@ -134,7 +140,7 @@ export namespace Entrypoints {
 		export function render(
 			entrypoint: ENTRYPOINTS_TYPE,
 			req: express.Request,
-			res: express.Response,
+			res: SpdyExpressResponse,
 			next: express.NextFunction
 		) {
 			res.startTime('entrypoint-info', 'Getting entrypoint info');
@@ -163,10 +169,46 @@ export namespace Entrypoints {
 				return renderedHTML;
 			})();
 
+			pushEntrypoint(res, entrypoint);
+
 			res.status(200);
 			res.contentType('.html');
 			res.write(html);
 			res.end();
+		}
+	}
+
+	const entrypointBundleCache = new Caching.FileCache();
+	async function pushEntrypoint(
+		res: SpdyExpressResponse,
+		entrypoint: ENTRYPOINTS_TYPE
+	) {
+		if (res.push) {
+			const fileURL = `entrypoints/${entrypoint}/${entrypoint}.js`;
+			const srcFile = path.join(CLIENT_DIR, 'build/public', fileURL);
+			const stream: Duplex = res.push(`/${fileURL}`, {
+				status: 200,
+				method: 'GET',
+				request: {
+					accept: '*/*',
+				},
+				response: {
+					'Content-Type': 'application/javascript',
+				},
+			});
+			stream.on('error', (err) => {
+				console.log(chalk.red('Failed to push file'), err);
+			});
+			if (!entrypointBundleCache.has(srcFile)) {
+				entrypointBundleCache.setCache(
+					srcFile,
+					await fs.readFile(srcFile, {
+						encoding: 'utf8',
+					})
+				);
+			}
+			stream.write(entrypointBundleCache.getCache(srcFile));
+			stream.end();
 		}
 	}
 
@@ -180,12 +222,12 @@ export namespace Entrypoints {
 				entrypoint === 'index' ? [baseRoute, '/'] : [baseRoute];
 			entrypointRoutes.forEach((route) => {
 				if (!noSSR) {
-					app.get(route, (req, res, next) => {
+					app.get(route, (req, res: SpdyExpressResponse, next) => {
 						res.endTime('route-resolution');
 						Rendering.render(entrypoint, req, res, next);
 					});
 				}
-				app.get(route, (_req, res, next) => {
+				app.get(route, (_req, res: SpdyExpressResponse, next) => {
 					res.endTime('route-resolution');
 					renderHTMLFile(entrypoint, res, next);
 				});
@@ -195,7 +237,7 @@ export namespace Entrypoints {
 
 	export function renderHTMLFile(
 		entrypoint: ENTRYPOINTS_TYPE,
-		res: express.Response,
+		res: SpdyExpressResponse,
 		next: express.NextFunction
 	) {
 		const htmlRenderer = Info.getHTML(entrypoint);
@@ -205,6 +247,8 @@ export namespace Entrypoints {
 			next();
 			return;
 		}
+
+		pushEntrypoint(res, entrypoint);
 
 		res.status(200);
 		res.contentType('.html');
