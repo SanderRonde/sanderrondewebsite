@@ -39,17 +39,29 @@ cmd('clean')
 	.run(async (exec) => {
 		await exec(rimraf('app/client/**/*.d.ts'));
 		await exec(rimraf('app/server/**/*.d.ts'));
+		await exec(rimraf('app/shared/**/*.d.ts'));
+		await exec(rimraf('app/i18n/**/*.d.ts'));
 		await exec(rimraf('app/client/**/*.js'));
 		await exec(rimraf('app/server/**/*.js'));
+		await exec(rimraf('app/shared/**/*.js'));
+		await exec(rimraf('app/i18n/**/*.js'));
+		await exec(rimraf('app/client/**/*.map'));
+		await exec(rimraf('app/server/**/*.map'));
+		await exec(rimraf('app/shared/**/*.map'));
+		await exec(rimraf('app/i18n/**/*.map'));
+		await exec(rimraf('app/i18n/**/*.json'));
 		await exec(rimraf('app/server/build/*'));
 		await exec(rimraf('app/client/build/*'));
+
+		await exec(rimraf('app/*.tsbuildinfo'));
+		await exec(rimraf('*.tsbuildinfo'));
 	});
 
 cmd('compile')
 	.desc('Compile typescript')
 	.args({
 		dir: choice(
-			['root', 'i18n', 'shared', 'serviceworker', 'client'],
+			['root', 'all', 'i18n', 'shared', 'serviceworker', 'client'],
 			'root'
 		),
 		build: flag(),
@@ -61,6 +73,21 @@ cmd('compile')
 		watch: 'Whether to compile the files on changes',
 	})
 	.run(async (exec, { watch, build, dir }) => {
+		if (dir === 'all') {
+			if (watch) {
+				throw new Error(
+					'Watching not supported combined with --dir all'
+				);
+			}
+			await Promise.all(
+				['i18n', 'serviceworker', 'shared', 'client'].map((dir) => {
+					return exec(`tsc -p ./app/tsconfig.${dir}.json`);
+				})
+			);
+			await exec('tsc -p ./tsconfig.json');
+			return;
+		}
+
 		const project = (() => {
 			switch (dir) {
 				case 'root':
@@ -75,7 +102,9 @@ cmd('compile')
 
 		const flags = `${watch ? '--watch' : ''}`;
 		if (build) {
-			await exec(`tsc --build ${project} ${flags}`);
+			await exec(
+				`tsc --build ${project} ${flags} --clean`
+			);
 		} else {
 			await exec(`tsc -p ${project} ${flags}`);
 		}
@@ -136,7 +165,7 @@ cmd('build')
 		await exec(`${env}; gulp pre-build`);
 
 		await exec('? compiling code');
-		await exec('@compile --dir root --build');
+		await exec('@compile --dir all');
 
 		await exec('? creating frontend bundles etc');
 		await exec({
