@@ -5,8 +5,7 @@
 		"lib": ["DOM"],
 		"sourceMap": true,
 		"resolveJsonModule": true,
-		"experimentalDecorators": true,
-		"listEmittedFiles": true
+		"experimentalDecorators": true
 	},
 	"include": ["./shared"]
 }

@@ -26,7 +26,6 @@
 		"composite": true,
 		"sourceMap": true,
 		"resolveJsonModule": true,
-		"listEmittedFiles": true,
 		"lib": ["DOM"]
 	},
 	"include": [
