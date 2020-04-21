@@ -1,63 +1,72 @@
 {
-    "compilerOptions": {
-        "alwaysStrict": true,
-        "forceConsistentCasingInFileNames": true,
-        "module": "ESNext",
-        "moduleResolution": "node",
-        "noImplicitAny": true,
-        "noImplicitThis": true,
-        "preserveConstEnums": false,
-        "listFiles": false,
-        "pretty": true,
-        "noFallthroughCasesInSwitch": true,
-        "noImplicitReturns": true,
-        "noUnusedLocals": true,
-        "target": "es6",
-        "jsx": "react",
-        "jsxFactory": "html.jsx",
-        "noUnusedParameters": true,
-        "experimentalDecorators": true,
-        "strictPropertyInitialization": true,
-        "strictNullChecks": true,
-        "strictBindCallApply": true,
-        "allowSyntheticDefaultImports": true,
-        "declaration": true,
-        "sourceMap": true,
-        "resolveJsonModule": true
-    },
-    "compileOnSave": true,
-    "include": ["./app/server", "./app/shared"],
-    "exclude": ["./app/server/build"],
-    "references": [
-        {
-            "path": "app/tsconfig.client.json"
-        }
-    ],
-    "ts-node": {
-        "compilerOptions": {
-            "alwaysStrict": true,
-            "forceConsistentCasingInFileNames": true,
-            "module": "CommonJS",
-            "moduleResolution": "node",
-            "noImplicitAny": true,
-            "noImplicitThis": true,
-            "preserveConstEnums": false,
-            "listFiles": false,
-            "pretty": true,
-            "noFallthroughCasesInSwitch": true,
-            "noImplicitReturns": true,
-            "noUnusedLocals": true,
-            "target": "es6",
-            "jsx": "react",
-            "jsxFactory": "html.jsx",
-            "noUnusedParameters": true,
-            "experimentalDecorators": true,
-            "strictPropertyInitialization": true,
-            "strictNullChecks": true,
-            "strictBindCallApply": true,
-            "allowSyntheticDefaultImports": true,
-            "declaration": true,
-            "resolveJsonModule": true
-        }
-    }
+	"compilerOptions": {
+		"alwaysStrict": true,
+		"forceConsistentCasingInFileNames": true,
+		"module": "ESNext",
+		"moduleResolution": "node",
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"preserveConstEnums": false,
+		"listFiles": false,
+		"pretty": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noUnusedLocals": true,
+		"target": "es6",
+		"jsx": "react",
+		"jsxFactory": "html.jsx",
+		"noUnusedParameters": true,
+		"experimentalDecorators": true,
+		"strictPropertyInitialization": true,
+		"strictNullChecks": true,
+		"strictBindCallApply": true,
+		"allowSyntheticDefaultImports": true,
+		"declaration": true,
+		"sourceMap": true,
+		"resolveJsonModule": true
+	},
+	"compileOnSave": true,
+	"include": ["./app/server", "./app/shared"],
+	"exclude": ["./app/server/build"],
+	"references": [
+		{
+			"path": "app/tsconfig.i18n.json"
+		},
+		{
+			"path": "app/tsconfig.shared.json"
+		},
+		{
+			"path": "app/tsconfig.serviceworker.json"
+		},
+		{
+			"path": "app/tsconfig.client.json"
+		}
+	],
+	"ts-node": {
+		"compilerOptions": {
+			"alwaysStrict": true,
+			"forceConsistentCasingInFileNames": true,
+			"module": "CommonJS",
+			"moduleResolution": "node",
+			"noImplicitAny": true,
+			"noImplicitThis": true,
+			"preserveConstEnums": false,
+			"listFiles": false,
+			"pretty": true,
+			"noFallthroughCasesInSwitch": true,
+			"noImplicitReturns": true,
+			"noUnusedLocals": true,
+			"target": "es6",
+			"jsx": "react",
+			"jsxFactory": "html.jsx",
+			"noUnusedParameters": true,
+			"experimentalDecorators": true,
+			"strictPropertyInitialization": true,
+			"strictNullChecks": true,
+			"strictBindCallApply": true,
+			"allowSyntheticDefaultImports": true,
+			"declaration": true,
+			"resolveJsonModule": true
+		}
+	}
 }
