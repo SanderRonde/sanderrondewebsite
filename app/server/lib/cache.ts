@@ -17,4 +17,14 @@ export namespace Caching {
             this._cacheStates.set(cacheState, value);
         }
     }
+
+    export class FileCache extends CacheStore<string, string> {
+        constructor() {
+            super((stored, current) => stored === current);
+        }
+
+        has(fileName: string) {
+            return this.getCache(fileName) !== null;
+        }
+    }
 }
