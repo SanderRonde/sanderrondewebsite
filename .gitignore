@@ -53,3 +53,5 @@ app/client/build
 
 app/i18n/locales/*.json
 app/client/temp
+
+certs
