@@ -1,4 +1,5 @@
 import { Entrypoints } from './lib/entrypoints.js';
+import { ROOT_DIR } from './lib/constants.js';
 import serverTiming from 'server-timing';
 import cookieParser from 'cookie-parser';
 import { Routes } from './lib/routes.js';
@@ -9,7 +10,6 @@ import fs from 'fs-extra';
 import http from 'http';
 import spdy from 'spdy';
 import path from 'path';
-import { ROOT_DIR } from './lib/constants.js';
 
 /**
  * The main app class used to wrap everything up
