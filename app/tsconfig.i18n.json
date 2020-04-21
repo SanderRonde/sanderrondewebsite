@@ -24,8 +24,7 @@
 		"sourceMap": true,
 		"resolveJsonModule": true,
 		"experimentalDecorators": true,
-		"listEmittedFiles": true,
-		"diagnostics": true
+		"listEmittedFiles": true
 	},
 	"include": ["./i18n"]
 }

@@ -27,8 +27,7 @@
 		"sourceMap": true,
 		"resolveJsonModule": true,
 		"listEmittedFiles": true,
-		"lib": ["DOM"],
-		"diagnostics": true
+		"lib": ["DOM"]
 	},
 	"include": [
 		"./shared",
