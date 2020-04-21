@@ -48,7 +48,10 @@ cmd('clean')
 cmd('compile')
 	.desc('Compile typescript')
 	.args({
-		dir: choice(['root', 'client'], 'root'),
+		dir: choice(
+			['root', 'i18n', 'shared', 'serviceworker', 'client'],
+			'root'
+		),
 		build: flag(),
 		watch: flag(),
 	})
@@ -63,7 +66,10 @@ cmd('compile')
 				case 'root':
 					return './tsconfig.json';
 				case 'client':
-					return './app/tsconfig.client.json';
+				case 'i18n':
+				case 'shared':
+				case 'serviceworker':
+					return `./app/tsconfig.${dir}.json`;
 			}
 		})();
 
