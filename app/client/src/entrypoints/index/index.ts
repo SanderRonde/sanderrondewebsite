@@ -15,8 +15,8 @@ import { registerServiceworker, onIdle } from '../../shared/sw.js';
 import { I18NType } from '../../../../i18n/i18n-defs';
 import { WebComponent } from 'wc-lib';
 
-const en = require('../../i18n/locales/en.json');
-const nl = require('../../i18n/locales/nl.json');
+import en from '../../../../i18n/locales/en.json.js';
+import nl from '../../../../i18n/locales/nl.json.js';
 
 function registerComponents() {
 	WebComponent.initComplexTemplateProvider({
