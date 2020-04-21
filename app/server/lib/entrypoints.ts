@@ -8,26 +8,21 @@ import {
 	isDirective,
 	noChange,
 } from '../build/modules/lit-html/lit-html.js';
-import {
-	I18NGetMessage,
-	LANGUAGE,
-	LANGUAGES,
-	DEFAULT_LANG,
-} from '../../shared/i18n.js';
+import { I18NGetMessage, LANGUAGE, strToLanguage } from '../../i18n/i18n.js';
 import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
-import ENTRYPOINTS from '../../shared/entrypoints.js';
 import { ENTRYPOINTS_TYPE } from '../../shared/types';
+import ENTRYPOINTS from '../../shared/entrypoints.js';
 import { WebServer } from '../app.js';
 import { Caching } from './cache.js';
 import express from 'express';
 
 import * as index from '../../client/build/private/entrypoints/index/exports.bundled.js';
 import indexHTML from '../../client/src/entrypoints/index/index.html.js';
-import { I18NType } from '../../client/src/i18n/i18n-defs.js';
+import { I18NType } from '../../i18n/i18n-defs';
 
-import en from '../../client/src/i18n/locales/en.json.js';
-import nl from '../../client/src/i18n/locales/nl.json.js';
+import en from '../../i18n/locales/en.json.js';
+import nl from '../../i18n/locales/nl.json.js';
 
 const langFiles: {
 	[key in LANGUAGE]: I18NType;
@@ -126,15 +121,12 @@ export namespace Entrypoints {
 			return html;
 		}
 
-		function isValidLanguage(language: string): language is LANGUAGE {
-			return LANGUAGES.includes(language as LANGUAGE);
-		}
-
 		function getLang(req: express.Request, res: express.Response) {
-			const language = req.cookies['lang'];
-			if (!language || !isValidLanguage(language)) {
-				res.cookie('lang', DEFAULT_LANG);
-				return DEFAULT_LANG;
+			const languageStr = req.cookies['lang'];
+			const language = strToLanguage(languageStr);
+			if (!language) {
+				res.cookie('lang', LANGUAGE.DEFAULT_LANG);
+				return LANGUAGE.DEFAULT_LANG;
 			}
 			return language;
 		}

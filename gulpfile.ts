@@ -190,7 +190,7 @@ gulp.task(
 	'bundle',
 	gulp.series(
 		gulp.parallel(
-			async function copy() {
+			function copy() {
 				const srcDir = path.join(__dirname, 'app/client/src');
 				const destDir = path.join(__dirname, 'app/client/temp');
 				return gulp
@@ -208,7 +208,7 @@ gulp.task(
 					)
 					.pipe(gulp.dest(destDir));
 			},
-			async function minifyCSS() {
+			function minifyCSS() {
 				const srcDir = path.join(__dirname, 'app/client/src');
 				const destDir = path.join(__dirname, 'app/client/temp');
 				return gulp
@@ -232,7 +232,7 @@ gulp.task(
 					)
 					.pipe(gulp.dest(destDir));
 			},
-			async function minifyHTML() {
+			function minifyHTML() {
 				const srcDir = path.join(__dirname, 'app/client/src');
 				const destDir = path.join(__dirname, 'app/client/temp');
 				return gulp
@@ -754,7 +754,7 @@ namespace I18N {
 
 	export function getMessageFiles(): Promise<[any, string][]> {
 		return new Promise<[any, string][]>((resolve, reject) => {
-			glob('./app/client/src/i18n/locales/*.js', async (err, matches) => {
+			glob('./app/i18n/locales/*.js', async (err, matches) => {
 				if (err) {
 					reject();
 					return;
@@ -913,7 +913,7 @@ namespace I18N {
 	export namespace GenType {
 		export async function genType(root: I18NRoot) {
 			const normalized = normalizeMessages(root);
-			const text = `import { I18NMessage } from '../../../shared/spec';\n\nexport interface I18NType {\n${Object.keys(
+			const text = `import { I18NMessage } from '../i18n/i18n';\n\nexport interface I18NType {\n${Object.keys(
 				normalized
 			)
 				.map((key) => {
@@ -939,7 +939,7 @@ gulp.task(
 			}
 			const enums = I18N.Enums.genEnumMessages(files[0][0]);
 			await fs.writeFile(
-				path.join(__dirname, 'app/client/src/i18n/i18n-keys.d.ts'),
+				path.join(__dirname, 'app/i18n/i18n-keys.d.ts'),
 				enums
 			);
 		},
@@ -959,7 +959,7 @@ gulp.task(
 			}
 			const defs = await I18N.GenType.genType(files[0][0]);
 			await fs.writeFile(
-				path.join(__dirname, 'app/client/src/i18n/i18n-defs.d.ts'),
+				path.join(__dirname, 'app/i18n/i18n-defs.d.ts'),
 				defs
 			);
 		}

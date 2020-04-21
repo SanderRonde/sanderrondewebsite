@@ -8,7 +8,7 @@
     },
     "include": [
         "./client/src/serviceworker.ts",
-        "./shared/**/*",
+        "./shared",
         "./shared/**/*.json",
         "./client/build/private/swconfig.json",
         "./client/build/public/versions.json"

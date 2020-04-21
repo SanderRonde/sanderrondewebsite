@@ -1,0 +1,13 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"composite": true,
+		"lib": ["DOM"],
+		"sourceMap": true,
+		"resolveJsonModule": true,
+		"experimentalDecorators": true,
+		"listEmittedFiles": true,
+		"diagnostics": true
+	},
+	"include": ["./shared"]
+}

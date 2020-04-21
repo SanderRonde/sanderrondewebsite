@@ -1,18 +1,18 @@
-import { I18NRoot } from '../../../../shared/spec';
+import { I18NRoot } from '../i18n';
 
 export const messages = {
 	generic: {
 		dismiss: {
-			message: 'verberg'
+			message: 'verberg',
 		},
 		reload: {
-			message: 'opnieuw laden'
-		}
+			message: 'opnieuw laden',
+		},
 	},
 	index: {
 		hi: {
 			message: 'Hoi!',
-		}
+		},
 	},
 	shared: {
 		sw: {
@@ -20,10 +20,10 @@ export const messages = {
 				message: 'Pagina werkt offline',
 			},
 			update_ready: {
-				message: 'Pagina kan worden geÃ¼pdate'
-			}
-		}
-	}
+				message: 'Pagina kan worden geüpdate',
+			},
+		},
+	},
 };
 
 export default messages as I18NRoot;

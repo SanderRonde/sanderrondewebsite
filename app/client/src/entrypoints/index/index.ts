@@ -9,10 +9,10 @@ import {
 	noChange,
 } from 'lit-html';
 import { SanderRonde } from '../../components/index/sander-ronde/sander-ronde.js';
-import { getLang, I18NGetMessage, LANGUAGE } from '../../../../shared/i18n.js';
+import { I18NGetMessage, LANGUAGE } from '../../../../i18n/i18n.js';
+import { I18NReturner, getLang } from '../../shared/client-i18n.js';
 import { registerServiceworker, onIdle } from '../../shared/sw.js';
-import { I18NReturner } from '../../i18n/client-i18n.js';
-import { I18NType } from '../../i18n/i18n-defs';
+import { I18NType } from '../../../../i18n/i18n-defs';
 import { WebComponent } from 'wc-lib';
 
 const en = require('../../i18n/locales/en.json');

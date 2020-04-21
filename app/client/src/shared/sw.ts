@@ -1,6 +1,6 @@
 import { MessageToast } from '../components/shared/message-toast/message-toast.js';
+import { I18NKeys } from '../../../i18n/i18n-keys';
 import { WebComponent } from 'wc-lib';
-import { I18NKeys } from '../i18n/i18n-keys.js';
 
 export function onIdle(fn: () => void) {
 	if ('requestIdleCallback' in window) {

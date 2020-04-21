@@ -1,18 +1,18 @@
-import { I18NRoot } from '../../../../shared/spec';
+import { I18NRoot } from '../i18n';
 
 export const messages = {
 	generic: {
 		dismiss: {
-			message: 'dismiss'
+			message: 'dismiss',
 		},
 		reload: {
-			message: 'reload'
-		}
+			message: 'reload',
+		},
 	},
 	index: {
 		hi: {
 			message: 'Hi!',
-		}
+		},
 	},
 	shared: {
 		sw: {
@@ -20,10 +20,10 @@ export const messages = {
 				message: 'Works offline now',
 			},
 			update_ready: {
-				message: 'Page can be updated'
-			}
-		}
-	}
+				message: 'Page can be updated',
+			},
+		},
+	},
 };
 
 export default messages as I18NRoot;

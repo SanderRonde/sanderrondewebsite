@@ -1,6 +1,3 @@
-import { I18NType } from '../client/src/i18n/i18n-defs';
-import { I18NMessage } from './spec';
-
 function doReplacements(
 	message: string,
 	replacements: [string, any][]
@@ -27,7 +24,13 @@ function doReplacements(
 	return result;
 }
 
-export function I18NGetMessage(langFile: I18NType, key: string, values: any[]) {
+export function I18NGetMessage(
+	langFile: {
+		[key: string]: I18NMessage;
+	},
+	key: string,
+	values: any[]
+) {
 	if (!(key in langFile)) {
 		return '???';
 	}
@@ -48,27 +51,29 @@ export function I18NGetMessage(langFile: I18NType, key: string, values: any[]) {
 	return doReplacements(message, replacements);
 }
 
-export type LANGUAGE = 'en' | 'nl';
-export const LANGUAGES: LANGUAGE[] = ['en', 'nl'];
-
-export const DEFAULT_LANG: LANGUAGE = 'en';
-export function getLang(): string {
-	if (typeof document === undefined || !('cookie' in document)) {
-		return DEFAULT_LANG;
-	}
-
-	const cookies = document.cookie.split(';').map((cookieString) => {
-		const [key, ...rest] = cookieString.trim().split('=');
-		return {
-			key,
-			value: rest.join('='),
-		};
-	});
-
-	for (const { key, value } of cookies) {
-		if (key === 'lang') return value;
-	}
-
-	document.cookie = `${document.cookie}; lang=${DEFAULT_LANG}`;
-	return DEFAULT_LANG;
+export const enum LANGUAGE {
+	EN = 'en',
+	NL = 'nl',
+	DEFAULT_LANG = 'en',
 }
+const LANGUAGES: LANGUAGE[] = [LANGUAGE.EN, LANGUAGE.NL];
+
+export function strToLanguage(str: string) {
+	return LANGUAGES.find((l) => l === str);
+}
+
+export interface I18NMessage {
+	message: string;
+}
+
+export type I18NTree =
+	| {
+			[key: string]: I18NMessage;
+	  }
+	| {
+			[key: string]: I18NTree;
+	  };
+
+export type I18NRoot = {
+	[key: string]: I18NTree;
+};

@@ -123,9 +123,12 @@ cmd('build')
 			await exec('? cleaning');
 			await exec('@clean');
 		}
-		
+
 		await exec('? generating HTML typings');
 		await exec('@html-typings');
+
+		await exec('? compiling i18n code');
+		await exec('@compile --dir i18n');
 
 		await exec('? creating pre-build requirements');
 		await exec(`${env}; gulp pre-build`);

@@ -4,9 +4,9 @@ import {
 	TemplateFn,
 	CHANGE_TYPE,
 } from 'wc-lib';
-import { LANGUAGE } from '../../../../../shared/i18n';
-import { I18NType } from '../../../i18n/i18n-defs';
-import { I18NKeys } from '../../../i18n/i18n-keys';
+import { LANGUAGE } from '../../../../../i18n/i18n';
+import { I18NType } from '../../../../../i18n/i18n-defs';
+import { I18NKeys } from '../../../../../i18n/i18n-keys';
 import { render, html } from 'lit-html';
 
 @config({
