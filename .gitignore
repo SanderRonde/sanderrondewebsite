@@ -57,3 +57,5 @@ app/client/temp
 certs
 
 types/html.html-data.json
+
+.makfy-cache
