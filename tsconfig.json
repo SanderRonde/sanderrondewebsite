@@ -34,7 +34,7 @@
 		"./app/i18n",
 		"./types"
 	],
-	"exclude": ["./app/server/build", "./app/client/src/serviceworker.ts"],
+	"exclude": ["./app/server/build", "./app/client/src/sw/serviceworker.ts"],
 	"ts-node": {
 		"compilerOptions": {
 			"alwaysStrict": true,

@@ -687,7 +687,7 @@ gulp.task(
 		),
 		async function bundle() {
 			await createBundle(
-				path.join(__dirname, 'app/client/src/serviceworker.js'),
+				path.join(__dirname, 'app/client/src/sw/serviceworker.js'),
 				path.join(
 					__dirname,
 					'app/client/build/public/serviceworker.js'

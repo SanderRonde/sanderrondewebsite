@@ -1,10 +1,10 @@
-/// <reference path="../../../types/serviceworker.d.ts" />
+/// <reference path="../../../../types/serviceworker.d.ts" />
 declare var self: DedicatedWorkerGlobalScope;
 export {};
 
-import _config from '../build/private/swconfig.json';
-import { SWConfig, SERVE_STATEGY } from '../../shared/types';
-import { flat } from '../../shared/util.js';
+import { SWConfig, SERVE_STATEGY } from '../../../shared/types';
+import _config from '../../build/private/swconfig.json';
+import { flat } from '../../../shared/util.js';
 
 const config = _config as SWConfig;
 
