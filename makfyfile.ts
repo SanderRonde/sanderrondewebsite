@@ -62,24 +62,29 @@ cmd('compile')
 	.args({
 		dir: choice(['root', 'all', 'i18n', 'serviceworker'], 'root'),
 		watch: flag(),
+		'no-initial': flag(),
 	})
 	.argsDesc({
 		dir: 'The directory to compile, root by default',
 		watch: 'Whether to compile the files on changes',
+		'no-initial': 'Skip initial compile when watching',
 	})
-	.run(async (exec, { watch, dir }) => {
+	.run(async (exec, args) => {
+		const { watch, dir } = args;
 		if (dir === 'all') {
-			if (watch) {
-				throw new Error(
-					'Watching not supported combined with --dir all'
-				);
+			if (!watch || !args['no-initial']) {
+				await exec('tsc -p ./app/tsconfig.serviceworker.json');
+				await exec('tsc -p ./app/tsconfig.i18n.json');
+				await exec('tsc -p ./tsconfig.json');
 			}
-			await Promise.all(
-				['i18n', 'serviceworker'].map((dir) => {
-					return exec(`tsc -p ./app/tsconfig.${dir}.json`);
-				})
-			);
-			await exec('tsc -p ./tsconfig.json');
+
+			if (watch) {
+				await exec([
+					'tsc -p ./app/tsconfig.serviceworker.json -w --preserveWatchOutput',
+					'tsc -p ./app/tsconfig.i18n.json -w --preserveWatchOutput',
+					'tsc -p ./tsconfig.json -w --preserveWatchOutput',
+				]);
+			}
 			return;
 		}
 
