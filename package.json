@@ -85,7 +85,7 @@
 	"scripts": {
 		"makfy": "makfy",
 		"compile": "makfy compile --dir all",
-		"watch": "makfy compile --dir all --watch",
+		"watch": "makfy watch",
 		"start": "nodemon",
 		"build-frontend": "makfy frontend",
 		"build": "makfy build",

@@ -4,9 +4,12 @@ import {
 	flag,
 	setEnvVar,
 	getFileChangesAsync,
+	getUtilsContext,
+	setUtilsContext,
 } from 'makfy';
+import { ExecFunction } from 'makfy/dist/lib/schema/runtime';
 import { choice, cmd } from './types/makfy-extended';
-import * as glob from 'glob';
+import * as chokidar from 'chokidar';
 import * as path from 'path';
 const choice = (_choice as unknown) as choice;
 const cmd = (_cmd as unknown) as cmd;
@@ -16,28 +19,6 @@ const cmd = (_cmd as unknown) as cmd;
  */
 function rimraf(glob: string): string {
 	return `rimraf ${glob} || echo "No files to delete"`;
-}
-
-/**
- * Glob but promisified
- * @param {string} pattern - The pattern to use
- * @param {glob.IOptions} [options] - Optional options
- *
- * @returns {Promise<string[]>} The matches
- */
-function globPromise(
-	pattern: string,
-	options?: glob.IOptions
-): Promise<string[]> {
-	return new Promise<string[]>((resolve, reject) => {
-		glob(pattern, options || {}, (error, matches) => {
-			if (error) {
-				reject(error);
-			} else {
-				resolve(matches);
-			}
-		});
-	});
 }
 
 cmd('clean')
@@ -68,17 +49,15 @@ cmd('compile')
 	.args({
 		dir: choice(['root', 'all', 'i18n', 'serviceworker'], 'root'),
 		watch: flag(),
-		'no-initial': flag(),
 	})
 	.argsDesc({
 		dir: 'The directory to compile, root by default',
 		watch: 'Whether to compile the files on changes',
-		'no-initial': 'Skip initial compile when watching',
 	})
 	.run(async (exec, args) => {
 		const { watch, dir } = args;
 		if (dir === 'all') {
-			if (!watch || !args['no-initial']) {
+			if (!watch) {
 				await exec('tsc -p ./app/client/src/sw/tsconfig.json');
 				await exec('tsc -p ./app/i18n/tsconfig.json');
 				await exec('tsc -p ./tsconfig.json');
@@ -122,26 +101,62 @@ cmd('frontend')
 		await exec(`${env}; gulp frontend`);
 	});
 
+async function updateHTMLTypings(exec: ExecFunction) {
+	const { hasChanges, added, modified } = await getFileChangesAsync(
+		'htm-typings',
+		path.join(__dirname, 'app/client/src/components/**/*.html.ts')
+	);
+	if (!hasChanges) {
+		console.log('No changes');
+	}
+	const htmlFiles = [...added, ...modified];
+	await exec(
+		htmlFiles.map((file) => {
+			const parsedPath = path.parse(file);
+			const componentName = parsedPath.name.split('.')[0];
+			const outFile = path.join(
+				parsedPath.dir,
+				`${componentName}-querymap.d.ts`
+			);
+			return `html-typings -i ${file} -o ${outFile} -e`;
+		})
+	);
+}
+
 cmd('html-typings')
 	.desc('Get HTML typings')
-	.run(async (exec) => {
-		const { hasChanges, added, modified } = await getFileChangesAsync(
-			'htm-typings',
-			path.join(__dirname, 'app/client/src/components/**/*.html.ts')
-		);
-		if (!hasChanges) return;
-		const htmlFiles = [...added, ...modified];
-		await exec(
-			htmlFiles.map((file) => {
-				const parsedPath = path.parse(file);
-				const componentName = parsedPath.name.split('.')[0];
-				const outFile = path.join(
-					parsedPath.dir,
-					`${componentName}-querymap.d.ts`
-				);
-				return `html-typings -i ${file} -o ${outFile} -e`;
-			})
-		);
+	.args({
+		watch: flag(),
+	})
+	.argsDesc({
+		watch: 'Watch for changes',
+	})
+	.run(async (exec, { watch }) => {
+		const context = getUtilsContext();
+		if (watch) {
+			chokidar
+				.watch(
+					path.join(
+						__dirname,
+						'app/client/src/components/**/*.html.ts'
+					),
+					{
+						persistent: true,
+						awaitWriteFinish: {
+							stabilityThreshold: 500,
+						},
+						cwd: __dirname,
+						ignoreInitial: false,
+						ignored: /.*\.(js|map)/,
+					}
+				)
+				.on('change', async () => {
+					console.log('Changes detected');
+					setUtilsContext(context);
+					await updateHTMLTypings(exec);
+				});
+		}
+		await updateHTMLTypings(exec);
 	});
 
 cmd('build')
@@ -176,4 +191,24 @@ cmd('build')
 				dev,
 			},
 		});
+	});
+
+cmd('watch')
+	.desc('Watch for changes and compile accordingly')
+	.args({
+		type: choice(['ts', 'html', 'all'], 'all'),
+	})
+	.argsDesc({
+		type: 'The type of changes to watch',
+	})
+	.run(async (exec, { type }) => {
+		const commands = [];
+		if (type === 'ts' || type === 'all') {
+			commands.push('@compile --dir all --watch');
+		}
+		if (type === 'html' || type === 'all') {
+			commands.push('@html-typings --watch');
+		}
+		console.log(commands);
+		await exec(commands);
 	});
