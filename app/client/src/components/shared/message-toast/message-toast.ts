@@ -9,6 +9,9 @@ import {
 import { IDMapType, ClassMapType } from './message-toast-querymap';
 import { MessageToastHTML } from './message-toast.html.js';
 import { MessageToastCSS } from './message-toast.css.js';
+import { LANGUAGE } from '../../../../../i18n/i18n';
+import { I18NType } from '../../../../../i18n/i18n-defs';
+import { themes } from '../../../../../shared/theme';
 
 export interface ToastConfig {
 	message: string;
@@ -20,7 +23,7 @@ export interface ToastConfig {
 @config({
 	is: 'message-toast',
 	html: MessageToastHTML,
-	css: MessageToastCSS
+	css: MessageToastCSS,
 })
 export class MessageToast extends ConfigurableWebComponent<{
 	selectors: {
@@ -35,6 +38,9 @@ export class MessageToast extends ConfigurableWebComponent<{
 			args: [];
 		};
 	};
+	langs: LANGUAGE;
+	i18n: I18NType;
+	themes: typeof themes;
 }> {
 	props = Props.define(this, {
 		reflect: {
