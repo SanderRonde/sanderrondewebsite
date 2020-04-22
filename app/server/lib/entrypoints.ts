@@ -8,10 +8,10 @@ import {
 	isDirective,
 	noChange,
 } from '../build/modules/lit-html/lit-html.js';
-import { I18NGetMessage, LANGUAGE, strToLanguage } from '../../i18n/i18n.js';
 import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
-import { themes, THEME, strToTheme } from '../../shared/theme.js';
+import { I18NGetMessage, LANGUAGE } from '../../i18n/i18n.js';
+import { themes, THEME } from '../../shared/theme.js';
 import { ENTRYPOINTS_TYPE } from '../../shared/types';
 import ENTRYPOINTS from '../../shared/entrypoints.js';
 import { SpdyExpressResponse } from './routes.js';
@@ -30,6 +30,7 @@ import { I18NType } from '../../i18n/i18n-defs';
 
 import en from '../../i18n/locales/en.json.js';
 import nl from '../../i18n/locales/nl.json.js';
+import { RequestVars } from './request-vars.js';
 
 const langFiles: {
 	[key in LANGUAGE]: I18NType;
@@ -132,26 +133,6 @@ export namespace Entrypoints {
 			return html;
 		}
 
-		function getLang(req: express.Request, res: express.Response) {
-			const languageStr = req.cookies['lang'];
-			const language = strToLanguage(languageStr);
-			if (!language) {
-				res.cookie('lang', LANGUAGE.DEFAULT_LANG);
-				return LANGUAGE.DEFAULT_LANG;
-			}
-			return language;
-		}
-
-		function getTheme(req: express.Request, res: express.Response) {
-			const languageStr = req.cookies['theme'];
-			const language = strToTheme(languageStr);
-			if (!language) {
-				res.cookie('theme', THEME.DEFAULT_THEME);
-				return THEME.DEFAULT_THEME;
-			}
-			return language;
-		}
-
 		export function render(
 			entrypoint: ENTRYPOINTS_TYPE,
 			req: express.Request,
@@ -166,8 +147,8 @@ export namespace Entrypoints {
 				return;
 			}
 
-			const lang = getLang(req, res);
-			const theme = getTheme(req, res);
+			const lang = RequestVars.getLang(req, res);
+			const theme = RequestVars.getTheme(req, res);
 
 			const props = Info.getProps(entrypoint, info, req);
 			res.endTime('entrypoint-info');

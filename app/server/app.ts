@@ -1,3 +1,4 @@
+import { SemiStaticFiles } from './lib/semi-static-files.js';
 import { Entrypoints } from './lib/entrypoints.js';
 import { ROOT_DIR } from './lib/constants.js';
 import serverTiming from 'server-timing';
@@ -49,6 +50,7 @@ export class WebServer {
 		this.app.use(cookieParser());
 		this._markSendMethods();
 		Entrypoints.registerEntrypointHandlers(this);
+		SemiStaticFiles.initRoutes(this);
 		Routes.initRoutes(this);
 	}
 
