@@ -15,6 +15,7 @@ import { themes, THEME } from '../../shared/theme.js';
 import { ENTRYPOINTS_TYPE } from '../../shared/types';
 import ENTRYPOINTS from '../../shared/entrypoints.js';
 import { SpdyExpressResponse } from './routes.js';
+import { RequestVars } from './request-vars.js';
 import { CLIENT_DIR } from './constants.js';
 import { WebServer } from '../app.js';
 import { Caching } from './cache.js';
@@ -30,7 +31,6 @@ import { I18NType } from '../../i18n/i18n-defs';
 
 import en from '../../i18n/locales/en.json.js';
 import nl from '../../i18n/locales/nl.json.js';
-import { RequestVars } from './request-vars.js';
 
 const langFiles: {
 	[key in LANGUAGE]: I18NType;
