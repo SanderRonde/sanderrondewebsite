@@ -1,4 +1,10 @@
-import { cmd as _cmd, choice as _choice, flag, setEnvVar } from 'makfy';
+import {
+	cmd as _cmd,
+	choice as _choice,
+	flag,
+	setEnvVar,
+	getFileChangesAsync,
+} from 'makfy';
 import { choice, cmd } from './types/makfy-extended';
 import * as glob from 'glob';
 import * as path from 'path';
@@ -119,9 +125,12 @@ cmd('frontend')
 cmd('html-typings')
 	.desc('Get HTML typings')
 	.run(async (exec) => {
-		const htmlFiles = await globPromise(
+		const { hasChanges, added, modified } = await getFileChangesAsync(
+			'htm-typings',
 			path.join(__dirname, 'app/client/src/components/**/*.html.ts')
 		);
+		if (!hasChanges) return;
+		const htmlFiles = [...added, ...modified];
 		await exec(
 			htmlFiles.map((file) => {
 				const parsedPath = path.parse(file);
