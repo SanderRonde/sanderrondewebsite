@@ -1,5 +1,5 @@
-import { strToLanguage, LANGUAGE } from '../../i18n/i18n';
-import { THEME, strToTheme } from '../../shared/theme';
+import { strToLanguage, LANGUAGE } from '../../i18n/i18n.js';
+import { THEME, strToTheme } from '../../shared/theme.js';
 import express from 'express';
 
 export namespace RequestVars {
