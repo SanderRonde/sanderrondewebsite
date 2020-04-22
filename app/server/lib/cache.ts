@@ -11,14 +11,9 @@ export namespace Caching {
 		compare?: (stored: CS, current: CS) => boolean
 	): CacheStore<CS, V> {
 		if (!complex) {
-			return (new SimpleCacheStore<any, V>() as unknown) as CacheStore<
-				CS,
-				V
-			>;
+			return new SimpleCacheStore<any, V>();
 		} else {
-			return (new ComplexCacheStore<any, V>(
-				compare!
-			) as unknown) as CacheStore<CS, V>;
+			return new ComplexCacheStore<any, V>(compare!);
 		}
 	}
 
@@ -52,40 +47,51 @@ export namespace Caching {
 		}
 	}
 
-	class ComplexCacheStore<CS, V> {
+	interface KeyValuePair<K, V> {
+		key: K;
+		value: V;
+	}
+
+	class ComplexCacheStore<CS, V> implements CacheStore<CS, V> {
 		private _cacheStates: Map<CS, V> = new Map();
-		private _lastMatch: [CS, V] | null = null;
+		private _lastMatch: KeyValuePair<CS, V> | null = null;
 
 		constructor(private _compare: (stored: CS, current: CS) => boolean) {}
 
-		private _match(cacheState: CS): V | null {
+		private _match(cacheState: CS): { key: CS; value: V } | null {
 			if (
 				this._lastMatch &&
-				this._compare(this._lastMatch[0], cacheState)
+				this._compare(this._lastMatch.key, cacheState)
 			) {
-				return this._lastMatch[1];
+				return this._lastMatch;
 			}
 
 			for (const [key, value] of this._cacheStates.entries()) {
 				if (this._compare(key, cacheState)) {
-					this._lastMatch = [key, value];
-					return value;
+					this._lastMatch = { key, value };
+					return this._lastMatch;
 				}
 			}
 			return null;
 		}
 
-		getCache(cacheState: CS): V | null {
-			return this._match(cacheState);
+		get(cacheState: CS): V | null {
+			return this._match(cacheState)?.value ?? null;
 		}
 
-		hasCache(cacheState: CS): boolean {
+		has(cacheState: CS): boolean {
 			return this._match(cacheState) !== null;
 		}
 
-		setCache(cacheState: CS, value: V) {
-			this._lastMatch = [cacheState, value];
+		set(cacheState: CS, value: V) {
+			this._lastMatch = { key: cacheState, value };
 			this._cacheStates.set(cacheState, value);
+		}
+
+		delete(cacheState: CS) {
+			const match = this._match(cacheState);
+			if (!match) return false;
+			return this._cacheStates.delete(match.key);
 		}
 	}
 
