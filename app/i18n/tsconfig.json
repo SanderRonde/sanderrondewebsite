@@ -1,10 +1,10 @@
 {
-	"extends": "../tsconfig.json",
+	"extends": "../../tsconfig.json",
 	"compilerOptions": {
 		"lib": ["DOM"],
 		"sourceMap": true,
 		"resolveJsonModule": true,
 		"experimentalDecorators": true
 	},
-	"include": ["./i18n", "../types"]
+	"include": ["./", "../../types"]
 }
