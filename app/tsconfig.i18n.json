@@ -6,5 +6,5 @@
 		"resolveJsonModule": true,
 		"experimentalDecorators": true
 	},
-	"include": ["./i18n"]
+	"include": ["./i18n", "../types"]
 }

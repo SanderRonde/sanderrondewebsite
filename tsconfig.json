@@ -31,7 +31,8 @@
 		"./app/shared",
 		"./app/client/src",
 		"./app/client/src/**/*.json",
-		"./app/i18n"
+		"./app/i18n",
+		"./types"
 	],
 	"exclude": ["./app/server/build", "./app/client/src/serviceworker.ts"],
 	"ts-node": {
