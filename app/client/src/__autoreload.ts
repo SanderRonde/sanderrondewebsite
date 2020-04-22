@@ -39,7 +39,6 @@ import { getCookie, setCookie } from './shared/cookies.js';
 		ws.onclose = () => window.setTimeout(connect, 1500);
 
 		ws.onmessage = (message) => {
-			console.log(message.data);
 			onMessage(message.data);
 		};
 	}
