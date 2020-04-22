@@ -60,19 +60,14 @@ cmd('clean')
 cmd('compile')
 	.desc('Compile typescript')
 	.args({
-		dir: choice(
-			['root', 'all', 'i18n', 'shared', 'serviceworker', 'client'],
-			'root'
-		),
-		build: flag(),
+		dir: choice(['root', 'all', 'i18n', 'serviceworker'], 'root'),
 		watch: flag(),
 	})
 	.argsDesc({
 		dir: 'The directory to compile, root by default',
-		build: 'Run in build mode',
 		watch: 'Whether to compile the files on changes',
 	})
-	.run(async (exec, { watch, build, dir }) => {
+	.run(async (exec, { watch, dir }) => {
 		if (dir === 'all') {
 			if (watch) {
 				throw new Error(
@@ -80,7 +75,7 @@ cmd('compile')
 				);
 			}
 			await Promise.all(
-				['i18n', 'serviceworker', 'shared', 'client'].map((dir) => {
+				['i18n', 'serviceworker'].map((dir) => {
 					return exec(`tsc -p ./app/tsconfig.${dir}.json`);
 				})
 			);
@@ -92,22 +87,14 @@ cmd('compile')
 			switch (dir) {
 				case 'root':
 					return './tsconfig.json';
-				case 'client':
 				case 'i18n':
-				case 'shared':
 				case 'serviceworker':
 					return `./app/tsconfig.${dir}.json`;
 			}
 		})();
 
 		const flags = `${watch ? '--watch' : ''}`;
-		if (build) {
-			await exec(
-				`tsc --build ${project} ${flags} --clean`
-			);
-		} else {
-			await exec(`tsc -p ${project} ${flags}`);
-		}
+		await exec(`tsc -p ${project} ${flags}`);
 	});
 
 cmd('frontend')

@@ -81,8 +81,8 @@
 	},
 	"scripts": {
 		"makfy": "makfy",
-		"compile": "makfy compile --build",
-		"watch": "makfy compile --build --watch",
+		"compile": "makfy compile --dir all",
+		"watch": "makfy compile --dir all --watch",
 		"build-frontend": "makfy frontend",
 		"build": "makfy build",
 		"build-dev": "makfy build --dev"

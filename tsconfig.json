@@ -26,22 +26,14 @@
 		"resolveJsonModule": true
 	},
 	"compileOnSave": true,
-	"include": ["./app/server", "./app/shared"],
-	"exclude": ["./app/server/build"],
-	"references": [
-		{
-			"path": "app/tsconfig.i18n.json"
-		},
-		{
-			"path": "app/tsconfig.shared.json"
-		},
-		{
-			"path": "app/tsconfig.serviceworker.json"
-		},
-		{
-			"path": "app/tsconfig.client.json"
-		}
+	"include": [
+		"./app/server",
+		"./app/shared",
+		"./app/client/src",
+		"./app/client/src/**/*.json",
+		"./app/i18n"
 	],
+	"exclude": ["./app/server/build", "./app/client/src/serviceworker.ts"],
 	"ts-node": {
 		"compilerOptions": {
 			"alwaysStrict": true,
