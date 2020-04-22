@@ -1,4 +1,4 @@
-import { ROOT_DIR, CLIENT_DIR } from './constants.js';
+import { ROOT_DIR, CLIENT_DIR, APP_DIR } from './constants.js';
 import serveStatic from 'serve-static';
 import { WebServer } from '../app.js';
 import { server } from 'spdy';
@@ -156,21 +156,25 @@ export namespace Routes {
 				serveSrc(req, res, next);
 			});
 
-			const litHTMLSubpath = 'node_modules/lit-html';
-			app.use(
-				serve(path.join(ROOT_DIR, litHTMLSubpath), {
-					extensions: ['js'],
-					prefix: `/${litHTMLSubpath}`,
-				})
+			['node_modules/lit-html', 'node_modules/wc-lib'].forEach(
+				(rootSubPath) => {
+					app.use(
+						serve(path.join(ROOT_DIR, rootSubPath), {
+							extensions: ['js'],
+							prefix: `/${rootSubPath}`,
+						})
+					);
+				}
 			);
 
-			const wcLibSubpath = 'node_modules/wc-lib';
-			app.use(
-				serve(path.join(ROOT_DIR, wcLibSubpath), {
-					extensions: ['js'],
-					prefix: `/${wcLibSubpath}`,
-				})
-			);
+			['i18n', 'shared'].forEach((subPath) => {
+				app.use(
+					serve(path.join(APP_DIR, subPath), {
+						extensions: ['js'],
+						prefix: `/${subPath}`,
+					})
+				);
+			});
 
 			app.use(
 				serveStatic(path.join(CLIENT_DIR, 'build/private'), {
