@@ -272,6 +272,13 @@
     "@types/expect" "^1.20.4"
     "@types/node" "*"
 
+"@types/ws@^7.2.4":
+  version "7.2.4"
+  resolved "https://registry.yarnpkg.com/@types/ws/-/ws-7.2.4.tgz#b3859f7b9c243b220efac9716ec42c716a72969d"
+  integrity sha512-9S6Ask71vujkVyeEXKxjBSUV8ZUB0mjL5la4IncBoheu04bDaYyUKErh1BQcY9+WzOUOiKqz/OnpJHYckbMfNg==
+  dependencies:
+    "@types/node" "*"
+
 abbrev@1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/abbrev/-/abbrev-1.1.1.tgz#f8f2c887ad10bf67f634f005b6987fed3179aac8"
@@ -842,7 +849,7 @@ chokidar@^2.0.0, chokidar@^2.1.2:
   optionalDependencies:
     fsevents "^1.2.7"
 
-chokidar@^3.2.2:
+chokidar@^3.2.2, chokidar@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.3.1.tgz#c84e5b3d18d9a4d77558fef466b1bf16bbeb3450"
   integrity sha512-4QYCEWOcK3OJrxwvyyAOxFuhpvOVCYkr33LPfFNBjAD/w3sEzWsp2BUOkI4l9bHvWioAd0rc6NlHUOEaWkTeqg==
@@ -4942,6 +4949,11 @@ write-file-atomic@^2.0.0:
     graceful-fs "^4.1.11"
     imurmurhash "^0.1.4"
     signal-exit "^3.0.2"
+
+ws@^7.2.3:
+  version "7.2.3"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.2.3.tgz#a5411e1fb04d5ed0efee76d26d5c46d830c39b46"
+  integrity sha512-HTDl9G9hbkNDk98naoR/cHDws7+EyYMOdL1BmjsZXRUjf7d+MficC4B7HLUPlSiho0vg+CWKrGIt/VJBd1xunQ==
 
 xdg-basedir@^3.0.0:
   version "3.0.0"

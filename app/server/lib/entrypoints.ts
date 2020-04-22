@@ -98,7 +98,8 @@ export namespace Entrypoints {
 			info: ReturnType<typeof Info.getInfo>,
 			props: ReturnType<typeof Info.getProps>,
 			lang: LANGUAGE,
-			theme: THEME
+			theme: THEME,
+			{ io }: WebServer
 		) {
 			const { Component, getHTML } = info!;
 
@@ -128,6 +129,7 @@ export namespace Entrypoints {
 			const html = getHTML({
 				defer: true,
 				mainTag: rendered,
+				autoReload: io.dev && !io.noAutoReload,
 			});
 
 			return html;
@@ -137,7 +139,8 @@ export namespace Entrypoints {
 			entrypoint: ENTRYPOINTS_TYPE,
 			req: express.Request,
 			res: SpdyExpressResponse,
-			next: express.NextFunction
+			next: express.NextFunction,
+			server: WebServer
 		) {
 			res.startTime('entrypoint-info', 'Getting entrypoint info');
 			const info = Info.getInfo(entrypoint);
@@ -160,7 +163,13 @@ export namespace Entrypoints {
 				if (cached) return cached;
 
 				res.startTime('server-side-render', 'Server-side rendering');
-				const renderedHTML = getRenderedText(info, props, lang, theme);
+				const renderedHTML = getRenderedText(
+					info,
+					props,
+					lang,
+					theme,
+					server
+				);
 				res.endTime('server-side-render');
 				renderCacheStore.set({ entrypoint, lang, theme }, renderedHTML);
 				return renderedHTML;
@@ -209,24 +218,22 @@ export namespace Entrypoints {
 		}
 	}
 
-	export function registerEntrypointHandlers({
-		app,
-		io: { noSSR },
-	}: WebServer) {
+	export function registerEntrypointHandlers(server: WebServer) {
+		const { app, io } = server;
 		ENTRYPOINTS.forEach((entrypoint: ENTRYPOINTS_TYPE) => {
 			const baseRoute = `/${entrypoint}`;
 			const entrypointRoutes =
 				entrypoint === 'index' ? [baseRoute, '/'] : [baseRoute];
 			entrypointRoutes.forEach((route) => {
-				if (!noSSR) {
+				if (!io.noSSR) {
 					app.get(route, (req, res: SpdyExpressResponse, next) => {
 						res.endTime('route-resolution');
-						Rendering.render(entrypoint, req, res, next);
+						Rendering.render(entrypoint, req, res, next, server);
 					});
 				}
 				app.get(route, (_req, res: SpdyExpressResponse, next) => {
 					res.endTime('route-resolution');
-					renderHTMLFile(entrypoint, res, next);
+					renderHTMLFile(entrypoint, res, next, server);
 				});
 			});
 		});
@@ -235,7 +242,8 @@ export namespace Entrypoints {
 	export function renderHTMLFile(
 		entrypoint: ENTRYPOINTS_TYPE,
 		res: SpdyExpressResponse,
-		next: express.NextFunction
+		next: express.NextFunction,
+		{ io }: WebServer
 	) {
 		const htmlRenderer = Info.getHTML(entrypoint);
 
@@ -250,7 +258,9 @@ export namespace Entrypoints {
 		res.status(200);
 		res.contentType('.html');
 		res.startTime('html-render', 'Rendering of simple HTML file');
-		const html = htmlRenderer({});
+		const html = htmlRenderer({
+			autoReload: io.dev && !io.noAutoReload,
+		});
 		res.endTime('html-render');
 		res.write(html);
 		res.end();

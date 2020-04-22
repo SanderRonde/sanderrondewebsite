@@ -1,6 +1,7 @@
 export interface EntrypointHTMLFileOptions {
     defer?: boolean;
     mainTag?: string;
+    autoReload: boolean;
 }
 
 export const enum SERVE_STATEGY {

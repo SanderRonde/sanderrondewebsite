@@ -4,10 +4,12 @@ import { ROOT_DIR } from './lib/constants.js';
 import serverTiming from 'server-timing';
 import cookieParser from 'cookie-parser';
 import { Routes } from './lib/routes.js';
+import { Dev } from './lib/dev.js';
 import { IO } from './lib/io.js';
 import express from 'express';
 import morgan from 'morgan';
 import fs from 'fs-extra';
+import https from 'https';
 import http from 'http';
 import spdy from 'spdy';
 import path from 'path';
@@ -17,6 +19,8 @@ import path from 'path';
  */
 export class WebServer {
 	public app!: express.Express;
+	public httpServer!: http.Server;
+	public httpsServer!: https.Server;
 
 	constructor(public io: IO.IO) {}
 
@@ -24,6 +28,9 @@ export class WebServer {
 		this._initVars();
 		this._initRoutes();
 		this._listen();
+		if (!this.io.noAutoReload) {
+			Dev.initAutoReload(this);
+		}
 		return this;
 	}
 
@@ -51,7 +58,11 @@ export class WebServer {
 		this._markSendMethods();
 		Entrypoints.registerEntrypointHandlers(this);
 		SemiStaticFiles.initRoutes(this);
+		if (this.io.dev) {
+			Dev.initRoutes(this);
+		}
 		Routes.initRoutes(this);
+		Routes.init404(this);
 	}
 
 	/**
@@ -62,14 +73,20 @@ export class WebServer {
 			cert: await fs.readFile(path.join(ROOT_DIR, 'certs', 'cert.crt')),
 			key: await fs.readFile(path.join(ROOT_DIR, 'certs', 'key.key')),
 		};
-		http.createServer(this.app).listen(this.io.ports.http, () => {
-			console.log(`HTTP server listening on port ${this.io.ports.http}`);
-		});
-		spdy.createServer(config, this.app).listen(this.io.ports.https, () => {
-			console.log(
-				`HTTPS server listening on port ${this.io.ports.https}`
-			);
-		});
+		this.httpServer = http
+			.createServer(this.app)
+			.listen(this.io.ports.http, () => {
+				console.log(
+					`HTTP server listening on port ${this.io.ports.http}`
+				);
+			});
+		this.httpsServer = spdy
+			.createServer(config, this.app)
+			.listen(this.io.ports.https, () => {
+				console.log(
+					`HTTPS server listening on port ${this.io.ports.https}`
+				);
+			});
 	}
 }
 

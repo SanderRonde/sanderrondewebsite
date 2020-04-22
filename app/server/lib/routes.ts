@@ -1,4 +1,4 @@
-import { ROOT_DIR, CLIENT_DIR, APP_DIR } from './constants.js';
+import { ROOT_DIR, CLIENT_DIR } from './constants.js';
 import serveStatic from 'serve-static';
 import { WebServer } from '../app.js';
 import { server } from 'spdy';
@@ -38,7 +38,7 @@ export namespace Routes {
 	 * @returns {express.RequestHandler} - A request handler, for use
 	 * 	in an express(...).use() call
 	 */
-	function serve(
+	export function serve(
 		root: string,
 		{
 			rewrite,
@@ -92,22 +92,6 @@ export namespace Routes {
 		};
 	}
 
-	/**
-	 * Rewrite all node-style imports to be relative
-	 * So 'lit-html' -> '/node_modules/lit-html'
-	 */
-	function rewriteModuleImports(content: string) {
-		return content
-			.replace(
-				/['"]wc-lib['"]/g,
-				"'/node_modules/wc-lib/build/es/wc-lib.js'"
-			)
-			.replace(
-				/['"]lit-html['"]/g,
-				"'/node_modules/lit-html/lit-html.js'"
-			);
-	}
-
 	function initImageRoutes(app: WebServer['app']) {
 		let isDay = new Date().getMonth() === 3 && new Date().getDate() === 29;
 		setInterval(() => {
@@ -136,7 +120,12 @@ export namespace Routes {
 	 *
 	 * @param {WebServer} server - The root WebServer
 	 */
-	export function initRoutes({ app, io }: WebServer) {
+	export function initRoutes({ app }: WebServer) {
+		app.get('/thesis(.pdf)?', (_req, res, _next) => {
+			res.endTime('route-resolution');
+			res.startTime('send-file', 'Sending file');
+			res.sendFile(THESIS_FILE);
+		});
 		app.use(
 			serveStatic(path.join(CLIENT_DIR, 'static'), {
 				extensions: ['pdf'],
@@ -144,54 +133,14 @@ export namespace Routes {
 			})
 		);
 		initImageRoutes(app);
-		if (io.dev) {
-			const serveSrc = serve(path.join(CLIENT_DIR, 'src'), {
-				rewrite: rewriteModuleImports,
-			});
-			app.use((req, res, next) => {
-				if (req.url.startsWith('/serviceworker.js')) {
-					next();
-					return;
-				}
-				serveSrc(req, res, next);
-			});
-
-			['node_modules/lit-html', 'node_modules/wc-lib'].forEach(
-				(rootSubPath) => {
-					app.use(
-						serve(path.join(ROOT_DIR, rootSubPath), {
-							extensions: ['js'],
-							prefix: `/${rootSubPath}`,
-						})
-					);
-				}
-			);
-
-			['i18n', 'shared'].forEach((subPath) => {
-				app.use(
-					serve(path.join(APP_DIR, subPath), {
-						extensions: ['js'],
-						prefix: `/${subPath}`,
-					})
-				);
-			});
-
-			app.use(
-				serveStatic(path.join(CLIENT_DIR, 'build/private'), {
-					index: false,
-				})
-			);
-		}
 		app.use(
 			serveStatic(path.join(CLIENT_DIR, 'build/public'), {
 				index: false,
 			})
 		);
-		app.get('/thesis(.pdf)?', (_req, res, _next) => {
-			res.endTime('route-resolution');
-			res.startTime('send-file', 'Sending file');
-			res.sendFile(THESIS_FILE);
-		});
+	}
+
+	export function init404({ app }: WebServer) {
 		app.get('/404', (_req, res) => {
 			// TODO: implement better 404 page
 			res.status(200).send('404');
