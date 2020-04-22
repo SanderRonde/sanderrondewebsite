@@ -73,15 +73,15 @@ cmd('compile')
 		const { watch, dir } = args;
 		if (dir === 'all') {
 			if (!watch || !args['no-initial']) {
-				await exec('tsc -p ./app/tsconfig.serviceworker.json');
-				await exec('tsc -p ./app/tsconfig.i18n.json');
+				await exec('tsc -p ./app/client/src/sw/tsconfig.json');
+				await exec('tsc -p ./app/i18n/tsconfig.json');
 				await exec('tsc -p ./tsconfig.json');
 			}
 
 			if (watch) {
 				await exec([
-					'tsc -p ./app/tsconfig.serviceworker.json -w --preserveWatchOutput',
-					'tsc -p ./app/tsconfig.i18n.json -w --preserveWatchOutput',
+					'tsc -p ./app/client/src/sw/tsconfig.json -w --preserveWatchOutput',
+					'tsc -p ./app/i18n/tsconfig.json -w --preserveWatchOutput',
 					'tsc -p ./tsconfig.json -w --preserveWatchOutput',
 				]);
 			}
@@ -93,8 +93,9 @@ cmd('compile')
 				case 'root':
 					return './tsconfig.json';
 				case 'i18n':
+					return './app/i18n/tsconfig.json';
 				case 'serviceworker':
-					return `./app/tsconfig.${dir}.json`;
+					return `./app/client/src/sw/tsconfig.json`;
 			}
 		})();
 

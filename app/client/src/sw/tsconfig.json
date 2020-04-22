@@ -1,0 +1,19 @@
+{
+    "extends": "../../../../tsconfig.json",
+    "compilerOptions": {
+        "lib": ["webworker"],
+        "sourceMap": true,
+        "resolveJsonModule": true
+    },
+    "include": [
+        "./client/src/serviceworker.ts",
+        "../../../shared",
+        "../../../shared/**/*.json",
+        "../../../client/build/private/swconfig.json",
+        "../../../client/build/public/versions.json",
+        "../../../../types"
+    ],
+    "exclude": [
+        "./shared/i18n.ts"
+    ]
+}
