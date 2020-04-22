@@ -11,6 +11,7 @@ import {
 import { I18NGetMessage, LANGUAGE, strToLanguage } from '../../i18n/i18n.js';
 import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
+import { themes, THEME, strToTheme } from '../../shared/theme.js';
 import { ENTRYPOINTS_TYPE } from '../../shared/types';
 import ENTRYPOINTS from '../../shared/entrypoints.js';
 import { SpdyExpressResponse } from './routes.js';
@@ -78,22 +79,25 @@ export namespace Entrypoints {
 	}
 
 	namespace Rendering {
-		const renderCacheStore = new Caching.CacheStore<
+		const renderCacheStore = Caching.createStore<
 			{
 				entrypoint: string;
 				lang: LANGUAGE;
+				theme: THEME;
 			},
 			string
-		>((stored, current) => {
+		>(true, (stored, current) => {
 			return (
 				stored.entrypoint === current.entrypoint &&
-				stored.lang === current.lang
+				stored.lang === current.lang &&
+				stored.theme === current.theme
 			);
 		});
 		function getRenderedText(
 			info: ReturnType<typeof Info.getInfo>,
 			props: ReturnType<typeof Info.getProps>,
-			lang: LANGUAGE
+			lang: LANGUAGE,
+			theme: THEME
 		) {
 			const { Component, getHTML } = info!;
 
@@ -117,6 +121,7 @@ export namespace Entrypoints {
 				},
 				i18n: langFiles[lang],
 				getMessage: I18NGetMessage,
+				theme: themes[theme],
 			});
 
 			const html = getHTML({
@@ -137,6 +142,16 @@ export namespace Entrypoints {
 			return language;
 		}
 
+		function getTheme(req: express.Request, res: express.Response) {
+			const languageStr = req.cookies['theme'];
+			const language = strToTheme(languageStr);
+			if (!language) {
+				res.cookie('theme', THEME.DEFAULT_THEME);
+				return THEME.DEFAULT_THEME;
+			}
+			return language;
+		}
+
 		export function render(
 			entrypoint: ENTRYPOINTS_TYPE,
 			req: express.Request,
@@ -152,20 +167,21 @@ export namespace Entrypoints {
 			}
 
 			const lang = getLang(req, res);
+			const theme = getTheme(req, res);
 
 			const props = Info.getProps(entrypoint, info, req);
 			res.endTime('entrypoint-info');
 			res.startTime('check-cache', 'Checking cache');
-			const cached = renderCacheStore.getCache({ entrypoint, lang });
+			const cached = renderCacheStore.get({ entrypoint, lang, theme });
 			res.endTime('check-cache');
 
 			const html = (() => {
 				if (cached) return cached;
 
 				res.startTime('server-side-render', 'Server-side rendering');
-				const renderedHTML = getRenderedText(info, props, lang);
+				const renderedHTML = getRenderedText(info, props, lang, theme);
 				res.endTime('server-side-render');
-				renderCacheStore.setCache({ entrypoint, lang }, renderedHTML);
+				renderCacheStore.set({ entrypoint, lang, theme }, renderedHTML);
 				return renderedHTML;
 			})();
 
@@ -200,14 +216,14 @@ export namespace Entrypoints {
 				console.log(chalk.red('Failed to push file'), err);
 			});
 			if (!entrypointBundleCache.has(srcFile)) {
-				entrypointBundleCache.setCache(
+				entrypointBundleCache.set(
 					srcFile,
 					await fs.readFile(srcFile, {
 						encoding: 'utf8',
 					})
 				);
 			}
-			stream.write(entrypointBundleCache.getCache(srcFile));
+			stream.write(entrypointBundleCache.get(srcFile));
 			stream.end();
 		}
 	}
