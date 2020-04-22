@@ -113,7 +113,7 @@ export namespace Dev {
 				.watch(watchPath, {
 					persistent: true,
 					awaitWriteFinish: {
-						stabilityThreshold: 200,
+						stabilityThreshold: 50,
 					},
 					cwd: ROOT_DIR,
 					ignoreInitial: true,
