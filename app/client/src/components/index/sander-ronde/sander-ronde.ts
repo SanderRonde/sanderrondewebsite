@@ -1,28 +1,25 @@
-import {
-	ConfigurableWebComponent,
-	config,
-	TemplateFn,
-	CHANGE_TYPE,
-} from 'wc-lib';
+import { BackgroundBlock } from '../../shared/background-block/background-block.js';
 import { MessageToast } from '../../shared/message-toast/message-toast.js';
+import { IDMapType, ClassMapType } from './sander-ronde-querymap';
+import { ConfigurableWebComponent, config } from 'wc-lib';
 import { I18NType } from '../../../../../i18n/i18n-defs';
-import { I18NKeys } from '../../../../../i18n/i18n-keys';
+import { SanderRondeHTML } from './sander-ronde.html.js';
+import { themes } from '../../../../../shared/theme.js';
+import { SanderRondeCSS } from './sander-ronde.css.js';
 import { LANGUAGE } from '../../../../../i18n/i18n';
-import { render, html } from 'lit-html';
 
 @config({
 	is: 'sander-ronde',
-	html: new TemplateFn<SanderRonde>(
-		function () {
-			return html`<div>${this.__(I18NKeys.index.hi)}</div> `;
-		},
-		CHANGE_TYPE.NEVER,
-		render
-	),
-	css: null,
-	dependencies: [MessageToast]
+	html: SanderRondeHTML,
+	css: SanderRondeCSS,
+	dependencies: [MessageToast, BackgroundBlock],
 })
 export class SanderRonde extends ConfigurableWebComponent<{
+	selectors: {
+		IDS: IDMapType;
+		CLASSES: ClassMapType;
+	};
 	langs: LANGUAGE;
 	i18n: I18NType;
+	themes: typeof themes;
 }> {}
