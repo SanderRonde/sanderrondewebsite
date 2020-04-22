@@ -6,11 +6,17 @@ import {
 	ENTRYPOINTS_TYPE,
 } from './app/shared/types';
 const HTMLMinimize = require('minimize') as typeof import('minimize');
-import { inlineTypedCSSPipe } from 'wc-lib/build/cjs/tasks/tasks';
+import {
+	inlineTypedCSSPipe,
+	generateHTMLCustomData,
+	joinCustomData,
+	HTMLCustomData,
+} from 'wc-lib/build/cjs/tasks';
 import * as builtins from 'rollup-plugin-node-builtins';
 import * as _resolve from '@rollup/plugin-node-resolve';
 import * as _sourcemaps from 'rollup-plugin-sourcemaps';
 import * as _commonjs from '@rollup/plugin-commonjs';
+import { ConfigurableWebComponent } from 'wc-lib';
 import * as _json from '@rollup/plugin-json';
 import * as htmlTypings from 'html-typings';
 import * as CleanCSS from 'clean-css';
@@ -967,10 +973,50 @@ gulp.task(
 );
 
 /**
+ * Generate a html-custom-data file for VSCode
+ */
+gulp.task('defs', async function generateCustomData() {
+	const fileNames = await globPromise(
+		'app/client/src/entrypoints/**/exports.js'
+	);
+
+	const customDatas = fileNames
+		.map((fileName) => {
+			const importES = esm(module);
+			const exports = importES(path.resolve(fileName));
+
+			const componentExport = exports['Component'];
+			if (
+				componentExport &&
+				'prototype' in componentExport &&
+				componentExport.prototype &&
+				componentExport.prototype instanceof ConfigurableWebComponent
+			) {
+				return generateHTMLCustomData(componentExport, true);
+			}
+
+			return null;
+		})
+		.filter((v) => v !== null) as HTMLCustomData[];
+
+	const joined = joinCustomData(...customDatas);
+
+	await fs.writeFile(
+		path.join(__dirname, 'types/html.html-data.json'),
+		JSON.stringify(joined, null, '\t')
+	);
+});
+
+/**
+ * Tasks that you tend to run while developing to update definitions
+ */
+gulp.task('dev', gulp.series('i18n', 'defs'));
+
+/**
  * Handle all pre-build stuff like modules for the
  * backend and some stubs
  */
-gulp.task('pre-build', gulp.series('modules', 'stubs', 'i18n'));
+gulp.task('pre-build', gulp.series('defs', 'modules', 'stubs', 'i18n'));
 
 /**
  * Handle all frontend bundling etc
