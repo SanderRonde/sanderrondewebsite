@@ -6,7 +6,7 @@
 	"type": "module",
 	"nodemonConfig": {
 		"ext": "js",
-		"exec": "node --experimental-modules app/server/app.js --http 1234",
+		"exec": "node --experimental-modules app/server/app.js --http 1234 --https 1235",
 		"watch": [
 			"app/server/"
 		]
@@ -83,6 +83,7 @@
 		"makfy": "makfy",
 		"compile": "makfy compile --dir all",
 		"watch": "makfy compile --dir all --watch",
+		"start": "nodemon",
 		"build-frontend": "makfy frontend",
 		"build": "makfy build",
 		"build-dev": "makfy build --dev"
