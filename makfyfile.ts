@@ -209,6 +209,5 @@ cmd('watch')
 		if (type === 'html' || type === 'all') {
 			commands.push('@html-typings --watch');
 		}
-		console.log(commands);
 		await exec(commands);
 	});
