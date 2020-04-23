@@ -6,5 +6,6 @@
 		"resolveJsonModule": true,
 		"experimentalDecorators": true
 	},
-	"include": ["./", "../../types"]
+	"include": ["./", "../../types"],
+	"exclude": ["../../types/clones"]
 }

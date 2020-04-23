@@ -47,6 +47,17 @@ export namespace Dev {
 			}
 		);
 
+		['wc-lib'].forEach(
+			(rootSubPath) => {
+				app.use(
+					Routes.serve(path.join(ROOT_DIR, 'types/clones', rootSubPath), {
+						extensions: ['ts'],
+						prefix: `/node_modules/${rootSubPath}`,
+					})
+				);
+			}
+		);
+
 		['i18n', 'shared'].forEach((subPath) => {
 			app.use(
 				Routes.serve(path.join(APP_DIR, subPath), {

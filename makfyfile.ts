@@ -10,6 +10,7 @@ import {
 import { ExecFunction } from 'makfy/dist/lib/schema/runtime';
 import { choice, cmd } from './types/makfy-extended';
 import * as chokidar from 'chokidar';
+import * as fs from 'fs-extra';
 import * as path from 'path';
 const choice = (_choice as unknown) as choice;
 const cmd = (_cmd as unknown) as cmd;
@@ -210,4 +211,21 @@ cmd('watch')
 			commands.push('@html-typings --watch');
 		}
 		await exec(commands);
+	});
+
+cmd('sourcemaps')
+	.desc('Clone source repo in order to provide source maps')
+	.run(async (exec) => {
+		await exec(rimraf('types/clones'));
+
+		// Get wc-lib version
+		const manifestText = await fs.readFile(path.join(__dirname, 'package.json'), {
+			encoding: 'utf8'
+		});
+		const manifest = JSON.parse(manifestText);
+		const wclibVersionString: string = manifest["dependencies"]["wc-lib"];
+		const wclibVersion = wclibVersionString.replace(/[^0-9\.]/g, '');
+
+		// Clone
+		await exec(`git clone -b ${wclibVersion} https://github.com/SanderRonde/wc-lib types/clones/wc-lib`);
 	});

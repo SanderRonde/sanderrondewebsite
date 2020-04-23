@@ -59,3 +59,5 @@ certs
 types/html.html-data.json
 
 .makfy-cache
+
+types/clones
