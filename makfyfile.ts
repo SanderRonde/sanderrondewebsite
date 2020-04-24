@@ -194,10 +194,39 @@ cmd('build')
 		});
 	});
 
+cmd('i18n')
+	.desc('Rebuild i18n files')
+	.args({
+		watch: flag(),
+	})
+	.argsDesc({
+		watch: 'Whether to update the i18n files as they are changed',
+	})
+	.run(async (exec, { watch }) => {
+		await exec('gulp i18n');
+
+		if (watch) {
+			chokidar
+				.watch(path.join(__dirname, 'app/i18n/locales/*.js'), {
+					persistent: true,
+					awaitWriteFinish: {
+						stabilityThreshold: 1000,
+					},
+					cwd: __dirname,
+					ignoreInitial: false,
+					ignored: /.*\.(map|json\.js|ts)/,
+				})
+				.on('change', async () => {
+					console.log('Changes detected');
+					await exec('gulp i18n');
+				});
+		}
+	});
+
 cmd('watch')
 	.desc('Watch for changes and compile accordingly')
 	.args({
-		type: choice(['ts', 'html', 'all'], 'all'),
+		type: choice(['ts', 'html', 'i18n', 'all'], 'all'),
 	})
 	.argsDesc({
 		type: 'The type of changes to watch',
@@ -210,6 +239,9 @@ cmd('watch')
 		if (type === 'html' || type === 'all') {
 			commands.push('@html-typings --watch');
 		}
+		if (type === 'i18n' || type === 'all') {
+			commands.push('@i18n --watch');
+		}
 		await exec(commands);
 	});
 
@@ -219,13 +251,18 @@ cmd('sourcemaps')
 		await exec(rimraf('types/clones'));
 
 		// Get wc-lib version
-		const manifestText = await fs.readFile(path.join(__dirname, 'package.json'), {
-			encoding: 'utf8'
-		});
+		const manifestText = await fs.readFile(
+			path.join(__dirname, 'package.json'),
+			{
+				encoding: 'utf8',
+			}
+		);
 		const manifest = JSON.parse(manifestText);
-		const wclibVersionString: string = manifest["dependencies"]["wc-lib"];
+		const wclibVersionString: string = manifest['dependencies']['wc-lib'];
 		const wclibVersion = wclibVersionString.replace(/[^0-9\.]/g, '');
 
 		// Clone
-		await exec(`git clone -b ${wclibVersion} https://github.com/SanderRonde/wc-lib types/clones/wc-lib`);
+		await exec(
+			`git clone -b ${wclibVersion} https://github.com/SanderRonde/wc-lib types/clones/wc-lib`
+		);
 	});
