@@ -223,10 +223,41 @@ cmd('i18n')
 		}
 	});
 
+cmd('sw')
+	.desc('Rebuild serviceworker file')
+	.args({
+		watch: flag(),
+	})
+	.argsDesc({
+		watch: 'Whether to update the serviceworker file as it is changed',
+	})
+	.run(async (exec, { watch }) => {
+		await exec('gulp serviceworker');
+
+		if (watch) {
+			chokidar
+				.watch(
+					path.join(__dirname, 'app/client/src/sw/serviceworker.js'),
+					{
+						persistent: true,
+						awaitWriteFinish: {
+							stabilityThreshold: 1000,
+						},
+						cwd: __dirname,
+						ignoreInitial: true,
+					}
+				)
+				.on('change', async () => {
+					console.log('Changes detected');
+					await exec('gulp serviceworker');
+				});
+		}
+	});
+
 cmd('watch')
 	.desc('Watch for changes and compile accordingly')
 	.args({
-		type: choice(['ts', 'html', 'i18n', 'all'], 'all'),
+		type: choice(['ts', 'html', 'i18n', 'sw', 'all'], 'all'),
 	})
 	.argsDesc({
 		type: 'The type of changes to watch',
@@ -241,6 +272,9 @@ cmd('watch')
 		}
 		if (type === 'i18n' || type === 'all') {
 			commands.push('@i18n --watch');
+		}
+		if (type === 'sw' || type === 'all') {
+			commands.push('@sw --watch');
 		}
 		await exec(commands);
 	});
