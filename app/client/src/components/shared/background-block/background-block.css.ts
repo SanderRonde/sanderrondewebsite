@@ -1,7 +1,7 @@
-import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
-import { BackgroundBlock } from './background-block.js';
-import { render } from 'lit-html';
 import { THEME_SHADE } from '../../../../../shared/theme.js';
+import { BackgroundBlock } from './background-block.js';
+import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
+import { render } from 'lit-html';
 
 export const BackgroundBlockCSS = new TemplateFn<BackgroundBlock>(
 	function (html, props, theme) {
@@ -19,6 +19,12 @@ export const BackgroundBlockCSS = new TemplateFn<BackgroundBlock>(
 							return theme.background.main;
 					}
 				})()};
+			}
+
+			${css(this).$.block.or.id.slot} {
+				display: flex;
+				flex-direction: column;
+				flex-grow: 100;
 			}
 		</style>`;
 	},

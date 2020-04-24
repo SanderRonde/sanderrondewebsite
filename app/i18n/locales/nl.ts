@@ -10,8 +10,27 @@ export const messages = {
 		},
 	},
 	index: {
-		hi: {
-			message: 'Hoi!',
+		nameBlock: {
+			education: {
+				uniLeiden: {
+					message: 'Universiteit Leiden',
+				},
+			},
+			links: {
+				vu: {
+					message: 'https://www.vu.nl/nl/',
+				},
+				uva: {
+					message: 'https://www.uva.nl/nl',
+				},
+				bachelor: {
+					message:
+						'https://www.universiteitleiden.nl/onderwijs/opleidingen/bachelor/informatica',
+				},
+				uniLeiden: {
+					message: 'https://www.universiteitleiden.nl/',
+				},
+			},
 		},
 	},
 	shared: {

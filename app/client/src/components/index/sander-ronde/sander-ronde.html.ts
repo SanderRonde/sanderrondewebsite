@@ -7,7 +7,9 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 	function () {
 		return html`
 			<div id="scroller">
-				<background-block></background-block>
+				<background-block>
+					<name-block id="name-block"></name-block>
+				</background-block>
 				<background-block
 					shade="${THEME_SHADE.LIGHT}"
 				></background-block>

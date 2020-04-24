@@ -25,6 +25,11 @@ export const SanderRondeCSS = new TemplateFn<SanderRonde>(
 				${css(this).$.scroller.pseudo(':-webkit-scrollbar-track')} {
 					background: none;
 				}
+
+				${css(this).$['name-block']} {
+					display: flex;
+					flex-grow: 100;
+				}
 			</style>
 		`;
 	},
