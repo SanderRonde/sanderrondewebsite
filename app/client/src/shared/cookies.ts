@@ -36,5 +36,5 @@ export function getCookie<V extends string>(
 }
 
 export function setCookie(name: string, value: string) {
-	document.cookie = `${document.cookie}; ${name}=${value}`;
+	document.cookie = `${name}=${value}`;
 }
