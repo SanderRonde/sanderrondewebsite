@@ -16,7 +16,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									<a
 										href="https://masters.vu.nl/en/programmes/computer-science-systems-security/index.aspx"
 										rel="noopener"
-										class="link"
+										class="link color"
 										target="_blank"
 										>Computer Science Master</a
 									>'s student @
@@ -25,7 +25,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 											I18NKeys.index.nameBlock.links.vu
 										)}"
 										rel="noopener"
-										class="link"
+										class="link color"
 										target="_blank"
 										>VU</a
 									>
@@ -35,7 +35,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 											I18NKeys.index.nameBlock.links.uva
 										)}"
 										rel="noopener"
-										class="link"
+										class="link color"
 										target="_blank"
 										>UVA</a
 									>
@@ -45,7 +45,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									<a
 										href="https://nextupsoftware.com/"
 										rel="noopener"
-										class="link"
+										class="link color"
 										target="_blank"
 										>Nextup Software</a
 									>
@@ -60,7 +60,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 												.bachelor
 										)}"
 										rel="noopener"
-										class="link"
+										class="link color"
 										target="_blank"
 										>Bachelor's degree in Computer
 										Science</a
@@ -72,7 +72,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 												.uniLeiden
 										)}"
 										rel="noopener"
-										class="link"
+										class="link color"
 										target="_blank"
 										>${this.__(
 											I18NKeys.index.nameBlock.education

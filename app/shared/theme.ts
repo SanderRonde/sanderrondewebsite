@@ -19,6 +19,7 @@ export const enum THEME_SHADE {
 export interface Theme {
 	background: ThemeShade;
 	primary: ThemeShade;
+	secondary: ThemeShade;
 	text: ThemeShade;
 }
 
@@ -32,6 +33,11 @@ export const themes: {
 			dark: '#101012',
 		},
 		text: {
+			main: '#C5C5C5',
+			dark: '#7B7B7B',
+			light: '#FFF',
+		},
+		secondary: {
 			main: '#FFD03E',
 			light: '#FFD442',
 			dark: '#EABB38',

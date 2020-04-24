@@ -11,8 +11,16 @@ export const LinkCSS = new TemplateFn<
 				color: ${theme.text.main};
 			}
 
+			.link.color {
+				color: ${theme.secondary.main};
+			}
+
 			.link:hover {
 				color: ${theme.text.dark};
+			}
+
+			.link.color:hover {
+				color: ${theme.secondary.dark};
 			}
 		</style>`;
 	},

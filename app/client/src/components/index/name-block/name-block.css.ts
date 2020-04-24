@@ -12,7 +12,7 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			}
 
 			${css(this).$.container} {
-				color: ${theme.text.main};
+				color: ${theme.secondary.main};
 				text-align: center;
 			}
 
