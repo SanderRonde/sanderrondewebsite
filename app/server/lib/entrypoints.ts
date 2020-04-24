@@ -127,6 +127,8 @@ export namespace Entrypoints {
 			});
 
 			const html = getHTML({
+				theme,
+				lang,
 				defer: true,
 				mainTag: rendered,
 				autoReload: io.dev && !io.noAutoReload,
@@ -231,9 +233,9 @@ export namespace Entrypoints {
 						Rendering.render(entrypoint, req, res, next, server);
 					});
 				}
-				app.get(route, (_req, res: SpdyExpressResponse, next) => {
+				app.get(route, (req, res: SpdyExpressResponse, next) => {
 					res.endTime('route-resolution');
-					renderHTMLFile(entrypoint, res, next, server);
+					renderHTMLFile(entrypoint, req, res, next, server);
 				});
 			});
 		});
@@ -241,6 +243,7 @@ export namespace Entrypoints {
 
 	export function renderHTMLFile(
 		entrypoint: ENTRYPOINTS_TYPE,
+		req: express.Request,
 		res: SpdyExpressResponse,
 		next: express.NextFunction,
 		{ io }: WebServer
@@ -258,7 +261,11 @@ export namespace Entrypoints {
 		res.status(200);
 		res.contentType('.html');
 		res.startTime('html-render', 'Rendering of simple HTML file');
+		const lang = RequestVars.getLang(req, res);
+		const theme = RequestVars.getTheme(req, res);
 		const html = htmlRenderer({
+			lang,
+			theme,
 			autoReload: io.dev && !io.noAutoReload,
 		});
 		res.endTime('html-render');
