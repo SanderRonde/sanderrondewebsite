@@ -9,6 +9,6 @@ export const FontCSS = new TemplateFn<any>(
 			}
 		</style>`;
 	},
-	CHANGE_TYPE.ALWAYS,
+	CHANGE_TYPE.NEVER,
 	render
 );
