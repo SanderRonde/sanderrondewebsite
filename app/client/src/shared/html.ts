@@ -83,6 +83,20 @@ const _head = html`
 	${icons()}
 	<link rel="manifest" href="/manifest.json" />
 	<link rel="icon" href="/images/favicon.ico" type="images/x-icon" />
+	<style>
+		@font-face {
+			font-family: 'Roboto';
+			font-style: normal;
+			font-weight: 400;
+			src: local('Roboto'), local('Roboto-Regular'),
+				url('/fonts/Roboto-Regular.ttf');
+		}
+		@import url('https://fonts.googleapis.com/css?family=Roboto:400');
+
+		span[data-type='html'] {
+			font-family: 'Roboto';
+		}
+	</style>
 `;
 export function head() {
 	return _head;
