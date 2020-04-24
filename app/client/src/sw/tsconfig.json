@@ -6,7 +6,7 @@
         "resolveJsonModule": true
     },
     "include": [
-        "./client/src/serviceworker.ts",
+        "./serviceworker.ts",
         "../../../shared",
         "../../../shared/**/*.json",
         "../../../client/build/private/swconfig.json",
