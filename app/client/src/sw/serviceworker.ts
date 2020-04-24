@@ -207,8 +207,10 @@ self.addEventListener('fetch', async (event) => {
 			break;
 	}
 
-	if (isEntrypoint) {
+	if (isEntrypoint && navigator.onLine) {
 		// Update versions
-		await updateVersions();
+		try {
+			await updateVersions();
+		} catch (e) {}
 	}
 });
