@@ -2217,10 +2217,10 @@ hpack.js@^2.1.6:
     readable-stream "^2.0.1"
     wbuf "^1.1.0"
 
-html-typings@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/html-typings/-/html-typings-1.2.1.tgz#c0ce683ac13b1a581ef8839910ba902cbc463718"
-  integrity sha512-t409cmFOxz/LDUvqncYWF7OYMcexlkT+ggQO2xyl/4StdrSyetQV9oEjGLAg7ir5sNe7/ssZy6Y81pKaVdzqgA==
+html-typings@^1.2.2:
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/html-typings/-/html-typings-1.2.2.tgz#0833387f91eb1a76705f8f717396c08dea310993"
+  integrity sha512-oCwaXYnhORA8BmHhQTzByoYemOmHUl8YjcHk8PCG9EUw4kyHGPP0qF6oCf61RVwVCi1H7FAN/zMiFIIpehIesQ==
   dependencies:
     argparse "^1.0.9"
     gaze "^1.1.2"

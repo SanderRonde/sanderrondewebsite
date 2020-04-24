@@ -65,7 +65,7 @@
 		"clean-css": "^4.2.3",
 		"glob": "^7.1.6",
 		"gulp": "^4.0.2",
-		"html-typings": "^1.2.1",
+		"html-typings": "^1.2.2",
 		"makfy": "^2.0.0",
 		"minimize": "^2.2.0",
 		"nodemon": "^2.0.2",
