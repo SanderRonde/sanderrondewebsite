@@ -7,12 +7,13 @@ import { SanderRondeHTML } from './sander-ronde.html.js';
 import { themes } from '../../../../../shared/theme.js';
 import { SanderRondeCSS } from './sander-ronde.css.js';
 import { LANGUAGE } from '../../../../../i18n/i18n';
+import { FontCSS } from '../../../styles/font.js';
 
 @config({
 	is: 'sander-ronde',
 	html: SanderRondeHTML,
-	css: SanderRondeCSS,
-	dependencies: [MessageToast, BackgroundBlock],
+	css: [SanderRondeCSS, FontCSS],
+	dependencies: [MessageToast, BackgroundBlock, NameBlock],
 })
 export class SanderRonde extends ConfigurableWebComponent<{
 	selectors: {
