@@ -30,6 +30,9 @@ export const messages = {
 				uniLeiden: {
 					message: 'https://www.universiteitleiden.nl/en',
 				},
+				scrollDown: {
+					message: 'scroll down',
+				},
 			},
 		},
 	},

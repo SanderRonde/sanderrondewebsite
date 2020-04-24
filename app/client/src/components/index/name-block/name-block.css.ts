@@ -8,6 +8,11 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			${css(this).$.block},
 			span[data-type='html'] {
 				display: flex;
+				flex-direction: column;
+				flex-grow: 100;
+			}
+
+			${css(this).$['main-content']} {
 				flex-grow: 100;
 			}
 
@@ -31,6 +36,18 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 
 			${css(this).c['education-line']} {
 				font-size: 120%;
+			}
+
+			${css(this).$['scroll-down']} {
+				fill: ${theme.secondary.main};
+				width: 100px;
+				margin-bottom: 20px;
+				transform: translateY(0);
+				transition: transform 200ms ease-in-out;
+			}
+
+			${css(this).$['scroll-down'].pseudo('hover')} {
+				transform: translateY(20px);
 			}
 		</style>`;
 	},
