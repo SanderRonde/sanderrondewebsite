@@ -49,13 +49,11 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			}
 
 			${mediaQueryRule(css(this).c.tagline, 'font-size', {
-				xs: '100%',
 				sm: '100%',
 				lg: '200%',
 			})}
 
 			${mediaQueryRule(css(this).c['education-line'], 'font-size', {
-				xs: '80%',
 				sm: '80%',
 				lg: '120%',
 			})}
