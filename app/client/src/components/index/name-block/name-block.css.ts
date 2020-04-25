@@ -1,3 +1,4 @@
+import { mediaQueryRule } from '../../../styles/media-query.js';
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
 import { NameBlock } from './name-block.js';
 import { render } from 'lit-html';
@@ -21,21 +22,18 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 				text-align: center;
 			}
 
-			${css(this).$.name} {
-				font-size: 1000%;
-				line-height: 0.9em;
-			}
+			${mediaQueryRule(css(this).$.name, 'font-size', {
+				xs: '350%',
+				sm: '500%',
+				lg: '1000%',
+			})}
 
-			${css(this).c.tagline} {
-				font-size: 200%;
+			${css(this).$.name} {
+				line-height: 0.9em;
 			}
 
 			${css(this).$.education} {
 				margin-top: 10px;
-			}
-
-			${css(this).c['education-line']} {
-				font-size: 120%;
 			}
 
 			${css(this).$['scroll-down']} {
@@ -49,8 +47,20 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			${css(this).$['scroll-down'].pseudo('hover')} {
 				transform: translateY(20px);
 			}
+
+			${mediaQueryRule(css(this).c.tagline, 'font-size', {
+				xs: '100%',
+				sm: '100%',
+				lg: '200%',
+			})}
+
+			${mediaQueryRule(css(this).c['education-line'], 'font-size', {
+				xs: '80%',
+				sm: '80%',
+				lg: '120%',
+			})}
 		</style>`;
 	},
-	CHANGE_TYPE.THEME,
+	CHANGE_TYPE.ALWAYS,
 	render
 );
