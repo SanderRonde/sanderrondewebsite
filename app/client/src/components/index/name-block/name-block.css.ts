@@ -45,7 +45,7 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			}
 
 			${css(this).$['scroll-down'].pseudo('hover')} {
-				transform: translateY(20px);
+				transform: translateY(10px);
 			}
 
 			${mediaQueryRule(css(this).c.tagline, 'font-size', {
