@@ -1,5 +1,4 @@
 type RANGE_KEYWORD = 'xs' | 'sm' | 'md' | 'lg';
-const RANGE_KEYWORDS: RANGE_KEYWORD[] = ['xs', 'sm', 'md', 'lg'];
 
 const RANGE_PX: {
 	[key in RANGE_KEYWORD]: number;
@@ -10,17 +9,6 @@ const RANGE_PX: {
 	lg: 992,
 };
 
-function getTruthyKey<
-	O extends {
-		[key: string]: string | undefined;
-	}
->(obj: O, keys: (keyof O)[]) {
-	for (const key of keys) {
-		if (obj[key]) return key;
-	}
-	return null;
-}
-
 interface RangeConfig {
 	max: number;
 	text: string;
@@ -30,26 +18,34 @@ export function mediaQuery(
 	selector: string | unknown,
 	rangeConfig: {
 		[key in RANGE_KEYWORD]?: string;
+	} & {
+		[key: number]: string;
 	}
 ) {
 	const ranges: RangeConfig[] = [];
 
-	const lowest = getTruthyKey(rangeConfig, ['xs', 'sm', 'md', 'lg']);
-	const highest = getTruthyKey(rangeConfig, ['lg', 'md', 'sm', 'xs']);
-
-	if (lowest === null || highest === null) return '';
-
-	const indices = (Object.keys(rangeConfig) as RANGE_KEYWORD[]).map((k) =>
-		RANGE_KEYWORDS.indexOf(k)
-	);
-	for (let i = 0; i < indices.length; i++) {
-		const max =
-			i === indices.length - 1
-				? Infinity
-				: RANGE_PX[RANGE_KEYWORDS[indices[i + 1]]];
+	const sorted: RangeConfig[] = (Object.keys(rangeConfig) as (
+		| RANGE_KEYWORD
+		| number
+	)[])
+		.map((key) => {
+			if (typeof key === 'string') {
+				return {
+					max: RANGE_PX[key],
+					text: rangeConfig[key]!,
+				};
+			}
+			return {
+				max: key,
+				text: rangeConfig[key]!,
+			};
+		})
+		.sort((a, b) => a.max - b.max);
+	for (let i = 0; i < sorted.length; i++) {
+		const max = i === sorted.length - 1 ? Infinity : sorted[i + 1].max;
 		ranges.push({
 			max: max,
-			text: rangeConfig[RANGE_KEYWORDS[indices[i]]]!,
+			text: sorted[i].text!,
 		});
 	}
 
