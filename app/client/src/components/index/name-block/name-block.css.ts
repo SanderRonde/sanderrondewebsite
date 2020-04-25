@@ -59,6 +59,6 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			})}
 		</style>`;
 	},
-	CHANGE_TYPE.ALWAYS,
+	CHANGE_TYPE.THEME,
 	render
 );
