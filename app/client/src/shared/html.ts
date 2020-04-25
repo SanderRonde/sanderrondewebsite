@@ -80,6 +80,8 @@ export function icons() {
 const _head = html`
 	<meta charset="utf-8" />
 	<meta name="description" content="Sander Ronde" />
+	<meta name="viewport" content="width=device-width" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	${icons()}
 	<link rel="manifest" href="/manifest.json" />
 	<link rel="icon" href="/images/favicon.ico" type="images/x-icon" />
