@@ -2,6 +2,7 @@ import { ConfigurableWebComponent, Props, config } from 'wc-lib';
 import { IDMapType, ClassMapType } from './name-block-querymap';
 import { CenterersCSS } from '../../../styles/centerers.js';
 import { I18NType } from '../../../../../i18n/i18n-defs';
+import { FadeInCSS } from '../../../styles/fade-in.js';
 import { themes } from '../../../../../shared/theme';
 import { NameBlockHTML } from './name-block.html.js';
 import { LANGUAGE } from '../../../../../i18n/i18n';
@@ -10,7 +11,7 @@ import { LinkCSS } from '../../../styles/link.js';
 
 @config({
 	is: 'name-block',
-	css: [NameBlockCSS, CenterersCSS, LinkCSS],
+	css: [NameBlockCSS, CenterersCSS, LinkCSS, FadeInCSS],
 	html: NameBlockHTML,
 })
 export class NameBlock extends ConfigurableWebComponent<{

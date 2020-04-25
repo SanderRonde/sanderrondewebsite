@@ -90,6 +90,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 						title="${this.__(
 							I18NKeys.index.nameBlock.links.scrollDown
 						)}"
+						class="fade-in"
 					>
 						<!-- TODO: make this go somewhere -->
 						<svg
