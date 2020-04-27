@@ -7,12 +7,13 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 	function () {
 		return html`
 			<div id="scroller">
-				<background-block>
+				<background-block fill>
 					<name-block id="name-block"></name-block>
 				</background-block>
-				<background-block
-					shade="${THEME_SHADE.LIGHT}"
-				></background-block>
+				<background-block shade="${THEME_SHADE.LIGHT}">
+					<info-block id="info-block"></info-block>
+				</background-block>
+				<background-block></background-block>
 			</div>
 		`;
 	},

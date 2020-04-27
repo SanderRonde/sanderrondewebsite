@@ -26,7 +26,7 @@ export const SanderRondeCSS = new TemplateFn<SanderRonde>(
 					background: none;
 				}
 
-				${css(this).$['name-block']} {
+				${css(this).$['name-block'].or.$['info-block']} {
 					display: flex;
 					flex-grow: 100;
 				}

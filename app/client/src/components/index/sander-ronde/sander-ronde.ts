@@ -6,6 +6,7 @@ import { I18NType } from '../../../../../i18n/i18n-defs';
 import { SanderRondeHTML } from './sander-ronde.html.js';
 import { NameBlock } from '../name-block/name-block.js';
 import { themes } from '../../../../../shared/theme.js';
+import { InfoBlock } from '../info-block/info-block.js';
 import { SanderRondeCSS } from './sander-ronde.css.js';
 import { LANGUAGE } from '../../../../../i18n/i18n';
 import { FontCSS } from '../../../styles/font.js';
@@ -14,7 +15,7 @@ import { FontCSS } from '../../../styles/font.js';
 	is: 'sander-ronde',
 	html: SanderRondeHTML,
 	css: [SanderRondeCSS, FontCSS],
-	dependencies: [MessageToast, BackgroundBlock, NameBlock],
+	dependencies: [MessageToast, BackgroundBlock, NameBlock, InfoBlock],
 })
 export class SanderRonde extends ConfigurableWebComponent<{
 	selectors: {

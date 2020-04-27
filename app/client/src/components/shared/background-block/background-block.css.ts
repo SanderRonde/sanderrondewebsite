@@ -8,7 +8,6 @@ export const BackgroundBlockCSS = new TemplateFn<BackgroundBlock>(
 		return html`<style>
 			${css(this).$.block} {
 				width: 100vw;
-				min-height: 100vh;
 				background-color: ${(() => {
 					switch (props.shade) {
 						case THEME_SHADE.DARK:
@@ -19,6 +18,7 @@ export const BackgroundBlockCSS = new TemplateFn<BackgroundBlock>(
 							return theme.background.main;
 					}
 				})()};
+				min-height: ${props.fill ? '100vh' : '1vh'};
 			}
 
 			${css(this).$.block.or.id.slot} {
