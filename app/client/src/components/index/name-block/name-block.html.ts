@@ -1,7 +1,7 @@
+import { I18NKeys } from '../../../../../i18n/i18n-keys.js';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { NameBlock } from './name-block.js';
 import { render } from 'lit-html';
-import { I18NKeys } from '../../../../../i18n/i18n-keys.js';
 
 export const NameBlockHTML = new TemplateFn<NameBlock>(
 	function (html) {
