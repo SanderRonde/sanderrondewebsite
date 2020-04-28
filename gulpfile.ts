@@ -1,4 +1,3 @@
-/// <reference path="./types/minimize.d.ts" />
 import {
 	SWConfig,
 	SERVE_STATEGY,
