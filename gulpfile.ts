@@ -5,7 +5,6 @@ import {
 	VersionMap,
 	ENTRYPOINTS_TYPE,
 } from './app/shared/types';
-const HTMLMinimize = require('minimize') as typeof import('minimize');
 import {
 	inlineTypedCSSPipe,
 	generateHTMLCustomData,
@@ -31,10 +30,10 @@ import * as gulp from 'gulp';
 // @ts-ignore
 import * as esm from 'esm';
 
-(require as any).extensions['.js'] = function(module: any, filename: string) {
+(require as any).extensions['.js'] = function (module: any, filename: string) {
 	const content = fs.readFileSync(filename, 'utf8');
 	module._compile(content, filename);
-  };
+};
 
 const ENTRYPOINTS: ENTRYPOINTS_TYPE[] = ['index'];
 
@@ -210,7 +209,6 @@ gulp.task(
 							'**/*.js',
 							'**/*.json',
 							'!**/*.css.js',
-							'!**/*.html.js',
 						],
 						{
 							cwd: srcDir,
@@ -239,33 +237,6 @@ gulp.task(
 									}</style>`;
 								}
 							);
-						})
-					)
-					.pipe(gulp.dest(destDir));
-			},
-			function minifyHTML() {
-				const srcDir = path.join(__dirname, 'app/client/src');
-				const destDir = path.join(__dirname, 'app/client/temp');
-				return gulp
-					.src(['**/*.html.js'], {
-						cwd: srcDir,
-						base: srcDir,
-					})
-					.pipe(
-						createPipable(async (content) => {
-							return new Promise<string>((resolve, reject) => {
-								const minimize = new HTMLMinimize();
-								minimize.parse(
-									content,
-									(error: Error | void, data: string) => {
-										if (error) {
-											reject(error);
-										} else {
-											resolve(data);
-										}
-									}
-								);
-							});
 						})
 					)
 					.pipe(gulp.dest(destDir));
