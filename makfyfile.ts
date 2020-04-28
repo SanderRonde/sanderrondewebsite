@@ -10,6 +10,8 @@ import {
 import { ExecFunction } from 'makfy/dist/lib/schema/runtime';
 import { choice, cmd } from './types/makfy-extended';
 import * as chokidar from 'chokidar';
+import * as rimraf from 'rimraf';
+import * as globby from 'globby';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 const choice = (_choice as unknown) as choice;
@@ -18,31 +20,53 @@ const cmd = (_cmd as unknown) as cmd;
 /**
  * Craft a rimraf command
  */
-function rimraf(glob: string): string {
-	return `rimraf ${glob} || echo "No files to delete"`;
+async function remove(
+	exec: ExecFunction,
+	pattern: string,
+	...additional: string[]
+): Promise<any> {
+	if (additional.length === 0) {
+		return exec(`rimraf ${pattern} || echo "No files to delete"`);
+	} else {
+		const files = await globby([pattern, ...additional]);
+		await Promise.all([
+			files.map(
+				(file) =>
+					new Promise((resolve, reject) => {
+						rimraf(file, (err) => {
+							if (err) {
+								reject(err);
+							} else {
+								resolve();
+							}
+						});
+					})
+			),
+		]);
+	}
 }
 
 cmd('clean')
 	.desc('Clean built files')
 	.run(async (exec) => {
-		await exec(rimraf('app/client/**/*.d.ts'));
-		await exec(rimraf('app/server/**/*.d.ts'));
-		await exec(rimraf('app/shared/**/*.d.ts'));
-		await exec(rimraf('app/i18n/**/*.d.ts'));
-		await exec(rimraf('app/client/**/*.js'));
-		await exec(rimraf('app/server/**/*.js'));
-		await exec(rimraf('app/shared/**/*.js'));
-		await exec(rimraf('app/i18n/**/*.js'));
-		await exec(rimraf('app/client/**/*.map'));
-		await exec(rimraf('app/server/**/*.map'));
-		await exec(rimraf('app/shared/**/*.map'));
-		await exec(rimraf('app/i18n/**/*.map'));
-		await exec(rimraf('app/i18n/**/*.json'));
-		await exec(rimraf('app/server/build/*'));
-		await exec(rimraf('app/client/build/*'));
+		await remove(exec, 'app/client/**/*.d.ts', '!app/client/src/components/types.d.ts');
+		await remove(exec, 'app/server/**/*.d.ts');
+		await remove(exec, 'app/shared/**/*.d.ts');
+		await remove(exec, 'app/i18n/**/*.d.ts', '!app/i18n/spec-check.d.ts');
+		await remove(exec, 'app/client/**/*.js');
+		await remove(exec, 'app/server/**/*.js');
+		await remove(exec, 'app/shared/**/*.js');
+		await remove(exec, 'app/i18n/**/*.js');
+		await remove(exec, 'app/client/**/*.map');
+		await remove(exec, 'app/server/**/*.map');
+		await remove(exec, 'app/shared/**/*.map');
+		await remove(exec, 'app/i18n/**/*.map');
+		await remove(exec, 'app/i18n/**/*.json', '!app/i18n/tsconfig.json');
+		await remove(exec, 'app/server/build/*');
+		await remove(exec, 'app/client/build/*');
 
-		await exec(rimraf('app/*.tsbuildinfo'));
-		await exec(rimraf('*.tsbuildinfo'));
+		await remove(exec, 'app/*.tsbuildinfo');
+		await remove(exec, '*.tsbuildinfo');
 	});
 
 cmd('compile')
@@ -282,7 +306,7 @@ cmd('watch')
 cmd('sourcemaps')
 	.desc('Clone source repo in order to provide source maps')
 	.run(async (exec) => {
-		await exec(rimraf('types/clones'));
+		await remove(exec, 'types/clones');
 
 		// Get wc-lib version
 		const manifestText = await fs.readFile(
