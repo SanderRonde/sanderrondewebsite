@@ -84,13 +84,10 @@
 		"ws": "^7.2.3"
 	},
 	"scripts": {
-		"makfy": "makfy",
-		"compile": "makfy compile --dir all",
 		"watch": "makfy watch",
 		"start": "nodemon",
-		"build-frontend": "makfy frontend",
+		"dev": "nodemon --dev --no-ssr",
 		"build": "makfy build",
-		"build-dev": "makfy build --dev",
-		"sourcemaps": "makfy sourcemaps"
+		"build-dev": "makfy sourcemaps && makfy build --dev"
 	}
 }
