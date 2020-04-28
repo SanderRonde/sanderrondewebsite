@@ -20,9 +20,9 @@ import { CLIENT_DIR } from './constants.js';
 import { WebServer } from '../app.js';
 import { Caching } from './cache.js';
 import { Duplex } from 'stream';
+import { Log } from './log.js';
 import express from 'express';
 import fs from 'fs-extra';
-import chalk from 'chalk';
 import path from 'path';
 
 import * as index from '../../client/build/private/entrypoints/index/exports.bundled.js';
@@ -205,7 +205,7 @@ export namespace Entrypoints {
 				},
 			});
 			stream.on('error', (err) => {
-				console.log(chalk.red('Failed to push file'), err);
+				Log.error('push', 'Failed to push file', err);
 			});
 			if (!entrypointBundleCache.has(srcFile)) {
 				entrypointBundleCache.set(

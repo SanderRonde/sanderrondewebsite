@@ -4,6 +4,7 @@ import { ROOT_DIR } from './lib/constants.js';
 import serverTiming from 'server-timing';
 import cookieParser from 'cookie-parser';
 import { Routes } from './lib/routes.js';
+import { Log } from './lib/log.js';
 import { Dev } from './lib/dev.js';
 import { IO } from './lib/io.js';
 import express from 'express';
@@ -65,13 +66,15 @@ export class WebServer {
 		Routes.init404(this);
 	}
 
-	private async _getCerts(): Promise<spdy.server.ServerOptions|null> {
+	private async _getCerts(): Promise<spdy.server.ServerOptions | null> {
 		try {
 			return {
-				cert: await fs.readFile(path.join(ROOT_DIR, 'certs', 'cert.crt')),
+				cert: await fs.readFile(
+					path.join(ROOT_DIR, 'certs', 'cert.crt')
+				),
 				key: await fs.readFile(path.join(ROOT_DIR, 'certs', 'key.key')),
 			};
-		} catch(e) {
+		} catch (e) {
 			return null;
 		}
 	}
@@ -84,7 +87,8 @@ export class WebServer {
 		this.httpServer = http
 			.createServer(this.app)
 			.listen(this.io.ports.http, () => {
-				console.log(
+				Log.success(
+					'HTTP',
 					`HTTP server listening on port ${this.io.ports.http}`
 				);
 			});
@@ -92,12 +96,13 @@ export class WebServer {
 			this.httpsServer = spdy
 				.createServer(certs, this.app)
 				.listen(this.io.ports.https, () => {
-					console.log(
+					Log.success(
+						'HTTPS',
 						`HTTPS server listening on port ${this.io.ports.https}`
 					);
 				});
 		} else {
-			console.log('No certs found, only creating HTTPS server');
+			Log.warning('HTTPS', 'No certs found, not hosting HTTPS server');
 		}
 	}
 }
