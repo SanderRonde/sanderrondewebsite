@@ -31,6 +31,11 @@ import * as gulp from 'gulp';
 // @ts-ignore
 import * as esm from 'esm';
 
+(require as any).extensions['.js'] = function(module: any, filename: string) {
+	const content = fs.readFileSync(filename, 'utf8');
+	module._compile(content, filename);
+  };
+
 const ENTRYPOINTS: ENTRYPOINTS_TYPE[] = ['index'];
 
 const json = (_json as unknown) as typeof _json.default;
@@ -767,7 +772,10 @@ namespace I18N {
 				}
 				matches = matches.filter((m) => !m.includes('json'));
 
-				const importES = esm(module);
+				const importES = esm(module, {
+					cjs: true,
+					mode: 'all',
+				});
 				resolve(
 					matches.map((file) => {
 						return [importES(file).default, file] as [any, string];
@@ -982,7 +990,10 @@ gulp.task('defs', async function generateCustomData() {
 
 	const customDatas = fileNames
 		.map((fileName) => {
-			const importES = esm(module);
+			const importES = esm(module, {
+				cjs: true,
+				mode: 'all',
+			});
 			const exports = importES(path.resolve(fileName));
 
 			const componentExport = exports['Component'];
