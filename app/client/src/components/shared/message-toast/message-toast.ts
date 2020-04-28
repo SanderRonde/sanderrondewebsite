@@ -8,10 +8,11 @@ import {
 } from 'wc-lib';
 import { IDMapType, ClassMapType } from './message-toast-querymap';
 import { MessageToastHTML } from './message-toast.html.js';
-import { MessageToastCSS } from './message-toast.css.js';
-import { LANGUAGE } from '../../../../../i18n/i18n';
 import { I18NType } from '../../../../../i18n/i18n-defs';
+import { MessageToastCSS } from './message-toast.css.js';
 import { themes } from '../../../../../shared/theme';
+import { LANGUAGE } from '../../../../../i18n/i18n';
+import { FontCSS } from '../../../styles/font.js';
 
 export interface ToastConfig {
 	message: string;
@@ -23,7 +24,7 @@ export interface ToastConfig {
 @config({
 	is: 'message-toast',
 	html: MessageToastHTML,
-	css: MessageToastCSS,
+	css: [MessageToastCSS, FontCSS],
 })
 export class MessageToast extends ConfigurableWebComponent<{
 	selectors: {
