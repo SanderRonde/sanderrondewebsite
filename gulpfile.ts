@@ -999,6 +999,10 @@ gulp.task('defs', async function generateCustomData() {
 		})
 		.filter((v) => v !== null) as HTMLCustomData[];
 
+	if (customDatas.length === 0) {
+		console.log('No custom data files generated');
+		return;
+	}
 	const joined = joinCustomData(...customDatas);
 
 	await fs.writeFile(
