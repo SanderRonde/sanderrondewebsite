@@ -65,14 +65,22 @@ export class WebServer {
 		Routes.init404(this);
 	}
 
+	private async _getCerts(): Promise<spdy.server.ServerOptions|null> {
+		try {
+			return {
+				cert: await fs.readFile(path.join(ROOT_DIR, 'certs', 'cert.crt')),
+				key: await fs.readFile(path.join(ROOT_DIR, 'certs', 'key.key')),
+			};
+		} catch(e) {
+			return null;
+		}
+	}
+
 	/**
 	 * Start listening for requests
 	 */
 	private async _listen() {
-		const config: spdy.server.ServerOptions = {
-			cert: await fs.readFile(path.join(ROOT_DIR, 'certs', 'cert.crt')),
-			key: await fs.readFile(path.join(ROOT_DIR, 'certs', 'key.key')),
-		};
+		const certs = await this._getCerts();
 		this.httpServer = http
 			.createServer(this.app)
 			.listen(this.io.ports.http, () => {
@@ -80,13 +88,17 @@ export class WebServer {
 					`HTTP server listening on port ${this.io.ports.http}`
 				);
 			});
-		this.httpsServer = spdy
-			.createServer(config, this.app)
-			.listen(this.io.ports.https, () => {
-				console.log(
-					`HTTPS server listening on port ${this.io.ports.https}`
-				);
-			});
+		if (certs) {
+			this.httpsServer = spdy
+				.createServer(certs, this.app)
+				.listen(this.io.ports.https, () => {
+					console.log(
+						`HTTPS server listening on port ${this.io.ports.https}`
+					);
+				});
+		} else {
+			console.log('No certs found, only creating HTTPS server');
+		}
 	}
 }
 
