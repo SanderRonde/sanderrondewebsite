@@ -35,6 +35,21 @@ export const messages = {
 				},
 			},
 		},
+		infoBlock: {
+			aboutMe: {
+				title: {
+					message: 'About me',
+				},
+				content: {
+					message: 'Lorem ipsum... (en)',
+				},
+			},
+			skills: {
+				title: {
+					message: 'Skills',
+				},
+			},
+		},
 	},
 	shared: {
 		sw: {
