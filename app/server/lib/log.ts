@@ -70,8 +70,6 @@ export namespace Log {
 			const elapsed = process.hrtime(startTime);
 			const ms = elapsed[0] * 1e3 + elapsed[1] * 1e-6;
 
-			// return truncated value
-			ms.toFixed(3);
 			Log.server(
 				'request',
 				req.method,
