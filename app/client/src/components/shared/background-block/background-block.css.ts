@@ -8,7 +8,8 @@ export const BackgroundBlockCSS = new TemplateFn<BackgroundBlock>(
 		return html`<style>
 			${css(this).$.block} {
 				width: 100vw;
-				min-height: ${props.fill ? '100vh' : '10vh'};
+				padding: 10vh 0;
+				min-height: ${props.fill ? '80vh' : '10vh'};
 				background-color: ${(() => {
 					switch (props.shade) {
 						case THEME_SHADE.DARK:
