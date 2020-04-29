@@ -1,5 +1,7 @@
 import { BackgroundBlock } from '../../shared/background-block/background-block.js';
 import { MessageToast } from '../../shared/message-toast/message-toast.js';
+import { SingleTimeline } from '../single-timeline/single-timeline.js';
+import { JoinedTimeline } from '../joined-timeline/joined-timeline.js';
 import { IDMapType, ClassMapType } from './sander-ronde-querymap';
 import { ConfigurableWebComponent, config } from 'wc-lib';
 import { I18NType } from '../../../../../i18n/i18n-defs';
@@ -14,7 +16,7 @@ import { FontCSS } from '../../../styles/font.js';
 	is: 'sander-ronde',
 	html: SanderRondeHTML,
 	css: [SanderRondeCSS, FontCSS],
-	dependencies: [MessageToast, BackgroundBlock, NameBlock],
+	dependencies: [MessageToast, BackgroundBlock, NameBlock, SingleTimeline, JoinedTimeline],
 })
 export class SanderRonde extends ConfigurableWebComponent<{
 	selectors: {

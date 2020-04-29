@@ -39,13 +39,21 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 								shade="${alternate()
 									? THEME_SHADE.LIGHT
 									: THEME_SHADE.REGULAR}"
-							></background-block>
+							>
+								<single-timeline
+									id="eet-timeline"
+								></single-timeline>
+							</background-block>
 							<background-block
 								id="projects-background"
 								shade="${alternate()
 									? THEME_SHADE.LIGHT
 									: THEME_SHADE.REGULAR}"
-							></background-block>
+							>
+								<single-timeline
+									id="projects-timeline"
+								></single-timeline>
+							</background-block>
 					  `
 					: html`
 							<background-block
@@ -53,7 +61,11 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 								shade="${alternate()
 									? THEME_SHADE.LIGHT
 									: THEME_SHADE.REGULAR}"
-							></background-block>
+							>
+								<joined-timeline
+									id="joined-timeline"
+								></joined-timeline>
+							</background-block>
 					  `}
 			</div>
 		`;
