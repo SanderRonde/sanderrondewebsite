@@ -27,6 +27,10 @@ export class BackgroundBlock extends ConfigurableWebComponent<{
 				exactType: '' as THEME_SHADE,
 				value: THEME_SHADE.REGULAR,
 			},
+			fill: {
+				type: PROP_TYPE.BOOL,
+				value: false
+			}
 		},
 	});
 }
