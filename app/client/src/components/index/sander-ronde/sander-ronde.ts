@@ -7,6 +7,7 @@ import { ConfigurableWebComponent, config } from 'wc-lib';
 import { I18NType } from '../../../../../i18n/i18n-defs';
 import { SanderRondeHTML } from './sander-ronde.html.js';
 import { NameBlock } from '../name-block/name-block.js';
+import { InfoBlock } from '../info-block/info-block.js';
 import { themes } from '../../../../../shared/theme.js';
 import { SanderRondeCSS } from './sander-ronde.css.js';
 import { LANGUAGE } from '../../../../../i18n/i18n';
@@ -16,7 +17,14 @@ import { FontCSS } from '../../../styles/font.js';
 	is: 'sander-ronde',
 	html: SanderRondeHTML,
 	css: [SanderRondeCSS, FontCSS],
-	dependencies: [MessageToast, BackgroundBlock, NameBlock, SingleTimeline, JoinedTimeline],
+	dependencies: [
+		MessageToast,
+		BackgroundBlock,
+		NameBlock,
+		SingleTimeline,
+		JoinedTimeline,
+		InfoBlock
+	],
 })
 export class SanderRonde extends ConfigurableWebComponent<{
 	selectors: {

@@ -31,7 +31,9 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 					shade="${alternate()
 						? THEME_SHADE.LIGHT
 						: THEME_SHADE.REGULAR}"
-				></background-block>
+				>
+						<info-block id="info-block"></info-block>
+				</background-block>
 				${window.innerWidth < MIN_JOINED_TIMELINE_WIDTH
 					? html`
 							<background-block
