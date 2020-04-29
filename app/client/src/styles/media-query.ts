@@ -88,6 +88,8 @@ export function mediaQueryRule(
 	key: string,
 	valueConfig: {
 		[key in RANGE_KEYWORD]?: string;
+	} & {
+		[key: number]: string;
 	}
 ) {
 	return mediaQuery(
