@@ -10,56 +10,47 @@ const RANGE_PX: {
 };
 
 interface RangeConfig {
+	min: number;
 	max: number;
 	text: string;
 }
 
 export function mediaQuery(
 	selector: string | unknown,
-	rangeConfig: {
-		[key in RANGE_KEYWORD]?: string;
-	} & {
-		[key: number]: string;
-	}
+	rangeConfig: Map<[RANGE_KEYWORD | number, RANGE_KEYWORD | number], string>
 ) {
-	const ranges: RangeConfig[] = [];
-
-	const sorted: RangeConfig[] = (Object.keys(rangeConfig) as (
-		| RANGE_KEYWORD
-		| number
-	)[])
-		.map((key) => {
-			if (typeof key === 'string') {
-				return {
-					max: RANGE_PX[key],
-					text: rangeConfig[key]!,
-				};
+	const ranges: RangeConfig[] = [...rangeConfig.entries()].map(
+		([[min, max], value]) => {
+			if (typeof min === 'string') {
+				min = RANGE_PX[min];
+			}
+			if (typeof max === 'string') {
+				max = RANGE_PX[max];
 			}
 			return {
-				max: key,
-				text: rangeConfig[key]!,
+				min,
+				max,
+				text: value,
 			};
-		})
-		.sort((a, b) => a.max - b.max);
-	for (let i = 0; i < sorted.length; i++) {
-		const max = i === sorted.length - 1 ? Infinity : sorted[i + 1].max;
-		ranges.push({
-			max: max,
-			text: sorted[i].text!,
-		});
-	}
+		}
+	);
 
-	return ranges
+	const sorted = ranges.sort((a, b) => {
+		return b.min - a.min;
+	});
+
+	return sorted
 		.reverse()
-		.map(({ max, text }) => {
+		.map(({ min, max, text }) => {
 			const lines = text.split('\n');
-			if (max === Infinity) {
-				return `${selector!} ${lines[0]}${lines
-					.slice(1)
-					.map((l) => `\t\t${l}`)
-					.join('\n')}`;
+			const rules = ['screen'];
+			if (min !== 0) {
+				rules.push(`(min-width: ${min}px)`);
 			}
-			return `@media screen and (max-width: ${max}px) {\n\t${selector!} ${
+			if (max !== Infinity) {
+				rules.push(`(max-width: ${max - 1}px)`);
+			}
+			return `@media ${rules.join(' and ')} {\n\t${selector!} ${
 				lines[0]
 			}${lines
 				.slice(1)
@@ -69,34 +60,16 @@ export function mediaQuery(
 		.join('\n');
 }
 
-function objFromEntries<V>(
-	entries: [string, V][]
-): {
-	[key: string]: V;
-} {
-	const obj: {
-		[key: string]: V;
-	} = {};
-	for (const [key, value] of entries) {
-		obj[key] = value;
-	}
-	return obj;
-}
-
 export function mediaQueryRule(
 	selector: string | unknown,
-	key: string,
-	valueConfig: {
-		[key in RANGE_KEYWORD]?: string;
-	} & {
-		[key: number]: string;
-	}
+	styleKey: string,
+	valueConfig: Map<[RANGE_KEYWORD | number, RANGE_KEYWORD | number], string>
 ) {
 	return mediaQuery(
 		selector,
-		objFromEntries(
-			(Object.keys(valueConfig) as RANGE_KEYWORD[]).map((valueKey) => {
-				return [valueKey, `{ ${key}: ${valueConfig[valueKey]}; }`];
+		new Map(
+			[...valueConfig.entries()].map(([key, value]) => {
+				return [key, `{ ${styleKey}: ${value}; }`];
 			})
 		)
 	);
