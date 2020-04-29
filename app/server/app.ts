@@ -8,7 +8,6 @@ import { Log } from './lib/log.js';
 import { Dev } from './lib/dev.js';
 import { IO } from './lib/io.js';
 import express from 'express';
-import morgan from 'morgan';
 import fs from 'fs-extra';
 import https from 'https';
 import http from 'http';
@@ -54,7 +53,7 @@ export class WebServer {
 	 */
 	private _initRoutes() {
 		this.app.use(serverTiming() as express.RequestHandler);
-		this.app.use(morgan('dev'));
+		this.app.use(Log.request);
 		this.app.use(cookieParser());
 		this._markSendMethods();
 		Entrypoints.registerEntrypointHandlers(this);
