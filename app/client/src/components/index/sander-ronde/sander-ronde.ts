@@ -1,5 +1,4 @@
 import { BackgroundBlock } from '../../shared/background-block/background-block.js';
-import { ExperienceTimeline } from '../experience-timeline/experience-timeline.js';
 import { MessageToast } from '../../shared/message-toast/message-toast.js';
 import { IDMapType, ClassMapType } from './sander-ronde-querymap';
 import { ConfigurableWebComponent, config } from 'wc-lib';
@@ -15,7 +14,7 @@ import { FontCSS } from '../../../styles/font.js';
 	is: 'sander-ronde',
 	html: SanderRondeHTML,
 	css: [SanderRondeCSS, FontCSS],
-	dependencies: [MessageToast, BackgroundBlock, NameBlock, ExperienceTimeline],
+	dependencies: [MessageToast, BackgroundBlock, NameBlock],
 })
 export class SanderRonde extends ConfigurableWebComponent<{
 	selectors: {

@@ -4,6 +4,6 @@ import { render } from 'lit-html';
 
 export const JoinedTimelineHTML = new TemplateFn<JoinedTimeline>(function (html) {
 	return html`
-		<div></div>
+		<div class="horizontal-centerer fill-x">Text</div>
 	`
 }, CHANGE_TYPE.PROP, render);

@@ -1,4 +1,3 @@
-import { ExperienceTimeline } from "./index/experience-timeline/experience-timeline";
 import { BackgroundBlock } from "./shared/background-block/background-block";
 import { SingleTimeline } from "./index/single-timeline/single-timeline";
 import { JoinedTimeline } from "./index/joined-timeline/joined-timeline";
@@ -9,5 +8,4 @@ declare global {
 	type HTMLSingleTimelineElement = SingleTimeline;
 	type HTMLJoinedTimelineElement = JoinedTimeline;
 	type HTMLBackgroundBlockElement = BackgroundBlock;
-	type HTMLExperienceTimelineElement = ExperienceTimeline;
 }
