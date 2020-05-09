@@ -75,18 +75,10 @@ export namespace Dev {
 	export async function initAutoReload({ io }: WebServer) {
 		// Init hook
 		const WebSocket = (await import('ws')).default;
-		if (io.ports.https === io.ports.http + 5) {
-			Log.info(
-				'auto-reload',
-				`Can't listen for changes. Port ${io.ports.http} + 5 = ${
-					io.ports.http + 5
-				} is taken by HTTPS`
-			);
-		}
 
 		// Record sessions
-		const wsServer = new WebSocket.Server({ port: io.ports.http + 5 });
-		const wssServer = new WebSocket.Server({ port: io.ports.https + 5 });
+		const wsServer = new WebSocket.Server({ port: io.ports.ws });
+		const wssServer = new WebSocket.Server({ port: io.ports.wss });
 		const sessions: Set<WebSocket> = new Set();
 		let versionIndex: number = 0;
 		[wsServer, wssServer].forEach((server) => {
@@ -105,13 +97,13 @@ export namespace Dev {
 		wsServer.on('listening', () => {
 			Log.info(
 				'auto-reload',
-				`WS server listening on port ${io.ports.http + 5}`
+				`WS server listening on port ${io.ports.ws}`
 			);
 		});
 		wssServer.on('listening', () => {
 			Log.info(
 				'auto-reload',
-				`WSS server listening on port ${io.ports.https + 5}`
+				`WSS server listening on port ${io.ports.wss}`
 			);
 		});
 
