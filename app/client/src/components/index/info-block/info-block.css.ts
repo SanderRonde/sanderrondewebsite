@@ -5,16 +5,23 @@ import { render } from 'lit-html';
 export const InfoBlockCSS = new TemplateFn<InfoBlock>(
 	function (html, _props, theme) {
 		return html`<style>
-			${css(this).$.block},
-			span[data-type='html'] {
+			${css(this).$.container} {
+				color: ${theme.text.main};
+				width: calc(600px + 10vw);
+				padding: 0 5vw;
 				display: flex;
-				flex-direction: column;
-				flex-grow: 100;
+				flex-direction: row;
+				justify-content: space-between;
 			}
 
-			${css(this).$['main-content']} {
-				flex-grow: 100;
-				color: ${theme.text.main};
+			${css(this).c.header} {
+				font-size: 200%;
+				font-weight: 500;
+				margin-bottom: 1px;
+			}
+
+			${css(this).$.skills.child.c.header} {
+				text-align: right;
 			}
 		</style>`;
 	},

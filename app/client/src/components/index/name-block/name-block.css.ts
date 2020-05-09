@@ -22,11 +22,14 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 				text-align: center;
 			}
 
-			${mediaQueryRule(css(this).$.name, 'font-size', {
-				xs: '330%',
-				sm: '500%',
-				lg: '1000%',
-			})}
+			${mediaQueryRule(
+				css(this).$.name,
+				'font-size',
+				new Map([
+					[[0, 1000], '14vw'],
+					[[1000, Infinity], '1000%'],
+				])
+			)}
 
 			${css(this).$.name} {
 				line-height: 0.9em;
@@ -48,17 +51,25 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 				transform: translateY(10px);
 			}
 
-			${mediaQueryRule(css(this).c.tagline, 'font-size', {
-				sm: '95%',
-				lg: '200%',
-			})}
+			${mediaQueryRule(
+				css(this).c.tagline,
+				'font-size',
+				new Map([
+					[[0, 800], '4vw'],
+					[[800, Infinity], '200%'],
+				])
+			)}
 
-			${mediaQueryRule(css(this).c['education-line'], 'font-size', {
-				sm: '75%',
-				lg: '120%',
-			})}
+			${mediaQueryRule(
+				css(this).c['education-line'],
+				'font-size',
+				new Map([
+					[[0, 800], '2.25vw'],
+					[[800, Infinity], '120%'],
+				])
+			)}
 		</style>`;
 	},
-	CHANGE_TYPE.THEME,
+	CHANGE_TYPE.NEVER,
 	render
 );

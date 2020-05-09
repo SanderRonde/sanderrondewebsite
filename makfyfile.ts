@@ -1,15 +1,10 @@
-import {
-	cmd as _cmd,
-	choice as _choice,
-	flag,
-	setEnvVar,
-	getFileChangesAsync,
-	getUtilsContext,
-	setUtilsContext,
-} from 'makfy';
+import { cmd as _cmd, choice as _choice, flag, setEnvVar } from 'makfy';
 import { ExecFunction } from 'makfy/dist/lib/schema/runtime';
 import { choice, cmd } from './types/makfy-extended';
 import * as chokidar from 'chokidar';
+import * as crypto from 'crypto';
+import * as rimraf from 'rimraf';
+import * as globby from 'globby';
 import * as fs from 'fs-extra';
 import * as path from 'path';
 const choice = (_choice as unknown) as choice;
@@ -18,31 +13,57 @@ const cmd = (_cmd as unknown) as cmd;
 /**
  * Craft a rimraf command
  */
-function rimraf(glob: string): string {
-	return `rimraf ${glob} || echo "No files to delete"`;
+async function remove(
+	exec: ExecFunction,
+	pattern: string,
+	...additional: string[]
+): Promise<any> {
+	if (additional.length === 0) {
+		return exec(`rimraf ${pattern} || echo "No files to delete"`);
+	} else {
+		const files = await globby([pattern, ...additional]);
+		await Promise.all([
+			files.map(
+				(file) =>
+					new Promise((resolve, reject) => {
+						rimraf(file, (err) => {
+							if (err) {
+								reject(err);
+							} else {
+								resolve();
+							}
+						});
+					})
+			),
+		]);
+	}
 }
 
 cmd('clean')
 	.desc('Clean built files')
 	.run(async (exec) => {
-		await exec(rimraf('app/client/**/*.d.ts'));
-		await exec(rimraf('app/server/**/*.d.ts'));
-		await exec(rimraf('app/shared/**/*.d.ts'));
-		await exec(rimraf('app/i18n/**/*.d.ts'));
-		await exec(rimraf('app/client/**/*.js'));
-		await exec(rimraf('app/server/**/*.js'));
-		await exec(rimraf('app/shared/**/*.js'));
-		await exec(rimraf('app/i18n/**/*.js'));
-		await exec(rimraf('app/client/**/*.map'));
-		await exec(rimraf('app/server/**/*.map'));
-		await exec(rimraf('app/shared/**/*.map'));
-		await exec(rimraf('app/i18n/**/*.map'));
-		await exec(rimraf('app/i18n/**/*.json'));
-		await exec(rimraf('app/server/build/*'));
-		await exec(rimraf('app/client/build/*'));
+		await remove(
+			exec,
+			'app/client/**/*.d.ts',
+			'!app/client/src/components/types.d.ts'
+		);
+		await remove(exec, 'app/server/**/*.d.ts');
+		await remove(exec, 'app/shared/**/*.d.ts');
+		await remove(exec, 'app/i18n/**/*.d.ts', '!app/i18n/spec-check.d.ts');
+		await remove(exec, 'app/client/**/*.js');
+		await remove(exec, 'app/server/**/*.js');
+		await remove(exec, 'app/shared/**/*.js');
+		await remove(exec, 'app/i18n/**/*.js');
+		await remove(exec, 'app/client/**/*.map');
+		await remove(exec, 'app/server/**/*.map');
+		await remove(exec, 'app/shared/**/*.map');
+		await remove(exec, 'app/i18n/**/*.map');
+		await remove(exec, 'app/i18n/**/*.json', '!app/i18n/tsconfig.json');
+		await remove(exec, 'app/server/build/*');
+		await remove(exec, 'app/client/build/*');
 
-		await exec(rimraf('app/*.tsbuildinfo'));
-		await exec(rimraf('*.tsbuildinfo'));
+		await remove(exec, 'app/*.tsbuildinfo');
+		await remove(exec, '*.tsbuildinfo');
 	});
 
 cmd('compile')
@@ -102,17 +123,78 @@ cmd('frontend')
 		await exec(`${env}; gulp frontend`);
 	});
 
-async function updateHTMLTypings(exec: ExecFunction) {
-	const { hasChanges, added, modified } = await getFileChangesAsync(
-		'htm-typings',
-		path.join(__dirname, 'app/client/src/components/**/*.html.ts')
+async function calcHash(filePath: string) {
+	const content = await fs.readFile(filePath);
+	const hash = crypto.createHash('sha512');
+
+	hash.update(content);
+
+	return hash.digest('hex');
+}
+
+async function watchForChanges(
+	glob: string,
+	chokidarOptions: chokidar.WatchOptions,
+	onChange: (
+		filePath: string,
+		changeType: 'add' | 'change' | 'delete'
+	) => void | Promise<void>
+) {
+	const hashes: Map<string, string> = new Map();
+
+	// First collect all hashes
+	await Promise.all(
+		(await globby(glob))
+			.map((f) => path.resolve(f))
+			.map(async (filePath) => {
+				hashes.set(filePath, await calcHash(filePath));
+			})
 	);
-	if (!hasChanges) {
-		console.log('No changes');
-	}
-	const htmlFiles = [...added, ...modified];
+
+	chokidar
+		.watch(glob, chokidarOptions)
+		.on('change', async (filePath) => {
+			filePath = path.resolve(filePath);
+
+			// File changed
+			if (!hashes.has(filePath)) {
+				console.log('didnt have the hash yet');
+				return await onChange(filePath, 'add');
+			}
+
+			const prevHash = hashes.get(filePath);
+			const currentHash = await calcHash(filePath);
+
+			if (prevHash !== currentHash) {
+				await onChange(filePath, 'change');
+			}
+		})
+		.on('add', async (filePath) => {
+			filePath = path.resolve(filePath);
+
+			// File added
+			if (hashes.has(filePath)) return;
+			console.log('added', filePath, 'to', hashes);
+
+			hashes.set(filePath, await calcHash(filePath));
+
+			await onChange(filePath, 'add');
+		})
+		.on('unlink', async (filePath) => {
+			filePath = path.resolve(filePath);
+
+			// File deleted
+			if (!hashes.has(filePath)) return;
+
+			hashes.delete(filePath);
+
+			await onChange(filePath, 'delete');
+		});
+}
+
+async function updateHTMLTypings(exec: ExecFunction, changedFiles: string[]) {
 	await exec(
-		htmlFiles.map((file) => {
+		changedFiles.map((file) => {
 			const parsedPath = path.parse(file);
 			const componentName = parsedPath.name.split('.')[0];
 			const outFile = path.join(
@@ -128,36 +210,42 @@ cmd('html-typings')
 	.desc('Get HTML typings')
 	.args({
 		watch: flag(),
+		hot: flag(),
 	})
 	.argsDesc({
 		watch: 'Watch for changes',
+		hot: "Start watching immediately and don't do initial task",
 	})
-	.run(async (exec, { watch }) => {
-		const context = getUtilsContext();
-		if (watch) {
-			chokidar
-				.watch(
+	.run(async (exec, { watch, hot }) => {
+		if (!watch || !hot) {
+			await updateHTMLTypings(
+				exec,
+				await globby(
 					path.join(
 						__dirname,
 						'app/client/src/components/**/*.html.ts'
-					),
-					{
-						persistent: true,
-						awaitWriteFinish: {
-							stabilityThreshold: 500,
-						},
-						cwd: __dirname,
-						ignoreInitial: false,
-						ignored: /.*\.(js|map)/,
-					}
+					)
 				)
-				.on('change', async () => {
-					console.log('Changes detected');
-					setUtilsContext(context);
-					await updateHTMLTypings(exec);
-				});
+			);
 		}
-		await updateHTMLTypings(exec);
+		if (watch) {
+			await watchForChanges(
+				path.join(__dirname, 'app/client/src/components/**/*.html.ts'),
+				{
+					persistent: true,
+					awaitWriteFinish: {
+						stabilityThreshold: 500,
+					},
+					cwd: __dirname,
+					ignoreInitial: false,
+					ignored: /.*\.(js|map)/,
+				},
+				async (changedFile) => {
+					await exec('? changes detected');
+					await updateHTMLTypings(exec, [changedFile]);
+				}
+			);
+		}
 	});
 
 cmd('build')
@@ -198,16 +286,21 @@ cmd('i18n')
 	.desc('Rebuild i18n files')
 	.args({
 		watch: flag(),
+		hot: flag(),
 	})
 	.argsDesc({
 		watch: 'Whether to update the i18n files as they are changed',
+		hot: "Start watching immediately and don't do initial task",
 	})
-	.run(async (exec, { watch }) => {
-		await exec('gulp i18n');
+	.run(async (exec, { watch, hot }) => {
+		if (!watch || !hot) {
+			await exec('gulp i18n');
+		}
 
 		if (watch) {
-			chokidar
-				.watch(path.join(__dirname, 'app/i18n/locales/*.js'), {
+			await watchForChanges(
+				path.join(__dirname, 'app/i18n/locales/*.js'),
+				{
 					persistent: true,
 					awaitWriteFinish: {
 						stabilityThreshold: 1000,
@@ -215,11 +308,14 @@ cmd('i18n')
 					cwd: __dirname,
 					ignoreInitial: false,
 					ignored: /.*\.(map|json\.js|ts)/,
-				})
-				.on('change', async () => {
-					console.log('Changes detected');
+				},
+				async (filePath, changeType) => {
+					await exec(
+						`? changes detected ${changeType} - ${filePath}`
+					);
 					await exec('gulp i18n');
-				});
+				}
+			);
 		}
 	});
 
@@ -227,30 +323,33 @@ cmd('sw')
 	.desc('Rebuild serviceworker file')
 	.args({
 		watch: flag(),
+		hot: flag(),
 	})
 	.argsDesc({
 		watch: 'Whether to update the serviceworker file as it is changed',
+		hot: "Start watching immediately and don't do initial task",
 	})
-	.run(async (exec, { watch }) => {
-		await exec('gulp serviceworker');
+	.run(async (exec, { watch, hot }) => {
+		if (!watch || !hot) {
+			await exec('gulp serviceworker');
+		}
 
 		if (watch) {
-			chokidar
-				.watch(
-					path.join(__dirname, 'app/client/src/sw/serviceworker.js'),
-					{
-						persistent: true,
-						awaitWriteFinish: {
-							stabilityThreshold: 1000,
-						},
-						cwd: __dirname,
-						ignoreInitial: true,
-					}
-				)
-				.on('change', async () => {
-					console.log('Changes detected');
+			await watchForChanges(
+				path.join(__dirname, 'app/client/src/sw/serviceworker.js'),
+				{
+					persistent: true,
+					awaitWriteFinish: {
+						stabilityThreshold: 1000,
+					},
+					cwd: __dirname,
+					ignoreInitial: true,
+				},
+				async () => {
+					await exec('? changes detected');
 					await exec('gulp serviceworker');
-				});
+				}
+			);
 		}
 	});
 
@@ -258,23 +357,28 @@ cmd('watch')
 	.desc('Watch for changes and compile accordingly')
 	.args({
 		type: choice(['ts', 'html', 'i18n', 'sw', 'all'], 'all'),
+		hot: flag(),
 	})
 	.argsDesc({
 		type: 'The type of changes to watch',
+		hot: "Start watching immediately and don't do initial task",
 	})
-	.run(async (exec, { type }) => {
+	.run(async (exec, { type, hot }) => {
+		const flags = ['--watch', hot ? '--hot' : null]
+			.filter((v) => !!v)
+			.join(' ');
 		const commands = [];
 		if (type === 'ts' || type === 'all') {
-			commands.push('@compile --dir all --watch');
+			commands.push(`@compile --dir all --watch`);
 		}
 		if (type === 'html' || type === 'all') {
-			commands.push('@html-typings --watch');
+			commands.push(`@html-typings ${flags}`);
 		}
 		if (type === 'i18n' || type === 'all') {
-			commands.push('@i18n --watch');
+			commands.push(`@i18n ${flags}`);
 		}
 		if (type === 'sw' || type === 'all') {
-			commands.push('@sw --watch');
+			commands.push(`@sw ${flags}`);
 		}
 		await exec(commands);
 	});
@@ -282,7 +386,7 @@ cmd('watch')
 cmd('sourcemaps')
 	.desc('Clone source repo in order to provide source maps')
 	.run(async (exec) => {
-		await exec(rimraf('types/clones'));
+		await remove(exec, 'types/clones');
 
 		// Get wc-lib version
 		const manifestText = await fs.readFile(

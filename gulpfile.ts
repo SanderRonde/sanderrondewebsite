@@ -1,11 +1,9 @@
-/// <reference path="./types/minimize.d.ts" />
 import {
 	SWConfig,
 	SERVE_STATEGY,
 	VersionMap,
 	ENTRYPOINTS_TYPE,
 } from './app/shared/types';
-const HTMLMinimize = require('minimize') as typeof import('minimize');
 import {
 	inlineTypedCSSPipe,
 	generateHTMLCustomData,
@@ -30,6 +28,11 @@ import * as glob from 'glob';
 import * as gulp from 'gulp';
 // @ts-ignore
 import * as esm from 'esm';
+
+(require as any).extensions['.js'] = function (module: any, filename: string) {
+	const content = fs.readFileSync(filename, 'utf8');
+	module._compile(content, filename);
+};
 
 const ENTRYPOINTS: ENTRYPOINTS_TYPE[] = ['index'];
 
@@ -200,18 +203,10 @@ gulp.task(
 				const srcDir = path.join(__dirname, 'app/client/src');
 				const destDir = path.join(__dirname, 'app/client/temp');
 				return gulp
-					.src(
-						[
-							'**/*.js',
-							'**/*.json',
-							'!**/*.css.js',
-							'!**/*.html.js',
-						],
-						{
-							cwd: srcDir,
-							base: srcDir,
-						}
-					)
+					.src(['**/*.js', '**/*.json', '!**/*.css.js'], {
+						cwd: srcDir,
+						base: srcDir,
+					})
 					.pipe(gulp.dest(destDir));
 			},
 			function minifyCSS() {
@@ -234,33 +229,6 @@ gulp.task(
 									}</style>`;
 								}
 							);
-						})
-					)
-					.pipe(gulp.dest(destDir));
-			},
-			function minifyHTML() {
-				const srcDir = path.join(__dirname, 'app/client/src');
-				const destDir = path.join(__dirname, 'app/client/temp');
-				return gulp
-					.src(['**/*.html.js'], {
-						cwd: srcDir,
-						base: srcDir,
-					})
-					.pipe(
-						createPipable(async (content) => {
-							return new Promise<string>((resolve, reject) => {
-								const minimize = new HTMLMinimize();
-								minimize.parse(
-									content,
-									(error: Error | void, data: string) => {
-										if (error) {
-											reject(error);
-										} else {
-											resolve(data);
-										}
-									}
-								);
-							});
 						})
 					)
 					.pipe(gulp.dest(destDir));
@@ -767,7 +735,10 @@ namespace I18N {
 				}
 				matches = matches.filter((m) => !m.includes('json'));
 
-				const importES = esm(module);
+				const importES = esm(module, {
+					cjs: true,
+					mode: 'all',
+				});
 				resolve(
 					matches.map((file) => {
 						return [importES(file).default, file] as [any, string];
@@ -982,7 +953,10 @@ gulp.task('defs', async function generateCustomData() {
 
 	const customDatas = fileNames
 		.map((fileName) => {
-			const importES = esm(module);
+			const importES = esm(module, {
+				cjs: true,
+				mode: 'all',
+			});
 			const exports = importES(path.resolve(fileName));
 
 			const componentExport = exports['Component'];
@@ -999,6 +973,10 @@ gulp.task('defs', async function generateCustomData() {
 		})
 		.filter((v) => v !== null) as HTMLCustomData[];
 
+	if (customDatas.length === 0) {
+		console.log('No custom data files generated');
+		return;
+	}
 	const joined = joinCustomData(...customDatas);
 
 	await fs.writeFile(

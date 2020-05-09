@@ -4,7 +4,7 @@ import serveStatic from 'serve-static';
 import { WebServer } from '../app.js';
 import { Routes } from './routes.js';
 import * as WebSocket from 'ws';
-import chalk from 'chalk';
+import { Log } from './log.js';
 import path from 'path';
 
 export namespace Dev {
@@ -47,16 +47,14 @@ export namespace Dev {
 			}
 		);
 
-		['wc-lib'].forEach(
-			(rootSubPath) => {
-				app.use(
-					Routes.serve(path.join(ROOT_DIR, 'types/clones', rootSubPath), {
-						extensions: ['ts'],
-						prefix: `/node_modules/${rootSubPath}`,
-					})
-				);
-			}
-		);
+		['wc-lib'].forEach((rootSubPath) => {
+			app.use(
+				Routes.serve(path.join(ROOT_DIR, 'types/clones', rootSubPath), {
+					extensions: ['ts'],
+					prefix: `/node_modules/${rootSubPath}`,
+				})
+			);
+		});
 
 		['i18n', 'shared'].forEach((subPath) => {
 			app.use(
@@ -78,8 +76,8 @@ export namespace Dev {
 		// Init hook
 		const WebSocket = (await import('ws')).default;
 		if (io.ports.https === io.ports.http + 5) {
-			console.log(
-				chalk.blue('[auto-reload]'),
+			Log.info(
+				'auto-reload',
 				`Can't listen for changes. Port ${io.ports.http} + 5 = ${
 					io.ports.http + 5
 				} is taken by HTTPS`
@@ -104,12 +102,12 @@ export namespace Dev {
 				);
 			});
 		});
-		console.log(
-			chalk.blue('[auto-reload]'),
+		Log.info(
+			'auto-reload',
 			`WS server listening on port ${io.ports.http + 5}`
 		);
-		console.log(
-			chalk.blue('[auto-reload]'),
+		Log.info(
+			'auto-reload',
 			`WSS server listening on port ${io.ports.https + 5}`
 		);
 
@@ -132,8 +130,8 @@ export namespace Dev {
 				})
 				.on('change', () => {
 					versionIndex++;
-					console.log(
-						chalk.blue('[auto-reload]'),
+					Log.info(
+						'auto-reload',
 						'File changed, reloading client...'
 					);
 					sessions.forEach((session) => {
