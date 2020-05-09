@@ -31,6 +31,10 @@ export class BackgroundBlock extends ConfigurableWebComponent<{
 				type: PROP_TYPE.BOOL,
 				value: false,
 			},
+			padding: {
+				type: PROP_TYPE.BOOL,
+				value: true,
+			},
 		},
 	});
 }

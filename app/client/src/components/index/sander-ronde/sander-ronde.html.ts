@@ -19,10 +19,10 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 				<background-block
 					id="name-background"
 					fill
-					style="display: none;"
 					shade="${alternate()
 						? THEME_SHADE.LIGHT
 						: THEME_SHADE.REGULAR}"
+					padding="false"
 				>
 					<name-block id="name-block"></name-block>
 				</background-block>

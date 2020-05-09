@@ -8,18 +8,18 @@ export const BackgroundBlockCSS = new TemplateFn<BackgroundBlock>(
 		return html`<style>
 			${css(this).$.block} {
 				width: 100vw;
-				padding: 10vh 0;
+				${props.padding ? 'padding: 10vh 0;' : ''}
 				min-height: ${props.fill ? '80vh' : '10vh'};
 				background-color: ${(() => {
-					switch (props.shade) {
-						case THEME_SHADE.DARK:
-							return theme.background.dark;
-						case THEME_SHADE.LIGHT:
-							return theme.background.light;
-						default:
-							return theme.background.main;
-					}
-				})()};
+				switch (props.shade) {
+					case THEME_SHADE.DARK:
+						return theme.background.dark;
+					case THEME_SHADE.LIGHT:
+						return theme.background.light;
+					default:
+						return theme.background.main;
+				}
+			})()};
 				min-height: ${props.fill ? '100vh' : '1vh'};
 			}
 
