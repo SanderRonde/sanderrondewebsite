@@ -102,14 +102,18 @@ export namespace Dev {
 				);
 			});
 		});
-		Log.info(
-			'auto-reload',
-			`WS server listening on port ${io.ports.http + 5}`
-		);
-		Log.info(
-			'auto-reload',
-			`WSS server listening on port ${io.ports.https + 5}`
-		);
+		wsServer.on('listening', () => {
+			Log.info(
+				'auto-reload',
+				`WS server listening on port ${io.ports.http + 5}`
+			);
+		});
+		wssServer.on('listening', () => {
+			Log.info(
+				'auto-reload',
+				`WSS server listening on port ${io.ports.https + 5}`
+			);
+		});
 
 		// Watch
 		const chokidar = await import('chokidar');
