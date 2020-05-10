@@ -15,7 +15,7 @@ export const ToolTipHTML = new TemplateFn<ToolTip>(
 						'fade-in',
 						props.internalDirection,
 						{
-							reverse:
+							'fade-down':
 								props.internalDirection ===
 								TOOLTIP_DIRECTION.TOP,
 							[TOGGLES.EXPANDED]: props.expanded,
