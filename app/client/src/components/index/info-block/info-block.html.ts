@@ -44,9 +44,16 @@ const skillGroups = pyramidSort(
 ).map((group) => {
 	return {
 		...group,
-		skills: group.skills.sort(
-			(a, b) => skillLevelToNumber(a.level) - skillLevelToNumber(b.level)
-		),
+		skills: group.skills.sort((a, b) => {
+			const levelDiff =
+				skillLevelToNumber(b.level) - skillLevelToNumber(a.level);
+			if (levelDiff !== 0) return levelDiff;
+
+			// Why is this even possible
+			if (a.name > b.name) return 1;
+			if (a.name < b.name) return -1;
+			return 0;
+		}),
 	};
 });
 
