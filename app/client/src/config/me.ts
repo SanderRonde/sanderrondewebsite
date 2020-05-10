@@ -44,6 +44,7 @@ export const enum SKILL {
 	KERAS = 'keras',
 	BROWSER_EXTENSIONS = 'browser_extensions',
 	BASH = 'bash',
+	REACT = 'react',
 }
 
 export const enum SKILL_GROUP {
@@ -113,6 +114,10 @@ const me: MeConfig = {
 				},
 				{
 					name: SKILL.CSS,
+					level: SKILL_LEVEL.GREAT,
+				},
+				{
+					name: SKILL.REACT,
 					level: SKILL_LEVEL.GREAT,
 				},
 			],
