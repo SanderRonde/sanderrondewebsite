@@ -40,7 +40,7 @@ export const themes: {
 		secondary: {
 			main: '#FFD03E',
 			light: '#FFD442',
-			dark: '#EABB38',
+			dark: '#A47F17',
 		},
 		primary: {
 			main: '#2176FF',
