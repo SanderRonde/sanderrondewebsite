@@ -76,6 +76,16 @@ export namespace Dev {
 		// Init hook
 		const WebSocket = (await import('ws')).default;
 
+		if (
+			io.ports.ws !== io.ports.http + 2 ||
+			io.ports.wss !== io.ports.https + 2
+		) {
+			Log.warning(
+				'auto-reload',
+				"auto reloader won't know what port to connect to since the WS(S) port is not HTTP(s) + 2"
+			);
+		}
+
 		// Record sessions
 		const wsServer = new WebSocket.Server({ port: io.ports.ws });
 		const wssServer = new WebSocket.Server({ port: io.ports.wss });

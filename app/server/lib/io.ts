@@ -65,8 +65,8 @@ export namespace IO {
 			ports: {
 				http: getNumArg('http') || 1234,
 				https: getNumArg('https') || 1235,
-				ws: getNumArg('dev-ws') || (getNumArg('http') || 1234) + 5,
-				wss: getNumArg('dev-wss') || (getNumArg('https') || 1235) + 5,
+				ws: getNumArg('dev-ws') || (getNumArg('http') || 1234) + 2,
+				wss: getNumArg('dev-wss') || (getNumArg('https') || 1235) + 2,
 			},
 		};
 	}

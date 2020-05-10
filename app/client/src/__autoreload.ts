@@ -33,7 +33,7 @@ import { getCookie, setCookie } from './shared/cookies.js';
 		const protocol = location.protocol === 'https:' ? 'wss:' : 'ws:';
 		const ws = new WebSocket(
 			`${protocol}//${location.hostname}:${
-				~~location.port + 5
+				~~location.port + 2
 			}/__autoreload`
 		);
 		ws.onclose = () => window.setTimeout(connect, 1500);
