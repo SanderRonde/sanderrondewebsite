@@ -62,9 +62,10 @@ export function strToLanguage(str: string) {
 	return LANGUAGES.find((l) => l === str);
 }
 
-export interface I18NMessage {
+export type I18NMessage = {
 	message: string;
-}
+	blank?: boolean;
+};
 
 export type I18NTree =
 	| {

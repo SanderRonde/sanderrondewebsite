@@ -680,6 +680,7 @@ namespace I18N {
 
 	interface I18NMessage {
 		message: string;
+		blank?: boolean;
 	}
 
 	type I18NRoot = {
@@ -791,7 +792,7 @@ namespace I18N {
 		export function genEnumMessages(root: I18NRoot) {
 			let str: string[] = [];
 			let tree: string[] = [];
-			walkMessages(root, (_message, currentPath, finalKey) => {
+			walkMessages(root, (message, currentPath, finalKey) => {
 				const diff = getDiffPath(tree, currentPath);
 				if (diff.length) {
 					for (let i = 0; i < diff.length; i++) {
@@ -815,12 +816,10 @@ namespace I18N {
 						}
 					}
 				}
-				str.push(
-					`${indent(tree.length)}"${finalKey}" = '${genPath(
-						currentPath,
-						finalKey
-					)}',`
-				);
+				const value = message.blank
+					? genPath(currentPath, '')
+					: genPath(currentPath, finalKey);
+				str.push(`${indent(tree.length)}"${finalKey}" = '${value}',`);
 			});
 			for (let i = 0; i < tree.length; i++) {
 				str.push(indent(tree.length - 1) + '}');
