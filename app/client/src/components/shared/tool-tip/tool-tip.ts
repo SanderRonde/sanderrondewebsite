@@ -82,7 +82,12 @@ export class ToolTip extends ConfigurableWebComponent<{
 			this.props.internalDirection = this.props.direction;
 		}
 
-		if (this._marginsUpdated && !this.props.dynamic) return;
+		if (
+			this._marginsUpdated &&
+			!this.props.dynamic &&
+			this.props.internalDirection !== TOOLTIP_DIRECTION.TOP
+		)
+			return;
 		this._marginsUpdated = true;
 		console.log(contentBCR);
 
@@ -103,6 +108,10 @@ export class ToolTip extends ConfigurableWebComponent<{
 		} else {
 			const padding = (msgWidth - contentWidth) / 2;
 			this.$.tooltip.style.marginLeft = `${-padding}px`;
+		}
+
+		if (this.props.internalDirection === TOOLTIP_DIRECTION.TOP) {
+			this.$.tooltip.style.marginTop = `${-contentBCR.height - 40}px`;
 		}
 	}
 

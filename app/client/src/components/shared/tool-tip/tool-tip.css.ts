@@ -20,7 +20,6 @@ export const ToolTipCSS = new TemplateFn<ToolTip>(
 			}
 
 			${css(this).$.tooltip.toggle.top} {
-				margin-top: calc(-100% - 35px);
 				padding-top: 0;
 				padding-bottom: 8px;
 			}
