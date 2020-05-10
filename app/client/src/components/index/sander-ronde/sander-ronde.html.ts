@@ -15,11 +15,9 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 
 		return html`
 			<div id="scroller">
-				<!-- TODO: remove invisibility when done with timeline development -->
 				<background-block
 					id="name-background"
 					fill
-					style="display: none;"
 					shade="${alternate()
 						? THEME_SHADE.LIGHT
 						: THEME_SHADE.REGULAR}"
