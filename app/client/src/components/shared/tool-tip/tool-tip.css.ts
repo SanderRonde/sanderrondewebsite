@@ -8,10 +8,25 @@ export const TOOLTIP_SIDE_PADDING = 8;
 export const ToolTipCSS = new TemplateFn<ToolTip>(
 	function (html) {
 		return html`<style>
+			${css(this).$.container} {
+				position: relative;
+			}
+
 			${css(this).$.tooltip} {
 				display: none;
 				position: absolute;
 				padding-top: 8px;
+				z-index: 100000;
+			}
+
+			${css(this).$.tooltip.toggle.top} {
+				margin-top: calc(-100% - 35px);
+				padding-top: 0;
+				padding-bottom: 8px;
+			}
+
+			${css(this).$.tooltip.toggle.top.child.$['tooltip-arrow']} {
+				margin-top: 39px;
 			}
 
 			${css(this).$.tooltip.toggle.expanded} {
@@ -40,6 +55,7 @@ export const ToolTipCSS = new TemplateFn<ToolTip>(
 			${css(this).$['tooltip-arrow']} {
 				margin-top: 7px;
 				position: absolute;
+				margin-left: 50%;
 			}
 
 			${css(this).$['tooltip-arrow'].pseudo(':before')} {

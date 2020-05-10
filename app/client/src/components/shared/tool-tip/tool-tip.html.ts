@@ -1,5 +1,5 @@
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
-import { ToolTip, TOGGLES } from './tool-tip.js';
+import { ToolTip, TOGGLES, TOOLTIP_DIRECTION } from './tool-tip.js';
 import { render } from 'lit-html';
 
 export const ToolTipHTML = new TemplateFn<ToolTip>(
@@ -13,7 +13,11 @@ export const ToolTipHTML = new TemplateFn<ToolTip>(
 					id="tooltip"
 					class=${[
 						'fade-in',
+						props.internalDirection,
 						{
+							reverse:
+								props.internalDirection ===
+								TOOLTIP_DIRECTION.TOP,
 							[TOGGLES.EXPANDED]: props.expanded,
 						},
 					]}
