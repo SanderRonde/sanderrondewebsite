@@ -41,8 +41,14 @@ export const messages = {
 				title: {
 					message: 'About me',
 				},
-				content: {
-					message: 'Lorem ipsum... (en)',
+				par1: {
+					message: `Hi I'm Sander, and as you might have already read, I'm a computer science student and full-stack developer. I have a passion for solving hard problems in either the frontend or the backend.`,
+				},
+				par2: {
+					message: `I started out some {{frontend}} years ago with developing chrome extensions and have since expanded to full-stack development with various database systems and backends, systems/microcontroller programming with mostly C and a bit of machine learning.`,
+				},
+				par3: {
+					message: `This website serves as both a browsable resumé and a way to show off what I can do, being built using my own {{wclib}} library. You can learn more about my portfolio down below or you can focus on the projects related to a skill by clicking on one.`,
 				},
 			},
 			skills: {
