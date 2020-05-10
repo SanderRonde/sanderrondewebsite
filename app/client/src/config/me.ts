@@ -1,9 +1,24 @@
 export const enum SKILL_LEVEL {
-	FLUENT,
-	GREAT,
-	GOOD,
-	DECENT,
-	BASIC,
+	FLUENT = 'fluent',
+	GREAT = 'great',
+	GOOD = 'good',
+	DECENT = 'decent',
+	BASIC = 'basic',
+}
+
+export function skillLevelToNumber(level: SKILL_LEVEL) {
+	switch (level) {
+		case SKILL_LEVEL.BASIC:
+			return 0;
+		case SKILL_LEVEL.DECENT:
+			return 1;
+		case SKILL_LEVEL.GOOD:
+			return 2;
+		case SKILL_LEVEL.GREAT:
+			return 3;
+		case SKILL_LEVEL.FLUENT:
+			return 3;
+	}
 }
 
 export const enum SKILL {

@@ -1,5 +1,5 @@
 import { I18NKeys } from '../../../../../i18n/i18n-keys.js';
-import config, { SkillGroup } from '../../../config/me.js';
+import config, { SkillGroup, skillLevelToNumber } from '../../../config/me.js';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { InfoBlock } from './info-block.js';
 import { render } from 'lit-html';
@@ -44,7 +44,9 @@ const skillGroups = pyramidSort(
 ).map((group) => {
 	return {
 		...group,
-		skills: group.skills.sort((a, b) => a.level - b.level),
+		skills: group.skills.sort(
+			(a, b) => skillLevelToNumber(a.level) - skillLevelToNumber(b.level)
+		),
 	};
 });
 
