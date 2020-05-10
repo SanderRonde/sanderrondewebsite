@@ -36,7 +36,6 @@ export const enum SKILL {
 	PHP = 'php',
 	ASSEMBLY = 'assembly',
 	LATEX = 'latex',
-	RUBY = 'ruby',
 	NODE = 'node',
 	DJANGO = 'django',
 	LINUX = 'linux',
@@ -140,10 +139,6 @@ const me: MeConfig = {
 				{
 					name: SKILL.PHP,
 					level: SKILL_LEVEL.DECENT,
-				},
-				{
-					name: SKILL.RUBY,
-					level: SKILL_LEVEL.BASIC,
 				},
 			],
 		},
