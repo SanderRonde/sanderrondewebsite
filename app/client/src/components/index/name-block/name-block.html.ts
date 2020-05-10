@@ -53,7 +53,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 							</div>
 							<div id="education">
 								<div class="education-line">
-									<span title="graduated">🎓</span>
+									<span title="graduated">ðŸŽ“</span>
 									<a
 										href="${this.__(
 											I18NKeys.index.nameBlock.links
@@ -90,7 +90,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 						title="${this.__(
 							I18NKeys.index.nameBlock.links.scrollDown
 						)}"
-						class="fade-in"
+						class="fade-in slow"
 					>
 						<!-- TODO: make this go somewhere -->
 						<svg
