@@ -174,7 +174,6 @@ async function watchForChanges(
 
 			// File added
 			if (hashes.has(filePath)) return;
-			console.log('added', filePath, 'to', hashes);
 
 			hashes.set(filePath, await calcHash(filePath));
 
