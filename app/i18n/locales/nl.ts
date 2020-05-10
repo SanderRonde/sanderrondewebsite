@@ -1,3 +1,4 @@
+import { SKILL, SKILL_LEVEL } from '../../client/src/config/me.js';
 import { I18NRoot } from '../i18n';
 
 export const messages = {
@@ -45,8 +46,45 @@ export const messages = {
 				},
 			},
 			skills: {
+				_: { message: '', blank: true },
 				title: {
 					message: 'Vaardigheden',
+				},
+				[SKILL.DUTCH]: {
+					message: 'Nederlands',
+				},
+				[SKILL.ENGLISH]: {
+					message: 'Engels',
+				},
+				[SKILL.GERMAN]: {
+					message: 'Duits',
+				},
+				[SKILL.FRENCH]: {
+					message: 'Frans',
+				},
+				[SKILL.BROWSER_EXTENSIONS]: {
+					message: 'Browser extensies',
+				},
+			},
+			skillLevels: {
+				_: { message: '', blank: true },
+				level: {
+					message: 'Niveau: {{level}}',
+				},
+				[SKILL_LEVEL.BASIC]: {
+					message: 'basis',
+				},
+				[SKILL_LEVEL.DECENT]: {
+					message: 'redelijk',
+				},
+				[SKILL_LEVEL.GOOD]: {
+					message: 'goed',
+				},
+				[SKILL_LEVEL.GREAT]: {
+					message: 'heel goed',
+				},
+				[SKILL_LEVEL.FLUENT]: {
+					message: 'vloeiend',
 				},
 			},
 		},
