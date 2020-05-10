@@ -51,6 +51,10 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 				transform: translateY(10px);
 			}
 
+			${css(this).$['down-arrow']} {
+				display: block;
+			}
+
 			${mediaQueryRule(
 				css(this).c.tagline,
 				'font-size',

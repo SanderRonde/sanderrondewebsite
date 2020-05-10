@@ -85,49 +85,53 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 					</div>
 				</div>
 				<div class="horizontal-centerer fill-x">
-					<a
-						href="/#block-2"
-						title="${this.__(
+					<tool-tip
+						message="${this.__(
 							I18NKeys.index.nameBlock.links.scrollDown
 						)}"
-						class="fade-in slow"
 					>
-						<!-- TODO: make this go somewhere -->
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							xmlns:xlink="http://www.w3.org/1999/xlink"
-							version="1.1"
-							x="50px"
-							y="50px"
-							viewBox="0 0 1000 1000"
-							enable-background="new 0 0 1000 1000"
-							xml:space="preserve"
-							id="scroll-down"
+						<a
+							href="/#block-2"
+							id="down-arrow"
+							class="fade-in slow"
 						>
-							<g>
+							<!-- TODO: make this go somewhere -->
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								xmlns:xlink="http://www.w3.org/1999/xlink"
+								version="1.1"
+								x="50px"
+								y="50px"
+								viewBox="0 0 1000 1000"
+								enable-background="new 0 0 1000 1000"
+								xml:space="preserve"
+								id="scroll-down"
+							>
 								<g>
-									<path
-										d="M77.3,249.3c-15.4-15.2-40.4-15.2-55.8,0c-15.4,15.2-15.4,40,0,55.2l450.6,446.1c15.4,15.2,40.4,15.2,55.8,0l450.6-446.1c15.4-15.2,15.4-40,0-55.2c-15.4-15.2-40.4-15.2-55.8,0L500,656.2L77.3,249.3z"
-									/>
+									<g>
+										<path
+											d="M77.3,249.3c-15.4-15.2-40.4-15.2-55.8,0c-15.4,15.2-15.4,40,0,55.2l450.6,446.1c15.4,15.2,40.4,15.2,55.8,0l450.6-446.1c15.4-15.2,15.4-40,0-55.2c-15.4-15.2-40.4-15.2-55.8,0L500,656.2L77.3,249.3z"
+										/>
+									</g>
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
+									<g />
 								</g>
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-								<g />
-							</g>
-						</svg>
-					</a>
+							</svg>
+						</a>
+					</tool-tip>
 				</div>
 			</div>
 		`;
