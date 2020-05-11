@@ -89,7 +89,6 @@ export class ToolTip extends ConfigurableWebComponent<{
 		)
 			return;
 		this._marginsUpdated = true;
-		console.log(contentBCR);
 
 		// Calculate the message width, surprisingly this is actually
 		// 30% faster than doing the classic CSS+getBCR trick
