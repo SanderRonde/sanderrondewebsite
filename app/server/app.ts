@@ -27,9 +27,9 @@ export class WebServer {
 	async init() {
 		this._initVars();
 		this._initRoutes();
-		this._listen();
+		await this._listen();
 		if (!this.io.noAutoReload) {
-			Dev.initAutoReload(this);
+			await Dev.initAutoReload(this);
 		}
 		return this;
 	}
