@@ -680,6 +680,9 @@ namespace I18N {
 
 	interface I18NMessage {
 		message: string;
+		args?: {
+			[key: string]: typeof String | typeof Number | typeof Boolean;
+		};
 		blank?: boolean;
 	}
 
@@ -832,12 +835,18 @@ namespace I18N {
 
 	function normalizeMessages(root: I18NRoot) {
 		const normalized: {
-			[key: string]: I18NMessage;
+			[key: string]: Partial<I18NMessage>;
 		} = {};
 		walkMessages(root, (message, currentPath, key) => {
-			normalized[genPath(currentPath, key)] = message;
+			normalized[genPath(currentPath, key)] = filterMessage(message);
 		});
 		return normalized;
+	}
+
+	function filterMessage(message: I18NMessage): Partial<I18NMessage> {
+		return {
+			message: message.message,
+		};
 	}
 
 	export namespace GenJSON {
