@@ -1,5 +1,7 @@
-import { I18NKeys } from '../../../../../i18n/i18n-keys.js';
 import config, { SkillGroup, skillLevelToNumber } from '../../../config/me.js';
+import { I18NKeys } from '../../../../../i18n/i18n-keys.js';
+import { RawHTML } from '../../shared/raw-html/raw-html.js';
+import { ToolTip } from '../../shared/tool-tip/tool-tip.js';
 import { LinkCSS } from '../../../styles/link.js';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { InfoBlock } from './info-block.js';
@@ -60,24 +62,24 @@ const skillGroups = pyramidSort(
 
 export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 	function (html) {
-		return html`
+		return (
 			<div class="horizontal-centerer fill-x">
 				<div id="container">
 					<div id="about-me-container" class="block">
 						<div id="about-me">
 							<div class="header">
-								${this.__(
+								{this.__(
 									I18NKeys.index.infoBlock.aboutMe.title
 								)}
 							</div>
 							<div class="content">
 								<p>
-									${this.__(
+									{this.__(
 										I18NKeys.index.infoBlock.aboutMe.par1
 									)}
 								</p>
 								<p>
-									${this.__(
+									{this.__(
 										I18NKeys.index.infoBlock.aboutMe.par2,
 										{
 											frontend:
@@ -86,9 +88,9 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 									)}
 								</p>
 								<p>
-									<raw-html
-										custom-css=${LinkCSS}
-										content="${this.__(
+									<RawHTML
+										custom-css={LinkCSS}
+										content={this.__(
 											I18NKeys.index.infoBlock.aboutMe
 												.par3,
 											{
@@ -98,8 +100,8 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 													rel="noopener" 
 													class="link">wc-lib</a>`,
 											}
-										)}"
-									></raw-html>
+										)}
+									/>
 								</p>
 							</div>
 						</div>
@@ -107,45 +109,47 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 					<div id="skills-container" class="block">
 						<div id="skills">
 							<div class="header">
-								${this.__(
-									I18NKeys.index.infoBlock.skills.title
-								)}
+								{this.__(I18NKeys.index.infoBlock.skills.title)}
 							</div>
 							<div class="content">
-								${skillGroups.map((skillGroup) => {
-									return html`<div class="skill-group">
-										${skillGroup.skills.map((skill) => {
-											const name = skill.translate
-												? this.__(
-														`${I18NKeys.index.infoBlock.skills._}${skill.name}` as any
-												  )
-												: skill.name;
-											return html`
-												<tool-tip
-													message="${this.__(
-														I18NKeys.index.infoBlock
-															.skillLevels.level,
-														{
-															level: this.__prom(
-																`${I18NKeys.index.infoBlock.skillLevels._}${skill.level}` as any
-															),
-														}
-													)}"
-												>
-													<div class="skill">
-														${name}
-													</div>
-												</tool-tip>
-											`;
-										})}
-									</div>`;
+								{skillGroups.map((skillGroup) => {
+									return (
+										<div class="skill-group">
+											{skillGroup.skills.map((skill) => {
+												const name = skill.translate
+													? this.__(
+															`${I18NKeys.index.infoBlock.skills._}${skill.name}` as any
+													  )
+													: skill.name;
+												return (
+													<ToolTip
+														message={this.__(
+															I18NKeys.index
+																.infoBlock
+																.skillLevels
+																.level,
+															{
+																level: this.__prom(
+																	`${I18NKeys.index.infoBlock.skillLevels._}${skill.level}` as any
+																),
+															}
+														)}
+													>
+														<div class="skill">
+															{name}
+														</div>
+													</ToolTip>
+												);
+											})}
+										</div>
+									);
 								})}
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		`;
+		) as any;
 	},
 	CHANGE_TYPE.NEVER,
 	render

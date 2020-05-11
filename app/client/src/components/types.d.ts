@@ -6,6 +6,21 @@ import { InfoBlock } from './index/info-block/info-block';
 import { RawHTML } from './shared/raw-html/raw-html';
 
 declare global {
+	namespace JSX {
+		type IntrinsicElements = {
+			[K in keyof HTMLElementTagNameMap]: Partial<
+				HTMLElementTagNameMap[K]
+			> & {
+				class?: string;
+			};
+		};
+
+		interface ElementAttributesProperty {
+			jsxProps: 'jsxProps';
+		}
+	}
+
+	type HTMLRawhtmlElement = RawHTML;
 	type HTMLRawHtmlElement = RawHTML;
 	type HTMLNameBlockElement = NameBlock;
 	type HTMLInfoBlockElement = InfoBlock;
