@@ -1,4 +1,4 @@
-import { mediaQueryRule } from '../../../styles/media-query.js';
+import { mediaQueryRule } from '../../../../styles/media-query.js';
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
 import { NameBlock } from './name-block.js';
 import { render } from 'lit-html';

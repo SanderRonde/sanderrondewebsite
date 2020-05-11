@@ -1,8 +1,8 @@
+import { SingleTimeline } from './index/sander-ronde/single-timeline/single-timeline';
+import { JoinedTimeline } from './index/sander-ronde/joined-timeline/joined-timeline';
 import { BackgroundBlock } from './shared/background-block/background-block';
-import { SingleTimeline } from './index/single-timeline/single-timeline';
-import { JoinedTimeline } from './index/joined-timeline/joined-timeline';
-import { NameBlock } from './index/name-block/name-block';
-import { InfoBlock } from './index/info-block/info-block';
+import { NameBlock } from './index/sander-ronde/name-block/name-block';
+import { InfoBlock } from './index/sander-ronde/info-block/info-block';
 import { RawHTML } from './shared/raw-html/raw-html';
 
 declare global {

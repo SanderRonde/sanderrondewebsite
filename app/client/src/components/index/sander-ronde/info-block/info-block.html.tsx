@@ -1,8 +1,11 @@
-import config, { SkillGroup, skillLevelToNumber } from '../../../config/me.js';
-import { I18NKeys } from '../../../../../i18n/i18n-keys.js';
-import { RawHTML } from '../../shared/raw-html/raw-html.js';
-import { ToolTip } from '../../shared/tool-tip/tool-tip.js';
-import { LinkCSS } from '../../../styles/link.js';
+import config, {
+	SkillGroup,
+	skillLevelToNumber,
+} from '../../../../config/me.js';
+import { I18NKeys } from '../../../../../../i18n/i18n-keys.js';
+import { RawHTML } from '../../../shared/raw-html/raw-html.js';
+import { ToolTip } from '../../../shared/tool-tip/tool-tip.js';
+import { LinkCSS } from '../../../../styles/link.js';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { InfoBlock } from './info-block.js';
 import { render } from 'lit-html';
