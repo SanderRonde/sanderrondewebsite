@@ -53,7 +53,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 							</div>
 							<div id="education">
 								<div class="education-line">
-									<span title="graduated">ðŸŽ“</span>
+									<span title="graduated">🎓</span>
 									<a
 										href="${this.__(
 											I18NKeys.index.nameBlock.links
