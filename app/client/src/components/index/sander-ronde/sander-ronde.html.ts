@@ -1,12 +1,12 @@
 import { THEME_SHADE } from '../../../../../shared/theme.js';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { SanderRonde } from './sander-ronde.js';
-import { html, render } from 'lit-html';
+import { render } from 'lit-html';
 
 const MIN_JOINED_TIMELINE_WIDTH = 800;
 
 export const SanderRondeHTML = new TemplateFn<SanderRonde>(
-	function () {
+	function (html) {
 		let alternator: boolean = false;
 		function alternate() {
 			alternator = !alternator;
@@ -23,7 +23,7 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 						: THEME_SHADE.REGULAR}"
 					padding="false"
 				>
-					<name-block id="name-block"></name-block>
+					<name-block id="name-block" #parent="${this}"></name-block>
 				</background-block>
 				<background-block
 					id="info-background"

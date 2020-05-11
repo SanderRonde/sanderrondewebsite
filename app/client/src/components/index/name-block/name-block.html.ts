@@ -90,9 +90,9 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 							I18NKeys.index.nameBlock.links.scrollDown
 						)}"
 					>
-						<a
-							href="/#block-2"
+						<span
 							id="down-arrow"
+							@click=${this.scrollDown}
 							class="fade-in slow"
 						>
 							<!-- TODO: make this go somewhere -->
@@ -130,7 +130,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									<g />
 								</g>
 							</svg>
-						</a>
+						</span>
 					</tool-tip>
 				</div>
 			</div>

@@ -53,6 +53,7 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 
 			${css(this).$['down-arrow']} {
 				display: block;
+				cursor: pointer;
 			}
 
 			${mediaQueryRule(
