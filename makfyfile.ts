@@ -133,7 +133,7 @@ async function calcHash(filePath: string) {
 }
 
 async function watchForChanges(
-	glob: string,
+	glob: string | string[],
 	chokidarOptions: chokidar.WatchOptions,
 	onChange: (
 		filePath: string,
@@ -192,6 +192,7 @@ async function watchForChanges(
 }
 
 async function updateHTMLTypings(exec: ExecFunction, changedFiles: string[]) {
+	console.log(changedFiles);
 	await exec(
 		changedFiles.map((file) => {
 			const parsedPath = path.parse(file);
@@ -219,17 +220,30 @@ cmd('html-typings')
 		if (!watch || !hot) {
 			await updateHTMLTypings(
 				exec,
-				await globby(
+				await globby([
 					path.join(
 						__dirname,
 						'app/client/src/components/**/*.html.ts'
-					)
-				)
+					),
+					path.join(
+						__dirname,
+						'app/client/src/components/**/*.html.tsx'
+					),
+				])
 			);
 		}
 		if (watch) {
 			await watchForChanges(
-				path.join(__dirname, 'app/client/src/components/**/*.html.ts'),
+				[
+					path.join(
+						__dirname,
+						'app/client/src/components/**/*.html.ts'
+					),
+					path.join(
+						__dirname,
+						'app/client/src/components/**/*.html.tsx'
+					),
+				],
 				{
 					persistent: true,
 					awaitWriteFinish: {
