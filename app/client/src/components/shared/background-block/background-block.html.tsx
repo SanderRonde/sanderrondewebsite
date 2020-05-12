@@ -4,11 +4,11 @@ import { render } from 'lit-html';
 
 export const BackgroundBlockHTML = new TemplateFn<BackgroundBlock>(
 	function (html) {
-		return html`
+		return (
 			<section id="block">
 				<slot id="slot"></slot>
 			</section>
-		`;
+		);
 	},
 	CHANGE_TYPE.PROP,
 	render

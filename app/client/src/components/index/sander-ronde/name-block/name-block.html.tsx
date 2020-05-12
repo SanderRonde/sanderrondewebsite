@@ -1,11 +1,14 @@
 import { I18NKeys } from '../../../../../../i18n/i18n-keys.js';
+import { ToolTip } from '../../../shared/tool-tip/tool-tip.js';
+import DownArrow from '../../../icons/down-arrow.js';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { NameBlock } from './name-block.js';
 import { render } from 'lit-html';
 
 export const NameBlockHTML = new TemplateFn<NameBlock>(
 	function (html) {
-		return html`
+		// debugger;
+		return (
 			<div id="block">
 				<div class="vertical-centerer fill-x" id="main-content">
 					<div class="horizontal-centerer">
@@ -18,63 +21,69 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										rel="noopener"
 										class="link color"
 										target="_blank"
-										>Computer Science Master</a
-									>'s student @
+									>
+										Computer Science Master
+									</a>
+									{"'s student @ "}
 									<a
-										href="${this.__(
+										href={this.__(
 											I18NKeys.index.nameBlock.links.vu
-										)}"
+										)}
 										rel="noopener"
 										class="link color"
 										target="_blank"
-										>VU</a
 									>
-									&
+										VU
+									</a>
+									{' & '}
 									<a
-										href="${this.__(
+										href={this.__(
 											I18NKeys.index.nameBlock.links.uva
-										)}"
+										)}
 										rel="noopener"
 										class="link color"
 										target="_blank"
-										>UVA</a
 									>
+										UVA
+									</a>
 								</div>
 								<div id="tagline-work" class="tagline">
-									Full-Stack software engineer @
+									{'Full-Stack software engineer @ '}
 									<a
 										href="https://nextupsoftware.com/"
 										rel="noopener"
 										class="link color"
 										target="_blank"
-										>Nextup Software</a
 									>
+										Nextup Software
+									</a>
 								</div>
 							</div>
 							<div id="education">
 								<div class="education-line">
 									<span title="graduated">🎓</span>
 									<a
-										href="${this.__(
+										href={this.__(
 											I18NKeys.index.nameBlock.links
 												.bachelor
-										)}"
+										)}
 										rel="noopener"
 										class="link color"
 										target="_blank"
-										>Bachelor's degree in Computer
-										Science</a
 									>
-									@
+										Bachelor's degree in Computer Science
+									</a>
+									{' @ '}
 									<a
-										href="${this.__(
+										href={this.__(
 											I18NKeys.index.nameBlock.links
 												.uniLeiden
-										)}"
+										)}
 										rel="noopener"
 										class="link color"
 										target="_blank"
-										>${this.__(
+									>
+										{this.__(
 											I18NKeys.index.nameBlock.education
 												.uniLeiden
 										)}
@@ -85,56 +94,30 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 					</div>
 				</div>
 				<div class="horizontal-centerer fill-x">
-					<tool-tip
-						message="${this.__(
+					<ToolTip
+						message={this.__(
 							I18NKeys.index.nameBlock.links.scrollDown
-						)}"
+						)}
 					>
 						<span
 							id="down-arrow"
-							@click=${this.scrollDown}
 							class="fade-in slow"
+							{...{
+								'@': {
+									click: this.scrollDown,
+								},
+							}}
 						>
-							<!-- TODO: make this go somewhere -->
-							<svg
-								xmlns="http://www.w3.org/2000/svg"
-								xmlns:xlink="http://www.w3.org/1999/xlink"
-								version="1.1"
-								x="50px"
-								y="50px"
-								viewBox="0 0 1000 1000"
-								enable-background="new 0 0 1000 1000"
-								xml:space="preserve"
+							<DownArrow
+								width={50}
+								height={50}
 								id="scroll-down"
-							>
-								<g>
-									<g>
-										<path
-											d="M77.3,249.3c-15.4-15.2-40.4-15.2-55.8,0c-15.4,15.2-15.4,40,0,55.2l450.6,446.1c15.4,15.2,40.4,15.2,55.8,0l450.6-446.1c15.4-15.2,15.4-40,0-55.2c-15.4-15.2-40.4-15.2-55.8,0L500,656.2L77.3,249.3z"
-										/>
-									</g>
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-									<g />
-								</g>
-							</svg>
+							/>
 						</span>
-					</tool-tip>
+					</ToolTip>
 				</div>
 			</div>
-		`;
+		);
 	},
 	CHANGE_TYPE.PROP,
 	render

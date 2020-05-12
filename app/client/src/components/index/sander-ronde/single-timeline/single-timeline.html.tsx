@@ -4,7 +4,7 @@ import { render } from 'lit-html';
 
 export const SingleTimelineHTML = new TemplateFn<SingleTimeline>(
 	function (html) {
-		return html` <div></div> `;
+		return <div></div>;
 	},
 	CHANGE_TYPE.PROP,
 	render

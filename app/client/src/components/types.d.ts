@@ -4,27 +4,20 @@ import { BackgroundBlock } from './shared/background-block/background-block';
 import { NameBlock } from './index/sander-ronde/name-block/name-block';
 import { InfoBlock } from './index/sander-ronde/info-block/info-block';
 import { RawHTML } from './shared/raw-html/raw-html';
+import DownArrow from './icons/down-arrow';
+import { JSXBase } from 'wc-lib';
 
 declare global {
 	namespace JSX {
-		type IntrinsicElements = {
-			[K in keyof HTMLElementTagNameMap]: Partial<
-				HTMLElementTagNameMap[K]
-			> & {
-				class?: string;
-			};
-		};
-
-		interface ElementAttributesProperty {
-			jsxProps: 'jsxProps';
-		}
+		type IntrinsicElements = JSXBase.IntrinsicElements;
+		type ElementAttributesProperty = JSXBase.ElementAttributesProperty;
 	}
 
 	type HTMLRawhtmlElement = RawHTML;
-	type HTMLRawHtmlElement = RawHTML;
-	type HTMLNameBlockElement = NameBlock;
-	type HTMLInfoBlockElement = InfoBlock;
-	type HTMLSingleTimelineElement = SingleTimeline;
-	type HTMLJoinedTimelineElement = JoinedTimeline;
-	type HTMLBackgroundBlockElement = BackgroundBlock;
+	type HTMLNameblockElement = NameBlock;
+	type HTMLInfoblockElement = InfoBlock;
+	type HTMLSingletimelineElement = SingleTimeline;
+	type HTMLJoinedtimelineElement = JoinedTimeline;
+	type HTMLBackgroundblockElement = BackgroundBlock;
+	type HTMLDownarrowElement = SVGElement;
 }

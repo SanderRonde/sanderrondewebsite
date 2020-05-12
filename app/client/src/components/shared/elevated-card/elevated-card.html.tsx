@@ -4,7 +4,7 @@ import { render } from 'lit-html';
 
 export const ElevatedCardHTML = new TemplateFn<ElevatedCard>(
 	function (html) {
-		return html` <div></div> `;
+		return <div></div>;
 	},
 	CHANGE_TYPE.PROP,
 	render

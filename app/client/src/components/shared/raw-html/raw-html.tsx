@@ -22,9 +22,7 @@ function templateStringsArray(...content: string[]) {
 	is: 'raw-html',
 	html: new TemplateFn<RawHTML>(
 		function (html, props) {
-			return html`
-				<div>${html(templateStringsArray(props.content))}</div>
-			`;
+			return <div>{html(templateStringsArray(props.content))}</div>;
 		},
 		CHANGE_TYPE.PROP,
 		render
