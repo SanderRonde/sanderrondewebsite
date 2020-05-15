@@ -45,6 +45,7 @@
 		"@rollup/plugin-commonjs": "^11.0.2",
 		"@rollup/plugin-json": "^4.0.2",
 		"@rollup/plugin-node-resolve": "^7.1.1",
+		"@sanderronde/autoreload": "^0.1.0",
 		"@types/clean-css": "^4.2.1",
 		"@types/cookie-parser": "^1.4.2",
 		"@types/css": "^0.0.31",
@@ -59,7 +60,6 @@
 		"@types/spdy": "^3.4.4",
 		"@types/through2": "^2.0.34",
 		"@types/uglify-es": "^3.0.0",
-		"@types/ws": "^7.2.4",
 		"chokidar": "^3.3.1",
 		"clean-css": "^4.2.3",
 		"glob": "^7.1.6",
@@ -78,8 +78,7 @@
 		"ts-node": "^8.8.1",
 		"ts-toolbelt": "^6.3.12",
 		"typescript": "^3.8.3",
-		"uglify-es": "^3.3.9",
-		"ws": "^7.2.3"
+		"uglify-es": "^3.3.9"
 	},
 	"scripts": {
 		"watch": "makfy watch",

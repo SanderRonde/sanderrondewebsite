@@ -1,6 +1,6 @@
 import { SemiStaticFiles } from './lib/semi-static-files.js';
+import { ROOT_DIR, APP_DIR } from './lib/constants.js';
 import { Entrypoints } from './lib/entrypoints.js';
-import { ROOT_DIR } from './lib/constants.js';
 import serverTiming from 'server-timing';
 import cookieParser from 'cookie-parser';
 import { Routes } from './lib/routes.js';
@@ -26,10 +26,35 @@ export class WebServer {
 
 	async init() {
 		this._initVars();
-		this._initRoutes();
+		await this._initRoutes();
 		await this._listen();
 		if (!this.io.noAutoReload) {
-			await Dev.initAutoReload(this);
+			const autoReload = await import('@sanderronde/autoreload');
+			autoReload.default.autoReloadWatcher({
+				log: {
+					reload: true,
+				},
+				port: this.io.ports.ws,
+				paths: [
+					path.join(APP_DIR, 'client'),
+					path.join(APP_DIR, 'i18n'),
+					path.join(APP_DIR, 'shared'),
+				].map((watchPath) => {
+					return {
+						watchPath,
+						events: ['change'],
+						options: {
+							persistent: true,
+							awaitWriteFinish: {
+								stabilityThreshold: 50,
+							},
+							cwd: ROOT_DIR,
+							ignoreInitial: true,
+							ignored: /.*\.(ts|map)/,
+						},
+					};
+				}),
+			});
 		}
 		return this;
 	}
@@ -51,7 +76,7 @@ export class WebServer {
 	/**
 	 * Initialize all routes to the website
 	 */
-	private _initRoutes() {
+	private async _initRoutes() {
 		this.app.use(serverTiming() as express.RequestHandler);
 		this.app.use(Log.request);
 		this.app.use(cookieParser());
@@ -59,6 +84,12 @@ export class WebServer {
 		Entrypoints.registerEntrypointHandlers(this);
 		SemiStaticFiles.initRoutes(this);
 		if (this.io.dev) {
+			const autoReload = await import('@sanderronde/autoreload');
+			this.app.use(
+				autoReload.default.serveReload({
+					port: this.io.ports.ws,
+				})
+			);
 			Dev.initRoutes(this);
 		}
 		Routes.initRoutes(this);

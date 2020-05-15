@@ -94,7 +94,7 @@ export namespace Entrypoints {
 				stored.theme === current.theme
 			);
 		});
-		function getRenderedText(
+		async function getRenderedText(
 			info: ReturnType<typeof Info.getInfo>,
 			props: ReturnType<typeof Info.getProps>,
 			lang: LANGUAGE,
@@ -126,7 +126,7 @@ export namespace Entrypoints {
 				theme: themes[theme],
 			});
 
-			const html = getHTML({
+			const html = await getHTML({
 				theme,
 				lang,
 				defer: true,
@@ -137,7 +137,7 @@ export namespace Entrypoints {
 			return html;
 		}
 
-		export function render(
+		export async function render(
 			entrypoint: ENTRYPOINTS_TYPE,
 			req: express.Request,
 			res: SpdyExpressResponse,
@@ -161,11 +161,11 @@ export namespace Entrypoints {
 			const cached = renderCacheStore.get({ entrypoint, lang, theme });
 			res.endTime('check-cache');
 
-			const html = (() => {
+			const html = await (async () => {
 				if (cached) return cached;
 
 				res.startTime('server-side-render', 'Server-side rendering');
-				const renderedHTML = getRenderedText(
+				const renderedHTML = await getRenderedText(
 					info,
 					props,
 					lang,
@@ -228,20 +228,29 @@ export namespace Entrypoints {
 				entrypoint === 'index' ? [baseRoute, '/'] : [baseRoute];
 			entrypointRoutes.forEach((route) => {
 				if (!io.noSSR) {
-					app.get(route, (req, res: SpdyExpressResponse, next) => {
-						res.endTime('route-resolution');
-						Rendering.render(entrypoint, req, res, next, server);
-					});
+					app.get(
+						route,
+						async (req, res: SpdyExpressResponse, next) => {
+							res.endTime('route-resolution');
+							await Rendering.render(
+								entrypoint,
+								req,
+								res,
+								next,
+								server
+							);
+						}
+					);
 				}
-				app.get(route, (req, res: SpdyExpressResponse, next) => {
+				app.get(route, async (req, res: SpdyExpressResponse, next) => {
 					res.endTime('route-resolution');
-					renderHTMLFile(entrypoint, req, res, next, server);
+					await renderHTMLFile(entrypoint, req, res, next, server);
 				});
 			});
 		});
 	}
 
-	export function renderHTMLFile(
+	export async function renderHTMLFile(
 		entrypoint: ENTRYPOINTS_TYPE,
 		req: express.Request,
 		res: SpdyExpressResponse,
@@ -263,7 +272,7 @@ export namespace Entrypoints {
 		res.startTime('html-render', 'Rendering of simple HTML file');
 		const lang = RequestVars.getLang(req, res);
 		const theme = RequestVars.getTheme(req, res);
-		const html = htmlRenderer({
+		const html = await htmlRenderer({
 			lang,
 			theme,
 			autoReload: io.dev && !io.noAutoReload,
