@@ -158,7 +158,6 @@ async function watchForChanges(
 
 			// File changed
 			if (!hashes.has(filePath)) {
-				console.log('didnt have the hash yet');
 				return await onChange(filePath, 'add');
 			}
 
