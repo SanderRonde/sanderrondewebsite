@@ -252,7 +252,8 @@ cmd('html-typings')
 					ignoreInitial: false,
 					ignored: /.*\.(js|map)/,
 				},
-				async (changedFile) => {
+				async (changedFile, changeType) => {
+					if (changeType === 'delete') return;
 					await exec('? changes detected');
 					await updateHTMLTypings(exec, [changedFile]);
 				}
