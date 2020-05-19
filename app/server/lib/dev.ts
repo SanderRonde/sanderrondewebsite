@@ -24,6 +24,8 @@ export namespace Dev {
 	export function initRoutes({ app }: WebServer) {
 		const serveSrc = Routes.serve(path.join(CLIENT_DIR, 'src'), {
 			rewrite: rewriteModuleImports,
+			extensions: ['js'],
+			index: true,
 		});
 		app.use((req, res, next) => {
 			if (req.url.startsWith('/serviceworker.js')) {

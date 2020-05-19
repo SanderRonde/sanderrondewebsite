@@ -44,6 +44,7 @@ export namespace Routes {
 			rewrite,
 			prefix = '',
 			extensions = [],
+			index = false,
 		}: {
 			rewrite?: (
 				content: string,
@@ -51,6 +52,7 @@ export namespace Routes {
 			) => Promise<string> | string;
 			prefix?: string;
 			extensions?: string[];
+			index?: boolean;
 		} = {}
 	): express.RequestHandler {
 		return async (
@@ -69,6 +71,23 @@ export namespace Routes {
 					return `${basePath}.${extension}`;
 				}),
 			];
+
+			if (index && path.extname(basePath) === '') {
+				filePaths.push(
+					path.join(
+						path.dirname(basePath),
+						`${path.basename(basePath)}/index`
+					)
+				);
+				filePaths.push(
+					path.join(
+						path.dirname(basePath),
+						`${path.basename(basePath)}/index.js`
+					)
+				);
+				console.log(filePaths);
+			}
+
 			for (const filePath of filePaths) {
 				if (await fs.pathExists(filePath)) {
 					const stat = await fs.stat(filePath);

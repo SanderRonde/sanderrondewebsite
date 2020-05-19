@@ -8,9 +8,9 @@ import {
 	isDirective,
 	noChange,
 } from 'lit-html';
-import { SanderRonde } from '../../components/index/sander-ronde/sander-ronde.js';
 import { I18NGetMessage, LANGUAGE } from '../../../../i18n/i18n.js';
 import { registerServiceworker, onIdle } from '../../shared/sw.js';
+import { SanderRonde } from '../../components/index/sander-ronde/';
 import { I18NReturner } from '../../shared/client-i18n.js';
 import { THEME, themes } from '../../../../shared/theme';
 import { I18NType } from '../../../../i18n/i18n-defs';

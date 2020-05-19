@@ -1,16 +1,16 @@
-import { BackgroundBlock } from '../../shared/background-block/background-block.js';
-import { MessageToast } from '../../shared/message-toast/message-toast.js';
 import { IDMapType, ClassMapType } from './sander-ronde-querymap';
+import { BackgroundBlock } from '../../shared/background-block/';
+import { MessageToast } from '../../shared/message-toast/';
 import { ConfigurableWebComponent, config } from 'wc-lib';
 import { I18NType } from '../../../../../i18n/i18n-defs';
 import { SanderRondeHTML } from './sander-ronde.html.js';
-import { NameBlock } from './name-block/name-block.js';
 import { themes } from '../../../../../shared/theme.js';
-import { InfoBlock } from './info-block/info-block.js';
 import { SanderRondeCSS } from './sander-ronde.css.js';
-import { TimeLine } from './time-line/time-line.js';
 import { LANGUAGE } from '../../../../../i18n/i18n';
 import { FontCSS } from '../../../styles/font.js';
+import { NameBlock } from './name-block/';
+import { InfoBlock } from './info-block/';
+import { TimeLine } from './time-line/';
 
 @config({
 	is: 'sander-ronde',

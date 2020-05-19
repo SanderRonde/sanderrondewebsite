@@ -1,3 +1,3 @@
-import { SanderRonde } from '../../components/index/sander-ronde/sander-ronde.js';
+import { SanderRonde } from '../../components/index/';
 
 export const Component = SanderRonde;

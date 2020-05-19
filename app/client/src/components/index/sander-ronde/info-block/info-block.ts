@@ -1,12 +1,12 @@
 import { IDMapType, ClassMapType } from './info-block-querymap';
 import { CenterersCSS } from '../../../../styles/centerers.js';
-import { ToolTip } from '../../../shared/tool-tip/tool-tip.js';
-import { RawHTML } from '../../../shared/raw-html/raw-html.js';
-import { ConfigurableWebComponent, config } from 'wc-lib';
 import { I18NType } from '../../../../../../i18n/i18n-defs';
-import { InfoBlockHTML } from './info-block.html.js';
+import { ConfigurableWebComponent, config } from 'wc-lib';
 import { themes } from '../../../../../../shared/theme';
 import { LANGUAGE } from '../../../../../../i18n/i18n';
+import { InfoBlockHTML } from './info-block.html.js';
+import { ToolTip } from '../../../shared/tool-tip/';
+import { RawHTML } from '../../../shared/raw-html/';
 import { InfoBlockCSS } from './info-block.css.js';
 
 @config({
