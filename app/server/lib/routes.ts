@@ -85,7 +85,6 @@ export namespace Routes {
 						`${path.basename(basePath)}/index.js`
 					)
 				);
-				console.log(filePaths);
 			}
 
 			for (const filePath of filePaths) {
