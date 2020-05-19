@@ -59,10 +59,10 @@
   dependencies:
     estree-walker "^1.0.1"
 
-"@sanderronde/autoreload@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@sanderronde/autoreload/-/autoreload-0.1.0.tgz#e15e6e321ae3f2068cf859d7770282d7762d8981"
-  integrity sha512-DuQxKR0tdcdom/xh9aqJfvcJ+MXPwJhole9sKc0MvVmVittR+lZytqRtERrKW9RfS0qHrmYxlZ1q4w76XD0ZOg==
+"@sanderronde/autoreload@^1.0.4":
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/@sanderronde/autoreload/-/autoreload-1.0.4.tgz#4e3666fa7f1531545d8ae1837d68e5f54181b042"
+  integrity sha512-elXzU7AIJcff3t7wS7kncYTMaVzstN3CBVhircGkfYv0RRk1Ab9o9b+d+uVEvL+ls9sN4J2MPoJOTXd0TYtuDQ==
   dependencies:
     chokidar "^3.4.0"
     kleur "^3.0.3"

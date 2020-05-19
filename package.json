@@ -45,7 +45,7 @@
 		"@rollup/plugin-commonjs": "^11.0.2",
 		"@rollup/plugin-json": "^4.0.2",
 		"@rollup/plugin-node-resolve": "^7.1.1",
-		"@sanderronde/autoreload": "^0.1.0",
+		"@sanderronde/autoreload": "^1.0.4",
 		"@types/clean-css": "^4.2.1",
 		"@types/cookie-parser": "^1.4.2",
 		"@types/css": "^0.0.31",
