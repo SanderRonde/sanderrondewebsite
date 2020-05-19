@@ -1,18 +1,18 @@
 import { ConfigurableWebComponent, Props, config } from 'wc-lib';
-import { IDMapType, ClassMapType } from './joined-timeline-querymap';
-import { JoinedTimelineHTML } from './joined-timeline.html.js';
-import { JoinedTimelineCSS } from './joined-timeline.css.js';
+import { IDMapType, ClassMapType } from './time-line-querymap';
 import { CenterersCSS } from '../../../../styles/centerers.js';
 import { I18NType } from '../../../../../../i18n/i18n-defs';
 import { themes } from '../../../../../../shared/theme';
 import { LANGUAGE } from '../../../../../../i18n/i18n';
+import { TimeLineHTML } from './time-line.html.js';
+import { TimeLineCSS } from './time-line.css.js';
 
 @config({
-	is: 'joined-timeline',
-	css: [JoinedTimelineCSS, CenterersCSS],
-	html: JoinedTimelineHTML,
+	is: 'time-line',
+	css: [TimeLineCSS, CenterersCSS],
+	html: TimeLineHTML,
 })
-export class JoinedTimeline extends ConfigurableWebComponent<{
+export class TimeLine extends ConfigurableWebComponent<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;

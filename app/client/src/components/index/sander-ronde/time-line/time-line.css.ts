@@ -1,8 +1,8 @@
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
-import { JoinedTimeline } from './joined-timeline.js';
+import { TimeLine } from './time-line.js';
 import { render } from 'lit-html';
 
-export const JoinedTimelineCSS = new TemplateFn<JoinedTimeline>(
+export const TimeLineCSS = new TemplateFn<TimeLine>(
 	function (html) {
 		return html`<style></style>`;
 	},

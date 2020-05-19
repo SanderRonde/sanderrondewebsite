@@ -1,7 +1,5 @@
 import { BackgroundBlock } from '../../shared/background-block/background-block.js';
 import { MessageToast } from '../../shared/message-toast/message-toast.js';
-import { SingleTimeline } from './single-timeline/single-timeline.js';
-import { JoinedTimeline } from './joined-timeline/joined-timeline.js';
 import { IDMapType, ClassMapType } from './sander-ronde-querymap';
 import { ConfigurableWebComponent, config } from 'wc-lib';
 import { I18NType } from '../../../../../i18n/i18n-defs';
@@ -10,6 +8,7 @@ import { NameBlock } from './name-block/name-block.js';
 import { themes } from '../../../../../shared/theme.js';
 import { InfoBlock } from './info-block/info-block.js';
 import { SanderRondeCSS } from './sander-ronde.css.js';
+import { TimeLine } from './time-line/time-line.js';
 import { LANGUAGE } from '../../../../../i18n/i18n';
 import { FontCSS } from '../../../styles/font.js';
 
@@ -21,8 +20,7 @@ import { FontCSS } from '../../../styles/font.js';
 		MessageToast,
 		BackgroundBlock,
 		NameBlock,
-		SingleTimeline,
-		JoinedTimeline,
+		TimeLine,
 		InfoBlock,
 	],
 })

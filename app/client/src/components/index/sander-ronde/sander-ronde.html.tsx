@@ -1,9 +1,8 @@
 import { BackgroundBlock } from '../../shared/background-block/background-block.js';
-import { SingleTimeline } from './single-timeline/single-timeline.js';
-import { JoinedTimeline } from './joined-timeline/joined-timeline.js';
 import { THEME_SHADE } from '../../../../../shared/theme.js';
 import { InfoBlock } from './info-block/info-block.js';
 import { NameBlock } from './name-block/name-block.js';
+import { TimeLine } from './time-line/time-line.js';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { SanderRonde } from './sander-ronde.js';
 import { render } from 'lit-html';
@@ -49,7 +48,7 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 									: THEME_SHADE.REGULAR
 							}
 						>
-							<SingleTimeline id="eet-timeline" />
+							<TimeLine id="eet-timeline" />
 						</BackgroundBlock>
 						<BackgroundBlock
 							id="projects-background"
@@ -59,7 +58,7 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 									: THEME_SHADE.REGULAR
 							}
 						>
-							<SingleTimeline id="projects-timeline" />
+							<TimeLine id="projects-timeline" />
 						</BackgroundBlock>
 					</span>
 				) : (
@@ -71,7 +70,7 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 								: THEME_SHADE.REGULAR
 						}
 					>
-						<JoinedTimeline id="joined-timeline" />
+						<TimeLine id="joined-timeline" />
 					</BackgroundBlock>
 				)}
 			</div>
