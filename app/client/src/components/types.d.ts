@@ -3,7 +3,6 @@ import { TimeLine } from './index/sander-ronde/time-line/time-line';
 import { NameBlock } from './index/sander-ronde/name-block/name-block';
 import { InfoBlock } from './index/sander-ronde/info-block/info-block';
 import { RawHTML } from './shared/raw-html/raw-html';
-import DownArrow from './icons/down-arrow';
 import { JSXBase } from 'wc-lib';
 
 declare global {
