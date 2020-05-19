@@ -1,10 +1,10 @@
-import { BackgroundBlock } from '../../shared/background-block/background-block.js';
-import { THEME_SHADE } from '../../../../../shared/theme.js';
-import { InfoBlock } from './info-block/info-block.js';
-import { NameBlock } from './name-block/name-block.js';
-import { TimeLine } from './time-line/time-line.js';
+import { BackgroundBlock } from '../../shared/background-block/background-block';
+import { THEME_SHADE } from '../../../../../shared/theme';
+import { InfoBlock } from './info-block/info-block';
+import { NameBlock } from './name-block/name-block';
+import { TimeLine } from './time-line/time-line';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
-import { SanderRonde } from './sander-ronde.js';
+import { SanderRonde } from './sander-ronde';
 import { render } from 'lit-html';
 
 const MIN_JOINED_TIMELINE_WIDTH = 800;

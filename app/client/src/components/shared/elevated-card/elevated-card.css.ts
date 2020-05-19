@@ -1,5 +1,5 @@
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
-import { ElevatedCard } from './elevated-card.js';
+import { ElevatedCard } from './elevated-card';
 import { render } from 'lit-html';
 
 export const ElevatedCardCSS = new TemplateFn<ElevatedCard>(

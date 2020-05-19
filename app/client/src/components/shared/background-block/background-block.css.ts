@@ -1,6 +1,6 @@
-import { THEME_SHADE } from '../../../../../shared/theme.js';
-import { BackgroundBlock } from './background-block.js';
+import { THEME_SHADE } from '../../../../../shared/theme';
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
+import { BackgroundBlock } from './background-block';
 import { render } from 'lit-html';
 
 export const BackgroundBlockCSS = new TemplateFn<BackgroundBlock>(

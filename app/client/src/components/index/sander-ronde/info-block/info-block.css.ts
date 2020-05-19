@@ -1,6 +1,6 @@
-import { mediaQueryRule } from '../../../../styles/media-query.js';
+import { mediaQueryRule } from '../../../../styles/media-query';
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
-import { InfoBlock } from './info-block.js';
+import { InfoBlock } from './info-block';
 import { render } from 'lit-html';
 
 export const InfoBlockCSS = new TemplateFn<InfoBlock>(

@@ -8,13 +8,13 @@ import {
 	isDirective,
 	noChange,
 } from 'lit-html';
-import { I18NGetMessage, LANGUAGE } from '../../../../i18n/i18n.js';
-import { registerServiceworker, onIdle } from '../../shared/sw.js';
 import { SanderRonde } from '../../components/index/sander-ronde/';
-import { I18NReturner } from '../../shared/client-i18n.js';
+import { I18NGetMessage, LANGUAGE } from '../../../../i18n/i18n';
+import { registerServiceworker, onIdle } from '../../shared/sw';
+import { I18NReturner } from '../../shared/client-i18n';
 import { THEME, themes } from '../../../../shared/theme';
 import { I18NType } from '../../../../i18n/i18n-defs';
-import { getCookie } from '../../shared/cookies.js';
+import { getCookie } from '../../shared/cookies';
 import { WebComponent } from 'wc-lib';
 
 import en from '../../../../i18n/locales/en.json.js';

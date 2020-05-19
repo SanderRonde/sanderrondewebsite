@@ -1,8 +1,8 @@
-import { I18NKeys } from '../../../../../../i18n/i18n-keys.js';
-import { ToolTip } from '../../../shared/tool-tip/tool-tip.js';
-import DownArrow from '../../../icons/down-arrow.js';
+import { I18NKeys } from '../../../../../../i18n/i18n-keys';
+import { ToolTip } from '../../../shared/tool-tip/tool-tip';
+import DownArrow from '../../../icons/down-arrow';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
-import { NameBlock } from './name-block.js';
+import { NameBlock } from './name-block';
 import { render } from 'lit-html';
 
 export const NameBlockHTML = new TemplateFn<NameBlock>(

@@ -1,14 +1,14 @@
 import { ConfigurableWebComponent, config, Props, ComplexType } from 'wc-lib';
 import { IDMapType, ClassMapType } from './name-block-querymap';
-import { CenterersCSS } from '../../../../styles/centerers.js';
+import { CenterersCSS } from '../../../../styles/centerers';
 import { I18NType } from '../../../../../../i18n/i18n-defs';
-import { FadeInCSS } from '../../../../styles/fade-in.js';
+import { FadeInCSS } from '../../../../styles/fade-in';
 import { themes } from '../../../../../../shared/theme';
 import { LANGUAGE } from '../../../../../../i18n/i18n';
-import { NameBlockHTML } from './name-block.html.js';
-import { LinkCSS } from '../../../../styles/link.js';
 import { ToolTip } from '../../../shared/tool-tip/';
-import { NameBlockCSS } from './name-block.css.js';
+import { NameBlockHTML } from './name-block.html';
+import { LinkCSS } from '../../../../styles/link';
+import { NameBlockCSS } from './name-block.css';
 import { SanderRonde } from '../sander-ronde';
 
 @config({

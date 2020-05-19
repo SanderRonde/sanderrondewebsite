@@ -1,5 +1,5 @@
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
-import { ToolTip } from './tool-tip.js';
+import { ToolTip } from './tool-tip';
 import { render } from 'lit-html';
 
 export const MIN_TOOLTIP_MESSAGE_WIDTH = 30;

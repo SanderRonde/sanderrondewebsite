@@ -1,5 +1,5 @@
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
-import { SanderRonde } from './sander-ronde.js';
+import { SanderRonde } from './sander-ronde';
 import { html, render } from 'lit-html';
 
 export const SanderRondeCSS = new TemplateFn<SanderRonde>(

@@ -1,4 +1,4 @@
-import { ToolTip, TOGGLES, TOOLTIP_DIRECTION } from './tool-tip.js';
+import { ToolTip, TOGGLES, TOOLTIP_DIRECTION } from './tool-tip';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { render } from 'lit-html';
 

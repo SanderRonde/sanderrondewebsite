@@ -1,11 +1,11 @@
 import { ConfigurableWebComponent, Props, config } from 'wc-lib';
 import { IDMapType, ClassMapType } from './time-line-querymap';
-import { CenterersCSS } from '../../../../styles/centerers.js';
+import { CenterersCSS } from '../../../../styles/centerers';
 import { I18NType } from '../../../../../../i18n/i18n-defs';
 import { themes } from '../../../../../../shared/theme';
 import { LANGUAGE } from '../../../../../../i18n/i18n';
-import { TimeLineHTML } from './time-line.html.js';
-import { TimeLineCSS } from './time-line.css.js';
+import { TimeLineHTML } from './time-line.html';
+import { TimeLineCSS } from './time-line.css';
 
 @config({
 	is: 'time-line',

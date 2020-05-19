@@ -7,12 +7,12 @@ import {
 	wait,
 } from 'wc-lib';
 import { IDMapType, ClassMapType } from './message-toast-querymap';
-import { MessageToastHTML } from './message-toast.html.js';
+import { MessageToastHTML } from './message-toast.html';
 import { I18NType } from '../../../../../i18n/i18n-defs';
-import { MessageToastCSS } from './message-toast.css.js';
+import { MessageToastCSS } from './message-toast.css';
 import { themes } from '../../../../../shared/theme';
 import { LANGUAGE } from '../../../../../i18n/i18n';
-import { FontCSS } from '../../../styles/font.js';
+import { FontCSS } from '../../../styles/font';
 
 export interface ToastConfig {
 	message: string;

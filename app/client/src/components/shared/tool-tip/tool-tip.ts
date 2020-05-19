@@ -5,11 +5,11 @@ import {
 } from './tool-tip.css.js';
 import { ConfigurableWebComponent, Props, config, PROP_TYPE } from 'wc-lib';
 import { IDMapType, ClassMapType } from './tool-tip-querymap';
-import { I18NType } from '../../../../../i18n/i18n-defs.js';
-import { themes } from '../../../../../shared/theme.js';
-import { FadeInCSS } from '../../../styles/fade-in.js';
-import { LANGUAGE } from '../../../../../i18n/i18n.js';
-import { ToolTipHTML } from './tool-tip.html.js';
+import { I18NType } from '../../../../../i18n/i18n-defs';
+import { themes } from '../../../../../shared/theme';
+import { FadeInCSS } from '../../../styles/fade-in';
+import { LANGUAGE } from '../../../../../i18n/i18n';
+import { ToolTipHTML } from './tool-tip.html';
 
 export const enum TOGGLES {
 	EXPANDED = 'expanded',

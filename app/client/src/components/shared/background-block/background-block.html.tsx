@@ -1,4 +1,4 @@
-import { BackgroundBlock } from './background-block.js';
+import { BackgroundBlock } from './background-block';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { render } from 'lit-html';
 

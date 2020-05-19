@@ -1,4 +1,4 @@
-import { SKILL, SKILL_LEVEL } from '../../client/src/config/me.js';
+import { SKILL, SKILL_LEVEL } from '../../client/src/config/me';
 import { I18NRoot } from '../i18n';
 
 export const messages = {

@@ -1,5 +1,5 @@
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
-import { TimeLine } from './time-line.js';
+import { TimeLine } from './time-line';
 import { render } from 'lit-html';
 
 export const TimeLineHTML = new TemplateFn<TimeLine>(

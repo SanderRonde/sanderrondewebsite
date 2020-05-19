@@ -1,6 +1,6 @@
-import { mediaQueryRule } from '../../../../styles/media-query.js';
+import { mediaQueryRule } from '../../../../styles/media-query';
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
-import { NameBlock } from './name-block.js';
+import { NameBlock } from './name-block';
 import { render } from 'lit-html';
 
 export const NameBlockCSS = new TemplateFn<NameBlock>(
