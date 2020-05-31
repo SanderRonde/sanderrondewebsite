@@ -1,7 +1,4 @@
-import config, {
-	SkillGroup,
-	skillLevelToNumber,
-} from '../../../../config/me.js';
+import config, { Skill } from '../../../../config/me.js';
 import { I18NKeys } from '../../../../../../i18n/i18n-keys';
 import { RawHTML } from '../../../shared/raw-html/raw-html';
 import { ToolTip } from '../../../shared/tool-tip/tool-tip';
@@ -10,7 +7,7 @@ import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { InfoBlock } from './info-block';
 import { render } from 'lit-html';
 
-function getApproxGroupSize(group: SkillGroup) {
+function getApproxGroupSize(group: Skill.SkillGroup) {
 	return (
 		group.skills.map((w) => w.name.length).reduce((p, c) => p + c, 0) +
 		group.skills.length * 5
@@ -45,14 +42,15 @@ function pyramidSort<V>(arr: [V, number][]): V[] {
 
 const skillGroups = pyramidSort(
 	config.skillGroups.map(
-		(g) => [g, getApproxGroupSize(g)] as [SkillGroup, number]
+		(g) => [g, getApproxGroupSize(g)] as [Skill.SkillGroup, number]
 	)
 ).map((group) => {
 	return {
 		...group,
 		skills: group.skills.sort((a, b) => {
 			const levelDiff =
-				skillLevelToNumber(b.level) - skillLevelToNumber(a.level);
+				Skill.skillLevelToNumber(b.level) -
+				Skill.skillLevelToNumber(a.level);
 			if (levelDiff !== 0) return levelDiff;
 
 			// Why is this even possible

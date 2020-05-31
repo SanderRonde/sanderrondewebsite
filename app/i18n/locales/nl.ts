@@ -1,4 +1,4 @@
-import { SKILL, SKILL_LEVEL } from '../../client/src/config/me';
+import { Skill } from '../../client/src/config/me';
 import { I18NRoot } from '../i18n';
 
 export const messages = {
@@ -56,19 +56,19 @@ export const messages = {
 				title: {
 					message: 'Vaardigheden',
 				},
-				[SKILL.DUTCH]: {
+				[Skill.SKILL.DUTCH]: {
 					message: 'Nederlands',
 				},
-				[SKILL.ENGLISH]: {
+				[Skill.SKILL.ENGLISH]: {
 					message: 'Engels',
 				},
-				[SKILL.GERMAN]: {
+				[Skill.SKILL.GERMAN]: {
 					message: 'Duits',
 				},
-				[SKILL.FRENCH]: {
+				[Skill.SKILL.FRENCH]: {
 					message: 'Frans',
 				},
-				[SKILL.BROWSER_EXTENSIONS]: {
+				[Skill.SKILL.BROWSER_EXTENSIONS]: {
 					message: 'Browser extensies',
 				},
 			},
@@ -77,19 +77,19 @@ export const messages = {
 				level: {
 					message: 'Niveau: {{level}}',
 				},
-				[SKILL_LEVEL.BASIC]: {
+				[Skill.SKILL_LEVEL.BASIC]: {
 					message: 'basis',
 				},
-				[SKILL_LEVEL.DECENT]: {
+				[Skill.SKILL_LEVEL.DECENT]: {
 					message: 'redelijk',
 				},
-				[SKILL_LEVEL.GOOD]: {
+				[Skill.SKILL_LEVEL.GOOD]: {
 					message: 'goed',
 				},
-				[SKILL_LEVEL.GREAT]: {
+				[Skill.SKILL_LEVEL.GREAT]: {
 					message: 'heel goed',
 				},
-				[SKILL_LEVEL.FLUENT]: {
+				[Skill.SKILL_LEVEL.FLUENT]: {
 					message: 'vloeiend',
 				},
 			},

@@ -1,78 +1,74 @@
-export const enum SKILL_LEVEL {
-	FLUENT = 'fluent',
-	GREAT = 'great',
-	GOOD = 'good',
-	DECENT = 'decent',
-	BASIC = 'basic',
-}
-
-export function skillLevelToNumber(level: SKILL_LEVEL) {
-	switch (level) {
-		case SKILL_LEVEL.BASIC:
-			return 0;
-		case SKILL_LEVEL.DECENT:
-			return 1;
-		case SKILL_LEVEL.GOOD:
-			return 2;
-		case SKILL_LEVEL.GREAT:
-			return 3;
-		case SKILL_LEVEL.FLUENT:
-			return 3;
+export namespace Skill {
+	export const enum SKILL_LEVEL {
+		FLUENT = 'fluent',
+		GREAT = 'great',
+		GOOD = 'good',
+		DECENT = 'decent',
+		BASIC = 'basic',
 	}
-}
 
-export const enum SKILL {
-	DUTCH = 'dutch',
-	ENGLISH = 'english',
-	FRENCH = 'french',
-	GERMAN = 'german',
-	PYTHON = 'python',
-	JAVASCRIPT = 'javascript',
-	TYPESCRIPT = 'typescript',
-	HTML = 'html',
-	CSS = 'css',
-	C = 'c',
-	CPLUSPLUS = 'c++',
-	PHP = 'php',
-	ASSEMBLY = 'assembly',
-	LATEX = 'latex',
-	NODE = 'node',
-	DJANGO = 'django',
-	LINUX = 'linux',
-	IDA_PRO = 'IDA pro',
-	KERAS = 'keras',
-	BROWSER_EXTENSIONS = 'browser_extensions',
-	BASH = 'bash',
-	REACT = 'react',
-}
+	export function skillLevelToNumber(level: SKILL_LEVEL) {
+		switch (level) {
+			case SKILL_LEVEL.BASIC:
+				return 0;
+			case SKILL_LEVEL.DECENT:
+				return 1;
+			case SKILL_LEVEL.GOOD:
+				return 2;
+			case SKILL_LEVEL.GREAT:
+				return 3;
+			case SKILL_LEVEL.FLUENT:
+				return 3;
+		}
+	}
 
-export const enum SKILL_GROUP {
-	HUMAN,
-	FRONTEND,
-	BACKEND,
-	SYSTEMS,
-	SOFTWARE,
-}
+	export const enum SKILL {
+		DUTCH = 'dutch',
+		ENGLISH = 'english',
+		FRENCH = 'french',
+		GERMAN = 'german',
+		PYTHON = 'python',
+		JAVASCRIPT = 'javascript',
+		TYPESCRIPT = 'typescript',
+		HTML = 'html',
+		CSS = 'css',
+		C = 'c',
+		CPLUSPLUS = 'c++',
+		PHP = 'php',
+		ASSEMBLY = 'assembly',
+		LATEX = 'latex',
+		NODE = 'node',
+		DJANGO = 'django',
+		LINUX = 'linux',
+		IDA_PRO = 'IDA pro',
+		KERAS = 'keras',
+		BROWSER_EXTENSIONS = 'browser_extensions',
+		BASH = 'bash',
+		REACT = 'react',
+	}
 
-export interface Skill {
-	name: SKILL;
-	translate?: boolean;
-	level: SKILL_LEVEL;
-}
+	export const enum SKILL_GROUP {
+		HUMAN,
+		FRONTEND,
+		BACKEND,
+		SYSTEMS,
+		SOFTWARE,
+	}
 
-export interface SkillGroup {
-	group: SKILL_GROUP;
-	skills: Skill[];
-}
+	export interface Skill {
+		name: SKILL;
+		translate?: boolean;
+		level: SKILL_LEVEL;
+	}
 
-interface MeConfig {
-	skillGroups: SkillGroup[];
-}
+	export interface SkillGroup {
+		group: SKILL_GROUP;
+		skills: Skill[];
+	}
 
-const me: MeConfig = {
-	skillGroups: [
+	export const skillGroups = [
 		{
-			group: SKILL_GROUP.HUMAN,
+			group: Skill.SKILL_GROUP.HUMAN,
 			skills: [
 				{
 					name: SKILL.DUTCH,
@@ -185,6 +181,15 @@ const me: MeConfig = {
 				},
 			],
 		},
-	],
+	];
+}
+
+export interface MeConfig {
+	skillGroups: Skill.SkillGroup[];
+}
+
+const me: MeConfig = {
+	skillGroups: Skill.skillGroups,
 };
+
 export default me;
