@@ -6,7 +6,6 @@ import {
 	TemplateFn,
 	CHANGE_TYPE,
 } from 'wc-lib';
-import { IDMapType, ClassMapType } from './raw-html-querymap';
 import { I18NType } from '../../../../../i18n/i18n-defs';
 import { themes } from '../../../../../shared/theme';
 import { LANGUAGE } from '../../../../../i18n/i18n';
@@ -29,10 +28,6 @@ function templateStringsArray(...content: string[]) {
 	),
 })
 export class RawHTML extends ConfigurableWebComponent<{
-	selectors: {
-		IDS: IDMapType;
-		CLASSES: ClassMapType;
-	};
 	langs: LANGUAGE;
 	i18n: I18NType;
 	themes: typeof themes;
