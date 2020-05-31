@@ -205,8 +205,142 @@ export namespace About {
 			par1: `Hi I'm Sander, and as you might have already read, I'm a computer science student and full-stack developer. I have a passion for solving hard problems in either the frontend or the backend.`,
 			par2: `I started out some {{frontend}} years ago with developing chrome extensions and have since expanded to full-stack development with various database systems and backends, systems/microcontroller programming with mostly C and a bit of machine learning.`,
 			par3: `This website serves as both a browsable resumé and a way to show off what I can do, being built using my own {{wclib}} library. You can learn more about my portfolio down below or you can focus on the projects related to a skill by clicking on one.`,
-		}
+		},
 	};
+}
+
+export type InternationalText =
+	| {
+			[lang in LANGUAGE]: string;
+	  }
+	| string;
+
+function getInternationText(text: InternationalText, lang: LANGUAGE): string {
+	if (typeof text === 'string') return text;
+	return text[lang];
+}
+
+export namespace LifeTimeline {
+	export const enum TYPE {
+		WORK = 'work',
+		PERSONAL_PROJECT = 'project',
+		EDUCATION_PROJECT = 'eduproject',
+		EDUCATION = 'education',
+	}
+
+	interface BaseEntry {
+		start: Date;
+		end: Date;
+		type: TYPE;
+		skills: Skill.SKILL[];
+		icon?: string;
+		title: InternationalText;
+		description: InternationalText;
+	}
+
+	export interface ProjectEntry extends BaseEntry {
+		type: TYPE.PERSONAL_PROJECT;
+		url?: InternationalText;
+		source: string;
+	}
+
+	export interface EducationProjectEntry extends BaseEntry {
+		type: TYPE.EDUCATION_PROJECT;
+		url?: InternationalText;
+		source: string;
+		school: InternationalText;
+		schoolURL?: InternationalText;
+	}
+
+	export interface EducationEntry extends BaseEntry {
+		type: TYPE.EDUCATION;
+		school: InternationalText;
+		schoolURL?: InternationalText;
+	}
+
+	export interface WorkEntry extends BaseEntry {
+		type: TYPE.WORK;
+	}
+
+	export type Entry =
+		| ProjectEntry
+		| EducationEntry
+		| WorkEntry
+		| EducationProjectEntry;
+
+	export type LifeTimeline = Entry[];
+
+	export const lifeTimeline: LifeTimeline = [
+		{
+			type: TYPE.EDUCATION,
+			school: 'Strabrecht College, Geldrop',
+			schoolURL: 'https://www.strabrecht.nl/',
+			start: new Date(2008, 8),
+			end: new Date(2014, 5),
+			skills: [],
+			title: 'Atheneum',
+			description: {
+				en: 'Profile: Nature & Tech',
+				nl: 'Profiel: Natuur & Techniek',
+			},
+		},
+		{
+			type: TYPE.EDUCATION,
+			school: {
+				en: 'Leiden University, Leiden',
+				nl: 'Universiteit Leiden, Leiden',
+			},
+			schoolURL: {
+				en: 'https://www.universiteitleiden.nl/en',
+				nl: 'https://www.universiteitleiden.nl/',
+			},
+			start: new Date(2014, 8),
+			end: new Date(2018, 2),
+			// TODO: icon
+			icon: '',
+			title: {
+				en: 'Bachelor in Computer Science',
+				nl: 'Bachelor Informatica',
+			},
+			description: '',
+			skills: [
+				Skill.SKILL.CPLUSPLUS,
+				Skill.SKILL.CSS,
+				Skill.SKILL.HTML,
+				Skill.SKILL.JAVASCRIPT,
+				Skill.SKILL.LINUX,
+			],
+		},
+		{
+			type: TYPE.EDUCATION_PROJECT,
+			school: {
+				en: 'Leiden University, Leiden',
+				nl: 'Universiteit Leiden, Leiden',
+			},
+			schoolURL: {
+				en: 'https://www.universiteitleiden.nl/en',
+				nl: 'https://www.universiteitleiden.nl/',
+			},
+			start: new Date(2014, 8),
+			end: new Date(2018, 2),
+			source: 'https://github.com/sanderronde/bachelor-thesis',
+			title:
+				'Bachelor Thesis: Detecting anomalies with recurrent neural networks',
+			url: '/thesis.pdf',
+			description: {
+				en:
+					'Bachelor thesis exploring the application of recurrent neural networks in detecting anomalies in user behavior on computer networks',
+				nl:
+					'Bachelor thesis waarin onderzocht wordt hoe recurrente neurale netwerken gebruikt kunnen worden voor het detecteren van abnormaal gedrag in computer netwerken',
+			},
+			skills: [
+				Skill.SKILL.PYTHON,
+				Skill.SKILL.BASH,
+				Skill.SKILL.LATEX,
+				Skill.SKILL.KERAS,
+			],
+		},
+	];
 }
 
 export interface MeConfig {
