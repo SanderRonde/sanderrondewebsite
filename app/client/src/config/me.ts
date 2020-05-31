@@ -1,3 +1,5 @@
+import { LANGUAGE } from '../../../i18n/i18n';
+
 export namespace Skill {
 	export const enum SKILL_LEVEL {
 		FLUENT = 'fluent',
@@ -184,11 +186,36 @@ export namespace Skill {
 	];
 }
 
+export namespace About {
+	export type Paragraphs = 'par1' | 'par2' | 'par3';
+
+	export type AboutConfig = {
+		[lang in LANGUAGE]: {
+			[par in Paragraphs]: string;
+		};
+	};
+
+	export const about: AboutConfig = {
+		nl: {
+			par1: `Hoi ik ben Sander, en zoals je misschien al hebt gelezen ben ik een informatica student en full-stack developer.Ik heb een passie voor het oplossen van moeilijke problemen op zowel de frontend als de backend.`,
+			par2: `Ik begon zo'n {{frontend}} jaar geleden met het ontwikkelen van chrome extensies en heb dat sindsdien uitgebreid naar full-stack development met verschillende database systemen en backends, systems/microcontrollers programmeren met voornamelijk C en een beetje machine learning`,
+			par3: `Deze website dient zowel als online CV als een plek om te laten zien wat ik kan, aangezien de website ook volledig gebouwd is met mijn eigen {{wclib}} library. Je kunt hieronder meer leren over mijn portfolio of je kunt focusen op vaardigheden door erop te klikken.`,
+		},
+		en: {
+			par1: `Hi I'm Sander, and as you might have already read, I'm a computer science student and full-stack developer. I have a passion for solving hard problems in either the frontend or the backend.`,
+			par2: `I started out some {{frontend}} years ago with developing chrome extensions and have since expanded to full-stack development with various database systems and backends, systems/microcontroller programming with mostly C and a bit of machine learning.`,
+			par3: `This website serves as both a browsable resumé and a way to show off what I can do, being built using my own {{wclib}} library. You can learn more about my portfolio down below or you can focus on the projects related to a skill by clicking on one.`,
+		}
+	};
+}
+
 export interface MeConfig {
+	about: About.AboutConfig;
 	skillGroups: Skill.SkillGroup[];
 }
 
 const me: MeConfig = {
+	about: About.about,
 	skillGroups: Skill.skillGroups,
 };
 
