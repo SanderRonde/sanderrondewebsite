@@ -116,14 +116,17 @@ export namespace Routes {
 			isDay = new Date().getMonth() === 3 && new Date().getDate() === 29;
 		}, 1000 * 60 * 60 * 3);
 
-		const serveImages = serve(path.join(CLIENT_DIR, 'images/src'), {
+		const serveImages = serve(path.join(CLIENT_DIR, 'images/icons'), {
 			extensions: ['pdf'],
 			prefix: '/images',
 		});
-		const serveSpecialImages = serve(path.join(CLIENT_DIR, 'images/hat'), {
-			extensions: ['pdf'],
-			prefix: '/images',
-		});
+		const serveSpecialImages = serve(
+			path.join(CLIENT_DIR, 'images/hat_icons'),
+			{
+				extensions: ['pdf'],
+				prefix: '/images',
+			}
+		);
 		app.use((req, res, next) => {
 			if (isDay) {
 				serveSpecialImages(req, res, next);
