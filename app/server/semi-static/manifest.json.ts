@@ -16,6 +16,7 @@ export function manifestJSON(
 			mime: MIME_TYPE,
 		};
 
+	const dimensions = ['48', '72', '96', '128', '144', '168', '192', '512'];
 	const value = JSON.stringify({
 		$schema: 'http://json.schemastore.org/web-manifest',
 		name: 'Sander Ronde',
@@ -29,41 +30,18 @@ export function manifestJSON(
 		theme_color: themes[theme].primary.main,
 		description: 'Sander Ronde personal website',
 		icons: [
-			{
-				src: 'images/48.png',
-				sizes: '48x48',
+			...dimensions.map((dimension) => ({
+				src: `images/${dimension}.png`,
+				sizes: `${dimension}x${dimension}`,
 				type: 'image/png',
-			},
-			{
-				src: 'images/72.png',
-				sizes: '72x72',
+				purpose: 'badge any',
+			})),
+			...dimensions.map((dimension) => ({
+				src: `images/${dimension}_masked.png`,
+				sizes: `${dimension}x${dimension}`,
 				type: 'image/png',
-			},
-			{
-				src: 'images/96.png',
-				sizes: '96x96',
-				type: 'image/png',
-			},
-			{
-				src: 'images/144.png',
-				sizes: '144x144',
-				type: 'image/png',
-			},
-			{
-				src: 'images/168.png',
-				sizes: '168x168',
-				type: 'image/png',
-			},
-			{
-				src: 'images/192.png',
-				sizes: '192x192',
-				type: 'image/png',
-			},
-			{
-				src: 'images/512.png',
-				sizes: '512x512',
-				type: 'image/png',
-			},
+				purpose: 'maskable',
+			})),
 		],
 	});
 	cache.set(theme, value);
