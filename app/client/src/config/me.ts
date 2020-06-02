@@ -501,7 +501,7 @@ export namespace LifeTimeline {
 		{
 			type: TYPE.PERSONAL_PROJECT,
 			// TODO:
-			start: new Date(2016, 10),
+			start: new Date(2020, 2),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/sanderrondewebsite',
 			url: 'http://sanderron.de/',
@@ -511,12 +511,224 @@ export namespace LifeTimeline {
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
 			],
-			title: 'sanderron.de',
+			title: 'www.sanderron.de',
 			// TODO: determine min size needed
 			icon: ['/icons/128.png'],
 			description: {
 				en: "The website you're reading this on",
 				nl: 'De website waarop je dit leest',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2019, 6),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/home-automation',
+			skills: [
+				Skill.SKILL.CSS,
+				Skill.SKILL.HTML,
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.NODE,
+				Skill.SKILL.REACT,
+				Skill.SKILL.PYTHON,
+				Skill.SKILL.KERAS,
+				Skill.SKILL.LINUX,
+				Skill.SKILL.C,
+				Skill.SKILL.CPLUSPLUS,
+			],
+			title: 'Home Automation',
+			description: {
+				en:
+					'A locally hosted home automation server that automates pretty much anything in my house using mostly microcontrollers. All controllable from a web app, touch screen, telegram bot and voice control. Check out the repo for more info.',
+				nl:
+					'Een locaal gehoste home automation server die vrijwel alles in mijn huis automatiseert met onder andere microcontrollers. Allemaal bestuurbaar vanuit een web app, touch screen, telegram bot of voice control. Bekijk de repo voor meer informatie.',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2019, 3),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/wc-lib',
+			url: 'https://www.npmjs.com/package/wc-lib',
+			skills: [Skill.SKILL.CSS, Skill.SKILL.HTML, Skill.SKILL.TYPESCRIPT],
+			title: 'wc-lib',
+			description: {
+				en:
+					'A small library for creating webcomponents based around the idea of importing what you need. Used to build this website among others.',
+				nl:
+					'Een kleine library voor het maken van webcomponents, gebaseerd op het idee van enkel importeren wat nodig is. Gebruikt voor onder andere deze website.',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2018, 6),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/password-manager',
+			skills: [
+				Skill.SKILL.CSS,
+				Skill.SKILL.HTML,
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.NODE,
+			],
+			title: 'Password Manager',
+			description: {
+				en:
+					'A fairly straight-forward self hosted password manager with a heavy focus on security and privacy.',
+				nl:
+					'Een self hosted password manager met een focus op veiligheid and privacy.',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2017, 8),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/html-typings',
+			url: 'https://html-typings.sanderron.de/',
+			skills: [
+				Skill.SKILL.HTML,
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.NODE,
+			],
+			title: 'HTML Typings',
+			description: {
+				en:
+					'A tool for generating typescript typings for HTML files. Allowing for type-safe references to HTML elements.',
+				nl:
+					'Een programma voor het genereren van typescript typings voor HTML bestanden. Hierdoor zijn referenties naar HTML bestanden type-safe.',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2015, 11),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/CustomRightClickMenu',
+			url:
+				'https://chrome.google.com/webstore/detail/custom-right-click-menu/onnbmgmepodkilcbdodhfepllfmafmlj',
+			icon: ['/timeline/crm.png'],
+			skills: [
+				Skill.SKILL.HTML,
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.NODE,
+			],
+			title: 'Custom Right-Click Menu (v2+)',
+			description: {
+				en:
+					'A browser extension for creating your own entry in the right-click menu. Allows adding of and activating custom scripts, links, sub-menus or custom CSS in your right-click menu.',
+				nl:
+					'Een browser extensie voor het maken van een eigen contextmenu veld. Hiermee kun je je eigen scripts, link, submenus of CSS activeren vanuit je contextmenu.',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2010, 11),
+			end: END_DATE.NEVER,
+			source:
+				'https://github.com/SanderRonde/CustomRightClickMenu/tree/oldCRM',
+			icon: ['/timeline/crmold.png'],
+			skills: [
+				Skill.SKILL.HTML,
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.NODE,
+			],
+			title: 'Custom Right-Click Menu (v1)',
+			description: {
+				en:
+					'A browser extension for creating your own entry in the right-click menu. Allows adding of and activating custom scripts, links, sub-menus or custom CSS in your right-click menu.',
+				nl:
+					'Een browser extensie voor het maken van een eigen contextmenu veld. Hiermee kun je je eigen scripts, link, submenus of CSS activeren vanuit je contextmenu.',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2020, 1),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/sharify',
+			url: 'https://sharify.sanderron.de/',
+			icon: ['/timeline/sharify.png'],
+			skills: [
+				Skill.SKILL.HTML,
+				Skill.SKILL.CSS,
+				Skill.SKILL.REACT,
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.NODE,
+			],
+			title: 'Sharify',
+			description: {
+				en:
+					'A web app that generates spotify playlists based on the combined tastes of all participants.',
+				nl:
+					'Een web app voor het genereren van spotify playlists op basis van de gecombineerde smaken van alle deelnemers.',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2020, 0),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/board-temperature-driver',
+			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS],
+			title: 'Board temperature driver',
+			description: {
+				en:
+					'The code that powers an ESP8266-based microcontroller which monitors and records the temperature. Part of the home-automation project.',
+				nl:
+					'De code voor een ESP8266-gebaseerde microcontroller die de temperatuur meet en vastlegt. Deel van het home-automation project',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2019, 11),
+			end: END_DATE.NEVER,
+			source:
+				'https://github.com/SanderRonde/arduino-board-screen-driver',
+			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS],
+			title: 'Board screen driver',
+			description: {
+				en:
+					'The code that powers an ESP8266-based microcontroller that controls a touch screen. This touch screen is used for turning on and off the lights among others. Part of the home-automation project.',
+				nl:
+					'De code voor een ESP8266-gebaseerde microcontroller die een touch screen bestuurt. De touch screen kan worden gebruikt om on andere het licht aan en uit te doen. Deel van het home-automation project',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2019, 11),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/board-power-driver',
+			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS],
+			title: 'Board power driver',
+			description: {
+				en:
+					'The code that powers an ESP8266-based microcontroller that allows for remote controlling of power sockets. Part of the home-automation project.',
+				nl:
+					'De code voor een ESP8266-gebaseerde microcontroller waarmee de stroom aan en uit kan worden gezet voor apparaten. Deel van het home-automation project',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2019, 11),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/arduino-board-led-driver',
+			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS],
+			title: 'Board LED driver',
+			description: {
+				en:
+					'The code that powers an arduino duo that controls an individually adressable LED strip with various patterns. Part of the home-automation project.',
+				nl:
+					'De code voor een ESP8266-gebaseerde microcontroller waarmee een individually adressable LED strip met verschillende patronen kan worden bediend. Deel van het home-automation project',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2019, 11),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/board-pressure-sensor',
+			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS],
+			title: 'Board pressure sensor',
+			description: {
+				en:
+					'The code that powers an ESP8266-based microcontroller that records and transmits the pressure it measures. Part of the home-automation project.',
+				nl:
+					'De code voor een ESP8266-gebaseerde microcontroller waarmee de druk wordt gemeten en opgeslagen. Deel van het home-automation project',
 			},
 		},
 	];
