@@ -204,7 +204,7 @@ export namespace About {
 		en: {
 			par1: `Hi I'm Sander, and as you might have already read, I'm a computer science student and full-stack developer. I have a passion for solving hard problems in either the frontend or the backend.`,
 			par2: `I started out some {{frontend}} years ago with developing chrome extensions and have since expanded to full-stack development with various database systems and backends, systems/microcontroller programming with mostly C and a bit of machine learning.`,
-			par3: `This website serves as both a browsable resumÃƒÂ© and a way to show off what I can do, being built using my own {{wclib}} library. You can learn more about my portfolio down below or you can focus on the projects related to a skill by clicking on one.`,
+			par3: `This website serves as both a browsable resumÃƒÆ’Ã‚Â© and a way to show off what I can do, being built using my own {{wclib}} library. You can learn more about my portfolio down below or you can focus on the projects related to a skill by clicking on one.`,
 		},
 	};
 }
@@ -335,14 +335,13 @@ export namespace LifeTimeline {
 			start: new Date(2014, 8),
 			end: new Date(2018, 2),
 			source: 'https://github.com/sanderronde/bachelor-thesis',
-			title:
-				'Bachelor Thesis: Detecting anomalies with recurrent neural networks',
+			title: 'Bachelor Thesis',
 			url: '/thesis.pdf',
 			description: {
 				en:
-					'Bachelor thesis exploring the application of recurrent neural networks in detecting anomalies in user behavior on computer networks',
+					'Bachelor thesis: Detecting anomalies with recurrent neural networks. Explores the application of recurrent neural networks in detecting anomalies in user behavior on computer networks',
 				nl:
-					'Bachelor thesis waarin onderzocht wordt hoe recurrente neurale netwerken gebruikt kunnen worden voor het detecteren van abnormaal gedrag in computernetwerken',
+					'Bachelor thesis: Detecting anomalies with recurrent neural networks. Hierin wordt onderzocht hoe recurrente neurale netwerken gebruikt kunnen worden voor het detecteren van abnormaal gedrag in computernetwerken',
 			},
 			skills: [
 				Skill.SKILL.PYTHON,
