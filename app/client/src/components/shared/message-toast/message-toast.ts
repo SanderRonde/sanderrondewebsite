@@ -33,7 +33,10 @@ export class MessageToast extends ComponentBase<{
 }> {
 	props = Props.define(this, {
 		reflect: {
-			message: PROP_TYPE.STRING,
+			message: {
+				type: PROP_TYPE.STRING,
+				required: true,
+			},
 			button: {
 				type: PROP_TYPE.STRING,
 				value: 'hide',

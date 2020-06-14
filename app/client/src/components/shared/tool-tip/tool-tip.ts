@@ -35,6 +35,7 @@ export class ToolTip extends ComponentBase<{
 			message: {
 				type: PROP_TYPE.STRING,
 				value: '',
+				required: true,
 			},
 			expanded: {
 				type: PROP_TYPE.BOOL,

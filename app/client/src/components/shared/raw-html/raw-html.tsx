@@ -24,6 +24,7 @@ export class RawHTML extends ComponentBase {
 			content: {
 				type: PROP_TYPE.STRING,
 				value: '',
+				required: true,
 			},
 		},
 	});
