@@ -37,7 +37,6 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 				>
 					<InfoBlock id="info-block" />
 				</BackgroundBlock>
-				$
 				{window.innerWidth < MIN_JOINED_TIMELINE_WIDTH ? (
 					<span>
 						<BackgroundBlock
