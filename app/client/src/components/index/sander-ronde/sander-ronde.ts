@@ -5,9 +5,9 @@ import { SanderRondeHTML } from './sander-ronde.html';
 import { SanderRondeCSS } from './sander-ronde.css';
 import { FontCSS } from '../../../styles/font';
 import { NameBlock } from './name-block/';
-import { BaseClass } from '../base-class';
 import { InfoBlock } from './info-block/';
 import { TimeLine } from './time-line/';
+import { IndexBase } from '../base';
 import { config } from 'wc-lib';
 
 @config({
@@ -22,7 +22,7 @@ import { config } from 'wc-lib';
 		InfoBlock,
 	],
 })
-export class SanderRonde extends BaseClass<{
+export class SanderRonde extends IndexBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
