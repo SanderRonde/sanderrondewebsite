@@ -27,7 +27,7 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 					}
 					padding={false}
 				>
-					<NameBlock id="name-block" {...{ '#parent': this }} />
+					<NameBlock id="name-block" />
 				</BackgroundBlock>
 				<BackgroundBlock
 					id="info-background"
