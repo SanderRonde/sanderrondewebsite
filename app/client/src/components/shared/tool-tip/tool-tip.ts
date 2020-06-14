@@ -3,13 +3,11 @@ import {
 	MIN_TOOLTIP_MESSAGE_WIDTH,
 	TOOLTIP_SIDE_PADDING,
 } from './tool-tip.css.js';
-import { ConfigurableWebComponent, Props, config, PROP_TYPE } from 'wc-lib';
 import { IDMapType, ClassMapType } from './tool-tip-querymap';
-import { I18NType } from '../../../../../i18n/i18n-defs';
-import { themes } from '../../../../../shared/theme';
 import { FadeInCSS } from '../../../styles/fade-in';
-import { LANGUAGE } from '../../../../../i18n/i18n';
+import { Props, config, PROP_TYPE } from 'wc-lib';
 import { ToolTipHTML } from './tool-tip.html';
+import { ComponentBase } from '../../base.js';
 
 export const enum TOGGLES {
 	EXPANDED = 'expanded',
@@ -25,15 +23,12 @@ export const enum TOOLTIP_DIRECTION {
 	css: [ToolTipCSS, FadeInCSS],
 	html: ToolTipHTML,
 })
-export class ToolTip extends ConfigurableWebComponent<{
+export class ToolTip extends ComponentBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
 		TOGGLES: TOGGLES | TOOLTIP_DIRECTION;
 	};
-	langs: LANGUAGE;
-	i18n: I18NType;
-	themes: typeof themes;
 }> {
 	props = Props.define(this, {
 		reflect: {

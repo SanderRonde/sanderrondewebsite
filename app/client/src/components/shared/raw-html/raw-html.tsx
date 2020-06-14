@@ -1,14 +1,5 @@
-import {
-	ConfigurableWebComponent,
-	Props,
-	PROP_TYPE,
-	config,
-	TemplateFn,
-	CHANGE_TYPE,
-} from 'wc-lib';
-import { I18NType } from '../../../../../i18n/i18n-defs';
-import { themes } from '../../../../../shared/theme';
-import { LANGUAGE } from '../../../../../i18n/i18n';
+import { Props, PROP_TYPE, config, TemplateFn, CHANGE_TYPE } from 'wc-lib';
+import { ComponentBase } from '../../base';
 import { render } from 'lit-html';
 
 function templateStringsArray(...content: string[]) {
@@ -27,11 +18,7 @@ function templateStringsArray(...content: string[]) {
 		render
 	),
 })
-export class RawHTML extends ConfigurableWebComponent<{
-	langs: LANGUAGE;
-	i18n: I18NType;
-	themes: typeof themes;
-}> {
+export class RawHTML extends ComponentBase {
 	props = Props.define(this, {
 		reflect: {
 			content: {

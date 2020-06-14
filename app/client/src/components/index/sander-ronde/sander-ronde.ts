@@ -1,16 +1,14 @@
 import { IDMapType, ClassMapType } from './sander-ronde-querymap';
 import { BackgroundBlock } from '../../shared/background-block/';
 import { MessageToast } from '../../shared/message-toast/';
-import { ConfigurableWebComponent, config } from 'wc-lib';
-import { I18NType } from '../../../../../i18n/i18n-defs';
 import { SanderRondeHTML } from './sander-ronde.html';
-import { themes } from '../../../../../shared/theme';
 import { SanderRondeCSS } from './sander-ronde.css';
-import { LANGUAGE } from '../../../../../i18n/i18n';
 import { FontCSS } from '../../../styles/font';
 import { NameBlock } from './name-block/';
+import { BaseClass } from '../base-class';
 import { InfoBlock } from './info-block/';
 import { TimeLine } from './time-line/';
+import { config } from 'wc-lib';
 
 @config({
 	is: 'sander-ronde',
@@ -24,12 +22,9 @@ import { TimeLine } from './time-line/';
 		InfoBlock,
 	],
 })
-export class SanderRonde extends ConfigurableWebComponent<{
+export class SanderRonde extends BaseClass<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
 	};
-	langs: LANGUAGE;
-	i18n: I18NType;
-	themes: typeof themes;
 }> {}

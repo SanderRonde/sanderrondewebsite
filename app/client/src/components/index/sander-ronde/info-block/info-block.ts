@@ -1,13 +1,11 @@
 import { IDMapType, ClassMapType } from './info-block-querymap';
 import { CenterersCSS } from '../../../../styles/centerers';
-import { I18NType } from '../../../../../../i18n/i18n-defs';
-import { ConfigurableWebComponent, config } from 'wc-lib';
-import { themes } from '../../../../../../shared/theme';
-import { LANGUAGE } from '../../../../../../i18n/i18n';
 import { ToolTip } from '../../../shared/tool-tip/';
 import { RawHTML } from '../../../shared/raw-html/';
 import { InfoBlockHTML } from './info-block.html';
 import { InfoBlockCSS } from './info-block.css';
+import { IndexBase } from '../../base';
+import { config } from 'wc-lib';
 
 @config({
 	is: 'info-block',
@@ -15,12 +13,9 @@ import { InfoBlockCSS } from './info-block.css';
 	html: InfoBlockHTML,
 	dependencies: [ToolTip, RawHTML],
 })
-export class InfoBlock extends ConfigurableWebComponent<{
+export class InfoBlock extends IndexBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
 	};
-	langs: LANGUAGE;
-	i18n: I18NType;
-	themes: typeof themes;
 }> {}

@@ -1,18 +1,9 @@
-import {
-	bindToClass,
-	config,
-	ConfigurableWebComponent,
-	Props,
-	PROP_TYPE,
-	wait,
-} from 'wc-lib';
+import { bindToClass, config, Props, PROP_TYPE, wait } from 'wc-lib';
 import { IDMapType, ClassMapType } from './message-toast-querymap';
 import { MessageToastHTML } from './message-toast.html';
-import { I18NType } from '../../../../../i18n/i18n-defs';
 import { MessageToastCSS } from './message-toast.css';
-import { themes } from '../../../../../shared/theme';
-import { LANGUAGE } from '../../../../../i18n/i18n';
 import { FontCSS } from '../../../styles/font';
+import { ComponentBase } from '../../base';
 
 export interface ToastConfig {
 	message: string;
@@ -26,7 +17,7 @@ export interface ToastConfig {
 	html: MessageToastHTML,
 	css: [MessageToastCSS, FontCSS],
 })
-export class MessageToast extends ConfigurableWebComponent<{
+export class MessageToast extends ComponentBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
@@ -39,9 +30,6 @@ export class MessageToast extends ConfigurableWebComponent<{
 			args: [];
 		};
 	};
-	langs: LANGUAGE;
-	i18n: I18NType;
-	themes: typeof themes;
 }> {
 	props = Props.define(this, {
 		reflect: {

@@ -1,24 +1,20 @@
-import { ConfigurableWebComponent, Props, PROP_TYPE, config } from 'wc-lib';
 import { IDMapType, ClassMapType } from './background-block-querymap';
-import { THEME_SHADE, themes } from '../../../../../shared/theme';
 import { BackgroundBlockHTML } from './background-block.html';
 import { BackgroundBlockCSS } from './background-block.css';
-import { I18NType } from '../../../../../i18n/i18n-defs';
-import { LANGUAGE } from '../../../../../i18n/i18n';
+import { THEME_SHADE } from '../../../../../shared/theme';
+import { Props, PROP_TYPE, config } from 'wc-lib';
+import { ComponentBase } from '../../base';
 
 @config({
 	is: 'background-block',
 	css: BackgroundBlockCSS,
 	html: BackgroundBlockHTML,
 })
-export class BackgroundBlock extends ConfigurableWebComponent<{
+export class BackgroundBlock extends ComponentBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
 	};
-	langs: LANGUAGE;
-	i18n: I18NType;
-	themes: typeof themes;
 }> {
 	props = Props.define(this, {
 		reflect: {
