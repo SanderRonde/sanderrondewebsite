@@ -4552,7 +4552,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.4.3, typescript@^3.8.3:
+typescript@^3.4.3:
   version "3.8.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.8.3.tgz#409eb8544ea0335711205869ec458ab109ee1061"
   integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
@@ -4785,16 +4785,16 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-wc-lib@^1.1.13:
-  version "1.1.13"
-  resolved "https://registry.yarnpkg.com/wc-lib/-/wc-lib-1.1.13.tgz#5ac5cbecbdf91bb333725312d03f47df5e92f891"
-  integrity sha512-/jt8hSazbjxlgBH0GEnorBTQ7YWZw6gXsSREuQRjLacWyBzx0o2SETSG87xPd9Q3FJu0iR0SAZC37skDqmO8wA==
+wc-lib@^1.1.14:
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/wc-lib/-/wc-lib-1.1.14.tgz#30226b481502afacc78f921865555ccead58a38a"
+  integrity sha512-fzCcMLoTGPm/qRhoxseO+XH9Xdrk9OUdE3NaIOBe7h6H14aWJOLEQCxSRbRKulTkxIe5/xiI+K8THVIrgsCKLw==
   dependencies:
     css "^2.2.4"
     glob "^7.1.6"
     htmlparser2 "^4.0.0"
     through2 "^3.0.1"
-    typescript "^3.8.3"
+    typescript "^3.9.5"
 
 which-module@^1.0.0:
   version "1.0.0"
