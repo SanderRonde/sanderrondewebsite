@@ -155,6 +155,11 @@ export namespace Routes {
 		);
 		initImageRoutes(app);
 		app.use(
+			serveStatic(path.join(CLIENT_DIR, 'images'), {
+				index: false,
+			})
+		);
+		app.use(
 			serveStatic(path.join(CLIENT_DIR, 'build/public'), {
 				index: false,
 			})
