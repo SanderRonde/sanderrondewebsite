@@ -18,7 +18,10 @@ export namespace Dev {
 			.replace(
 				/['"]lit-html['"]/g,
 				"'/node_modules/lit-html/lit-html.js'"
-			);
+			)
+			.replace(/['"]lit-html\/directives\/(\w+)['"]/g, (_, directive) => {
+				return `'/node_modules/lit-html/directives/${directive}.js'`;
+			});
 	}
 
 	export function initRoutes({ app }: WebServer) {
