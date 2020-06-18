@@ -1,7 +1,7 @@
 import config, { Skill } from '../../../../config/me.js';
 import { I18NKeys } from '../../../../../../i18n/i18n-keys';
 import { RawHTML } from '../../../shared/raw-html/raw-html';
-import { ToolTip } from '../../../shared/tool-tip/tool-tip';
+import { SkillRow } from './skill-row/skill-row.js';
 import { LinkCSS } from '../../../../styles/link';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { InfoBlock } from './info-block';
@@ -113,38 +113,9 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 								{this.__(I18NKeys.index.infoBlock.skills.title)}
 							</div>
 							<div class="content">
-								{skillGroups.map((skillGroup) => {
-									return (
-										<div class="skill-group">
-											{skillGroup.skills.map((skill) => {
-												const name = skill.translate
-													? this.__(
-															`${I18NKeys.index.infoBlock.skills._}${skill.name}` as any
-													  )
-													: skill.name;
-												return (
-													<ToolTip
-														message={this.__(
-															I18NKeys.index
-																.infoBlock
-																.skillLevels
-																.level,
-															{
-																level: this.__prom(
-																	`${I18NKeys.index.infoBlock.skillLevels._}${skill.level}` as any
-																),
-															}
-														)}
-													>
-														<div class="skill">
-															{name}
-														</div>
-													</ToolTip>
-												);
-											})}
-										</div>
-									);
-								})}
+								{skillGroups.map((skillGroup) => (
+									<SkillRow group={skillGroup} />
+								))}
 							</div>
 						</div>
 					</div>
