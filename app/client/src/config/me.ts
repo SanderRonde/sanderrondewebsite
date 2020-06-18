@@ -55,6 +55,13 @@ export namespace Skill {
 		BACKEND,
 		SYSTEMS,
 		SOFTWARE,
+		NONE,
+	}
+
+	export interface NameSkill {
+		name: SKILL;
+		translate?: boolean;
+		level?: SKILL_LEVEL;
 	}
 
 	export interface Skill {
@@ -204,7 +211,7 @@ export namespace About {
 		en: {
 			par1: `Hi I'm Sander, and as you might have already read, I'm a computer science student and full-stack developer. I have a passion for solving hard problems in either the frontend or the backend.`,
 			par2: `I started out some {{frontend}} years ago with developing chrome extensions and have since expanded to full-stack development with various database systems and backends, systems/microcontroller programming with mostly C and a bit of machine learning.`,
-			par3: `This website serves as both a browsable resumÃƒÆ’Ã‚Â© and a way to show off what I can do, being built using my own {{wclib}} library. You can learn more about my portfolio down below or you can focus on the projects related to a skill by clicking on one.`,
+			par3: `This website serves as both a browsable resumé and a way to show off what I can do, being built using my own {{wclib}} library. You can learn more about my portfolio down below or you can focus on the projects related to a skill by clicking on one.`,
 		},
 	};
 }
@@ -240,7 +247,7 @@ export namespace LifeTimeline {
 		start: Date;
 		end: Date | END_DATE;
 		type: TYPE;
-		skills: Skill.SKILL[];
+		skills: Skill.NameSkill[];
 		icon?: string[];
 		title: InternationalText;
 		description: InternationalText;
@@ -256,13 +263,13 @@ export namespace LifeTimeline {
 		type: TYPE.EDUCATION_PROJECT;
 		url?: InternationalText;
 		source: string;
-		school: InternationalText;
-		schoolURL?: InternationalText;
+		school: InternationalText[];
+		schoolURL?: InternationalText[];
 	}
 
 	export interface EducationEntry extends BaseEntry {
 		type: TYPE.EDUCATION;
-		school: InternationalText;
+		school: InternationalText[];
 		schoolURL?: InternationalText[];
 	}
 
@@ -280,10 +287,27 @@ export namespace LifeTimeline {
 
 	export type LifeTimeline = Entry[];
 
+	export function isEET(
+		entry: Entry
+	): entry is EducationEntry | WorkEntry | EducationProjectEntry {
+		switch (entry.type) {
+			case TYPE.EDUCATION:
+			case TYPE.EDUCATION_PROJECT:
+			case TYPE.WORK:
+				return true;
+			case TYPE.PERSONAL_PROJECT:
+				return false;
+		}
+	}
+
+	export function isPProj(entry: Entry): entry is ProjectEntry {
+		return !isEET(entry);
+	}
+
 	export const lifeTimeline: LifeTimeline = [
 		{
 			type: TYPE.EDUCATION,
-			school: 'Strabrecht College, Geldrop',
+			school: ['Strabrecht College, Geldrop'],
 			schoolURL: ['https://www.strabrecht.nl/'],
 			start: new Date(2008, 8),
 			end: new Date(2014, 5),
@@ -296,10 +320,12 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.EDUCATION,
-			school: {
-				en: 'Leiden University, Leiden',
-				nl: 'Universiteit Leiden, Leiden',
-			},
+			school: [
+				{
+					en: 'Leiden University, Leiden',
+					nl: 'Universiteit Leiden, Leiden',
+				},
+			],
 			schoolURL: [
 				{
 					en: 'https://www.universiteitleiden.nl/en',
@@ -320,18 +346,22 @@ export namespace LifeTimeline {
 				Skill.SKILL.HTML,
 				Skill.SKILL.JAVASCRIPT,
 				Skill.SKILL.LINUX,
-			],
+			].map((skill) => ({ name: skill })),
 		},
 		{
 			type: TYPE.EDUCATION_PROJECT,
-			school: {
-				en: 'Leiden University, Leiden',
-				nl: 'Universiteit Leiden, Leiden',
-			},
-			schoolURL: {
-				en: 'https://www.universiteitleiden.nl/en',
-				nl: 'https://www.universiteitleiden.nl/',
-			},
+			school: [
+				{
+					en: 'Leiden University',
+					nl: 'Universiteit Leiden',
+				},
+			],
+			schoolURL: [
+				{
+					en: 'https://www.universiteitleiden.nl/en',
+					nl: 'https://www.universiteitleiden.nl/',
+				},
+			],
 			start: new Date(2014, 8),
 			end: new Date(2018, 2),
 			source: 'https://github.com/sanderronde/bachelor-thesis',
@@ -348,14 +378,11 @@ export namespace LifeTimeline {
 				Skill.SKILL.BASH,
 				Skill.SKILL.LATEX,
 				Skill.SKILL.KERAS,
-			],
+			].map((skill) => ({ name: skill })),
 		},
 		{
 			type: TYPE.EDUCATION,
-			school: {
-				en: 'University of Amsterdam & Vrije Universiteit Amsterdam',
-				nl: 'Universiteit van Amsterdam & Vrije Universiteit Amsterdam',
-			},
+			school: ['UvA', 'VU'],
 			schoolURL: [
 				{
 					en: 'https://www.uva.nl/en',
@@ -391,7 +418,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.REACT,
 				Skill.SKILL.PYTHON,
-			],
+			].map((skill) => ({ name: skill })),
 		},
 		{
 			type: TYPE.WORK,
@@ -399,8 +426,8 @@ export namespace LifeTimeline {
 			end: new Date(2019, 7),
 			skills: [],
 			title: {
-				en: 'Computer help',
-				nl: 'Computer hulp',
+				en: 'IT help',
+				nl: 'IT hulp',
 			},
 			employer: 'Studentaanhuis',
 			employerURL: 'https://www.studentaanhuis.nl/',
@@ -423,7 +450,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.PYTHON,
 				Skill.SKILL.REACT,
-			],
+			].map((skill) => ({ name: skill })),
 			employer: 'Nextup Software',
 			employerURL: 'https://nextupsoftware.com/',
 			title: 'Full stack developer',
@@ -443,10 +470,15 @@ export namespace LifeTimeline {
 			url:
 				'https://chrome.google.com/webstore/detail/binder-app/jeolbigkboigkhlfhilmedbakkkcmeif',
 			skills: [
-				Skill.SKILL.BROWSER_EXTENSIONS,
-				Skill.SKILL.CSS,
-				Skill.SKILL.HTML,
-				Skill.SKILL.JAVASCRIPT,
+				{
+					name: Skill.SKILL.BROWSER_EXTENSIONS,
+					translate: true,
+				},
+				...[
+					Skill.SKILL.CSS,
+					Skill.SKILL.HTML,
+					Skill.SKILL.JAVASCRIPT,
+				].map((skill) => ({ name: skill })),
 			],
 			title: 'Binder App (browser app)',
 			description: {
@@ -468,27 +500,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
 				Skill.SKILL.REACT,
-			],
-			title: 'WatchMeType',
-			description: {
-				en:
-					'A web app that allows you to type using nothing but your finger and a leap motion. Created as a demo for what the leap motion could do for typing on a smartwatch.',
-				nl:
-					'Een browser app waarmee je kan typen met enkel je vinger en een leap motion. Gemaakt als een demo voor wat de leap motion zou kunnen doen voor het typen op een smartwatch',
-			},
-		},
-		{
-			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2016, 10),
-			end: END_DATE.NEVER,
-			source: 'https://github.com/SanderRonde/WatchMeType',
-			skills: [
-				Skill.SKILL.CSS,
-				Skill.SKILL.HTML,
-				Skill.SKILL.TYPESCRIPT,
-				Skill.SKILL.NODE,
-				Skill.SKILL.REACT,
-			],
+			].map((skill) => ({ name: skill })),
 			title: 'WatchMeType',
 			description: {
 				en:
@@ -509,7 +521,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.HTML,
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
-			],
+			].map((skill) => ({ name: skill })),
 			title: 'www.sanderron.de',
 			// TODO: determine min size needed
 			icon: ['/icons/128.png'],
@@ -534,7 +546,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.LINUX,
 				Skill.SKILL.C,
 				Skill.SKILL.CPLUSPLUS,
-			],
+			].map((skill) => ({ name: skill })),
 			title: 'Home Automation',
 			description: {
 				en:
@@ -549,7 +561,11 @@ export namespace LifeTimeline {
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/wc-lib',
 			url: 'https://www.npmjs.com/package/wc-lib',
-			skills: [Skill.SKILL.CSS, Skill.SKILL.HTML, Skill.SKILL.TYPESCRIPT],
+			skills: [
+				Skill.SKILL.CSS,
+				Skill.SKILL.HTML,
+				Skill.SKILL.TYPESCRIPT,
+			].map((skill) => ({ name: skill })),
 			title: 'wc-lib',
 			description: {
 				en:
@@ -568,7 +584,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.HTML,
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
-			],
+			].map((skill) => ({ name: skill })),
 			title: 'Password Manager',
 			description: {
 				en:
@@ -587,7 +603,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.HTML,
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
-			],
+			].map((skill) => ({ name: skill })),
 			title: 'HTML Typings',
 			description: {
 				en:
@@ -608,7 +624,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.HTML,
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
-			],
+			].map((skill) => ({ name: skill })),
 			title: 'Custom Right-Click Menu (v2+)',
 			description: {
 				en:
@@ -628,7 +644,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.HTML,
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
-			],
+			].map((skill) => ({ name: skill })),
 			title: 'Custom Right-Click Menu (v1)',
 			description: {
 				en:
@@ -650,7 +666,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.REACT,
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
-			],
+			].map((skill) => ({ name: skill })),
 			title: 'Sharify',
 			description: {
 				en:
@@ -664,7 +680,9 @@ export namespace LifeTimeline {
 			start: new Date(2020, 0),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/board-temperature-driver',
-			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS],
+			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS].map((skill) => ({
+				name: skill,
+			})),
 			title: 'Board temperature driver',
 			description: {
 				en:
@@ -679,7 +697,9 @@ export namespace LifeTimeline {
 			end: END_DATE.NEVER,
 			source:
 				'https://github.com/SanderRonde/arduino-board-screen-driver',
-			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS],
+			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS].map((skill) => ({
+				name: skill,
+			})),
 			title: 'Board screen driver',
 			description: {
 				en:
@@ -693,7 +713,9 @@ export namespace LifeTimeline {
 			start: new Date(2019, 11),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/board-power-driver',
-			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS],
+			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS].map((skill) => ({
+				name: skill,
+			})),
 			title: 'Board power driver',
 			description: {
 				en:
@@ -707,7 +729,9 @@ export namespace LifeTimeline {
 			start: new Date(2019, 11),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/arduino-board-led-driver',
-			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS],
+			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS].map((skill) => ({
+				name: skill,
+			})),
 			title: 'Board LED driver',
 			description: {
 				en:
@@ -721,7 +745,9 @@ export namespace LifeTimeline {
 			start: new Date(2019, 11),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/board-pressure-sensor',
-			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS],
+			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS].map((skill) => ({
+				name: skill,
+			})),
 			title: 'Board pressure sensor',
 			description: {
 				en:

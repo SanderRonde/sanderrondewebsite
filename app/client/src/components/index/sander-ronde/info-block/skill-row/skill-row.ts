@@ -20,7 +20,7 @@ export class SkillRow extends IndexBase<{
 		reflect: {
 			group: {
 				type: ComplexType<{
-					skills: Skill.Skill[];
+					skills: Skill.NameSkill[];
 					group: Skill.SKILL_GROUP;
 				}>(),
 				required: true,

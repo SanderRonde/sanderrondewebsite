@@ -15,7 +15,7 @@ export const SkillRowHTML = new TemplateFn<SkillRow>(
 									`${I18NKeys.index.infoBlock.skills._}${skill.name}` as any
 							  )
 							: skill.name;
-						return (
+						return skill.level ? (
 							<ToolTip
 								message={this.__(
 									I18NKeys.index.infoBlock.skillLevels.level,
@@ -28,6 +28,8 @@ export const SkillRowHTML = new TemplateFn<SkillRow>(
 							>
 								<div class="skill">{name}</div>
 							</ToolTip>
+						) : (
+							<div class="skill">{name}</div>
 						);
 					})}
 			</div>
