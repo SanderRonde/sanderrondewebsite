@@ -21,6 +21,7 @@ export interface Theme {
 	primary: ThemeShade;
 	secondary: ThemeShade;
 	text: ThemeShade;
+	card: string;
 }
 
 export const themes: {
@@ -35,7 +36,7 @@ export const themes: {
 		text: {
 			main: '#C5C5C5',
 			dark: '#7B7B7B',
-			light: '#FFF',
+			light: '#D5D5D5',
 		},
 		secondary: {
 			main: '#FFD03E',
@@ -47,6 +48,7 @@ export const themes: {
 			light: '#3383FF',
 			dark: '#1E6AF0',
 		},
+		card: '#222222',
 	},
 };
 
