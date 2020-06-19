@@ -15,7 +15,7 @@ export const SkillRowCSS = new TemplateFn<SkillRow>(
 			}
 
 			${css(this).c.skill} {
-				color: white;
+				color: ${theme.text.main};
 				display: inline-block;
 				border-radius: 10px;
 				padding: 8px;
