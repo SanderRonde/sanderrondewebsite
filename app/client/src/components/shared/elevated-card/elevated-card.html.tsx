@@ -4,8 +4,12 @@ import { render } from 'lit-html';
 
 export const ElevatedCardHTML = new TemplateFn<ElevatedCard>(
 	function (html) {
-		return <div></div>;
+		return (
+			<div id="shadow">
+				<slot id="slot"></slot>
+			</div>
+		);
 	},
-	CHANGE_TYPE.PROP,
+	CHANGE_TYPE.NEVER,
 	render
 );
