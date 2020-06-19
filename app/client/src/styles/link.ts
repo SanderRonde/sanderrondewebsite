@@ -11,6 +11,10 @@ export const LinkCSS = new TemplateFn<
 				color: ${theme.text.main};
 			}
 
+			.link.light {
+				color: ${theme.text.light};
+			}
+
 			.link.color {
 				color: ${theme.secondary.main};
 			}
