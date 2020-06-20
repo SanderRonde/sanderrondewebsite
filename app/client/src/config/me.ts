@@ -211,7 +211,7 @@ export namespace About {
 		en: {
 			par1: `Hi I'm Sander, and as you might have already read, I'm a computer science student and full-stack developer. I have a passion for solving hard problems in either the frontend or the backend.`,
 			par2: `I started out some {{frontend}} years ago with developing chrome extensions and have since expanded to full-stack development with various database systems and backends, systems/microcontroller programming with mostly C and a bit of machine learning.`,
-			par3: `This website serves as both a browsable resumÃƒÂ© and a way to show off what I can do, being built using my own {{wclib}} library. You can learn more about my portfolio down below or you can focus on the projects related to a skill by clicking on one.`,
+			par3: `This website serves as both a browsable resumÃƒÆ’Ã‚Â© and a way to show off what I can do, being built using my own {{wclib}} library. You can learn more about my portfolio down below or you can focus on the projects related to a skill by clicking on one.`,
 		},
 	};
 }
@@ -340,7 +340,10 @@ export namespace LifeTimeline {
 				en: 'Bachelor in Computer Science',
 				nl: 'Bachelor Informatica',
 			},
-			description: '',
+			description: {
+				en: 'Computer science bachelor at Leiden University',
+				nl: 'Bachelor informatica aan de Universiteit Leiden',
+			},
 			skills: [
 				Skill.SKILL.CPLUSPLUS,
 				Skill.SKILL.CSS,
