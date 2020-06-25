@@ -79,8 +79,6 @@ function createYearGroups(sortedEntries: LifeTimeline.Entry[]) {
 				});
 				continue;
 			}
-
-			console.log('???', year);
 		}
 	}
 
@@ -169,7 +167,6 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 			});
 
 		const timeGroups = createYearGroups(sortedToLeastRecent);
-		console.log(timeGroups);
 
 		return (
 			<div
@@ -209,7 +206,6 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 								highlightEnd
 							);
 						})();
-						console.log(timeGroup, timeGroup.short);
 						return [
 							...timeGroup.entries.map((entry) => {
 								const isHighlighted = (() => {
@@ -224,19 +220,9 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 									)
 										return false;
 
-									if (
-										!entry.end ||
-										!(entry.end instanceof Date)
-									) {
-										return (
-											highlightEnd.getTime() >=
-											entry.start.getTime()
-										);
-									}
-
 									return (
-										highlightEnd.getTime() <=
-										entry.end.getTime()
+										entry.start.getTime() <=
+										highlightEnd.getTime()
 									);
 								})();
 								return (
