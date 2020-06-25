@@ -1,30 +1,68 @@
-import { Props, config, PROP_TYPE } from 'wc-lib';
+import { Props, config, PROP_TYPE, ComplexType } from 'wc-lib';
 import { IDMapType, ClassMapType } from './time-line-querymap';
+import { THEME_SHADE } from '../../../../../../shared/theme';
 import { CenterersCSS } from '../../../../styles/centerers';
+import { TimeLineEntry } from './time-line-entry/';
 import { TimeLineHTML } from './time-line.html';
 import { TimeLineCSS } from './time-line.css';
+import { SanderRonde } from '../sander-ronde';
 import { IndexBase } from '../../base';
+
+export const enum TIMELINE_SIDES {
+	EDUCATION_EMPLOYMENT_TRAINING = 'eet',
+	PERSONAL_PROJECT = 'personal_project',
+	BOTH = 'both',
+}
+
+export const enum CSS_TOGGLES {
+	HIGHLIGHTED = 'higlighted',
+}
 
 @config({
 	is: 'time-line',
 	css: [TimeLineCSS, CenterersCSS],
 	html: TimeLineHTML,
+	dependencies: [TimeLineEntry],
 })
 export class TimeLine extends IndexBase<{
 	selectors: {
 		IDS: IDMapType;
-		CLASSES: ClassMapType;
+		CLASSES: ClassMapType & {
+			'timeline-row-item': HTMLDivElement;
+			'eet-item': HTMLDivElement;
+			'pproj-item': HTMLDivElement;
+		};
+		TOGGLES: CSS_TOGGLES;
 	};
+	parent: SanderRonde;
 }> {
 	props = Props.define(this, {
-		// ...
+		reflect: {
+			sides: {
+				type: PROP_TYPE.STRING,
+				exactType: '' as TIMELINE_SIDES,
+				value: TIMELINE_SIDES.BOTH,
+				required: true,
+			},
+			shade: {
+				type: PROP_TYPE.STRING,
+				exactType: '' as THEME_SHADE,
+				value: THEME_SHADE.REGULAR,
+			},
+		},
+		priv: {
+			highlightedRange: {
+				type: ComplexType<[Date, Date] | null>(),
+				value: null,
+			},
+		},
 	});
 
-	mounted() {
-		// ...
+	highlightDateRange(range: { start: Date; end: Date }) {
+		this.props.highlightedRange = [range.start, range.end];
 	}
 
-	firstRender() {
-		// ...
+	disableHighlight() {
+		this.props.highlightedRange = null;
 	}
 }

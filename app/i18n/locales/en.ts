@@ -100,6 +100,22 @@ export const messages = {
 				},
 			},
 		},
+		timeline: {
+			timelineEntry: {
+				time: {
+					end: {
+						current: {
+							message: 'current',
+						},
+					},
+				},
+			},
+			timelineHeader: {
+				header: {
+					message: 'Life Timeline',
+				},
+			},
+		},
 	},
 	shared: {
 		sw: {

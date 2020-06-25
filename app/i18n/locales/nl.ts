@@ -100,6 +100,22 @@ export const messages = {
 				},
 			},
 		},
+		timeline: {
+			timelineEntry: {
+				time: {
+					end: {
+						current: {
+							message: 'huidig',
+						},
+					},
+				},
+			},
+			timelineHeader: {
+				header: {
+					message: 'Levenstimeline',
+				},
+			},
+		},
 	},
 	shared: {
 		sw: {

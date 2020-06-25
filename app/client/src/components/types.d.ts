@@ -1,3 +1,4 @@
+import { TimeLineEntry } from './index/sander-ronde/time-line/time-line-entry';
 import { BackgroundBlock } from './shared/background-block/background-block';
 import { NameBlock } from './index/sander-ronde/name-block/name-block';
 import { InfoBlock } from './index/sander-ronde/info-block/info-block';
@@ -16,5 +17,6 @@ declare global {
 	type HTMLNameblockElement = NameBlock;
 	type HTMLInfoblockElement = InfoBlock;
 	type HTMLDownarrowElement = SVGElement;
+	type HTMLTimelineentryElement = TimeLineEntry;
 	type HTMLBackgroundblockElement = BackgroundBlock;
 }
