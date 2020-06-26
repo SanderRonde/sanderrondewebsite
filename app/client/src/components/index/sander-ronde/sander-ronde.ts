@@ -8,7 +8,7 @@ import { NameBlock } from './name-block/';
 import { InfoBlock } from './info-block/';
 import { TimeLine } from './time-line/';
 import { IndexBase } from '../base';
-import { config } from 'wc-lib';
+import { config, CHANGE_TYPE } from 'wc-lib';
 
 @config({
 	is: 'sander-ronde',
@@ -27,4 +27,10 @@ export class SanderRonde extends IndexBase<{
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
 	};
-}> {}
+}> {
+	mounted() {
+		window.addEventListener('resize', () => {
+			this.renderToDOM(CHANGE_TYPE.PROP);
+		});
+	}
+}

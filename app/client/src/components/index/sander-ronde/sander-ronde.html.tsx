@@ -98,6 +98,6 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 			</div>
 		);
 	},
-	CHANGE_TYPE.NEVER,
+	CHANGE_TYPE.PROP,
 	render
 );
