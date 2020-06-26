@@ -1,17 +1,19 @@
 import { mediaQueryRule } from '../../../../../styles/media-query.js';
+import { SkillRow, SKILL_ROW_ALIGNMENT } from './skill-row.js';
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
-import { SkillRow } from './skill-row.js';
 import { render } from 'lit-html';
 
 export const SkillRowCSS = new TemplateFn<SkillRow>(
-	function (html, _props, theme) {
+	function (html, props, theme) {
 		return html`<style>
 
 			${css(this).$['skill-group']} {
 				display: flex;
 				margin: 10px 0;
 				flex-direction: row;
-				justify-content: flex-end;
+				justify-content: ${props.align === SKILL_ROW_ALIGNMENT.LEFT
+				? 'flex-start'
+				: 'flex-end'};
 			}
 
 			${css(this).c.skill} {

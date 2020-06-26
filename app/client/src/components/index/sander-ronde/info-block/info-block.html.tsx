@@ -1,7 +1,7 @@
 import config, { Skill } from '../../../../config/me.js';
 import { I18NKeys } from '../../../../../../i18n/i18n-keys';
 import { RawHTML } from '../../../shared/raw-html/raw-html';
-import { SkillRow } from './skill-row/skill-row.js';
+import { SkillRow, SKILL_ROW_ALIGNMENT } from './skill-row/skill-row.js';
 import { LinkCSS } from '../../../../styles/link';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { InfoBlock } from './info-block';
@@ -114,7 +114,10 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 							</div>
 							<div class="content">
 								{skillGroups.map((skillGroup) => (
-									<SkillRow group={skillGroup} />
+									<SkillRow
+										group={skillGroup}
+										align={SKILL_ROW_ALIGNMENT.RIGHT}
+									/>
 								))}
 							</div>
 						</div>
