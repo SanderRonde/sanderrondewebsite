@@ -1,8 +1,8 @@
 import { BackgroundBlock } from '../../shared/background-block/background-block';
 import { TimeLine, TIMELINE_SIDES } from './time-line/time-line';
 import { THEME_SHADE } from '../../../../../shared/theme';
-// import { InfoBlock } from './info-block/info-block';
-// import { NameBlock } from './name-block/name-block';
+import { InfoBlock } from './info-block/info-block';
+import { NameBlock } from './name-block/name-block';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { SanderRonde } from './sander-ronde';
 import { render } from 'lit-html';
@@ -19,7 +19,7 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 
 		return (
 			<div id="scroller">
-				{/* <BackgroundBlock
+				<BackgroundBlock
 					id="name-background"
 					fill
 					shade={
@@ -36,7 +36,7 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 					}
 				>
 					<InfoBlock id="info-block" />
-				</BackgroundBlock> */}
+				</BackgroundBlock>
 				{window.innerWidth < MIN_JOINED_TIMELINE_WIDTH ? (
 					<span>
 						{(() => {
