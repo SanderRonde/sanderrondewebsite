@@ -222,7 +222,7 @@ export type InternationalText =
 	  }
 	| string;
 
-export function getInternationText(
+export function getInternationalText(
 	text: InternationalText,
 	lang: LANGUAGE
 ): string {
@@ -461,7 +461,7 @@ export namespace LifeTimeline {
 			title: 'Full stack developer',
 			description: {
 				en:
-					'Maintaining and expanding on a transport management system witha  frontend written in React, MobX and typescript and a backend using Django Python. Additionally managing the security of the full system. Mainly consists of ensuring test coverage, regular pentests and general security advice.',
+					'Maintaining and expanding on a transport management system with a frontend written in React, Redux and Typescript and a backend using Django Python. Additionally managing the security of the full system. Mainly consists of ensuring test coverage, regular pentests and general security advice.',
 				nl:
 					'Onderhouden en uitbreiden van een transportmanagement systeem met een frontend in React, MobX en Typescript en een backend in Django Python. Daarnaast het beheren van de security van het volledige systeem. Bestaat voornamelijk uit het zorgen voor test coverage, regelmatige pentests en algemeen security advies.',
 			},
