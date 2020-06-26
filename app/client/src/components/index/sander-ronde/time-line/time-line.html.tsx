@@ -142,6 +142,49 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 			);
 		};
 
+		const renderTimelineRow = (
+			entry: LifeTimeline.Entry,
+			isHighlighted: boolean
+		) => (
+			<div class="timeline-row">
+				{renderEntry(
+					entry,
+					TIMELINE_SIDES.EDUCATION_EMPLOYMENT_TRAINING
+				)}
+				<div
+					class={[
+						'center-line',
+						{
+							[CSS_TOGGLES.HIGHLIGHTED]: isHighlighted,
+						},
+					]}
+				></div>
+				{renderEntry(entry, TIMELINE_SIDES.PERSONAL_PROJECT)}
+			</div>
+		);
+
+		const renderEmptyTimelineRow = (
+			timeGroup: YearGroup,
+			highlighted: boolean
+		) => (
+			<div class="timeline-row">
+				<div></div>
+				<div
+					class={[
+						'center-line',
+						{
+							[CSS_TOGGLES.HIGHLIGHTED]: highlighted,
+						},
+					]}
+				>
+					<div class="year-tag">
+						{timeGroup.short ? '...' : timeGroup.years[0]}
+					</div>
+				</div>
+				<div></div>
+			</div>
+		);
+
 		const shouldHighlightYear = (
 			year: number,
 			timeStart: Date,
@@ -225,45 +268,9 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 										highlightEnd.getTime()
 									);
 								})();
-								return (
-									<div class="timeline-row">
-										{renderEntry(
-											entry,
-											TIMELINE_SIDES.EDUCATION_EMPLOYMENT_TRAINING
-										)}
-										<div
-											class={[
-												'center-line',
-												{
-													[CSS_TOGGLES.HIGHLIGHTED]: isHighlighted,
-												},
-											]}
-										></div>
-										{renderEntry(
-											entry,
-											TIMELINE_SIDES.PERSONAL_PROJECT
-										)}
-									</div>
-								);
+								return renderTimelineRow(entry, isHighlighted);
 							}),
-							<div class="timeline-row">
-								<div />
-								<div
-									class={[
-										'center-line',
-										{
-											[CSS_TOGGLES.HIGHLIGHTED]: yearHighlighted,
-										},
-									]}
-								>
-									<div class="year-tag">
-										{timeGroup.short
-											? '...'
-											: timeGroup.years[0]}
-									</div>
-								</div>
-								<div />
-							</div>,
+							renderEmptyTimelineRow(timeGroup, yearHighlighted),
 						];
 					})}
 				</div>

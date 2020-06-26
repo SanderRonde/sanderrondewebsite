@@ -31,7 +31,7 @@ export const TimeLineCSS = new TemplateFn<TimeLine>(
 			}
 
 			${css(this).c['timeline-entry']} {
-				margin: 10px 0;
+				margin: 5px 0;
 				display: block;
 				width: fit-content;
 			}
