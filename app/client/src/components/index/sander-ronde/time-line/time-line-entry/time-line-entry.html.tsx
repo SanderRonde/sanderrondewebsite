@@ -1,16 +1,24 @@
 import {
-	getInternationText as getInternationalText,
+	getInternationalText,
 	LifeTimeline,
 	InternationalText,
 	Skill,
 } from '../../../../../config/me.js';
+import { cutIntoGroups } from '../../../../../../../shared/util.js';
+import {
+	SkillRow,
+	SKILL_ROW_ALIGNMENT,
+} from '../../info-block/skill-row/skill-row.js';
+import { TimeLineEntry, TIMELINE_DIRECTION } from './time-line-entry.js';
 import { I18NKeys } from '../../../../../../../i18n/i18n-keys.js';
-import { SkillRow } from '../../info-block/skill-row/skill-row.js';
-import { TimeLineEntry } from './time-line-entry.js';
 import { ElevatedCard } from '../../../../shared/';
 import { until } from 'lit-html/directives/until';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
+import Pin from '../../../../icons/pin.js';
 import { render } from 'lit-html';
+
+// TODO: dynamic skill group contents
+const SKILL_GROUP_SIZE = window.innerWidth < 500 ? 2 : 4;
 
 export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 	function (html, props) {
@@ -71,7 +79,23 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 		};
 
 		return (
-			<ElevatedCard id="card" level={1}>
+			<ElevatedCard
+				id="card"
+				level={1}
+				{...{
+					'@': {
+						// When hovering/unhovering, temporarily
+						// show
+						mouseenter: this.cardEnter,
+						mouseleave: this.cardLeave,
+						focusin: this.cardEnter,
+						focusout: this.cardLeave,
+
+						// When touching/clicking, pin/unpin
+						click: this.cardClick,
+					},
+				}}
+			>
 				<div id="content">
 					<div id="icon-col">
 						{props.entry.icon && props.entry.icon.length ? (
@@ -129,19 +153,33 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 								)}
 							</div>
 						</div>
-						<div id="detail-row">
-							{getInternationalText(
-								props.entry.description,
-								lang
-							)}
-						</div>
-						<div id="skill-row">
-							<SkillRow
-								group={{
-									group: Skill.SKILL_GROUP.NONE,
-									skills: props.entry.skills,
-								}}
-							/>
+						<div id="overflow-container">
+							<Pin id="pin" width={15} height={15} />
+							<div id="detail-row">
+								{getInternationalText(
+									props.entry.description,
+									lang
+								)}
+							</div>
+							<div id="skill-row">
+								{cutIntoGroups(
+									props.entry.skills,
+									SKILL_GROUP_SIZE
+								).map((group) => (
+									<SkillRow
+										group={{
+											group: Skill.SKILL_GROUP.NONE,
+											skills: group,
+										}}
+										align={
+											props.direction ===
+											TIMELINE_DIRECTION.LEFT
+												? SKILL_ROW_ALIGNMENT.RIGHT
+												: SKILL_ROW_ALIGNMENT.LEFT
+										}
+									/>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>

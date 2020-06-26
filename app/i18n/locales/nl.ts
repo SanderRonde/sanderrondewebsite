@@ -112,7 +112,13 @@ export const messages = {
 			},
 			timelineHeader: {
 				header: {
-					message: 'Levenstimeline',
+					message: 'Tijdlijn',
+				},
+				eet: {
+					message: 'Tijdlijn (werk/school)',
+				},
+				pproj: {
+					message: 'Tijdlijn (projecten)',
 				},
 			},
 		},

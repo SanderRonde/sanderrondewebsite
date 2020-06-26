@@ -1,9 +1,13 @@
 import { TimeLineEntry, TIMELINE_DIRECTION } from './time-line-entry.js';
+import { getTextWidth } from '../../../../../../../shared/util.js';
+import { getInternationalText } from '../../../../../config/me.js';
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
 import { render } from 'lit-html';
 
 export const TimeLineEntryCSS = new TemplateFn<TimeLineEntry>(
 	function (html, props, theme) {
+		const lang = this.getLang();
+		const maxTextWidth = Math.min(window.innerWidth - 150, 400);
 		return html`<style>
 			${css(this).c.icon} {
 				width: 40px;
@@ -36,13 +40,43 @@ export const TimeLineEntryCSS = new TemplateFn<TimeLineEntry>(
 			}
 
 			${css(this).$.card} {
-				max-width: 500px;
 				display: block;
 				border-bottom: 2px solid ${theme.primary.main};
+				cursor: pointer;
 			}
 
-			${css(this).$['detail-row'].or.$['skill-row']} {
-				display: none;
+			${css(this).$['overflow-container']} {
+				height: 0;
+				width: 0;
+				overflow: hidden;
+				display: flex;
+				flex-direction: column;
+				float: ${props.direction === TIMELINE_DIRECTION.LEFT
+				? 'right'
+				: 'left'};
+			}
+
+			${css(this).$['skill-row']} {
+				margin-top: 5px;
+				width: fit-content;
+			}
+
+			${css(this).$['detail-row']} {
+				width: ${Math.min(
+				maxTextWidth,
+				getTextWidth(
+					getInternationalText(props.entry.description, lang),
+					'16px Roboto'
+				)
+			)}px;
+			}
+
+			${css(this).$['detail-row']} {
+				margin-top: 5px;
+				text-align: ${props.direction === TIMELINE_DIRECTION.LEFT
+				? 'right'
+				: 'left'};
+				position: relative;
 			}
 
 			${css(this).$.title} {
@@ -63,6 +97,21 @@ export const TimeLineEntryCSS = new TemplateFn<TimeLineEntry>(
 				${props.direction === TIMELINE_DIRECTION.LEFT
 				? 'padding-left: 10px;'
 				: 'padding-right: 10px;'}
+			}
+
+			${css(this).$.pin} {
+				fill: ${theme.text.main};
+				position: absolute;
+				${props.direction === TIMELINE_DIRECTION.LEFT
+				? 'left: 10px;'
+				: 'right: 10px;'}
+				top: 10px;
+				opacity: 0;
+				transition: opacity 100ms ease-in;
+			}
+
+			${css(this).$.card.toggle.expanded.toggle.pinned.descendant.$.pin} {
+				opacity: 1;
 			}
 		</style>`;
 	},

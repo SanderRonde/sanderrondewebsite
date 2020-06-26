@@ -168,7 +168,7 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 			highlighted: boolean
 		) => (
 			<div class="timeline-row">
-				<div></div>
+				<div />
 				<div
 					class={[
 						'center-line',
@@ -181,7 +181,7 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 						{timeGroup.short ? '...' : timeGroup.years[0]}
 					</div>
 				</div>
-				<div></div>
+				<div />
 			</div>
 		);
 
@@ -225,16 +225,31 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 			>
 				<div id="timeline-table">
 					<div class="timeline-row">
-						<div />
+						<div class="top-row-entry" />
 						<div class="center-line center-line-header">
 							<div class="header">
-								{this.__(
-									I18NKeys.index.timeline.timelineHeader
-										.header
-								)}
+								{(() => {
+									switch (props.sides) {
+										case TIMELINE_SIDES.BOTH:
+											return this.__(
+												I18NKeys.index.timeline
+													.timelineHeader.header
+											);
+										case TIMELINE_SIDES.EDUCATION_EMPLOYMENT_TRAINING:
+											return this.__(
+												I18NKeys.index.timeline
+													.timelineHeader.eet
+											);
+										case TIMELINE_SIDES.PERSONAL_PROJECT:
+											return this.__(
+												I18NKeys.index.timeline
+													.timelineHeader.pproj
+											);
+									}
+								})()}
 							</div>
 						</div>
-						<div />
+						<div class="top-row-entry" />
 					</div>
 					{timeGroups.reverse().map((timeGroup) => {
 						const yearHighlighted = (() => {

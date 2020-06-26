@@ -9,9 +9,9 @@ import { SanderRonde } from '../sander-ronde';
 import { IndexBase } from '../../base';
 
 export const enum TIMELINE_SIDES {
-	EDUCATION_EMPLOYMENT_TRAINING = 'eet',
-	PERSONAL_PROJECT = 'personal_project',
-	BOTH = 'both',
+	EDUCATION_EMPLOYMENT_TRAINING = 1,
+	PERSONAL_PROJECT = 2,
+	BOTH = 3,
 }
 
 export const enum CSS_TOGGLES {
@@ -39,8 +39,8 @@ export class TimeLine extends IndexBase<{
 	props = Props.define(this, {
 		reflect: {
 			sides: {
-				type: PROP_TYPE.STRING,
-				exactType: '' as TIMELINE_SIDES,
+				type: PROP_TYPE.NUMBER,
+				exactType: 0 as TIMELINE_SIDES,
 				value: TIMELINE_SIDES.BOTH,
 				required: true,
 			},

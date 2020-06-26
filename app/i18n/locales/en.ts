@@ -114,6 +114,12 @@ export const messages = {
 				header: {
 					message: 'Life Timeline',
 				},
+				eet: {
+					message: 'Life Timeline (work/education)',
+				},
+				pproj: {
+					message: 'Life Timeline (personal projects)',
+				},
 			},
 		},
 	},

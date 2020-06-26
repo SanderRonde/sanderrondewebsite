@@ -1,10 +1,12 @@
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
-import { TimeLine } from './time-line';
+import { TimeLine, TIMELINE_SIDES } from './time-line';
 import { render } from 'lit-html';
 import { THEME_SHADE } from '../../../../../../shared/theme';
+import { mediaQueryRule } from '../../../../styles/media-query';
 
 export const TimeLineCSS = new TemplateFn<TimeLine>(
 	function (html, props, theme) {
+		const cardWidth = Math.min(window.innerWidth - 150, 500);
 		return html`<style>
 			${css(this).$['timeline-table']} {
 				display: table;
@@ -89,7 +91,16 @@ export const TimeLineCSS = new TemplateFn<TimeLine>(
 				color: white;
 				padding: 2px 5px;
 				position: absolute;
-				transform: translateX(-50%);
+				transform: ${(() => {
+					switch (props.sides) {
+						case TIMELINE_SIDES.BOTH:
+							return 'translateX(-50%)';
+						case TIMELINE_SIDES.EDUCATION_EMPLOYMENT_TRAINING:
+							return 'translateX(-100%)';
+						case TIMELINE_SIDES.PERSONAL_PROJECT:
+							return 'none';
+					}
+				})()};
 				background-color: ${(() => {
 					switch (props.shade) {
 						case THEME_SHADE.DARK:
@@ -103,10 +114,22 @@ export const TimeLineCSS = new TemplateFn<TimeLine>(
 				border-bottom: 2px solid ${theme.primary.main};
 				z-index: 10;
 				width: max-content;
-				font-size: 200%;
+				border-left: 2px solid
+					${props.sides === TIMELINE_SIDES.PERSONAL_PROJECT
+						? theme.primary.main
+						: 'transparant'};
+				border-right: 2px solid transparent;
 			}
 
-			${css(this).c['center-line-header']} {
+			${mediaQueryRule(
+					css(this).c.header,
+					'font-size',
+					new Map([
+						[[0, 1000], '5vw'],
+						[[1000, Infinity], '200%'],
+					])
+				)}
+				${css(this).c['center-line-header']} {
 				margin-bottom: 20px;
 				height: 50px;
 			}
@@ -119,6 +142,25 @@ export const TimeLineCSS = new TemplateFn<TimeLine>(
 					'year-tag'
 				]} {
 				background-color: ${theme.secondary.dark};
+			}
+
+			${css(this).$['timeline-table']} {
+				width: ${props.sides === TIMELINE_SIDES.BOTH
+					? `${cardWidth * 2}px`
+					: 'auto'};
+			}
+
+			${css(this).c['timeline-row-item'].and['eet-item']} {
+				width: ${props.sides &
+				TIMELINE_SIDES.EDUCATION_EMPLOYMENT_TRAINING
+					? `${cardWidth}px`
+					: '0'};
+			}
+
+			${css(this).c['timeline-row-item'].and['pproj-item']} {
+				width: ${props.sides & TIMELINE_SIDES.PERSONAL_PROJECT
+					? `${cardWidth}px`
+					: '0'};
 			}
 		</style>`;
 	},
