@@ -58,6 +58,11 @@ export const InfoBlockCSS = new TemplateFn<InfoBlock>(
 					text-align: center;
 				}
 			}
+
+			${css(this).c['skill-row']} {
+				margin: 10px 0;
+				display: block;
+			}
 		</style>`;
 	},
 	CHANGE_TYPE.THEME,

@@ -9,7 +9,6 @@ export const SkillRowCSS = new TemplateFn<SkillRow>(
 
 			${css(this).$['skill-group']} {
 				display: flex;
-				margin: 10px 0;
 				flex-direction: row;
 				justify-content: ${props.align === SKILL_ROW_ALIGNMENT.LEFT
 				? 'flex-start'
@@ -54,6 +53,6 @@ export const SkillRowCSS = new TemplateFn<SkillRow>(
 			)}
 		</style>`;
 	},
-	CHANGE_TYPE.THEME,
+	CHANGE_TYPE.THEME | CHANGE_TYPE.PROP,
 	render
 );

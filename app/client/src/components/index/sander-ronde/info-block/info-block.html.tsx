@@ -115,6 +115,7 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 							<div class="content">
 								{skillGroups.map((skillGroup) => (
 									<SkillRow
+										class="skill-row"
 										group={skillGroup}
 										align={SKILL_ROW_ALIGNMENT.RIGHT}
 									/>
