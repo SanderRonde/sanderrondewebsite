@@ -14,8 +14,16 @@ My personal website, currently under construction
 -   [x] Icon, maybe me as favicon
 -   [x] HTTP/2
 -   [x] Colors / Manifest color
--   [ ] Main content  
-         - [x] First page - [x] Info page - [x] Timeline - [x] Block - [x] Central line - [ ] Custom text highlight color? - [ ] Theme switcher - [ ] I18N switcher - [ ] Put links to github/mail etc somewhere
+-   [ ] Main content
+-   [x] Main content - First page
+-   [x] Main content - Info page
+-   [x] Main content - Timeline
+-   [x] Main content - Timeline - Block
+-   [x] Main content - Timeline - Central line
+-   [ ] Main content - Custom text highlight color?
+-   [ ] Main content - Theme switcher
+-   [ ] Main content - I18N switcher
+-   [ ] Main content - Put links to github/mail etc somewhere
 -   [ ] Make sure the CHANGE_TYPEs are correct/optimal
 -   [ ] Re-check mobile experience
 -   [ ] Lighthouse optimizations
