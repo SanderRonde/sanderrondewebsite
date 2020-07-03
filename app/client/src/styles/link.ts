@@ -16,7 +16,7 @@ export const LinkCSS = new TemplateFn<
 			}
 
 			.link.color {
-				color: ${theme.secondary.main};
+				color: ${theme.highlight.main};
 			}
 
 			.link:hover {
@@ -24,7 +24,7 @@ export const LinkCSS = new TemplateFn<
 			}
 
 			.link.color:hover {
-				color: ${theme.secondary.dark};
+				color: ${theme.highlight.dark};
 			}
 		</style>`;
 	},

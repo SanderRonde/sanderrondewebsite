@@ -18,7 +18,7 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			}
 
 			${css(this).$.container} {
-				color: ${theme.secondary.main};
+				color: ${theme.highlight.main};
 				text-align: center;
 			}
 
@@ -40,7 +40,7 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			}
 
 			${css(this).$['scroll-down']} {
-				fill: ${theme.secondary.main};
+				fill: ${theme.highlight.main};
 				width: 100px;
 				margin-bottom: 20px;
 				transform: translateY(0);

@@ -6,8 +6,8 @@ export const HighlightCSS = new TemplateFn<IndexBase<{}>>(
 	function (html, _props, theme) {
 		return html`<style>
 			::selection {
-				background: ${theme.secondary.dark};
-				color: ${theme.text.light};
+				background: ${theme.highlight.dark};
+				color: ${theme.text.highlighted};
 			}
 		</style>`;
 	},

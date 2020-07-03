@@ -135,13 +135,14 @@ export const TimeLineCSS = new TemplateFn<TimeLine>(
 			}
 
 			${css(this).c['center-line'].toggle.higlighted} {
-				background-color: ${theme.secondary.main};
+				background-color: ${theme.highlight.main};
 			}
 
 			${css(this).c['center-line'].toggle.higlighted.descendant.c[
 					'year-tag'
 				]} {
-				background-color: ${theme.secondary.dark};
+				background-color: ${theme.highlight.dark};
+				color: ${theme.text.highlighted};
 			}
 
 			${css(this).$['timeline-table']} {

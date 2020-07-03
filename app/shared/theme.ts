@@ -1,7 +1,8 @@
 export const enum THEME {
-	// LIGHT = "light",
+	LIGHT = 'light',
 	DARK = 'dark',
 	DEFAULT_THEME = 'dark',
+	HIGH_CONTRAST = 'high-contrast',
 }
 
 export interface ThemeShade {
@@ -19,15 +20,17 @@ export const enum THEME_SHADE {
 export interface Theme {
 	background: ThemeShade;
 	primary: ThemeShade;
-	secondary: ThemeShade;
-	text: ThemeShade;
+	highlight: ThemeShade;
+	text: ThemeShade & {
+		highlighted: string;
+	};
 	card: string;
 }
 
 export const themes: {
 	[key in THEME]: Theme;
 } = {
-	dark: {
+	[THEME.DARK]: {
 		background: {
 			main: '#1B1B1B',
 			light: '#262527',
@@ -37,8 +40,9 @@ export const themes: {
 			main: '#C5C5C5',
 			dark: '#7B7B7B',
 			light: '#D5D5D5',
+			highlighted: '#C5C5C5',
 		},
-		secondary: {
+		highlight: {
 			main: '#FFD03E',
 			light: '#FFD442',
 			dark: '#A47F17',
@@ -49,6 +53,54 @@ export const themes: {
 			dark: '#1E6AF0',
 		},
 		card: '#222222',
+	},
+	[THEME.HIGH_CONTRAST]: {
+		background: {
+			main: '#efefef',
+			light: '#efefef',
+			dark: '#efefef',
+		},
+		text: {
+			main: '#070707',
+			dark: '#070707',
+			light: '#070707',
+			highlighted: '#efefef',
+		},
+		highlight: {
+			main: '#070707',
+			light: '#070707',
+			dark: '#070707',
+		},
+		primary: {
+			main: '#070707',
+			light: '#070707',
+			dark: '#070707',
+		},
+		card: '#efefef',
+	},
+	[THEME.LIGHT]: {
+		background: {
+			main: '#e1e1e1',
+			light: '#efefef',
+			dark: '#dadada',
+		},
+		text: {
+			main: '#2c2c2c',
+			dark: '#070707',
+			light: '#414141',
+			highlighted: '#e1e1e1',
+		},
+		highlight: {
+			main: '#6a6a6a',
+			light: '#606060',
+			dark: '#202020',
+		},
+		primary: {
+			main: '#649fff',
+			light: '#7caeff',
+			dark: '#2f7eff',
+		},
+		card: '#dadada',
 	},
 };
 
