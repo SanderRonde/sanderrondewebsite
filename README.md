@@ -24,6 +24,7 @@ My personal website, currently under construction
 -   [ ] Main content - Theme switcher
 -   [ ] Main content - I18N switcher
 -   [ ] Main content - Put links to github/mail etc somewhere
+-   [ ] Main content - Allow using of tags
 -   [ ] Make sure the CHANGE_TYPEs are correct/optimal
 -   [ ] Re-check mobile experience
 -   [ ] Lighthouse optimizations
