@@ -2,6 +2,7 @@ import { Props, config, PROP_TYPE, ComplexType } from 'wc-lib';
 import { IDMapType, ClassMapType } from './time-line-querymap';
 import { THEME_SHADE } from '../../../../../../shared/theme';
 import { CenterersCSS } from '../../../../styles/centerers';
+import { HighlightCSS } from '../../../../styles/highlight';
 import { TimeLineEntry } from './time-line-entry/';
 import { TimeLineHTML } from './time-line.html';
 import { TimeLineCSS } from './time-line.css';
@@ -20,7 +21,7 @@ export const enum CSS_TOGGLES {
 
 @config({
 	is: 'time-line',
-	css: [TimeLineCSS, CenterersCSS],
+	css: [TimeLineCSS, CenterersCSS, HighlightCSS],
 	html: TimeLineHTML,
 	dependencies: [TimeLineEntry],
 })

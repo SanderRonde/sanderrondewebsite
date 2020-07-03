@@ -1,5 +1,7 @@
 import { IDMapType, ClassMapType } from './time-line-entry-querymap';
+import { ReusableAnimation } from '../../../../../../../shared/util';
 import { SkillRow } from '../../info-block/skill-row/skill-row';
+import { HighlightCSS } from '../../../../../styles/highlight';
 import { Props, config, ComplexType, PROP_TYPE } from 'wc-lib';
 import { TimeLineEntryHTML } from './time-line-entry.html.js';
 import { TimeLineEntryCSS } from './time-line-entry.css.js';
@@ -7,7 +9,6 @@ import { LifeTimeline } from '../../../../../config/me';
 import { LinkCSS } from '../../../../../styles/link';
 import { ElevatedCard } from '../../../../shared/';
 import { IndexBase } from '../../../base';
-import { ReusableAnimation } from '../../../../../../../shared/util';
 
 export const enum TIMELINE_DIRECTION {
 	LEFT = 'left',
@@ -23,7 +24,7 @@ const ANIMATION_DURATION = 350;
 
 @config({
 	is: 'time-line-entry',
-	css: [TimeLineEntryCSS, LinkCSS],
+	css: [TimeLineEntryCSS, LinkCSS, HighlightCSS],
 	html: TimeLineEntryHTML,
 	dependencies: [SkillRow, ElevatedCard],
 })

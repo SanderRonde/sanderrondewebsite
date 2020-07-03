@@ -1,5 +1,6 @@
 import { ClassMapType, IDMapType } from './skill-row-querymap';
 import { Props, config, ComplexType, PROP_TYPE } from 'wc-lib';
+import { HighlightCSS } from '../../../../../styles/highlight';
 import { SkillRowHTML } from './skill-row.html.js';
 import { SkillRowCSS } from './skill-row.css.js';
 import { Skill } from '../../../../../config/me';
@@ -12,7 +13,7 @@ export const enum SKILL_ROW_ALIGNMENT {
 
 @config({
 	is: 'skill-row',
-	css: SkillRowCSS,
+	css: [SkillRowCSS, HighlightCSS],
 	html: SkillRowHTML,
 })
 export class SkillRow extends IndexBase<{

@@ -3,9 +3,10 @@ import { I18NKeys } from '../../../../../../i18n/i18n-keys';
 import { RawHTML } from '../../../shared/raw-html/raw-html';
 import { SkillRow, SKILL_ROW_ALIGNMENT } from './skill-row/skill-row.js';
 import { LinkCSS } from '../../../../styles/link';
-import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
+import { TemplateFn, CHANGE_TYPE, Templates } from 'wc-lib';
 import { InfoBlock } from './info-block';
 import { render } from 'lit-html';
+import { HighlightCSS } from '../../../../styles/highlight.js';
 
 function getApproxGroupSize(group: Skill.SkillGroup) {
 	return (
@@ -90,7 +91,11 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 								</p>
 								<p>
 									<RawHTML
-										custom-css={LinkCSS}
+										custom-css={Templates.joinTemplates(
+											render,
+											LinkCSS,
+											HighlightCSS
+										)}
 										content={this.__(
 											I18NKeys.index.infoBlock.aboutMe
 												.par3,
