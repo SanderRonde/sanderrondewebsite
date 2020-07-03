@@ -191,7 +191,6 @@ async function watchForChanges(
 }
 
 async function updateHTMLTypings(exec: ExecFunction, changedFiles: string[]) {
-	console.log(changedFiles);
 	await exec(
 		changedFiles.map((file) => {
 			const parsedPath = path.parse(file);
@@ -200,7 +199,7 @@ async function updateHTMLTypings(exec: ExecFunction, changedFiles: string[]) {
 				parsedPath.dir,
 				`${componentName}-querymap.d.ts`
 			);
-			return `html-typings -i ${file} -o ${outFile} -e`;
+			return `html-typings -i ${file} -o ${outFile} -e -j "html.jsx"`;
 		})
 	);
 }
