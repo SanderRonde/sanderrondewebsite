@@ -70,7 +70,7 @@ export const TimeLineCSS = new TemplateFn<TimeLine>(
 			}
 
 			${css(this).c['year-tag']} {
-				color: white;
+				color: ${theme.text.main};
 				padding: 2px 5px;
 				position: absolute;
 				transform: translateX(-50%);
@@ -88,7 +88,7 @@ export const TimeLineCSS = new TemplateFn<TimeLine>(
 			}
 
 			${css(this).c['header']} {
-				color: white;
+				color: ${theme.text.main};
 				padding: 2px 5px;
 				position: absolute;
 				transform: ${(() => {
