@@ -1,8 +1,8 @@
 import { IDMapType, ClassMapType } from './time-line-entry-querymap';
-import { ReusableAnimation } from '../../../../../../../shared/util';
 import { SkillRow } from '../../info-block/skill-row/skill-row';
 import { HighlightCSS } from '../../../../../styles/highlight';
 import { Props, config, ComplexType, PROP_TYPE } from 'wc-lib';
+import { ReusableAnimation } from '../../../../../shared/util';
 import { TimeLineEntryHTML } from './time-line-entry.html.js';
 import { TimeLineEntryCSS } from './time-line-entry.css.js';
 import { LifeTimeline } from '../../../../../config/me';

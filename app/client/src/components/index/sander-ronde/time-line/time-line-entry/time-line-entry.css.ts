@@ -1,6 +1,6 @@
 import { TimeLineEntry, TIMELINE_DIRECTION } from './time-line-entry.js';
-import { getTextWidth } from '../../../../../../../shared/util.js';
 import { getInternationalText } from '../../../../../config/me.js';
+import { getTextWidth } from '../../../../../shared/util.js';
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
 import { render } from 'lit-html';
 
