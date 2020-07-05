@@ -1,12 +1,13 @@
-import config, { Skill } from '../../../../config/me.js';
+import { SkillRow, SKILL_ROW_ALIGNMENT } from './skill-row/skill-row.js';
+import { TransitionCSS } from '../../../../styles/transition.js';
+import { HighlightCSS } from '../../../../styles/highlight.js';
 import { I18NKeys } from '../../../../../../i18n/i18n-keys';
 import { RawHTML } from '../../../shared/raw-html/raw-html';
-import { SkillRow, SKILL_ROW_ALIGNMENT } from './skill-row/skill-row.js';
-import { LinkCSS } from '../../../../styles/link';
 import { TemplateFn, CHANGE_TYPE, Templates } from 'wc-lib';
+import config, { Skill } from '../../../../config/me.js';
+import { LinkCSS } from '../../../../styles/link';
 import { InfoBlock } from './info-block';
 import { render } from 'lit-html';
-import { HighlightCSS } from '../../../../styles/highlight.js';
 
 function getApproxGroupSize(group: Skill.SkillGroup) {
 	return (
@@ -94,6 +95,7 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 										custom-css={Templates.joinTemplates(
 											render,
 											LinkCSS,
+											TransitionCSS,
 											HighlightCSS
 										)}
 										content={this.__(

@@ -1,4 +1,5 @@
 import { IDMapType, ClassMapType } from './time-line-entry-querymap';
+import { TransitionCSS } from '../../../../../styles/transition';
 import { SkillRow } from '../../info-block/skill-row/skill-row';
 import { HighlightCSS } from '../../../../../styles/highlight';
 import { Props, config, ComplexType, PROP_TYPE } from 'wc-lib';
@@ -24,7 +25,7 @@ const ANIMATION_DURATION = 350;
 
 @config({
 	is: 'time-line-entry',
-	css: [TimeLineEntryCSS, LinkCSS, HighlightCSS],
+	css: [TimeLineEntryCSS, LinkCSS, HighlightCSS, TransitionCSS],
 	html: TimeLineEntryHTML,
 	dependencies: [SkillRow, ElevatedCard],
 })

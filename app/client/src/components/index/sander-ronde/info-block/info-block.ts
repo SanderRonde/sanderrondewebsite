@@ -1,4 +1,5 @@
 import { IDMapType, ClassMapType } from './info-block-querymap';
+import { TransitionCSS } from '../../../../styles/transition';
 import { CenterersCSS } from '../../../../styles/centerers';
 import { HighlightCSS } from '../../../../styles/highlight';
 import { ToolTip } from '../../../shared/tool-tip/';
@@ -11,7 +12,7 @@ import { config } from 'wc-lib';
 
 @config({
 	is: 'info-block',
-	css: [InfoBlockCSS, CenterersCSS, HighlightCSS],
+	css: [InfoBlockCSS, CenterersCSS, HighlightCSS, TransitionCSS],
 	html: InfoBlockHTML,
 	dependencies: [ToolTip, RawHTML, SkillRow],
 })

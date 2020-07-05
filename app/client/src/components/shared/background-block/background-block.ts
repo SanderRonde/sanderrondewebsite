@@ -1,13 +1,14 @@
 import { IDMapType, ClassMapType } from './background-block-querymap';
 import { BackgroundBlockHTML } from './background-block.html';
 import { BackgroundBlockCSS } from './background-block.css';
+import { TransitionCSS } from '../../../styles/transition';
 import { THEME_SHADE } from '../../../../../shared/theme';
 import { Props, PROP_TYPE, config } from 'wc-lib';
 import { ComponentBase } from '../../base';
 
 @config({
 	is: 'background-block',
-	css: BackgroundBlockCSS,
+	css: [BackgroundBlockCSS, TransitionCSS],
 	html: BackgroundBlockHTML,
 })
 export class BackgroundBlock extends ComponentBase<{

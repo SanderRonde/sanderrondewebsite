@@ -1,3 +1,4 @@
+import { TransitionCSS } from '../../../../../styles/transition';
 import { ClassMapType, IDMapType } from './skill-row-querymap';
 import { Props, config, ComplexType, PROP_TYPE } from 'wc-lib';
 import { HighlightCSS } from '../../../../../styles/highlight';
@@ -13,7 +14,7 @@ export const enum SKILL_ROW_ALIGNMENT {
 
 @config({
 	is: 'skill-row',
-	css: [SkillRowCSS, HighlightCSS],
+	css: [SkillRowCSS, HighlightCSS, TransitionCSS],
 	html: SkillRowHTML,
 })
 export class SkillRow extends IndexBase<{

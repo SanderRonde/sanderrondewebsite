@@ -1,4 +1,5 @@
 import { IDMapType, ClassMapType } from './name-block-querymap';
+import { TransitionCSS } from '../../../../styles/transition';
 import { CenterersCSS } from '../../../../styles/centerers';
 import { HighlightCSS } from '../../../../styles/highlight';
 import { FadeInCSS } from '../../../../styles/fade-in';
@@ -12,7 +13,14 @@ import { config } from 'wc-lib';
 
 @config({
 	is: 'name-block',
-	css: [NameBlockCSS, CenterersCSS, LinkCSS, FadeInCSS, HighlightCSS],
+	css: [
+		NameBlockCSS,
+		CenterersCSS,
+		LinkCSS,
+		FadeInCSS,
+		HighlightCSS,
+		TransitionCSS,
+	],
 	html: NameBlockHTML,
 	dependencies: [ToolTip],
 })

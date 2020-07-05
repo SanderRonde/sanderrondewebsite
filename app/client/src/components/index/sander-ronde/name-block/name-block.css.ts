@@ -75,6 +75,6 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			)}
 		</style>`;
 	},
-	CHANGE_TYPE.NEVER,
+	CHANGE_TYPE.THEME,
 	render
 );
