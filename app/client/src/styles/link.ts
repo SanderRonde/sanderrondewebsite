@@ -9,22 +9,27 @@ export const LinkCSS = new TemplateFn<
 		return html`<style>
 			.link {
 				color: ${theme.text.main};
+				fill: ${theme.text.main};
 			}
 
 			.link.light {
 				color: ${theme.text.light};
+				fill: ${theme.text.light};
 			}
 
 			.link.color {
 				color: ${theme.highlight.main};
+				fill: ${theme.highlight.main};
 			}
 
 			.link:hover {
 				color: ${theme.text.dark};
+				fill: ${theme.text.dark};
 			}
 
 			.link.color:hover {
 				color: ${theme.highlight.dark};
+				fill: ${theme.highlight.dark};
 			}
 		</style>`;
 	},

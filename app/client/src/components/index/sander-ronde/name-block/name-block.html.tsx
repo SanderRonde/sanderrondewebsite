@@ -2,6 +2,8 @@ import { I18NKeys } from '../../../../../../i18n/i18n-keys';
 import { ToolTip } from '../../../shared/tool-tip/tool-tip';
 import DownArrow from '../../../icons/down-arrow';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
+import Github from '../../../icons/github';
+import Email from '../../../icons/email';
 import { NameBlock } from './name-block';
 import { render } from 'lit-html';
 
@@ -12,14 +14,14 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 			<div id="block">
 				<div class="vertical-centerer fill-x" id="main-content">
 					<div class="horizontal-centerer">
-						<div id="container">
+						<div id="container" class="transition">
 							<div id="name">Sander Ronde</div>
 							<div id="tagline">
 								<div id="tagline-study" class="tagline">
 									<a
 										href="https://masters.vu.nl/en/programmes/computer-science-systems-security/index.aspx"
 										rel="noopener"
-										class="link color"
+										class="link color transition"
 										target="_blank"
 									>
 										Computer Science Master
@@ -30,7 +32,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 											I18NKeys.index.nameBlock.links.vu
 										)}
 										rel="noopener"
-										class="link color"
+										class="link color transition"
 										target="_blank"
 									>
 										VU
@@ -41,7 +43,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 											I18NKeys.index.nameBlock.links.uva
 										)}
 										rel="noopener"
-										class="link color"
+										class="link color transition"
 										target="_blank"
 									>
 										UVA
@@ -52,7 +54,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									<a
 										href="https://nextupsoftware.com/"
 										rel="noopener"
-										class="link color"
+										class="link color transition"
 										target="_blank"
 									>
 										Nextup Software
@@ -68,7 +70,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 												.bachelor
 										)}
 										rel="noopener"
-										class="link color"
+										class="link color transition"
 										target="_blank"
 									>
 										Bachelor's degree in Computer Science
@@ -80,7 +82,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 												.uniLeiden
 										)}
 										rel="noopener"
-										class="link color"
+										class="link color transition"
 										target="_blank"
 									>
 										{this.__(
@@ -89,6 +91,23 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										)}
 									</a>
 								</div>
+							</div>
+							<div id="links">
+								<a
+									id="github-link"
+									class="icon-link link color transition"
+									href="https://github.com/sanderronde"
+									target="_blank"
+								>
+									<Github width={50} height={45} />
+								</a>
+								<a
+									id="email-link"
+									class="icon-link link color transition"
+									href="mailto:sander@sanderron.de"
+								>
+									<Email width={50} height={50} />
+								</a>
 							</div>
 						</div>
 					</div>
@@ -101,7 +120,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 					>
 						<span
 							id="down-arrow"
-							class="fade-in slow"
+							class="fade-in slow transition"
 							{...{
 								'@': {
 									click: this.scrollDown,

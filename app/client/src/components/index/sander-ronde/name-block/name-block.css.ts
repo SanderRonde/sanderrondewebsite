@@ -23,15 +23,14 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			}
 
 			${mediaQueryRule(
-				css(this).$.name,
-				'font-size',
-				new Map([
-					[[0, 1000], '14vw'],
-					[[1000, Infinity], '1000%'],
-				])
-			)}
-
-			${css(this).$.name} {
+					css(this).$.name,
+					'font-size',
+					new Map([
+						[[0, 1000], '14vw'],
+						[[1000, Infinity], '1000%'],
+					])
+				)}
+				${css(this).$.name} {
 				line-height: 0.9em;
 			}
 
@@ -39,8 +38,11 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 				margin-top: 10px;
 			}
 
-			${css(this).$['scroll-down']} {
+			${css(this).$['down-arrow']} {
 				fill: ${theme.highlight.main};
+			}
+
+			${css(this).$['scroll-down']} {
 				width: 100px;
 				margin-bottom: 20px;
 				transform: translateY(0);
@@ -57,22 +59,31 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 			}
 
 			${mediaQueryRule(
-				css(this).c.tagline,
-				'font-size',
-				new Map([
-					[[0, 800], '4vw'],
-					[[800, Infinity], '200%'],
-				])
-			)}
+					css(this).c.tagline,
+					'font-size',
+					new Map([
+						[[0, 800], '4vw'],
+						[[800, Infinity], '200%'],
+					])
+				)}
+				${mediaQueryRule(
+					css(this).c['education-line'],
+					'font-size',
+					new Map([
+						[[0, 800], '2.25vw'],
+						[[800, Infinity], '120%'],
+					])
+				)}
+				${css(this).$.links} {
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+			}
 
-			${mediaQueryRule(
-				css(this).c['education-line'],
-				'font-size',
-				new Map([
-					[[0, 800], '2.25vw'],
-					[[800, Infinity], '120%'],
-				])
-			)}
+			${css(this).c['icon-link']} {
+				margin: 10px;
+				cursor: pointer;
+			}
 		</style>`;
 	},
 	CHANGE_TYPE.THEME,
