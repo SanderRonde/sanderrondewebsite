@@ -8,9 +8,8 @@ import {
 	isDirective,
 	noChange,
 } from 'lit-html';
-import { THEME, themes, DEFAULT_THEME } from '../../../../shared/theme';
+import { I18NGetMessage, LANGUAGE, DEFAULT_LANG } from '../../../../i18n/i18n';
 import { SanderRonde } from '../../components/index/sander-ronde/';
-import { I18NGetMessage, LANGUAGE } from '../../../../i18n/i18n';
 import { registerServiceworker, onIdle } from '../../shared/sw';
 import { I18NReturner } from '../../shared/client-i18n';
 import { I18NType } from '../../../../i18n/i18n-defs';
@@ -33,7 +32,7 @@ function registerComponents() {
 	});
 	WebComponent.initI18N({
 		urlFormat: '/i18n/locales/$LANG$.json',
-		defaultLang: getCookie('lang', LANGUAGE.DEFAULT_LANG),
+		defaultLang: getCookie('lang', DEFAULT_LANG),
 		returner: I18NReturner,
 		getMessage: I18NGetMessage,
 		langFiles: {

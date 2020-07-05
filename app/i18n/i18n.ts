@@ -54,8 +54,8 @@ export function I18NGetMessage(
 export const enum LANGUAGE {
 	EN = 'en',
 	NL = 'nl',
-	DEFAULT_LANG = 'en',
 }
+export const DEFAULT_LANG = LANGUAGE.EN;
 const LANGUAGES: LANGUAGE[] = [LANGUAGE.EN, LANGUAGE.NL];
 
 export function strToLanguage(str: string) {
