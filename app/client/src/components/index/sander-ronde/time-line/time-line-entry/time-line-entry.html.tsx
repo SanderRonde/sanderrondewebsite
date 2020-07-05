@@ -59,7 +59,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 												lang
 											)}
 											target="_blank"
-											class="title-at-name link light"
+											class="title-at-name link light transition"
 										>
 											{name}
 										</a>
