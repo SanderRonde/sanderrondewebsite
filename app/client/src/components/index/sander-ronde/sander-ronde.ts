@@ -10,6 +10,7 @@ import { SanderRondeHTML } from './sander-ronde.html';
 import { SanderRondeCSS } from './sander-ronde.css';
 import { FontCSS } from '../../../styles/font';
 import { config, CHANGE_TYPE } from 'wc-lib';
+import { LangSelect } from './lang-select/';
 import { NameBlock } from './name-block/';
 import { InfoBlock } from './info-block/';
 import { TimeLine } from './time-line/';
@@ -26,6 +27,7 @@ import { IndexBase } from '../base';
 		TimeLine,
 		InfoBlock,
 		ThemeSelect,
+		LangSelect,
 	],
 })
 export class SanderRonde extends IndexBase<{

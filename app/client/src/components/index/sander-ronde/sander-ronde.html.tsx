@@ -6,6 +6,7 @@ import { InfoBlock } from './info-block/info-block';
 import { NameBlock } from './name-block/name-block';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { SanderRonde } from './sander-ronde';
+import { LangSelect } from './lang-select/';
 import { render } from 'lit-html';
 
 const MIN_JOINED_TIMELINE_WIDTH = 800;
@@ -20,6 +21,7 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 
 		return (
 			<div id="container">
+				<LangSelect />
 				<ThemeSelect />
 				<div id="scroller">
 					<BackgroundBlock

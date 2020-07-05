@@ -8,17 +8,16 @@ import {
 	THEME_COOKIE_NAME,
 	THEMES,
 } from '../../../../../../shared/theme';
-import { BubbleSelectCSS } from '../bubble-select/bubble-select.css';
+import { ThemeSelectCSS, ThemeBubbleSelectCSS } from './theme-select.css.js';
 import { TransitionCSS } from '../../../../styles/transition';
 import { BubbleSelect } from '../bubble-select/bubble-select';
 import { ThemeSelectHTML } from './theme-select.html.js';
-import { ThemeSelectCSS } from './theme-select.css.js';
 import { setCookie } from '../../../../shared/cookies';
 import { config } from 'wc-lib';
 
 @config({
 	is: 'theme-select',
-	css: [BubbleSelectCSS, ThemeSelectCSS, TransitionCSS],
+	css: [ThemeBubbleSelectCSS, ThemeSelectCSS, TransitionCSS],
 	html: ThemeSelectHTML,
 })
 export class ThemeSelect extends BubbleSelect<

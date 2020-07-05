@@ -1,12 +1,12 @@
 import { BubbleSelectHTML } from '../bubble-select/bubble-select.html.js';
-import { themes, THEMES } from '../../../../../../shared/theme.js';
+import { themes, THEMES, THEME } from '../../../../../../shared/theme.js';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { ThemeSelect } from './theme-select.js';
 import { render } from 'lit-html';
 
 export const ThemeSelectHTML = new TemplateFn<ThemeSelect>(
 	function (html) {
-		return BubbleSelectHTML(html, this, THEMES, (themeName) => {
+		return BubbleSelectHTML<THEME>(html, this, THEMES, (themeName) => {
 			const theme = themes[themeName];
 			return (
 				<div
