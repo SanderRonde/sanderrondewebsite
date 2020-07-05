@@ -5,7 +5,7 @@ import { render } from 'lit-html';
 export const BackgroundBlockHTML = new TemplateFn<BackgroundBlock>(
 	function (html) {
 		return (
-			<section id="block">
+			<section id="block" class="transition">
 				<slot id="slot"></slot>
 			</section>
 		);

@@ -80,6 +80,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 		return (
 			<ElevatedCard
 				id="card"
+				class="transition"
 				level={1}
 				{...{
 					'@': {
@@ -107,9 +108,12 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 					</div>
 					<div id="content-col">
 						<div id="title-row">
-							<div id="title">{renderTitle()}</div>
+							<div id="title" class="transition">
+								{renderTitle()}
+							</div>
 							<div
 								id="time"
+								class="transition"
 								{...{
 									'@': {
 										mouseenter: this.dateEnter,
@@ -152,7 +156,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 								)}
 							</div>
 						</div>
-						<div id="overflow-container">
+						<div id="overflow-container" class="transition">
 							<Pin id="pin" width={15} height={15} />
 							<div id="detail-row">
 								{getInternationalText(

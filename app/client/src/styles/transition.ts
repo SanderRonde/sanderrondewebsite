@@ -9,7 +9,7 @@ export const TransitionCSS = new TemplateFn<
 >(
 	function (html) {
 		return html`<style>
-			* {
+			.transition {
 				transition: background-color ${TRANSITION_TIME}ms ease-in-out,
 					color ${TRANSITION_TIME}ms ease-in-out,
 					fill ${TRANSITION_TIME}ms ease-in-out;

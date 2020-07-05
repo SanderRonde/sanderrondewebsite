@@ -5,7 +5,7 @@ import { render } from 'lit-html';
 export const ElevatedCardHTML = new TemplateFn<ElevatedCard>(
 	function (html) {
 		return (
-			<div id="shadow">
+			<div id="shadow" class="transition">
 				<slot id="slot"></slot>
 			</div>
 		);

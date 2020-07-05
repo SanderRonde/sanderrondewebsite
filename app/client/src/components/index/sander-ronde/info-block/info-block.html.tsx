@@ -67,7 +67,7 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 	function (html) {
 		return (
 			<div class="horizontal-centerer fill-x">
-				<div id="container">
+				<div id="container" class="transition">
 					<div id="about-me-container" class="block">
 						<div id="about-me">
 							<div class="header">

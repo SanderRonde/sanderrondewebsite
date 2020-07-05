@@ -31,6 +31,7 @@ export const BubbleSelectHTML = function <B>(
 						<div
 							class={[
 								'bubble',
+								'transition',
 								{
 									[BUBBLE_SELECT_TOGGLES.ACTIVE]:
 										current === bubbleName,

@@ -112,6 +112,7 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 				'eet-item': sideIsEET,
 				'pproj-item': !sideIsEET,
 				'timeline-row-item': true,
+				transition: true,
 			};
 			return (
 				<div class={classObj}>
@@ -134,7 +135,7 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 								}}
 							/>
 							<div class="arrow-centerer">
-								<div class="timeline-arrow" />
+								<div class="timeline-arrow transition" />
 							</div>
 						</div>
 					)}
@@ -154,6 +155,7 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 				<div
 					class={[
 						'center-line',
+						'transition',
 						{
 							[CSS_TOGGLES.HIGHLIGHTED]: isHighlighted,
 						},
@@ -172,12 +174,13 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 				<div
 					class={[
 						'center-line',
+						'transition',
 						{
 							[CSS_TOGGLES.HIGHLIGHTED]: highlighted,
 						},
 					]}
 				>
-					<div class="year-tag">
+					<div class="year-tag transition">
 						{timeGroup.short ? '...' : timeGroup.years[0]}
 					</div>
 				</div>
@@ -226,8 +229,8 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 				<div id="timeline-table">
 					<div class="timeline-row">
 						<div class="top-row-entry" />
-						<div class="center-line center-line-header">
-							<div class="header">
+						<div class="center-line center-line-header transition">
+							<div class="header transition">
 								{(() => {
 									switch (props.sides) {
 										case TIMELINE_SIDES.BOTH:

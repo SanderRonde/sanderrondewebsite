@@ -99,8 +99,11 @@ export const TimeLineEntryCSS = new TemplateFn<TimeLineEntry>(
 				: 'padding-right: 10px;'}
 			}
 
-			${css(this).$.pin} {
+			${css(this).$['overflow-container']} {
 				fill: ${theme.text.main};
+			}
+
+			${css(this).$.pin} {
 				position: absolute;
 				${props.direction === TIMELINE_DIRECTION.LEFT
 				? 'left: 10px;'

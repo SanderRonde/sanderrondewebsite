@@ -26,10 +26,10 @@ export const SkillRowHTML = new TemplateFn<SkillRow>(
 									}
 								)}
 							>
-								<div class="skill">{name}</div>
+								<div class="skill transition">{name}</div>
 							</ToolTip>
 						) : (
-							<div class="skill">{name}</div>
+							<div class="skill transition">{name}</div>
 						);
 					})}
 			</div>
