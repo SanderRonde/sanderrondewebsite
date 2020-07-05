@@ -4,13 +4,13 @@ import {
 	InternationalText,
 	Skill,
 } from '../../../../../config/me.js';
-import { cutIntoGroups } from '../../../../../../../shared/util.js';
 import {
 	SkillRow,
 	SKILL_ROW_ALIGNMENT,
 } from '../../info-block/skill-row/skill-row.js';
 import { TimeLineEntry, TIMELINE_DIRECTION } from './time-line-entry.js';
 import { I18NKeys } from '../../../../../../../i18n/i18n-keys.js';
+import { cutIntoGroups } from '../../../../../shared/util.js';
 import { ElevatedCard } from '../../../../shared/';
 import { until } from 'lit-html/directives/until';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';

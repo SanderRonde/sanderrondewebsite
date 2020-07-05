@@ -24,11 +24,3 @@ export function flat<A extends any[]>(arr: A): List.Flatten<A> {
 	}
 	return flattened;
 }
-
-export function cutIntoGroups<I>(arr: I[], groupSize: number): I[][] {
-	const result: I[][] = [];
-	for (let i = 0; i < arr.length; i += groupSize) {
-		result.push(arr.slice(i, i + groupSize));
-	}
-	return result;
-}
