@@ -35,6 +35,6 @@ export const SkillRowHTML = new TemplateFn<SkillRow>(
 			</div>
 		);
 	},
-	CHANGE_TYPE.PROP,
+	CHANGE_TYPE.PROP | CHANGE_TYPE.LANG,
 	render
 );

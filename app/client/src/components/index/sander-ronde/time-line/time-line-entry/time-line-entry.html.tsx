@@ -186,6 +186,6 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 			</ElevatedCard>
 		);
 	},
-	CHANGE_TYPE.PROP,
+	CHANGE_TYPE.PROP | CHANGE_TYPE.LANG,
 	render
 );

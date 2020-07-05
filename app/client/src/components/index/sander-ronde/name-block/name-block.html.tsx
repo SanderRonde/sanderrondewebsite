@@ -119,6 +119,6 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 			</div>
 		);
 	},
-	CHANGE_TYPE.PROP,
+	CHANGE_TYPE.PROP | CHANGE_TYPE.LANG,
 	render
 );

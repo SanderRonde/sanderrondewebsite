@@ -134,6 +134,6 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 			</div>
 		) as any;
 	},
-	CHANGE_TYPE.NEVER,
+	CHANGE_TYPE.LANG,
 	render
 );

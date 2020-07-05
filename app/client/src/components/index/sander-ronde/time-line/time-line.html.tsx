@@ -292,6 +292,6 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 			</div>
 		);
 	},
-	CHANGE_TYPE.PROP,
+	CHANGE_TYPE.PROP | CHANGE_TYPE.LANG,
 	render
 );
