@@ -323,12 +323,19 @@ accepts@~1.3.7:
     mime-types "~2.1.24"
     negotiator "0.6.2"
 
+acorn-loose@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/acorn-loose/-/acorn-loose-7.1.0.tgz#2c87dc71c0ca759ec2a110eee43a5057c07ae857"
+  integrity sha512-QBHr9xhpJfVvuJNqKaE0V2DcXJ9UOthhqgKKsr5O8fV553jVW8VoyndfsuBpTsRTAX0BnYt/PamrNj9SLkbSHA==
+  dependencies:
+    acorn "^7.0.0"
+
 acorn-walk@^7.2.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/acorn-walk/-/acorn-walk-7.2.0.tgz#0de889a601203909b0fbe07b8938dc21d2e967bc"
   integrity sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA==
 
-acorn@^7.3.1:
+acorn@^7.0.0:
   version "7.3.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-7.3.1.tgz#85010754db53c3fbaf3b9ea3e083aa5c5d147ffd"
   integrity sha512-tLc0wSnatxAQHVHUapaHdz72pi9KUyHjq5KyHjGg9Y8Ifdc79pTh2XvI6I1/chZbnM7QtNKzh66ooDogPZSleA==
@@ -2198,12 +2205,12 @@ hpack.js@^2.1.6:
     readable-stream "^2.0.1"
     wbuf "^1.1.0"
 
-html-typings@^1.3.0:
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/html-typings/-/html-typings-1.3.0.tgz#65fcf75d409a467e8390ef96652119c8e0213746"
-  integrity sha512-IOcVRluXp9eH7fEuTomfEGPNiwWc43RMA3g567WdlZvNZnfALq64l5HEr37MS8JQsx67mGidD5asDE7xsNFTPw==
+html-typings@^1.3.5:
+  version "1.3.5"
+  resolved "https://registry.yarnpkg.com/html-typings/-/html-typings-1.3.5.tgz#bda4849a5542fb6a2be69b1c8e5ef64a78936588"
+  integrity sha512-CiyZEx5RAoHDMkfcsKq5/q4KFiAG2nc1c1M6cboEgNNWRnmid3piXKOdxkfx4l0Vv68FETu6WLI5UbrE3oyxAw==
   dependencies:
-    acorn "^7.3.1"
+    acorn-loose "^7.1.0"
     acorn-walk "^7.2.0"
     argparse "^1.0.9"
     gaze "^1.1.2"
@@ -4797,10 +4804,10 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-wc-lib@^1.1.17:
-  version "1.1.17"
-  resolved "https://registry.yarnpkg.com/wc-lib/-/wc-lib-1.1.17.tgz#e0927561fb2ee8b61ced2ae5be4f4b07378aeb2b"
-  integrity sha512-2J0ELps4+G7CapYduL/lqXchF5IE5aXllsQG+DiVGl+pVjlxsAaGN0KUgEH3h8PJgKfKDt7Au13pHtoBQpqM9w==
+wc-lib@^1.1.19:
+  version "1.1.19"
+  resolved "https://registry.yarnpkg.com/wc-lib/-/wc-lib-1.1.19.tgz#812b75135f865ec43bd58b9700441975e47ce697"
+  integrity sha512-CXQdWVCNKR7CRBHefs1rs1VFofbo5JNTgLf5Y4uHGsgnzW3hWAAhgQV87ITWQkfOi+2rAFiUvloE6nCMEKdh3w==
   dependencies:
     css "^2.2.4"
     glob "^7.1.6"

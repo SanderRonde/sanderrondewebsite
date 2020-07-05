@@ -1,6 +1,7 @@
 import { cmd as _cmd, choice as _choice, flag, setEnvVar } from 'makfy';
 import { ExecFunction } from 'makfy/dist/lib/schema/runtime';
 import { choice, cmd } from './types/makfy-extended';
+import { extractStringTypes } from 'html-typings';
 import * as chokidar from 'chokidar';
 import * as crypto from 'crypto';
 import * as rimraf from 'rimraf';
@@ -190,16 +191,30 @@ async function watchForChanges(
 		});
 }
 
-async function updateHTMLTypings(exec: ExecFunction, changedFiles: string[]) {
-	await exec(
-		changedFiles.map((file) => {
+async function updateHTMLTypings(changedFiles: string[]) {
+	await Promise.all(
+		changedFiles.map(async (file) => {
 			const parsedPath = path.parse(file);
 			const componentName = parsedPath.name.split('.')[0];
 			const outFile = path.join(
 				parsedPath.dir,
 				`${componentName}-querymap.d.ts`
 			);
-			return `html-typings -i ${file} -o ${outFile} -e -j "html.jsx"`;
+			const fileContent = await fs.readFile(file, {
+				encoding: 'utf8',
+			});
+			if (file.indexOf('message-toast') > -1) {
+				debugger;
+			}
+			const output = extractStringTypes(fileContent, {
+				fileType: 'jsx' as any,
+				getTypesObj: false,
+				jsxFactory: 'html.jsx',
+				exportTypes: true,
+			} as any);
+			await fs.writeFile(outFile, output, {
+				encoding: 'utf8',
+			});
 		})
 	);
 }
@@ -217,15 +232,10 @@ cmd('html-typings')
 	.run(async (exec, { watch, hot }) => {
 		if (!watch || !hot) {
 			await updateHTMLTypings(
-				exec,
 				await globby([
 					path.join(
 						__dirname,
-						'app/client/src/components/**/*.html.ts'
-					),
-					path.join(
-						__dirname,
-						'app/client/src/components/**/*.html.tsx'
+						'app/client/src/components/**/*.html.js'
 					),
 				])
 			);
@@ -235,11 +245,7 @@ cmd('html-typings')
 				[
 					path.join(
 						__dirname,
-						'app/client/src/components/**/*.html.ts'
-					),
-					path.join(
-						__dirname,
-						'app/client/src/components/**/*.html.tsx'
+						'app/client/src/components/**/*.html.js'
 					),
 				],
 				{
@@ -249,12 +255,12 @@ cmd('html-typings')
 					},
 					cwd: __dirname,
 					ignoreInitial: false,
-					ignored: /.*\.(js|map)/,
+					ignored: /.*\.(js)/,
 				},
 				async (changedFile, changeType) => {
 					if (changeType === 'delete') return;
 					await exec('? changes detected');
-					await updateHTMLTypings(exec, [changedFile]);
+					await updateHTMLTypings([changedFile]);
 				}
 			);
 		}
