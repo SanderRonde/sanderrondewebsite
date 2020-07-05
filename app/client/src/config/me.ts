@@ -528,8 +528,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.NODE,
 			].map((skill) => ({ name: skill })),
 			title: 'www.sanderron.de',
-			// TODO: determine min size needed
-			icon: ['/icons/128.png'],
+			icon: ['/icons/48.png'],
 			description: {
 				en: "The website you're reading this on",
 				nl: 'De website waarop je dit leest',

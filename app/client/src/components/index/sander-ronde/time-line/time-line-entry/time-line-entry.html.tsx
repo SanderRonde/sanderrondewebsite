@@ -17,7 +17,6 @@ import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import Pin from '../../../../icons/pin.js';
 import { render } from 'lit-html';
 
-// TODO: dynamic skill group contents
 const SKILL_GROUP_SIZE = window.innerWidth < 500 ? 2 : 4;
 
 export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
