@@ -27,6 +27,6 @@ export const LangSelectCSS = new TemplateFn<LangSelect>(
 			}
 		</style>`;
 	},
-	CHANGE_TYPE.THEME,
+	CHANGE_TYPE.NEVER,
 	render
 );

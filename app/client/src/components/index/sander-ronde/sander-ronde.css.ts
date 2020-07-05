@@ -1,9 +1,9 @@
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
 import { SanderRonde } from './sander-ronde';
-import { html, render } from 'lit-html';
+import { render } from 'lit-html';
 
 export const SanderRondeCSS = new TemplateFn<SanderRonde>(
-	function () {
+	function (html) {
 		return html`
 			<style>
 				${css(this).$.scroller} {

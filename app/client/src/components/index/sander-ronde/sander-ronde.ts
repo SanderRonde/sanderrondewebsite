@@ -39,7 +39,7 @@ export class SanderRonde extends IndexBase<{
 }> {
 	mounted() {
 		window.addEventListener('resize', () => {
-			this.renderToDOM(CHANGE_TYPE.PROP);
+			this.renderToDOM(CHANGE_TYPE.FORCE);
 		});
 	}
 }

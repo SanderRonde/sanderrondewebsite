@@ -9,7 +9,6 @@ import { render } from 'lit-html';
 
 export const NameBlockHTML = new TemplateFn<NameBlock>(
 	function (html) {
-		// debugger;
 		return (
 			<div id="block">
 				<div class="vertical-centerer fill-x" id="main-content">
@@ -138,6 +137,6 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 			</div>
 		);
 	},
-	CHANGE_TYPE.PROP | CHANGE_TYPE.LANG,
+	CHANGE_TYPE.LANG,
 	render
 );

@@ -10,6 +10,6 @@ export const BackgroundBlockHTML = new TemplateFn<BackgroundBlock>(
 			</section>
 		);
 	},
-	CHANGE_TYPE.PROP,
+	CHANGE_TYPE.NEVER,
 	render
 );

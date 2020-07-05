@@ -87,6 +87,6 @@ export const ToolTipCSS = new TemplateFn<ToolTip>(
 			}
 		</style>`;
 	},
-	CHANGE_TYPE.ALWAYS,
+	CHANGE_TYPE.NEVER,
 	render
 );
