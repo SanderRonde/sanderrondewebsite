@@ -3,7 +3,7 @@ import {
 	MIN_TOOLTIP_MESSAGE_WIDTH,
 	TOOLTIP_SIDE_PADDING,
 } from './tool-tip.css.js';
-import { IDMapType, ClassMapType } from './tool-tip-querymap';
+import { IDMapType, ClassMapType, SelectorMapType } from './tool-tip-querymap';
 import { FadeInCSS } from '../../../styles/fade-in';
 import { Props, config, PROP_TYPE } from 'wc-lib';
 import { ToolTipHTML } from './tool-tip.html';
@@ -28,6 +28,7 @@ export class ToolTip extends ComponentBase<{
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
 		TOGGLES: TOGGLES | TOOLTIP_DIRECTION;
+		SELECTORS: SelectorMapType;
 	};
 }> {
 	props = Props.define(this, {

@@ -1,5 +1,5 @@
+import { IDMapType, ClassMapType, SelectorMapType } from './time-line-querymap';
 import { Props, config, PROP_TYPE, ComplexType } from 'wc-lib';
-import { IDMapType, ClassMapType } from './time-line-querymap';
 import { TransitionCSS } from '../../../../styles/transition';
 import { THEME_SHADE } from '../../../../../../shared/theme';
 import { CenterersCSS } from '../../../../styles/centerers';
@@ -35,6 +35,7 @@ export class TimeLine extends IndexBase<{
 			'pproj-item': HTMLDivElement;
 		};
 		TOGGLES: CSS_TOGGLES;
+		SELECTORS: SelectorMapType;
 	};
 	parent: SanderRonde;
 }> {

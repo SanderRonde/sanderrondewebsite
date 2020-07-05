@@ -1,4 +1,8 @@
-import { IDMapType, ClassMapType } from './time-line-entry-querymap';
+import {
+	IDMapType,
+	ClassMapType,
+	SelectorMapType,
+} from './time-line-entry-querymap';
 import { TransitionCSS } from '../../../../../styles/transition';
 import { SkillRow } from '../../info-block/skill-row/skill-row';
 import { HighlightCSS } from '../../../../../styles/highlight';
@@ -34,6 +38,7 @@ export class TimeLineEntry extends IndexBase<{
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
 		TOGGLES: TIMELINE_ENTRY_TOGGLES;
+		SELECTORS: SelectorMapType;
 	};
 	events?: {
 		highlightdaterange: {

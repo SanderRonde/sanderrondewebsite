@@ -1,4 +1,8 @@
-import { IDMapType, ClassMapType } from './info-block-querymap';
+import {
+	IDMapType,
+	ClassMapType,
+	SelectorMapType,
+} from './info-block-querymap';
 import { TransitionCSS } from '../../../../styles/transition';
 import { CenterersCSS } from '../../../../styles/centerers';
 import { HighlightCSS } from '../../../../styles/highlight';
@@ -20,5 +24,6 @@ export class InfoBlock extends IndexBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
+		SELECTORS: SelectorMapType;
 	};
 }> {}

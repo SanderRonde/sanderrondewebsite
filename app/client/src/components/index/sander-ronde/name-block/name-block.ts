@@ -1,4 +1,8 @@
-import { IDMapType, ClassMapType } from './name-block-querymap';
+import {
+	IDMapType,
+	ClassMapType,
+	SelectorMapType,
+} from './name-block-querymap';
 import { TransitionCSS } from '../../../../styles/transition';
 import { CenterersCSS } from '../../../../styles/centerers';
 import { HighlightCSS } from '../../../../styles/highlight';
@@ -28,6 +32,7 @@ export class NameBlock extends IndexBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
+		SELECTORS: SelectorMapType;
 	};
 	parent: SanderRonde;
 }> {

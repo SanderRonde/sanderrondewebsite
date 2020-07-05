@@ -1,4 +1,8 @@
-import { IDMapType, ClassMapType } from './background-block-querymap';
+import {
+	IDMapType,
+	ClassMapType,
+	SelectorMapType,
+} from './background-block-querymap';
 import { BackgroundBlockHTML } from './background-block.html';
 import { BackgroundBlockCSS } from './background-block.css';
 import { TransitionCSS } from '../../../styles/transition';
@@ -15,6 +19,7 @@ export class BackgroundBlock extends ComponentBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
+		SELECTORS: SelectorMapType;
 	};
 }> {
 	props = Props.define(this, {

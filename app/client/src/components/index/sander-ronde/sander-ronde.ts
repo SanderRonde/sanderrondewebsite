@@ -1,4 +1,8 @@
-import { IDMapType, ClassMapType } from './sander-ronde-querymap';
+import {
+	IDMapType,
+	ClassMapType,
+	SelectorMapType,
+} from './sander-ronde-querymap';
 import { BackgroundBlock } from '../../shared/background-block/';
 import { MessageToast } from '../../shared/message-toast/';
 import { ThemeSelect } from './theme-select/theme-select';
@@ -28,6 +32,7 @@ export class SanderRonde extends IndexBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
+		SELECTORS: SelectorMapType;
 	};
 }> {
 	mounted() {

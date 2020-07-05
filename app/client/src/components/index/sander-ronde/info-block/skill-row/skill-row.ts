@@ -1,5 +1,5 @@
+import { ClassMapType, IDMapType, SelectorMapType } from './skill-row-querymap';
 import { TransitionCSS } from '../../../../../styles/transition';
-import { ClassMapType, IDMapType } from './skill-row-querymap';
 import { Props, config, ComplexType, PROP_TYPE } from 'wc-lib';
 import { HighlightCSS } from '../../../../../styles/highlight';
 import { SkillRowHTML } from './skill-row.html.js';
@@ -21,6 +21,7 @@ export class SkillRow extends IndexBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
+		SELECTORS: SelectorMapType;
 	};
 }> {
 	props = Props.define(this, {

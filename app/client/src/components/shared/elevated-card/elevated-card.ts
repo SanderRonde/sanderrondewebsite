@@ -1,4 +1,8 @@
-import { IDMapType, ClassMapType } from './elevated-card-querymap';
+import {
+	IDMapType,
+	ClassMapType,
+	SelectorMapType,
+} from './elevated-card-querymap';
 import { TransitionCSS } from '../../../styles/transition';
 import { ElevatedCardHTML } from './elevated-card.html';
 import { ElevatedCardCSS } from './elevated-card.css';
@@ -14,6 +18,7 @@ export class ElevatedCard extends ComponentBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
+		SELECTORS: SelectorMapType;
 	};
 }> {
 	props = Props.define(this, {

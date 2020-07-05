@@ -1,5 +1,9 @@
+import {
+	IDMapType,
+	ClassMapType,
+	SelectorMapType,
+} from './message-toast-querymap';
 import { bindToClass, config, Props, PROP_TYPE, wait } from 'wc-lib';
-import { IDMapType, ClassMapType } from './message-toast-querymap';
 import { MessageToastHTML } from './message-toast.html';
 import { MessageToastCSS } from './message-toast.css';
 import { FontCSS } from '../../../styles/font';
@@ -21,6 +25,7 @@ export class MessageToast extends ComponentBase<{
 	selectors: {
 		IDS: IDMapType;
 		CLASSES: ClassMapType;
+		SELECTORS: SelectorMapType;
 	};
 	events: {
 		click: {
