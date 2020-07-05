@@ -1,5 +1,5 @@
+import { strToTheme, DEFAULT_THEME } from '../../shared/theme.js';
 import { strToLanguage, LANGUAGE } from '../../i18n/i18n.js';
-import { THEME, strToTheme } from '../../shared/theme.js';
 import express from 'express';
 
 export namespace RequestVars {
@@ -17,8 +17,8 @@ export namespace RequestVars {
 		const languageStr = req.cookies['theme'];
 		const language = strToTheme(languageStr);
 		if (!language) {
-			res.cookie('theme', THEME.DEFAULT_THEME);
-			return THEME.DEFAULT_THEME;
+			res.cookie('theme', DEFAULT_THEME);
+			return DEFAULT_THEME;
 		}
 		return language;
 	}

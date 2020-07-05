@@ -8,11 +8,11 @@ import {
 	isDirective,
 	noChange,
 } from 'lit-html';
+import { THEME, themes, DEFAULT_THEME } from '../../../../shared/theme';
 import { SanderRonde } from '../../components/index/sander-ronde/';
 import { I18NGetMessage, LANGUAGE } from '../../../../i18n/i18n';
 import { registerServiceworker, onIdle } from '../../shared/sw';
 import { I18NReturner } from '../../shared/client-i18n';
-import { THEME, themes } from '../../../../shared/theme';
 import { I18NType } from '../../../../i18n/i18n-defs';
 import { getCookie } from '../../shared/cookies';
 import { WebComponent } from 'wc-lib';
@@ -45,7 +45,7 @@ function registerComponents() {
 	});
 	WebComponent.initTheme({
 		theme: themes,
-		defaultTheme: getCookie('theme', THEME.DEFAULT_THEME) as THEME,
+		defaultTheme: getCookie('theme', DEFAULT_THEME) as THEME,
 	});
 
 	SanderRonde.define();

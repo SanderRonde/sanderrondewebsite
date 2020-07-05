@@ -1,9 +1,9 @@
 export const enum THEME {
 	LIGHT = 'light',
 	DARK = 'dark',
-	DEFAULT_THEME = 'dark',
 	HIGH_CONTRAST = 'high-contrast',
 }
+export const DEFAULT_THEME = THEME.DARK;
 
 export interface ThemeShade {
 	light: string;
