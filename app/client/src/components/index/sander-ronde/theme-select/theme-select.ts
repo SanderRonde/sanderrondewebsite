@@ -42,7 +42,6 @@ export class ThemeSelect extends IndexBase<{
 	};
 }> {
 	private _initialBubbleOrder = (() => {
-		console.log(this.getThemeName());
 		const initialTheme = this.getThemeName();
 		return [
 			...THEMES.filter((themeName) => themeName !== initialTheme),
@@ -78,9 +77,7 @@ export class ThemeSelect extends IndexBase<{
 	private _setTheme(themeName: THEME) {
 		this.setTheme(themeName as any);
 		this.props.currentTheme = themeName;
-		debugger;
 		setCookie(THEME_COOKIE_NAME, themeName);
-		console.log('cookie', themeName);
 	}
 
 	private _setSelectedBubble(newThemeName: THEME, oldTheme: THEME) {
@@ -164,7 +161,6 @@ export class ThemeSelect extends IndexBase<{
 	}
 
 	async themeSelect(themeName: THEME) {
-		console.log('select', themeName);
 		if (this.props.expanded) {
 			// Expanded, select that and collapse
 			await this.collapse(themeName);
