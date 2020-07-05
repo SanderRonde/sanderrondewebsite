@@ -17,11 +17,19 @@ declare global {
 	type HTMLPinElement = SVGElement;
 	type HTMLRawhtmlElement = RawHTML;
 	type HTMLSkillrowElement = SkillRow;
+	type HTMLSkillRowElement = SkillRow;
 	type HTMLTimelineElement = TimeLine;
+	type HTMLTimeLineElement = TimeLine;
 	type HTMLNameblockElement = NameBlock;
+	type HTMLNameBlockElement = NameBlock;
 	type HTMLInfoblockElement = InfoBlock;
+	type HTMLInfoBlockElement = InfoBlock;
 	type HTMLDownarrowElement = SVGElement;
+	type HTMLDownArrowElement = SVGElement;
 	type HTMLElevatedcardElement = ElevatedCard;
+	type HTMLElevatedCardElement = ElevatedCard;
 	type HTMLTimelineentryElement = TimeLineEntry;
+	type HTMLTimeLineEntryElement = TimeLineEntry;
 	type HTMLBackgroundblockElement = BackgroundBlock;
+	type HTMLBackgroundBlockElement = BackgroundBlock;
 }
