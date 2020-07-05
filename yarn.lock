@@ -4804,10 +4804,10 @@ wbuf@^1.1.0, wbuf@^1.7.3:
   dependencies:
     minimalistic-assert "^1.0.0"
 
-wc-lib@^1.1.21:
-  version "1.1.21"
-  resolved "https://registry.yarnpkg.com/wc-lib/-/wc-lib-1.1.21.tgz#191e17473c7cbc3a0985dbef635548f2e8db3e7e"
-  integrity sha512-jJhtzAdeNNIZ/U89f1WvY1xA9zPT0F+SX0suxV4e3c2C26NBL5UtVUTzIOo0A9tzfRJQWKP69YEvRFf95u8Tgg==
+wc-lib@^1.1.22:
+  version "1.1.22"
+  resolved "https://registry.yarnpkg.com/wc-lib/-/wc-lib-1.1.22.tgz#47cf28489df9937978e6bd11f55d3d90c7e07b0b"
+  integrity sha512-BIlxwDHYBuj9Lwwgbd538c3b7LkasTDK9U9JGxaJlpCqgI5rOcvV545huA1zb7UMxSOne6WO4GlgvnLCRd2ntQ==
   dependencies:
     css "^2.2.4"
     glob "^7.1.6"
