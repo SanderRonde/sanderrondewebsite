@@ -170,6 +170,3 @@ export class ThemeSelect extends IndexBase<{
 		}
 	}
 }
-
-// TODO: actually change/store the theme permanently
-// also those errors in the compiler
