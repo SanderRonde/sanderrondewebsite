@@ -57,7 +57,7 @@ export const enum LANGUAGE {
 }
 export const DEFAULT_LANG = LANGUAGE.EN;
 export const LANG_COOKIE_NAME = 'lang';
-const LANGUAGES: LANGUAGE[] = [LANGUAGE.EN, LANGUAGE.NL];
+export const LANGUAGES: LANGUAGE[] = [LANGUAGE.EN, LANGUAGE.NL];
 
 export function strToLanguage(str: string) {
 	return LANGUAGES.find((l) => l === str);
