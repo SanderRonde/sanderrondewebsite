@@ -105,7 +105,7 @@ export const themes: {
 	},
 };
 
-const THEMES: THEME[] = [THEME.DARK];
+export const THEMES: THEME[] = Object.keys(themes) as THEME[];
 export function strToTheme(str: string) {
 	return THEMES.find((l) => l === str);
 }
