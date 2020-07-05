@@ -13,12 +13,14 @@ import { TransitionCSS } from '../../../../styles/transition';
 import { BubbleSelect } from '../bubble-select/bubble-select';
 import { ThemeSelectHTML } from './theme-select.html.js';
 import { setCookie } from '../../../../shared/cookies';
+import { ToolTip } from '../../../shared/';
 import { config } from 'wc-lib';
 
 @config({
 	is: 'theme-select',
 	css: [ThemeBubbleSelectCSS, ThemeSelectCSS, TransitionCSS],
 	html: ThemeSelectHTML,
+	dependencies: [ToolTip],
 })
 export class ThemeSelect extends BubbleSelect<
 	THEME,

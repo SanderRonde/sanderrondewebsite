@@ -13,12 +13,14 @@ import { TransitionCSS } from '../../../../styles/transition';
 import { BubbleSelect } from '../bubble-select/bubble-select';
 import { setCookie } from '../../../../shared/cookies';
 import { LangSelectHTML } from './lang-select.html';
+import { ToolTip } from '../../../shared/';
 import { config } from 'wc-lib';
 
 @config({
 	is: 'lang-select',
 	css: [LangBubbleSelectCSS, LangSelectCSS, TransitionCSS],
 	html: LangSelectHTML,
+	dependencies: [ToolTip],
 })
 export class LangSelect extends BubbleSelect<
 	LANGUAGE,
