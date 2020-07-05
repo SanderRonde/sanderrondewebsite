@@ -22,7 +22,7 @@ My personal website, currently under construction
 -   [x] Main content - Timeline - Central line
 -   [x] Main content - Custom text highlight color?
 -   [x] Main content - Theme switcher
--   [ ] Main content - I18N switcher
+-   [x] Main content - I18N switcher
 -   [ ] Main content - Put links to github/mail etc somewhere
 -   [ ] Main content - Allow using of tags
 -   [ ] Make sure the CHANGE_TYPEs are correct/optimal
