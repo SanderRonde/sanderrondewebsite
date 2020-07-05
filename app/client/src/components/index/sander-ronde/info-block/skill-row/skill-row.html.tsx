@@ -1,8 +1,8 @@
+import { I18NKeys } from '../../../../../../../i18n/i18n-keys.js';
 import { ToolTip } from '../../../../shared/index.js';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { SkillRow } from './skill-row.js';
 import { render } from 'lit-html';
-import { I18NKeys } from '../../../../../../../i18n/i18n-keys.js';
 
 export const SkillRowHTML = new TemplateFn<SkillRow>(
 	function (html, props) {
