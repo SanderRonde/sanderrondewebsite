@@ -16,6 +16,8 @@ export const enum TOGGLES {
 export const enum TOOLTIP_DIRECTION {
 	TOP = 'top',
 	BOTTOM = 'bottom',
+	LEFT = 'left',
+	RIGHT = 'right',
 }
 
 @config({
@@ -85,6 +87,7 @@ export class ToolTip extends ComponentBase<{
 			this.props.internalDirection !== TOOLTIP_DIRECTION.TOP
 		)
 			return;
+
 		this._marginsUpdated = true;
 
 		// Calculate the message width, surprisingly this is actually
@@ -108,6 +111,18 @@ export class ToolTip extends ComponentBase<{
 
 		if (this.props.internalDirection === TOOLTIP_DIRECTION.TOP) {
 			this.$.tooltip.style.marginTop = `${-contentBCR.height - 40}px`;
+		} else if (this.props.internalDirection === TOOLTIP_DIRECTION.LEFT) {
+			this.$.tooltip.style.marginTop = `${-(
+				(contentBCR.height + 45) /
+				2
+			)}px`;
+			this.$.tooltip.style.marginLeft = `${-(msgWidth + 20)}px`;
+		} else if (this.props.internalDirection === TOOLTIP_DIRECTION.RIGHT) {
+			this.$.tooltip.style.marginTop = `${-(
+				(contentBCR.height + 50) /
+				2
+			)}px`;
+			this.$.tooltip.style.marginLeft = `${contentBCR.width + 15}px`;
 		}
 	}
 

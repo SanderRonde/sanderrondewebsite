@@ -28,6 +28,16 @@ export const ToolTipCSS = new TemplateFn<ToolTip>(
 				margin-top: 39px;
 			}
 
+			${css(this).$.tooltip.toggle.left.child.$['tooltip-arrow']} {
+				margin-left: calc(100% - 2.5px);
+				margin-top: 23px;
+			}
+
+			${css(this).$.tooltip.toggle.right.child.$['tooltip-arrow']} {
+				margin-left: -2.5px;
+				margin-top: 23px;
+			}
+
 			${css(this).$.tooltip.toggle.expanded} {
 				display: block;
 			}
