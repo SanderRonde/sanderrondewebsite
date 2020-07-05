@@ -20,6 +20,7 @@ export const LangSelectCSS = new TemplateFn<LangSelect>(
 			${css(this).$.container} {
 				position: absolute;
 				right: 70px;
+				z-index: 1000;
 			}
 
 			${css(this).c['lang-background']} {

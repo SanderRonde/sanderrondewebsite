@@ -20,6 +20,7 @@ export const ThemeSelectCSS = new TemplateFn<ThemeSelect>(
 			${css(this).$.container} {
 				position: absolute;
 				right: 15px;
+				z-index: 1000;
 			}
 
 			${css(this).c['theme-background']} {
