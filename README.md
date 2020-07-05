@@ -21,7 +21,7 @@ My personal website, currently under construction
 -   [x] Main content - Timeline - Block
 -   [x] Main content - Timeline - Central line
 -   [x] Main content - Custom text highlight color?
--   [ ] Main content - Theme switcher
+-   [x] Main content - Theme switcher
 -   [ ] Main content - I18N switcher
 -   [ ] Main content - Put links to github/mail etc somewhere
 -   [ ] Main content - Allow using of tags
