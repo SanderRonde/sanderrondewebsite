@@ -255,7 +255,6 @@ cmd('html-typings')
 					},
 					cwd: __dirname,
 					ignoreInitial: false,
-					ignored: /.*\.(js)/,
 				},
 				async (changedFile, changeType) => {
 					if (changeType === 'delete') return;
