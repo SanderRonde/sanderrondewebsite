@@ -12,6 +12,9 @@ import express from 'express';
 
 export namespace RequestVars {
 	export function getLang(req: express.Request, res: express.Response) {
+		if (req.headers.cookie === undefined) {
+			return DEFAULT_LANG;
+		}
 		const languageStr = req.cookies[LANG_COOKIE_NAME];
 		const language = strToLanguage(languageStr);
 		if (!language) {
@@ -22,6 +25,9 @@ export namespace RequestVars {
 	}
 
 	export function getTheme(req: express.Request, res: express.Response) {
+		if (req.headers.cookie === undefined) {
+			return DEFAULT_THEME;
+		}
 		const themeName = req.cookies[THEME_COOKIE_NAME];
 		const theme = strToTheme(themeName);
 		if (!theme) {
