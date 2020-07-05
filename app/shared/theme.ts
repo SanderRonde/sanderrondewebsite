@@ -4,6 +4,7 @@ export const enum THEME {
 	HIGH_CONTRAST = 'high-contrast',
 }
 export const DEFAULT_THEME = THEME.DARK;
+export const THEME_COOKIE_NAME = 'theme';
 
 export interface ThemeShade {
 	light: string;

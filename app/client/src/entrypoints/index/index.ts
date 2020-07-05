@@ -8,7 +8,18 @@ import {
 	isDirective,
 	noChange,
 } from 'lit-html';
-import { I18NGetMessage, LANGUAGE, DEFAULT_LANG } from '../../../../i18n/i18n';
+import {
+	THEME,
+	themes,
+	DEFAULT_THEME,
+	THEME_COOKIE_NAME,
+} from '../../../../shared/theme';
+import {
+	I18NGetMessage,
+	LANGUAGE,
+	DEFAULT_LANG,
+	LANG_COOKIE_NAME,
+} from '../../../../i18n/i18n';
 import { SanderRonde } from '../../components/index/sander-ronde/';
 import { registerServiceworker, onIdle } from '../../shared/sw';
 import { I18NReturner } from '../../shared/client-i18n';
@@ -32,7 +43,7 @@ function registerComponents() {
 	});
 	WebComponent.initI18N({
 		urlFormat: '/i18n/locales/$LANG$.json',
-		defaultLang: getCookie('lang', DEFAULT_LANG),
+		defaultLang: getCookie(LANG_COOKIE_NAME, DEFAULT_LANG),
 		returner: I18NReturner,
 		getMessage: I18NGetMessage,
 		langFiles: {
@@ -44,7 +55,7 @@ function registerComponents() {
 	});
 	WebComponent.initTheme({
 		theme: themes,
-		defaultTheme: getCookie('theme', DEFAULT_THEME) as THEME,
+		defaultTheme: getCookie(THEME_COOKIE_NAME, DEFAULT_THEME) as THEME,
 	});
 
 	SanderRonde.define();
