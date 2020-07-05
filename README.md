@@ -14,7 +14,7 @@ My personal website, currently under construction
 -   [x] Icon, maybe me as favicon
 -   [x] HTTP/2
 -   [x] Colors / Manifest color
--   [ ] Main content
+-   [x] Main content
 -   [x] Main content - First page
 -   [x] Main content - Info page
 -   [x] Main content - Timeline
@@ -25,7 +25,7 @@ My personal website, currently under construction
 -   [x] Main content - I18N switcher
 -   [x] Main content - Put links to github/mail etc somewhere
 -   [x] Make sure the CHANGE_TYPEs are correct/optimal
--   [ ] Re-check mobile experience
+-   [x] Re-check mobile experience
 -   [ ] Lighthouse optimizations
 -   [ ] Semantic HTML
 -   [ ] 404 page
