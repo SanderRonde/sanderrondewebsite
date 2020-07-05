@@ -28,6 +28,6 @@ export const LinkCSS = new TemplateFn<
 			}
 		</style>`;
 	},
-	CHANGE_TYPE.NEVER,
+	CHANGE_TYPE.THEME,
 	render
 );
