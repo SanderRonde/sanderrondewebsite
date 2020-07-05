@@ -16,12 +16,6 @@ import { ThemeSelectCSS } from './theme-select.css.js';
 import { setCookie } from '../../../../shared/cookies';
 import { config } from 'wc-lib';
 
-export const enum THEME_SELECT_TOGGLES {
-	ACTIVE = 'active',
-	EXPANDED = 'expanded',
-	ON_TOP = 'on-top',
-}
-
 @config({
 	is: 'theme-select',
 	css: [BubbleSelectCSS, ThemeSelectCSS, TransitionCSS],
