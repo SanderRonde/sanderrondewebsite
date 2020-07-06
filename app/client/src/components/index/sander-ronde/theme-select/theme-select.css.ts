@@ -1,13 +1,13 @@
 import { BubbleSelectCSS } from '../bubble-select/bubble-select.css.js';
 import { THEMES } from '../../../../../../shared/theme.js';
-import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
+import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { ThemeSelect } from './theme-select.js';
 import { render } from 'lit-html';
 
 export const ThemeBubbleSelectCSS = new TemplateFn<ThemeSelect>(
 	function (html, _props, theme) {
 		return html`<style>
-			${BubbleSelectCSS(html, this, theme, THEMES.length)}
+			${BubbleSelectCSS(html, theme, THEMES.length)}
 		</style>`;
 	},
 	CHANGE_TYPE.THEME,
@@ -17,20 +17,20 @@ export const ThemeBubbleSelectCSS = new TemplateFn<ThemeSelect>(
 export const ThemeSelectCSS = new TemplateFn<ThemeSelect>(
 	function (html) {
 		return html`<style>
-			${css(this).$.container} {
+			#container {
 				position: absolute;
 				right: 15px;
 				z-index: 1000;
 			}
 
-			${css(this).c['theme-background']} {
+			.theme-background {
 				width: 41px;
 				height: 41px;
 				border-radius: 50%;
 				transform: translate(2px, 2px);
 			}
 
-			${css(this).c['highlight-color']} {
+			.hightlight-color {
 				width: 15px;
 				height: 15px;
 				border-radius: 50%;
@@ -38,7 +38,7 @@ export const ThemeSelectCSS = new TemplateFn<ThemeSelect>(
 				z-index: 10;
 			}
 
-			${css(this).c['primary-color']} {
+			.primary-color {
 				width: 15px;
 				height: 15px;
 				border-radius: 50%;

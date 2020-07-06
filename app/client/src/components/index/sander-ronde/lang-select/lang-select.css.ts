@@ -1,13 +1,13 @@
 import { BubbleSelectCSS } from '../bubble-select/bubble-select.css.js';
 import { LANGUAGES } from '../../../../../../i18n/i18n.js';
-import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
+import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { LangSelect } from './lang-select.js';
 import { render } from 'lit-html';
 
 export const LangBubbleSelectCSS = new TemplateFn<LangSelect>(
 	function (html, _props, theme) {
 		return html`<style>
-			${BubbleSelectCSS(html, this, theme, LANGUAGES.length)}
+			${BubbleSelectCSS(html, theme, LANGUAGES.length)}
 		</style>`;
 	},
 	CHANGE_TYPE.THEME,
@@ -17,13 +17,13 @@ export const LangBubbleSelectCSS = new TemplateFn<LangSelect>(
 export const LangSelectCSS = new TemplateFn<LangSelect>(
 	function (html) {
 		return html`<style>
-			${css(this).$.container} {
+			#container {
 				position: absolute;
 				right: 70px;
 				z-index: 1000;
 			}
 
-			${css(this).c['lang-background']} {
+			.lang-background {
 				transform: translate(2px, 2px);
 			}
 		</style>`;
