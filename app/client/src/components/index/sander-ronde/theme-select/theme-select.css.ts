@@ -30,7 +30,7 @@ export const ThemeSelectCSS = new TemplateFn<ThemeSelect>(
 				transform: translate(2px, 2px);
 			}
 
-			.hightlight-color {
+			.highlight-color {
 				width: 15px;
 				height: 15px;
 				border-radius: 50%;
