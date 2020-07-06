@@ -1,7 +1,7 @@
 import { cmd as _cmd, choice as _choice, flag, setEnvVar } from 'makfy';
 import { ExecFunction } from 'makfy/dist/lib/schema/runtime';
 import { choice, cmd } from './types/makfy-extended';
-import { extractStringTypes } from 'html-typings';
+import { extractStringTypes, FILE_TYPE } from 'html-typings';
 import * as chokidar from 'chokidar';
 import * as crypto from 'crypto';
 import * as rimraf from 'rimraf';
@@ -203,13 +203,10 @@ async function updateHTMLTypings(changedFiles: string[]) {
 			const fileContent = await fs.readFile(file, {
 				encoding: 'utf8',
 			});
-			if (file.indexOf('message-toast') > -1) {
-				debugger;
-			}
+			debugger;
 			const output = extractStringTypes(fileContent, {
-				fileType: 'jsx' as any,
+				fileType: FILE_TYPE.TSX,
 				getTypesObj: false,
-				jsxFactory: 'html.jsx',
 				exportTypes: true,
 			} as any);
 			await fs.writeFile(outFile, output, {
@@ -235,7 +232,7 @@ cmd('html-typings')
 				await globby([
 					path.join(
 						__dirname,
-						'app/client/src/components/**/*.html.js'
+						'app/client/src/components/**/*.html.tsx'
 					),
 				])
 			);
@@ -245,7 +242,7 @@ cmd('html-typings')
 				[
 					path.join(
 						__dirname,
-						'app/client/src/components/**/*.html.js'
+						'app/client/src/components/**/*.html.tsx'
 					),
 				],
 				{
@@ -254,6 +251,7 @@ cmd('html-typings')
 						stabilityThreshold: 500,
 					},
 					cwd: __dirname,
+					ignored: /.*\.(js|map)/,
 					ignoreInitial: false,
 				},
 				async (changedFile, changeType) => {
