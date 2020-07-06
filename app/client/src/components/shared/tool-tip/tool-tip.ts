@@ -73,7 +73,10 @@ export class ToolTip extends ComponentBase<{
 			.assignedElements()[0]
 			.getBoundingClientRect();
 		const contentWidth = contentBCR.width;
-		if (contentBCR.y + contentBCR.height + 30 >= window.innerHeight) {
+		if (
+			contentBCR.y + contentBCR.height + 30 >=
+			(typeof window === 'undefined' ? 1080 : window.innerHeight)
+		) {
 			this.props.internalDirection = TOOLTIP_DIRECTION.TOP;
 		} else if (contentBCR.x < 30) {
 			this.props.internalDirection = TOOLTIP_DIRECTION.BOTTOM;

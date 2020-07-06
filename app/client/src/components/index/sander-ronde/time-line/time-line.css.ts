@@ -6,7 +6,10 @@ import { mediaQueryRule } from '../../../../styles/media-query';
 
 export const TimeLineCSS = new TemplateFn<TimeLine>(
 	function (html, props, theme) {
-		const cardWidth = Math.min(window.innerWidth - 150, 500);
+		const cardWidth = Math.min(
+			typeof window === 'undefined' ? 1920 : window.innerWidth - 150,
+			500
+		);
 		return html`<style>
 			${css(this).$['timeline-table']} {
 				display: table;

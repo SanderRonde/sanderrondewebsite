@@ -7,7 +7,10 @@ import { render } from 'lit-html';
 export const TimeLineEntryCSS = new TemplateFn<TimeLineEntry>(
 	function (html, props, theme) {
 		const lang = this.getLang();
-		const maxTextWidth = Math.min(window.innerWidth - 150, 400);
+		const maxTextWidth = Math.min(
+			typeof window === 'undefined' ? 1920 : window.innerWidth - 150,
+			400
+		);
 		return html`<style>
 			${css(this).c.icon} {
 				width: 40px;

@@ -17,7 +17,8 @@ import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import Pin from '../../../../icons/pin.js';
 import { render } from 'lit-html';
 
-const SKILL_GROUP_SIZE = window.innerWidth < 500 ? 2 : 4;
+const SKILL_GROUP_SIZE =
+	(typeof window === 'undefined' ? 1920 : window.innerWidth) < 500 ? 2 : 4;
 
 export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 	function (html, props) {

@@ -46,7 +46,8 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 					>
 						<InfoBlock id="info-block" />
 					</BackgroundBlock>
-					{window.innerWidth < MIN_JOINED_TIMELINE_WIDTH ? (
+					{typeof window !== 'undefined' &&
+					window.innerWidth < MIN_JOINED_TIMELINE_WIDTH ? (
 						<span>
 							{(() => {
 								const shade = alternate()
