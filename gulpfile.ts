@@ -17,8 +17,6 @@ import * as _commonjs from '@rollup/plugin-commonjs';
 import { ConfigurableWebComponent } from 'wc-lib';
 import * as _json from '@rollup/plugin-json';
 import * as htmlTypings from 'html-typings';
-import * as CleanCSS from 'clean-css';
-import * as through2 from 'through2';
 import * as uglify from 'uglify-es';
 import * as crypto from 'crypto';
 import * as rollup from 'rollup';
@@ -162,36 +160,6 @@ async function createBundle(
 	});
 }
 
-function createPipable(fn: (content: string) => string | Promise<string>) {
-	return through2.obj(
-		async (
-			file: Buffer | { contents: Buffer },
-			_: any,
-			cb: (
-				error: Error | null,
-				file: Buffer | { contents: Buffer }
-			) => void
-		) => {
-			const content = Buffer.isBuffer(file)
-				? file.toString()
-				: file.contents.toString();
-
-			try {
-				const transformed = await fn(content);
-
-				if (Buffer.isBuffer(file)) {
-					file = Buffer.from(transformed);
-				} else {
-					file.contents = Buffer.from(transformed);
-				}
-				cb(null, file);
-			} catch (e) {
-				cb(e, file);
-			}
-		}
-	);
-}
-
 /**
  * Bundle all components into a single file
  */
@@ -212,26 +180,28 @@ gulp.task(
 			function minifyCSS() {
 				const srcDir = path.join(__dirname, 'app/client/src');
 				const destDir = path.join(__dirname, 'app/client/temp');
-				return gulp
-					.src(['**/*.css.js'], {
-						cwd: srcDir,
-						base: srcDir,
-					})
-					.pipe(inlineTypedCSSPipe())
-					.pipe(
-						createPipable(async (content) => {
-							const minifier = new CleanCSS();
-							return content.replace(
-								/<style>((.|\n|\r)*?)<\/style>/g,
-								(_, innerContent) => {
-									return `<style>${
-										minifier.minify(innerContent).styles
-									}</style>`;
-								}
-							);
+				return (
+					gulp
+						.src(['**/*.css.js'], {
+							cwd: srcDir,
+							base: srcDir,
 						})
-					)
-					.pipe(gulp.dest(destDir));
+						.pipe(inlineTypedCSSPipe())
+						// .pipe(
+						// 	createPipable(async (content) => {
+						// 		const minifier = new CleanCSS();
+						// 		return content.replace(
+						// 			/<style>((.|\n|\r)*?)<\/style>/g,
+						// 			(_, innerContent) => {
+						// 				return `<style>${
+						// 					minifier.minify(innerContent).styles
+						// 				}</style>`;
+						// 			}
+						// 		);
+						// 	})
+						// )
+						.pipe(gulp.dest(destDir))
+				);
 			}
 		),
 		async function bundle() {
