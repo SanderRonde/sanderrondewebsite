@@ -6,9 +6,7 @@ import { render } from 'lit-html';
 
 export const ThemeBubbleSelectCSS = new TemplateFn<ThemeSelect>(
 	function (html, _props, theme) {
-		return html`<style>
-			${BubbleSelectCSS(html, theme, THEMES.length)}
-		</style>`;
+		return html`${BubbleSelectCSS(html, theme, THEMES.length)}`;
 	},
 	CHANGE_TYPE.THEME,
 	render
