@@ -16,6 +16,8 @@ declare global {
 
 	type HTMLPinElement = SVGElement;
 	type HTMLRawhtmlElement = RawHTML;
+	type HTMLEmailElement = SVGElement;
+	type HTMLGithubElement = SVGElement;
 	type HTMLSkillrowElement = SkillRow;
 	type HTMLSkillRowElement = SkillRow;
 	type HTMLTimelineElement = TimeLine;
