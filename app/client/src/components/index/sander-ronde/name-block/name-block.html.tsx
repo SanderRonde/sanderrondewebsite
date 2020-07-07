@@ -98,14 +98,18 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									href="https://github.com/sanderronde"
 									target="_blank"
 								>
-									<Github width={50} height={45} />
+									<Github
+										id="github"
+										width={50}
+										height={45}
+									/>
 								</a>
 								<a
 									id="email-link"
 									class="icon-link link color transition"
 									href="mailto:sander@sanderron.de"
 								>
-									<Email width={50} height={50} />
+									<Email id="email" width={50} height={50} />
 								</a>
 							</div>
 						</div>

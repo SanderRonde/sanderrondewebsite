@@ -7,7 +7,7 @@ export const Github = ({
 }: {
 	width?: number;
 	height?: number;
-	id?: string;
+	id: string;
 }) =>
 	svg`
 		<svg 
