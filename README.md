@@ -26,6 +26,7 @@ My personal website, currently under construction
 -   [x] Main content - Put links to github/mail etc somewhere
 -   [x] Make sure the CHANGE_TYPEs are correct/optimal
 -   [x] Re-check mobile experience
+-   [ ] Titles
 -   [ ] Lighthouse optimizations
 -   [ ] Semantic HTML
 -   [ ] 404 page
