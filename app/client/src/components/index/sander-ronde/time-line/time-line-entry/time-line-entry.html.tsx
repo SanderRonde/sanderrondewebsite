@@ -127,7 +127,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 								{until(
 									(async () => {
 										const fmt = new Intl.DateTimeFormat(
-											navigator.language,
+											this.getLang(),
 											{
 												year: 'numeric',
 												month: 'short',
