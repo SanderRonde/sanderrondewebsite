@@ -83,6 +83,7 @@ const _head = html`
 	<meta name="viewport" content="width=device-width" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	${icons()}
+	<link rel="preload" href="/fonts/Roboto-Regular.ttf" as="font" />
 	<link rel="manifest" href="/manifest.json" />
 	<link rel="icon" href="/images/favicon.ico" type="images/x-icon" />
 	<style>
@@ -90,10 +91,10 @@ const _head = html`
 			font-family: 'Roboto';
 			font-style: normal;
 			font-weight: 400;
+			font-display: swap;
 			src: local('Roboto'), local('Roboto-Regular'),
 				url('/fonts/Roboto-Regular.ttf');
 		}
-		@import url('https://fonts.googleapis.com/css?family=Roboto:400');
 
 		span[data-type='html'] {
 			font-family: 'Roboto';
