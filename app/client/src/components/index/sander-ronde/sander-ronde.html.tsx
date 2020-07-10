@@ -36,76 +36,80 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 					>
 						<NameBlock id="name-block" />
 					</BackgroundBlock>
-					<BackgroundBlock
-						id="info-background"
-						shade={
-							alternate()
-								? THEME_SHADE.LIGHT
-								: THEME_SHADE.REGULAR
-						}
-					>
-						<InfoBlock id="info-block" />
-					</BackgroundBlock>
-					{typeof window !== 'undefined' &&
-					window.innerWidth < MIN_JOINED_TIMELINE_WIDTH ? (
-						<span>
-							{(() => {
-								const shade = alternate()
-									? THEME_SHADE.LIGHT
-									: THEME_SHADE.REGULAR;
-								return (
-									<BackgroundBlock
-										id="eet-background"
-										shade={shade}
-									>
-										<TimeLine
-											sides={
-												TIMELINE_SIDES.EDUCATION_EMPLOYMENT_TRAINING
-											}
-											id="eet-timeline"
+					{!this.isSSR && (
+						<html.F>
+							<BackgroundBlock
+								id="info-background"
+								shade={
+									alternate()
+										? THEME_SHADE.LIGHT
+										: THEME_SHADE.REGULAR
+								}
+							>
+								<InfoBlock id="info-block" />
+							</BackgroundBlock>
+							{typeof window !== 'undefined' &&
+							window.innerWidth < MIN_JOINED_TIMELINE_WIDTH ? (
+								<span>
+									{(() => {
+										const shade = alternate()
+											? THEME_SHADE.LIGHT
+											: THEME_SHADE.REGULAR;
+										return (
+											<BackgroundBlock
+												id="eet-background"
+												shade={shade}
+											>
+												<TimeLine
+													sides={
+														TIMELINE_SIDES.EDUCATION_EMPLOYMENT_TRAINING
+													}
+													id="eet-timeline"
+													shade={shade}
+												/>
+											</BackgroundBlock>
+										);
+									})()}
+									{(() => {
+										const shade = alternate()
+											? THEME_SHADE.LIGHT
+											: THEME_SHADE.REGULAR;
+										return (
+											<BackgroundBlock
+												id="projects-background"
+												shade={shade}
+											>
+												<TimeLine
+													sides={
+														TIMELINE_SIDES.PERSONAL_PROJECT
+													}
+													id="projects-timeline"
+													shade={shade}
+												/>
+											</BackgroundBlock>
+										);
+									})()}
+								</span>
+							) : (
+								(() => {
+									const shade = alternate()
+										? THEME_SHADE.LIGHT
+										: THEME_SHADE.REGULAR;
+									return (
+										<BackgroundBlock
+											id="joined-timeline-background"
 											shade={shade}
-										/>
-									</BackgroundBlock>
-								);
-							})()}
-							{(() => {
-								const shade = alternate()
-									? THEME_SHADE.LIGHT
-									: THEME_SHADE.REGULAR;
-								return (
-									<BackgroundBlock
-										id="projects-background"
-										shade={shade}
-									>
-										<TimeLine
-											sides={
-												TIMELINE_SIDES.PERSONAL_PROJECT
-											}
-											id="projects-timeline"
-											shade={shade}
-										/>
-									</BackgroundBlock>
-								);
-							})()}
-						</span>
-					) : (
-						(() => {
-							const shade = alternate()
-								? THEME_SHADE.LIGHT
-								: THEME_SHADE.REGULAR;
-							return (
-								<BackgroundBlock
-									id="joined-timeline-background"
-									shade={shade}
-								>
-									<TimeLine
-										sides={TIMELINE_SIDES.BOTH}
-										id="joined-timeline"
-										shade={shade}
-									/>
-								</BackgroundBlock>
-							);
-						})()
+										>
+											<TimeLine
+												sides={TIMELINE_SIDES.BOTH}
+												id="joined-timeline"
+												shade={shade}
+											/>
+										</BackgroundBlock>
+									);
+								})()
+							)}
+						</html.F>
 					)}
 				</div>
 			</div>
