@@ -7,6 +7,8 @@ import {
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
 import { render } from 'lit-html';
 
+export const IMAGE_DIMENSIONS = 40;
+
 export const TimeLineEntryCSS = new TemplateFn<TimeLineEntry>(
 	function (html, props, theme) {
 		const lang = this.getLang();
@@ -16,8 +18,8 @@ export const TimeLineEntryCSS = new TemplateFn<TimeLineEntry>(
 		);
 		return html`<style>
 			${css(this).c.icon} {
-				width: 40px;
-				height: 40px;
+				width: ${IMAGE_DIMENSIONS}px;
+				height: ${IMAGE_DIMENSIONS}px;
 				border-radius: 50%;
 				padding-top: 5px;
 			}

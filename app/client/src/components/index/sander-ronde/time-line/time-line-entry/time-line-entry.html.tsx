@@ -15,6 +15,7 @@ import { ElevatedCard } from '../../../../shared/';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import Pin from '../../../../icons/pin.js';
 import { render } from 'lit-html';
+import { IMAGE_DIMENSIONS } from './time-line-entry.css.js';
 
 const SKILL_GROUP_SIZE =
 	(typeof window === 'undefined' ? 1920 : window.innerWidth) < 500 ? 2 : 4;
@@ -105,6 +106,8 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 									class="icon"
 									src={source}
 									alt={alt}
+									width={IMAGE_DIMENSIONS}
+									height={IMAGE_DIMENSIONS}
 									{...{
 										loading: 'lazy',
 									}}
@@ -115,6 +118,8 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 								class="icon"
 								src="/timeline/github.png"
 								alt="github project icon"
+								width={IMAGE_DIMENSIONS}
+								height={IMAGE_DIMENSIONS}
 								{...{
 									loading: 'lazy',
 								}}
