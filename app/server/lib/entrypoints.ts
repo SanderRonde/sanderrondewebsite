@@ -116,7 +116,7 @@ export namespace Entrypoints {
 				});
 			}
 
-			const rendered = ssr(Component as SSR.BaseTypes.BaseClass, {
+			const rendered = await ssr(Component as SSR.BaseTypes.BaseClass, {
 				props: props,
 				attributes: {
 					'server-side-rendered': true,
@@ -124,6 +124,9 @@ export namespace Entrypoints {
 				i18n: langFiles[lang],
 				getMessage: I18NGetMessage,
 				theme: themes[theme],
+				themeName: theme,
+				await: true,
+				lang,
 			});
 
 			const html = await getHTML({
