@@ -26,8 +26,11 @@ My personal website, currently under construction
 -   [x] Main content - Put links to github/mail etc somewhere
 -   [x] Make sure the CHANGE_TYPEs are correct/optimal
 -   [x] Re-check mobile experience
+-   [ ] Optimize font/loading
+-   [ ] Use prefers-color-scheme
 -   [ ] Titles
 -   [ ] Lighthouse optimizations
+-   [ ] Check bottlenecks in project and wc-lib
 -   [ ] Semantic HTML
 -   [ ] 404 page
 -   [ ] ... Done?
