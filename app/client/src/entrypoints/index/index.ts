@@ -13,7 +13,6 @@ import {
 	themes,
 	DEFAULT_THEME,
 	THEME_COOKIE_NAME,
-	getPreferredColorScheme,
 } from '../../../../shared/theme';
 import {
 	I18NGetMessage,
@@ -30,6 +29,14 @@ import { WebComponent } from 'wc-lib';
 
 import en from '../../../../i18n/locales/en.json.js';
 import nl from '../../../../i18n/locales/nl.json.js';
+
+function getPreferredColorScheme() {
+	if (window.matchMedia('(prefers-contrast: high)'))
+		return THEME.HIGH_CONTRAST;
+	if (window.matchMedia('(prefers-color-scheme: dark)')) return THEME.DARK;
+	if (window.matchMedia('(prefers-color-scheme: light)')) return THEME.LIGHT;
+	return undefined;
+}
 
 function registerComponents() {
 	WebComponent.initComplexTemplateProvider({
