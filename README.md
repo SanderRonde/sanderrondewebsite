@@ -29,6 +29,7 @@ My personal website, currently under construction
 -   [x] Optimize font/loading
 -   [x] Use prefers-color-scheme
 -   [ ] Titles
+-   [ ] Optimize images
 -   [ ] Lighthouse optimizations
 -   [ ] Check bottlenecks in project and wc-lib
 -   [ ] Semantic HTML
