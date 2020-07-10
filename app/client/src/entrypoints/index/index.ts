@@ -13,6 +13,7 @@ import {
 	themes,
 	DEFAULT_THEME,
 	THEME_COOKIE_NAME,
+	getPreferredColorScheme,
 } from '../../../../shared/theme';
 import {
 	I18NGetMessage,
@@ -55,7 +56,10 @@ function registerComponents() {
 	});
 	WebComponent.initTheme({
 		theme: themes,
-		defaultTheme: getCookie(THEME_COOKIE_NAME, DEFAULT_THEME) as THEME,
+		defaultTheme: getCookie(
+			THEME_COOKIE_NAME,
+			getPreferredColorScheme() || DEFAULT_THEME
+		) as THEME,
 	});
 
 	SanderRonde.define();

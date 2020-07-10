@@ -109,3 +109,11 @@ export const THEMES: THEME[] = Object.keys(themes) as THEME[];
 export function strToTheme(str: string) {
 	return THEMES.find((l) => l === str);
 }
+
+export function getPreferredColorScheme() {
+	if (window.matchMedia('(prefers-contrast: high)'))
+		return THEME.HIGH_CONTRAST;
+	if (window.matchMedia('(prefers-color-scheme: dark)')) return THEME.DARK;
+	if (window.matchMedia('(prefers-color-scheme: light)')) return THEME.LIGHT;
+	return undefined;
+}
