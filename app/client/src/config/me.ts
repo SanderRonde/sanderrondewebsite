@@ -316,7 +316,7 @@ export namespace LifeTimeline {
 			schoolURL: ['https://www.strabrecht.nl/'],
 			icon: [
 				{
-					source: '/timeline/strabrecht.png',
+					source: '/timeline/strabrecht.webp',
 					alt: 'Strabrecht College logo',
 				},
 			],
@@ -347,7 +347,7 @@ export namespace LifeTimeline {
 			end: new Date(2018, 2).getTime(),
 			icon: [
 				{
-					source: '/timeline/leiden_university.png',
+					source: '/timeline/leiden_university.webp',
 					alt: 'Leiden University logo',
 				},
 			],
@@ -387,7 +387,7 @@ export namespace LifeTimeline {
 			title: 'Bachelor Thesis',
 			icon: [
 				{
-					source: '/timeline/leiden_university.png',
+					source: '/timeline/leiden_university.webp',
 					alt: 'Leiden University logo',
 				},
 			],
@@ -422,10 +422,10 @@ export namespace LifeTimeline {
 			end: END_DATE.TBD,
 			icon: [
 				{
-					source: '/timeline/uva.png',
+					source: '/timeline/uva.webp',
 					alt: 'UvA logo',
 				},
-				{ source: '/timeline/vu.png', alt: 'VU logo' },
+				{ source: '/timeline/vu.webp', alt: 'VU logo' },
 			],
 			title: {
 				en: 'Master in Computer Science',
@@ -467,7 +467,9 @@ export namespace LifeTimeline {
 				nl:
 					'Oplossen van verschillende computer- en smartphone gerelateerde problemen',
 			},
-			icon: [{ source: '/timeline/sah.png', alt: 'Studentaanhuis logo' }],
+			icon: [
+				{ source: '/timeline/sah.webp', alt: 'Studentaanhuis logo' },
+			],
 		},
 		{
 			type: TYPE.WORK,
@@ -491,7 +493,7 @@ export namespace LifeTimeline {
 				nl:
 					'Onderhouden en uitbreiden van een transportmanagement systeem met een frontend in React, MobX en Typescript en een backend in Django Python. Daarnaast het beheren van de security van het volledige systeem. Bestaat voornamelijk uit het zorgen voor test coverage, regelmatige pentests en algemeen security advies.',
 			},
-			icon: [{ source: '/timeline/nextup.png', alt: 'NextUp logo' }],
+			icon: [{ source: '/timeline/nextup.webp', alt: 'NextUp logo' }],
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
@@ -519,7 +521,7 @@ export namespace LifeTimeline {
 					'Een browser app waarmee je snel en makkelijk websites kan openen vanaf je desktop door bepaalde keywords aan websites te binden. Bevat ook een aantal omnibar features zoals het doorzoeken van zoekmachines.',
 			},
 			icon: [
-				{ source: '/timeline/binder_app.png', alt: 'Binder App icon' },
+				{ source: '/timeline/binder_app.webp', alt: 'Binder App icon' },
 			],
 		},
 		{
@@ -556,7 +558,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.NODE,
 			].map((skill) => ({ name: skill })),
 			title: 'www.sanderron.de',
-			icon: [{ source: '/icons/48.png', alt: "this website's icon" }],
+			icon: [{ source: '/timeline/me.webp', alt: "this website's icon" }],
 			description: {
 				en: "The website you're reading this on",
 				nl: 'De website waarop je dit leest',
@@ -653,7 +655,7 @@ export namespace LifeTimeline {
 				'https://chrome.google.com/webstore/detail/custom-right-click-menu/onnbmgmepodkilcbdodhfepllfmafmlj',
 			icon: [
 				{
-					source: '/timeline/crm.png',
+					source: '/timeline/crm.webp',
 					alt: 'Custom Right-Click Menu icon',
 				},
 			],
@@ -678,7 +680,7 @@ export namespace LifeTimeline {
 				'https://github.com/SanderRonde/CustomRightClickMenu/tree/oldCRM',
 			icon: [
 				{
-					source: '/timeline/crmold.png',
+					source: '/timeline/crmold.webp',
 					alt: 'Custom Right-Click Menu v1 icon',
 				},
 			],
@@ -701,7 +703,7 @@ export namespace LifeTimeline {
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/sharify',
 			url: 'https://sharify.sanderron.de/',
-			icon: [{ source: '/timeline/sharify.png', alt: 'Sharify icon' }],
+			icon: [{ source: '/timeline/sharify.webp', alt: 'Sharify icon' }],
 			skills: [
 				Skill.SKILL.HTML,
 				Skill.SKILL.CSS,

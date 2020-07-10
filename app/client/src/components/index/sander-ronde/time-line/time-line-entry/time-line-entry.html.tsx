@@ -106,6 +106,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 									class="icon"
 									src={source}
 									alt={alt}
+									title={alt}
 									width={IMAGE_DIMENSIONS}
 									height={IMAGE_DIMENSIONS}
 									{...{
@@ -116,8 +117,9 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 						) : (
 							<img
 								class="icon"
-								src="/timeline/github.png"
+								src="/timeline/github.webp"
 								alt="github project icon"
+								title="github project ico"
 								width={IMAGE_DIMENSIONS}
 								height={IMAGE_DIMENSIONS}
 								{...{
