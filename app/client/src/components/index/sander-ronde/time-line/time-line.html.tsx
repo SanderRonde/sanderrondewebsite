@@ -23,10 +23,11 @@ function getRange(start: number, end: number, include: boolean = false) {
 function createYearGroups(sortedEntries: LifeTimeline.Entry[]) {
 	const yearMap: Map<number, LifeTimeline.Entry[]> = new Map();
 	for (const entry of sortedEntries) {
-		if (!yearMap.has(entry.start.getFullYear())) {
-			yearMap.set(entry.start.getFullYear(), []);
+		const startDate = new Date(entry.start);
+		if (!yearMap.has(startDate.getFullYear())) {
+			yearMap.set(startDate.getFullYear(), []);
 		}
-		yearMap.get(entry.start.getFullYear())!.push(entry);
+		yearMap.get(startDate.getFullYear())!.push(entry);
 	}
 
 	const groups: YearGroup[] = [];
@@ -209,7 +210,7 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 				}
 			})
 			.sort((entry1, entry2) => {
-				return entry2.start.getTime() - entry1.start.getTime();
+				return entry2.start - entry1.start;
 			});
 
 		const timeGroups = createYearGroups(sortedToLeastRecent);
@@ -275,15 +276,11 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 										highlightStart,
 										highlightEnd,
 									] = props.highlightedRange;
-									if (
-										highlightStart.getTime() >
-										entry.start.getTime()
-									)
+									if (highlightStart.getTime() > entry.start)
 										return false;
 
 									return (
-										entry.start.getTime() <=
-										highlightEnd.getTime()
+										entry.start <= highlightEnd.getTime()
 									);
 								})();
 								return renderTimelineRow(entry, isHighlighted);

@@ -10,9 +10,8 @@ import {
 } from '../../info-block/skill-row/skill-row.js';
 import { TimeLineEntry, TIMELINE_DIRECTION } from './time-line-entry.js';
 import { I18NKeys } from '../../../../../../../i18n/i18n-keys.js';
-import { cutIntoGroups } from '../../../../../shared/util.js';
+import { cutIntoGroups, untilAwait } from '../../../../../shared/util.js';
 import { ElevatedCard } from '../../../../shared/';
-import { until } from 'lit-html/directives/until';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import Pin from '../../../../icons/pin.js';
 import { render } from 'lit-html';
@@ -112,7 +111,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 							<div id="title" class="transition">
 								{renderTitle()}
 							</div>
-							<div
+							<span
 								id="time"
 								class="transition"
 								{...{
@@ -124,7 +123,8 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 									},
 								}}
 							>
-								{until(
+								{untilAwait(
+									this,
 									(async () => {
 										const fmt = new Intl.DateTimeFormat(
 											this.getLang(),
@@ -135,15 +135,17 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 										);
 										if (LifeTimeline.isPProj(props.entry)) {
 											return fmt.format(
-												props.entry.start
+												new Date(props.entry.start)
 											);
 										}
 
-										if (props.entry.end instanceof Date) {
+										if (
+											typeof props.entry.end === 'number'
+										) {
 											return `${fmt.format(
-												props.entry.start
+												new Date(props.entry.start)
 											)} - ${fmt.format(
-												props.entry.end
+												new Date(props.entry.end)
 											)}`;
 										}
 										return `${fmt.format(
@@ -155,7 +157,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 									})(),
 									''
 								)}
-							</div>
+							</span>
 						</div>
 						<div id="overflow-container" class="transition">
 							<Pin id="pin" width={15} height={15} />

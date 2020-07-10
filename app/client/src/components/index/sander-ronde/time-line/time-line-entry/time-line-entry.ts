@@ -72,13 +72,13 @@ export class TimeLineEntry extends IndexBase<{
 
 	dateEnter() {
 		this.fire('highlightdaterange', {
-			start: this.props.entry.start,
+			start: new Date(this.props.entry.start),
 			end:
-				this.props.entry.end && this.props.entry.end instanceof Date
-					? this.props.entry.end
+				this.props.entry.end && typeof this.props.entry.end === 'number'
+					? new Date(this.props.entry.end)
 					: this.props.entry.type ===
 					  LifeTimeline.TYPE.PERSONAL_PROJECT
-					? this.props.entry.start
+					? new Date(this.props.entry.start)
 					: new Date(),
 		});
 	}

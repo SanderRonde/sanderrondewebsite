@@ -244,8 +244,8 @@ export namespace LifeTimeline {
 	}
 
 	interface BaseEntry {
-		start: Date;
-		end: Date | END_DATE;
+		start: number;
+		end: number | END_DATE;
 		type: TYPE;
 		skills: Skill.NameSkill[];
 		icon?: string[];
@@ -310,8 +310,8 @@ export namespace LifeTimeline {
 			school: ['Strabrecht College, Geldrop'],
 			schoolURL: ['https://www.strabrecht.nl/'],
 			icon: ['/timeline/strabrecht.png'],
-			start: new Date(2008, 8),
-			end: new Date(2014, 5),
+			start: new Date(2008, 8).getTime(),
+			end: new Date(2014, 5).getTime(),
 			skills: [],
 			title: 'Atheneum',
 			description: {
@@ -333,8 +333,8 @@ export namespace LifeTimeline {
 					nl: 'https://www.universiteitleiden.nl/',
 				},
 			],
-			start: new Date(2014, 8),
-			end: new Date(2018, 2),
+			start: new Date(2014, 8).getTime(),
+			end: new Date(2018, 2).getTime(),
 			icon: ['/timeline/leiden_university.png'],
 			title: {
 				en: 'Bachelor in Computer Science',
@@ -366,8 +366,8 @@ export namespace LifeTimeline {
 					nl: 'https://www.universiteitleiden.nl/',
 				},
 			],
-			start: new Date(2014, 8),
-			end: new Date(2018, 2),
+			start: new Date(2014, 8).getTime(),
+			end: new Date(2018, 2).getTime(),
 			source: 'https://github.com/sanderronde/bachelor-thesis',
 			title: 'Bachelor Thesis',
 			icon: ['/timeline/leiden_university.png'],
@@ -398,7 +398,7 @@ export namespace LifeTimeline {
 					nl: 'https://www.vu.nl/',
 				},
 			],
-			start: new Date(2018, 3),
+			start: new Date(2018, 3).getTime(),
 			end: END_DATE.TBD,
 			icon: ['/timeline/uva.png', '/timeline/vu.png'],
 			title: {
@@ -427,8 +427,8 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.WORK,
-			start: new Date(2017, 11),
-			end: new Date(2019, 7),
+			start: new Date(2017, 11).getTime(),
+			end: new Date(2019, 7).getTime(),
 			skills: [],
 			title: {
 				en: 'IT help',
@@ -445,7 +445,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.WORK,
-			start: new Date(2019, 7),
+			start: new Date(2019, 7).getTime(),
 			end: END_DATE.TBD,
 			skills: [
 				Skill.SKILL.CSS,
@@ -469,7 +469,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2015, 3),
+			start: new Date(2015, 3).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/BinderApp',
 			url:
@@ -496,7 +496,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2016, 10),
+			start: new Date(2016, 10).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/WatchMeType',
 			skills: [
@@ -517,7 +517,7 @@ export namespace LifeTimeline {
 		{
 			type: TYPE.PERSONAL_PROJECT,
 			// TODO:
-			start: new Date(2020, 2),
+			start: new Date(2020, 2).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/sanderrondewebsite',
 			url: 'http://sanderron.de/',
@@ -536,7 +536,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2019, 6),
+			start: new Date(2019, 6).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/home-automation',
 			skills: [
@@ -561,7 +561,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2019, 3),
+			start: new Date(2019, 3).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/wc-lib',
 			url: 'https://www.npmjs.com/package/wc-lib',
@@ -580,7 +580,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2018, 6),
+			start: new Date(2018, 6).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/password-manager',
 			skills: [
@@ -599,7 +599,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2017, 8),
+			start: new Date(2017, 8).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/html-typings',
 			url: 'https://html-typings.sanderron.de/',
@@ -618,7 +618,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2015, 11),
+			start: new Date(2015, 11).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/CustomRightClickMenu',
 			url:
@@ -639,7 +639,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2010, 11),
+			start: new Date(2010, 11).getTime(),
 			end: END_DATE.NEVER,
 			source:
 				'https://github.com/SanderRonde/CustomRightClickMenu/tree/oldCRM',
@@ -659,7 +659,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2020, 1),
+			start: new Date(2020, 1).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/sharify',
 			url: 'https://sharify.sanderron.de/',
@@ -681,7 +681,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2020, 0),
+			start: new Date(2020, 0).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/board-temperature-driver',
 			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS].map((skill) => ({
@@ -697,7 +697,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2019, 11),
+			start: new Date(2019, 11).getTime(),
 			end: END_DATE.NEVER,
 			source:
 				'https://github.com/SanderRonde/arduino-board-screen-driver',
@@ -714,7 +714,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2019, 11),
+			start: new Date(2019, 11).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/board-power-driver',
 			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS].map((skill) => ({
@@ -730,7 +730,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2019, 11),
+			start: new Date(2019, 11).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/arduino-board-led-driver',
 			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS].map((skill) => ({
@@ -746,7 +746,7 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			start: new Date(2019, 11),
+			start: new Date(2019, 11).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/board-pressure-sensor',
 			skills: [Skill.SKILL.C, Skill.SKILL.CPLUSPLUS].map((skill) => ({

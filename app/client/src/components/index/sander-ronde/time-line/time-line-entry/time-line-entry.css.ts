@@ -1,6 +1,9 @@
 import { TimeLineEntry, TIMELINE_DIRECTION } from './time-line-entry.js';
 import { getInternationalText } from '../../../../../config/me.js';
-import { getTextWidth } from '../../../../../shared/util.js';
+import {
+	getTextWidth,
+	getTextWidthServer,
+} from '../../../../../shared/util.js';
 import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
 import { render } from 'lit-html';
 
@@ -65,13 +68,26 @@ export const TimeLineEntryCSS = new TemplateFn<TimeLineEntry>(
 			}
 
 			${css(this).$['detail-row']} {
-				width: ${Math.min(
-				maxTextWidth,
-				getTextWidth(
-					getInternationalText(props.entry.description, lang),
-					'16px Roboto'
-				)
-			)}px;
+				width: ${this.isSSR
+				? (async () => {
+						return Math.min(
+							maxTextWidth,
+							await getTextWidthServer(
+								getInternationalText(
+									props.entry.description,
+									lang
+								),
+								'16px Roboto'
+							)
+						);
+				  })()
+				: Math.min(
+						maxTextWidth,
+						getTextWidth(
+							getInternationalText(props.entry.description, lang),
+							'16px Roboto'
+						)
+				  )}px;
 			}
 
 			${css(this).$['detail-row']} {
