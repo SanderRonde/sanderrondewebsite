@@ -100,10 +100,22 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 					<div id="icon-col">
 						{props.entry.icon && props.entry.icon.length ? (
 							props.entry.icon.map((icon) => (
-								<img class="icon" src={icon} />
+								<img
+									class="icon"
+									src={icon}
+									{...{
+										loading: 'lazy',
+									}}
+								/>
 							))
 						) : (
-							<img class="icon" src="/timeline/github.png" />
+							<img
+								class="icon"
+								src="/timeline/github.png"
+								{...{
+									loading: 'lazy',
+								}}
+							/>
 						)}
 					</div>
 					<div id="content-col">
