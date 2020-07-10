@@ -243,12 +243,17 @@ export namespace LifeTimeline {
 		TBD = 'tbd',
 	}
 
+	interface Icon {
+		source: string;
+		alt: string;
+	}
+
 	interface BaseEntry {
 		start: number;
 		end: number | END_DATE;
 		type: TYPE;
 		skills: Skill.NameSkill[];
-		icon?: string[];
+		icon?: Icon[];
 		title: InternationalText;
 		description: InternationalText;
 	}
@@ -309,7 +314,12 @@ export namespace LifeTimeline {
 			type: TYPE.EDUCATION,
 			school: ['Strabrecht College, Geldrop'],
 			schoolURL: ['https://www.strabrecht.nl/'],
-			icon: ['/timeline/strabrecht.png'],
+			icon: [
+				{
+					source: '/timeline/strabrecht.png',
+					alt: 'Strabrecht College logo',
+				},
+			],
 			start: new Date(2008, 8).getTime(),
 			end: new Date(2014, 5).getTime(),
 			skills: [],
@@ -335,7 +345,12 @@ export namespace LifeTimeline {
 			],
 			start: new Date(2014, 8).getTime(),
 			end: new Date(2018, 2).getTime(),
-			icon: ['/timeline/leiden_university.png'],
+			icon: [
+				{
+					source: '/timeline/leiden_university.png',
+					alt: 'Leiden University logo',
+				},
+			],
 			title: {
 				en: 'Bachelor in Computer Science',
 				nl: 'Bachelor Informatica',
@@ -370,7 +385,12 @@ export namespace LifeTimeline {
 			end: new Date(2018, 2).getTime(),
 			source: 'https://github.com/sanderronde/bachelor-thesis',
 			title: 'Bachelor Thesis',
-			icon: ['/timeline/leiden_university.png'],
+			icon: [
+				{
+					source: '/timeline/leiden_university.png',
+					alt: 'Leiden University logo',
+				},
+			],
 			url: '/thesis.pdf',
 			description: {
 				en:
@@ -400,7 +420,13 @@ export namespace LifeTimeline {
 			],
 			start: new Date(2018, 3).getTime(),
 			end: END_DATE.TBD,
-			icon: ['/timeline/uva.png', '/timeline/vu.png'],
+			icon: [
+				{
+					source: '/timeline/uva.png',
+					alt: 'UvA logo',
+				},
+				{ source: '/timeline/vu.png', alt: 'VU logo' },
+			],
 			title: {
 				en: 'Master in Computer Science',
 				nl: 'Master in Computer Science',
@@ -441,7 +467,7 @@ export namespace LifeTimeline {
 				nl:
 					'Oplossen van verschillende computer- en smartphone gerelateerde problemen',
 			},
-			icon: ['/timeline/sah.png'],
+			icon: [{ source: '/timeline/sah.png', alt: 'Studentaanhuis logo' }],
 		},
 		{
 			type: TYPE.WORK,
@@ -456,7 +482,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.PYTHON,
 				Skill.SKILL.REACT,
 			].map((skill) => ({ name: skill })),
-			employer: 'Nextup Software',
+			employer: 'NextUp Software',
 			employerURL: 'https://nextupsoftware.com/',
 			title: 'Full stack developer',
 			description: {
@@ -465,7 +491,7 @@ export namespace LifeTimeline {
 				nl:
 					'Onderhouden en uitbreiden van een transportmanagement systeem met een frontend in React, MobX en Typescript en een backend in Django Python. Daarnaast het beheren van de security van het volledige systeem. Bestaat voornamelijk uit het zorgen voor test coverage, regelmatige pentests en algemeen security advies.',
 			},
-			icon: ['/timeline/nextup.png'],
+			icon: [{ source: '/timeline/nextup.png', alt: 'NextUp logo' }],
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
@@ -492,7 +518,9 @@ export namespace LifeTimeline {
 				nl:
 					'Een browser app waarmee je snel en makkelijk websites kan openen vanaf je desktop door bepaalde keywords aan websites te binden. Bevat ook een aantal omnibar features zoals het doorzoeken van zoekmachines.',
 			},
-			icon: ['/timeline/binder_app.png'],
+			icon: [
+				{ source: '/timeline/binder_app.png', alt: 'Binder App icon' },
+			],
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
@@ -528,7 +556,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.NODE,
 			].map((skill) => ({ name: skill })),
 			title: 'www.sanderron.de',
-			icon: ['/icons/48.png'],
+			icon: [{ source: '/icons/48.png', alt: "this website's icon" }],
 			description: {
 				en: "The website you're reading this on",
 				nl: 'De website waarop je dit leest',
@@ -623,7 +651,12 @@ export namespace LifeTimeline {
 			source: 'https://github.com/SanderRonde/CustomRightClickMenu',
 			url:
 				'https://chrome.google.com/webstore/detail/custom-right-click-menu/onnbmgmepodkilcbdodhfepllfmafmlj',
-			icon: ['/timeline/crm.png'],
+			icon: [
+				{
+					source: '/timeline/crm.png',
+					alt: 'Custom Right-Click Menu icon',
+				},
+			],
 			skills: [
 				Skill.SKILL.HTML,
 				Skill.SKILL.TYPESCRIPT,
@@ -643,7 +676,12 @@ export namespace LifeTimeline {
 			end: END_DATE.NEVER,
 			source:
 				'https://github.com/SanderRonde/CustomRightClickMenu/tree/oldCRM',
-			icon: ['/timeline/crmold.png'],
+			icon: [
+				{
+					source: '/timeline/crmold.png',
+					alt: 'Custom Right-Click Menu v1 icon',
+				},
+			],
 			skills: [
 				Skill.SKILL.HTML,
 				Skill.SKILL.TYPESCRIPT,
@@ -663,7 +701,7 @@ export namespace LifeTimeline {
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/sharify',
 			url: 'https://sharify.sanderron.de/',
-			icon: ['/timeline/sharify.png'],
+			icon: [{ source: '/timeline/sharify.png', alt: 'Sharify icon' }],
 			skills: [
 				Skill.SKILL.HTML,
 				Skill.SKILL.CSS,

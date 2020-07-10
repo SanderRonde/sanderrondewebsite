@@ -22,6 +22,10 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										rel="noopener"
 										class="link color transition"
 										target="_blank"
+										title={this.__(
+											I18NKeys.index.nameBlock.titles
+												.master
+										)}
 									>
 										Computer Science Master
 									</a>
@@ -33,6 +37,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										rel="noopener"
 										class="link color transition"
 										target="_blank"
+										title="VU website"
 									>
 										VU
 									</a>
@@ -44,6 +49,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										rel="noopener"
 										class="link color transition"
 										target="_blank"
+										title="UVA website"
 									>
 										UVA
 									</a>
@@ -55,8 +61,9 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										rel="noopener"
 										class="link color transition"
 										target="_blank"
+										title="NextUp website"
 									>
-										Nextup Software
+										NextUp Software
 									</a>
 								</div>
 							</div>
@@ -71,6 +78,10 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										rel="noopener"
 										class="link color transition"
 										target="_blank"
+										title={this.__(
+											I18NKeys.index.nameBlock.titles
+												.bachelor
+										)}
 									>
 										Bachelor's degree in Computer Science
 									</a>
@@ -83,6 +94,10 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										rel="noopener"
 										class="link color transition"
 										target="_blank"
+										title={this.__(
+											I18NKeys.index.nameBlock.titles
+												.uniLeiden
+										)}
 									>
 										{this.__(
 											I18NKeys.index.nameBlock.education
@@ -97,6 +112,9 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									class="icon-link link color transition"
 									href="https://github.com/sanderronde"
 									target="_blank"
+									title={this.__(
+										I18NKeys.index.nameBlock.titles.github
+									)}
 								>
 									<Github
 										id="github"
@@ -108,6 +126,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									id="email-link"
 									class="icon-link link color transition"
 									href="mailto:sander@sanderron.de"
+									title="Email"
 								>
 									<Email id="email" width={50} height={50} />
 								</a>
@@ -124,6 +143,9 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 						<span
 							id="down-arrow"
 							class="fade-in slow transition"
+							title={this.__(
+								I18NKeys.index.nameBlock.links.scrollDown
+							)}
 							{...{
 								'@': {
 									click: this.scrollDown,

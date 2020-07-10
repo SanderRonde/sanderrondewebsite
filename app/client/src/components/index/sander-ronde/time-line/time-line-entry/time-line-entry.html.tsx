@@ -58,6 +58,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 												url,
 												lang
 											)}
+											title={`${name} website`}
 											target="_blank"
 											class="title-at-name link light transition"
 										>
@@ -99,10 +100,11 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 				<div id="content">
 					<div id="icon-col">
 						{props.entry.icon && props.entry.icon.length ? (
-							props.entry.icon.map((icon) => (
+							props.entry.icon.map(({ alt, source }) => (
 								<img
 									class="icon"
-									src={icon}
+									src={source}
+									alt={alt}
 									{...{
 										loading: 'lazy',
 									}}
@@ -112,6 +114,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 							<img
 								class="icon"
 								src="/timeline/github.png"
+								alt="github project icon"
 								{...{
 									loading: 'lazy',
 								}}

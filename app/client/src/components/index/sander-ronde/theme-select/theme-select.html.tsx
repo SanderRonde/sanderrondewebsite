@@ -17,6 +17,7 @@ export const ThemeSelectHTML = new TemplateFn<ThemeSelect>(
 						style={{
 							backgroundColor: theme.background.main,
 						}}
+						title={themeName}
 					>
 						<div class="theme-colors">
 							<div

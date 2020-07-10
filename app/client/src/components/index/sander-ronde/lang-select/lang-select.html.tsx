@@ -25,7 +25,7 @@ export const LangSelectHTML = new TemplateFn<LangSelect>(
 			const LangSVG = LANG_ICONS[langName];
 			return (
 				<ToolTip direction={TOOLTIP_DIRECTION.LEFT} message={langName}>
-					<div class="lang-background">
+					<div class="lang-background" title={langName}>
 						<LangSVG id={langName} width={41} height={41} />
 					</div>
 				</ToolTip>

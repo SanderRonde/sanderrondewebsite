@@ -35,6 +35,20 @@ export const messages = {
 					message: 'scroll naar beneden',
 				},
 			},
+			titles: {
+				master: {
+					message: 'Master informatie',
+				},
+				bachelor: {
+					message: 'Bachelor informatie',
+				},
+				uniLeiden: {
+					message: 'Universiteit Leiden website',
+				},
+				github: {
+					message: 'Github profiel',
+				},
+			},
 		},
 		infoBlock: {
 			aboutMe: {

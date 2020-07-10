@@ -28,7 +28,7 @@ My personal website, currently under construction
 -   [x] Re-check mobile experience
 -   [x] Optimize font/loading
 -   [x] Use prefers-color-scheme
--   [ ] Titles
+-   [x] Titles
 -   [ ] Optimize images
 -   [ ] Lighthouse optimizations
 -   [ ] Check bottlenecks in project and wc-lib
