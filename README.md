@@ -39,4 +39,5 @@ My personal website, currently under construction
 -   [ ] Lighthouse optimizations - Content when JS is not available
 -   [ ] Check bottlenecks in project and wc-lib
 -   [ ] 404 page
+-   [ ] Google Search console
 -   [ ] ... Done?
