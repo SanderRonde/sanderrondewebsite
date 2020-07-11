@@ -115,6 +115,9 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									title={this.__(
 										I18NKeys.index.nameBlock.titles.github
 									)}
+									aria-label={this.__(
+										I18NKeys.index.nameBlock.titles.github
+									)}
 								>
 									<Github
 										id="github"
@@ -127,6 +130,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									class="icon-link link color transition"
 									href="mailto:sander@sanderron.de"
 									title="Email"
+									aria-label={'Email'}
 								>
 									<Email id="email" width={50} height={50} />
 								</a>
