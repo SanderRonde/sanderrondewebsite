@@ -47,6 +47,14 @@ export const BubbleSelectHTML = function <B>(
 											component.current
 										);
 									},
+									keydown: (e) => {
+										if (
+											e.code === 'Enter' ||
+											e.code === 'Space'
+										) {
+											component.bubbleSelect(bubbleName);
+										}
+									},
 								},
 							}}
 						>
