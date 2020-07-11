@@ -3,6 +3,7 @@ import {
 	TemplateRenderResult,
 } from 'wc-lib/build/cjs/lib/template-fn';
 import { BUBBLE_ANIMATION_DURATION } from '../bubble-select/bubble-select.js';
+import { TRANSITION_TIME } from '../../../../styles/transition.js';
 import { Theme } from '../../../../../../shared/theme.js';
 
 const BUBBLE_SIZE = 45;
@@ -38,7 +39,10 @@ export const BubbleSelectCSS = (
 		transform: translateY(
 			-${(numEntries - 1) * (BUBBLE_SIZE + BUBBLE_PADDING)}px
 		);
-		transition: transform ${BUBBLE_ANIMATION_DURATION}ms ease-in-out;
+		transition: transform ${BUBBLE_ANIMATION_DURATION}ms ease-in-out,
+			background-color ${TRANSITION_TIME}ms ease-in-out,
+			color ${TRANSITION_TIME}ms ease-in-out,
+			fill ${TRANSITION_TIME}ms ease-in-out;
 	}
 
 	#positioner.expanded {
@@ -57,7 +61,7 @@ export const BubbleSelectCSS = (
 	${new Array(numEntries)
 		.fill('')
 		.map((_, index) => {
-			return `.bubbleshift-${index + 1} {
+			return `.bubble.shift-${index + 1} {
 				transform: translateY(${(index + 1) * (BUBBLE_SIZE + BUBBLE_PADDING)}px);
 			}`;
 		})
