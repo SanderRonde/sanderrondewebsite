@@ -94,7 +94,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 						focusout: this.cardLeave,
 
 						// When touching/clicking, pin/unpin
-						click: this.cardClick,
+						click: () => this.cardClick(true),
 					},
 				}}
 			>
