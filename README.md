@@ -31,7 +31,7 @@ My personal website, currently under construction
 -   [x] Titles
 -   [x] Optimize images
 -   [ ] Lighthouse optimizations
--   [ ] Lighthouse optimizations - Text compression
+-   [x] Lighthouse optimizations - Text compression
 -   [ ] Lighthouse optimizations - Links to cross-origin destinations unsafe
 -   [ ] Lighthouse optimizations - Robots.txt
 -   [ ] Lighthouse optimizations - rel="canonical"

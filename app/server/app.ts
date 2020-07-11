@@ -4,6 +4,7 @@ import { Entrypoints } from './lib/entrypoints.js';
 import serverTiming from 'server-timing';
 import cookieParser from 'cookie-parser';
 import { Routes } from './lib/routes.js';
+import compression from 'compression';
 import { Log } from './lib/log.js';
 import { Dev } from './lib/dev.js';
 import { IO } from './lib/io.js';
@@ -80,6 +81,11 @@ export class WebServer {
 		this.app.use(serverTiming() as express.RequestHandler);
 		this.app.use(Log.request);
 		this.app.use(cookieParser());
+		this.app.use(
+			compression({
+				level: 6,
+			})
+		);
 		this._markSendMethods();
 		Entrypoints.registerEntrypointHandlers(this);
 		SemiStaticFiles.initRoutes(this);
