@@ -15,7 +15,7 @@ export default async function indexHTML({
 		<html lang="${lang}">
 			<head>
 				<title>Sander Ronde</title>
-				${head()}
+				${head(themes[theme])}
 			</head>
 			<body
 				style="margin: 0; background-color: ${themes[theme].background

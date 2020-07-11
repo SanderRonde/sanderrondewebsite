@@ -1,3 +1,4 @@
+import { Theme } from '../../../shared/theme.js';
 import { html } from '../../../shared/util.js';
 
 const _icons = html`
@@ -77,11 +78,49 @@ export function icons() {
 	return _icons;
 }
 
-const _head = html`
+export const head = (theme: Theme) => html`
+	<!-- Essentials -->
 	<meta charset="utf-8" />
-	<meta name="description" content="Sander Ronde" />
 	<meta name="viewport" content="width=device-width" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<!-- CSP -->
+	<meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+
+	<!-- Meta info -->
+	<meta name="description" content="Sander Ronde" />
+	<meta name="theme-color" content="${theme.primary.main}" />
+	<meta name="robots" content="index,follow" />
+	<meta name="googlebot" content="index,follow" />
+
+	<!-- Search result stuff -->
+	<link rel="canonical" href="https://sanderron.de/" />
+
+	<!-- Me -->
+	<link rel="me" href="mailto:sander@sanderron.de" />
+
+	<!-- Facebook -->
+	<meta property="og:url" content="https://sanderron.de/" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="Sander Ronde" />
+	<meta property="og:image" content="https://sanderron.de/icons/512.png" />
+	<meta property="og:image:alt" content="Sander Ronde" />
+	<meta property="og:description" content="Sander Ronde's personal website" />
+	<meta property="og:site_name" content="Sander Ronde" />
+	<meta property="og:locale" content="en_US" />
+	<meta property="article:author" content="Sander Ronde" />
+
+	<!-- Twitter -->
+	<meta name="twitter:card" content="Sander Ronde's personal website" />
+	<meta name="twitter:url" content="https://sanderron.de/" />
+	<meta name="twitter:title" content="Sander Ronde" />
+	<meta
+		name="twitter:description"
+		content="Sander Ronde's personal website"
+	/>
+	<meta name="twitter:image" content="https://sanderron.de/icons/512.png" />
+	<meta name="twitter:image:alt" content="Sander Ronde" />
+
 	${icons()}
 	<link
 		crossorigin
@@ -106,6 +145,3 @@ const _head = html`
 		}
 	</style>
 `;
-export function head() {
-	return _head;
-}

@@ -34,7 +34,7 @@ My personal website, currently under construction
 -   [x] Lighthouse optimizations - Text compression
 -   [x] Lighthouse optimizations - Links to cross-origin destinations unsafe
 -   [x] Lighthouse optimizations - Robots.txt
--   [ ] Lighthouse optimizations - rel="canonical"
+-   [x] Lighthouse optimizations - rel="canonical"
 -   [ ] Lighthouse optimizations - Check offline
 -   [ ] Lighthouse optimizations - Content when JS is not available
 -   [ ] Check bottlenecks in project and wc-lib
