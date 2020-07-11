@@ -32,6 +32,8 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 				)}
 				${css(this).$.name} {
 				line-height: 0.9em;
+				margin: 0;
+				font-weight: normal;
 			}
 
 			${css(this).$.education} {

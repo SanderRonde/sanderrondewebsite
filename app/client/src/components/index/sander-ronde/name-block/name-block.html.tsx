@@ -14,7 +14,9 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 				<div class="vertical-centerer fill-x" id="main-content">
 					<div class="horizontal-centerer">
 						<div id="container" class="transition">
-							<div id="name">Sander Ronde</div>
+							<header>
+								<h1 id="name">Sander Ronde</h1>
+							</header>
 							<div id="tagline">
 								<div id="tagline-study" class="tagline">
 									<a

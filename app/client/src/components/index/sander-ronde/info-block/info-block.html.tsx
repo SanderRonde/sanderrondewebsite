@@ -69,13 +69,13 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 			<div class="horizontal-centerer fill-x">
 				<div id="container" class="transition">
 					<div id="about-me-container" class="block">
-						<div id="about-me">
+						<main id="about-me">
 							<div class="header">
 								{this.__(
 									I18NKeys.index.infoBlock.aboutMe.title
 								)}
 							</div>
-							<div class="content">
+							<section class="content">
 								<p>
 									{this.__(
 										I18NKeys.index.infoBlock.aboutMe.par1
@@ -111,8 +111,8 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 										)}
 									/>
 								</p>
-							</div>
-						</div>
+							</section>
+						</main>
 					</div>
 					<div id="skills-container" class="block">
 						<div id="skills">

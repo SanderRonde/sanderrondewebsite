@@ -21,8 +21,10 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 
 		return (
 			<div id="container">
-				<LangSelect tabindex={0} />
-				<ThemeSelect tabindex={0} />
+				<nav>
+					<LangSelect tabindex={0} />
+					<ThemeSelect tabindex={0} />
+				</nav>
 
 				<div id="scroller">
 					<BackgroundBlock
