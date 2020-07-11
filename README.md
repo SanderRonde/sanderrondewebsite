@@ -32,7 +32,7 @@ My personal website, currently under construction
 -   [x] Optimize images
 -   [ ] Lighthouse optimizations
 -   [x] Lighthouse optimizations - Text compression
--   [ ] Lighthouse optimizations - Links to cross-origin destinations unsafe
+-   [x] Lighthouse optimizations - Links to cross-origin destinations unsafe
 -   [ ] Lighthouse optimizations - Robots.txt
 -   [ ] Lighthouse optimizations - rel="canonical"
 -   [ ] Lighthouse optimizations - Check offline

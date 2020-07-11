@@ -59,6 +59,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 												url,
 												lang
 											)}
+											rel="noopener"
 											title={`${name} website`}
 											target="_blank"
 											class="title-at-name link light transition"
