@@ -31,7 +31,12 @@ My personal website, currently under construction
 -   [x] Titles
 -   [x] Optimize images
 -   [ ] Lighthouse optimizations
+-   [ ] Lighthouse optimizations - Text compression
+-   [ ] Lighthouse optimizations - Links to cross-origin destinations unsafe
+-   [ ] Lighthouse optimizations - Robots.txt
+-   [ ] Lighthouse optimizations - rel="canonical"
+-   [ ] Lighthouse optimizations - Check offline
+-   [ ] Lighthouse optimizations - Content when JS is not available
 -   [ ] Check bottlenecks in project and wc-lib
--   [ ] Semantic HTML
 -   [ ] 404 page
 -   [ ] ... Done?
