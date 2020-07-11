@@ -1,4 +1,9 @@
-import { ROOT_DIR, CLIENT_DIR } from './constants.js';
+import {
+	ROOT_DIR,
+	CLIENT_DIR,
+	CACHE_HEADER,
+	CACHE_MAX_AGE,
+} from './constants.js';
 import serveStatic from 'serve-static';
 import { WebServer } from '../app.js';
 import { server } from 'spdy';
@@ -45,6 +50,7 @@ export namespace Routes {
 			prefix = '',
 			extensions = [],
 			index = false,
+			cache = false,
 		}: {
 			rewrite?: (
 				content: string,
@@ -53,6 +59,7 @@ export namespace Routes {
 			prefix?: string;
 			extensions?: string[];
 			index?: boolean;
+			cache?: boolean;
 		} = {}
 	): express.RequestHandler {
 		return async (
@@ -96,6 +103,9 @@ export namespace Routes {
 							const content = await fs.readFile(filePath, {
 								encoding: 'utf8',
 							});
+							if (cache) {
+								res.set('Cache-Control', CACHE_HEADER);
+							}
 							res.contentType(path.basename(filePath));
 							res.send(await rewrite(content, filePath));
 							res.end();
@@ -119,12 +129,14 @@ export namespace Routes {
 		const serveImages = serve(path.join(CLIENT_DIR, 'images/icons'), {
 			extensions: ['pdf'],
 			prefix: '/images',
+			cache: true,
 		});
 		const serveSpecialImages = serve(
 			path.join(CLIENT_DIR, 'images/hat_icons'),
 			{
 				extensions: ['pdf'],
 				prefix: '/images',
+				cache: true,
 			}
 		);
 		app.use((req, res, next) => {
@@ -142,6 +154,12 @@ export namespace Routes {
 	 * @param {WebServer} server - The root WebServer
 	 */
 	export function initRoutes({ app }: WebServer) {
+		const staticSettings: serveStatic.ServeStaticOptions = {
+			index: false,
+			cacheControl: true,
+			immutable: false,
+			maxAge: CACHE_MAX_AGE * 1000,
+		};
 		app.get('/thesis(.pdf)?', (_req, res, _next) => {
 			res.endTime('route-resolution');
 			res.startTime('send-file', 'Sending file');
@@ -150,18 +168,18 @@ export namespace Routes {
 		app.use(
 			serveStatic(path.join(CLIENT_DIR, 'static'), {
 				extensions: ['pdf'],
-				index: false,
+				...staticSettings,
 			})
 		);
 		initImageRoutes(app);
 		app.use(
 			serveStatic(path.join(CLIENT_DIR, 'images'), {
-				index: false,
+				...staticSettings,
 			})
 		);
 		app.use(
 			serveStatic(path.join(CLIENT_DIR, 'build/public'), {
-				index: false,
+				...staticSettings,
 			})
 		);
 	}

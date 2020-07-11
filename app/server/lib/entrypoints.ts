@@ -11,12 +11,12 @@ import {
 import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
 import { I18NGetMessage, LANGUAGE } from '../../i18n/i18n.js';
+import { CLIENT_DIR, CACHE_HEADER } from './constants.js';
 import { themes, THEME } from '../../shared/theme.js';
 import { ENTRYPOINTS_TYPE } from '../../shared/types';
 import ENTRYPOINTS from '../../shared/entrypoints.js';
 import { SpdyExpressResponse } from './routes.js';
 import { RequestVars } from './request-vars.js';
-import { CLIENT_DIR } from './constants.js';
 import { WebServer } from '../app.js';
 import { Caching } from './cache.js';
 import { Duplex } from 'stream';
@@ -183,6 +183,7 @@ export namespace Entrypoints {
 			pushEntrypoint(res, entrypoint);
 
 			res.status(200);
+			res.set('Cache-Control', CACHE_HEADER);
 			res.contentType('.html');
 			res.write(html);
 			res.end();
@@ -205,6 +206,7 @@ export namespace Entrypoints {
 				},
 				response: {
 					'Content-Type': 'application/javascript',
+					'Cache-Control': CACHE_HEADER,
 				},
 			});
 			stream.on('error', (err) => {
@@ -273,6 +275,7 @@ export namespace Entrypoints {
 		res.status(200);
 		res.contentType('.html');
 		res.startTime('html-render', 'Rendering of simple HTML file');
+		res.set('Cache-Control', CACHE_HEADER);
 		const lang = RequestVars.getLang(req, res);
 		const theme = RequestVars.getTheme(req, res);
 		const html = await htmlRenderer({

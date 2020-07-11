@@ -9,3 +9,7 @@ const DIR_NAME = os.platform() === 'win32' ? DIR_FULL.slice(1) : DIR_FULL;
 export const ROOT_DIR = path.join(DIR_NAME, '../../../');
 export const APP_DIR = path.join(ROOT_DIR, 'app');
 export const CLIENT_DIR = path.join(APP_DIR, 'client');
+
+// Cache
+export const CACHE_MAX_AGE = 60 * 60 * 24 * 365;
+export const CACHE_HEADER = `public, must-revalidate, max-age=${CACHE_MAX_AGE}`;
