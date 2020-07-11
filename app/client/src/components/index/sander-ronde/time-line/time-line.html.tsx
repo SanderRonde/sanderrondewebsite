@@ -127,6 +127,7 @@ export const TimeLineHTML = new TemplateFn<TimeLine>(
 										: TIMELINE_DIRECTION.RIGHT
 								}
 								entry={entry}
+								tabindex={0}
 								{...{
 									'@@': {
 										highlightdaterange: this

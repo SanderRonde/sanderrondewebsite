@@ -31,6 +31,10 @@ export const BubbleSelectCSS = (
 		transition: transform 250ms ease-in-out;
 	}
 
+	.bubble:focus {
+		outline: none;
+	}
+
 	.bubble.on-top {
 		z-index: 100;
 	}

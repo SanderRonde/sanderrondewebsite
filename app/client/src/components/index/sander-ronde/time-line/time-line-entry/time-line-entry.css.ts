@@ -17,6 +17,10 @@ export const TimeLineEntryCSS = new TemplateFn<TimeLineEntry>(
 			400
 		);
 		return html`<style>
+			:host(:focus) {
+				outline: none;
+			}
+
 			${css(this).c.icon} {
 				width: ${IMAGE_DIMENSIONS}px;
 				height: ${IMAGE_DIMENSIONS}px;

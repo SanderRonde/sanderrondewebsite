@@ -36,6 +36,19 @@ export const BubbleSelectHTML = function <B>(
 										current === bubbleName,
 								},
 							]}
+							{...{
+								tabindex: 0,
+								'@': {
+									focus: () => {
+										component.setActiveBubble(bubbleName);
+									},
+									blur: () => {
+										component.setActiveBubble(
+											component.current
+										);
+									},
+								},
+							}}
 						>
 							<div
 								class="highlighter"
@@ -44,9 +57,9 @@ export const BubbleSelectHTML = function <B>(
 										click: () =>
 											component.bubbleSelect(bubbleName),
 										mouseenter: () =>
-											component.preview(bubbleName),
+											component.previewBubble(bubbleName),
 										mouseleave: () =>
-											component.endPreview(),
+											component.endPreviewBubble(),
 									},
 								}}
 							>

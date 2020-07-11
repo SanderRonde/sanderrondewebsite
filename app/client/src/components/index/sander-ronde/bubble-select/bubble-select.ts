@@ -40,6 +40,20 @@ export abstract class BubbleSelect<B, I, C, S> extends IndexBase<{
 		},
 	});
 
+	private _ignoreFocus: boolean = false;
+	mounted() {
+		this.addEventListener('focus', () => {
+			this.expand();
+			this._ignoreFocus = true;
+			setTimeout(() => {
+				this._ignoreFocus = false;
+			}, 100);
+		});
+		this.addEventListener('blur', () => {
+			this.collapse(this.current);
+		});
+	}
+
 	expand() {
 		this.props.expanded = true;
 		this.$.positioner.classList.add(BUBBLE_SELECT_TOGGLES.EXPANDED);
@@ -120,11 +134,38 @@ export abstract class BubbleSelect<B, I, C, S> extends IndexBase<{
 		this.$.positioner.classList.remove(BUBBLE_SELECT_TOGGLES.EXPANDED);
 	}
 
-	public abstract preview(selected: B): void;
+	public setActiveBubble(bubble: B) {
+		const bubbleElements = this.$$('.bubble');
+		for (let i = 0; i < bubbleElements.length; i++) {
+			const bubbleName = this._initialBubbleOrder[i];
+			const bubbleElement = bubbleElements[i];
+			if (bubbleName === bubble) {
+				bubbleElement.classList.add(BUBBLE_SELECT_TOGGLES.ACTIVE);
+			} else {
+				bubbleElement.classList.remove(BUBBLE_SELECT_TOGGLES.ACTIVE);
+			}
+		}
+	}
 
-	public abstract endPreview(): void;
+	public previewBubble(selected: B) {
+		this.setActiveBubble(selected);
+		this.preview(selected);
+	}
+
+	public endPreviewBubble() {
+		this.setActiveBubble(this.current);
+		this.endPreview();
+	}
+
+	protected abstract preview(selected: B): void;
+
+	protected abstract endPreview(): void;
 
 	async bubbleSelect(selected: B) {
+		if (this._ignoreFocus) {
+			this._ignoreFocus = false;
+			return;
+		}
 		if (this.props.expanded) {
 			// Expanded, select that and collapse
 			await this.collapse(selected);

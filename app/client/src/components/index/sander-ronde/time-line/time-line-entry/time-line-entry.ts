@@ -70,6 +70,20 @@ export class TimeLineEntry extends IndexBase<{
 		},
 	});
 
+	mounted() {
+		this.addEventListener('keydown', (e) => {
+			if (e.code === 'Enter' || e.code === 'Space') {
+				this.cardClick(false);
+			}
+		});
+		this.addEventListener('focus', () => {
+			this.cardEnter();
+		});
+		this.addEventListener('blur', () => {
+			this.cardLeave();
+		});
+	}
+
 	dateEnter() {
 		this.fire('highlightdaterange', {
 			start: new Date(this.props.entry.start),
@@ -203,7 +217,7 @@ export class TimeLineEntry extends IndexBase<{
 		});
 	}
 
-	cardClick() {
+	cardClick(isMouse: boolean = true) {
 		this._pinned = !this._pinned;
 		this.$.card.classList.toggle(
 			TIMELINE_ENTRY_TOGGLES.PINNED,
@@ -211,7 +225,7 @@ export class TimeLineEntry extends IndexBase<{
 		);
 		if (this._pinned) {
 			this.cardEnter();
-		} else {
+		} else if (isMouse) {
 			this.cardLeave();
 		}
 	}
