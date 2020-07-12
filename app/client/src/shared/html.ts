@@ -85,7 +85,10 @@ export const head = (theme: Theme) => html`
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<!-- CSP -->
-	<meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+	<meta
+		http-equiv="Content-Security-Policy"
+		content="default-src 'self' 'unsafe-inline'"
+	/>
 
 	<!-- Meta info -->
 	<meta name="description" content="Sander Ronde" />
