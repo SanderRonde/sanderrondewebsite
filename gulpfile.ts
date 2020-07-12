@@ -484,6 +484,11 @@ gulp.task(
 					await globPromise(`${staticDir}/**/*.${EXTENSION_GLOB}`)
 				).map((f) => path.relative(staticDir, f));
 
+				const imagesDir = 'app/client/images';
+				const imagesFiles = (
+					await globPromise(`${imagesDir}/**/*.${EXTENSION_GLOB}`)
+				).map((f) => path.relative(imagesDir, f));
+
 				// Find all bundles
 				const publicDir = 'app/client/build/public';
 				const bundles = (
@@ -511,7 +516,7 @@ gulp.task(
 							// Static files
 							notifyOnUpdate: false,
 							serveStategy: SERVE_STATEGY.FASTEST,
-							files: staticFiles,
+							files: [...staticFiles, ...imagesFiles],
 						},
 						{
 							// Bundled files
