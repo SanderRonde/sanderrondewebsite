@@ -5,7 +5,6 @@ import { head } from '../../shared/html.js';
 
 export default async function indexHTML({
 	defer = false,
-	mainTag = 'sander-ronde',
 	autoReload,
 	theme,
 	lang,
@@ -21,7 +20,12 @@ export default async function indexHTML({
 				style="margin: 0; background-color: ${themes[theme].background
 					.main};"
 			>
-				${html`<${mainTag}>Javascript is not enabled, please enable it to use this website</${mainTag}>`}
+				${html`<sander-ronde
+					><noscript
+						>Javascript is not enabled, please enable it to use this
+						website</noscript
+					></sander-ronde
+				>`}
 				<script
 					${defer ? 'defer async' : ''}
 					type="module"
