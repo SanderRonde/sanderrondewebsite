@@ -29,7 +29,7 @@ export class WebServer {
 		this._initVars();
 		await this._initRoutes();
 		await this._listen();
-		if (!this.io.noAutoReload) {
+		if (!this.io.noAutoReload && this.io.dev) {
 			const autoReload = await import('@sanderronde/autoreload');
 			autoReload.default.autoReloadWatcher({
 				log: {
@@ -89,6 +89,7 @@ export class WebServer {
 		this._markSendMethods();
 		Entrypoints.registerEntrypointHandlers(this);
 		SemiStaticFiles.initRoutes(this);
+		console.log('dev?', this.io.dev);
 		if (this.io.dev) {
 			const autoReload = await import('@sanderronde/autoreload');
 			this.app.use(
