@@ -106,8 +106,10 @@ export namespace Routes {
 							if (cache) {
 								res.set('Cache-Control', CACHE_HEADER);
 							}
+							const rewritten = await rewrite(content, filePath);
 							res.contentType(path.basename(filePath));
-							res.send(await rewrite(content, filePath));
+							res.header('Content-Length', rewritten.length + '');
+							res.send(rewritten);
 							res.end();
 						} else {
 							res.sendFile(filePath);
