@@ -21,9 +21,11 @@ export default async function indexHTML({
 					.main};"
 			>
 				${html`<sander-ronde
-					><noscript
-						>Javascript is not enabled, please enable it to use this
-						website</noscript
+					><noscript>
+						<span style="color: ${themes[theme].text.main};"
+							>Javascript is not enabled, please enable it to use
+							this website</span
+						></noscript
 					></sander-ronde
 				>`}
 				<script
