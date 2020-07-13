@@ -31,10 +31,10 @@ import en from '../../../../i18n/locales/en.json.js';
 import nl from '../../../../i18n/locales/nl.json.js';
 
 function getPreferredColorScheme() {
-	if (window.matchMedia('(prefers-contrast: high)'))
+	if (window.matchMedia('(prefers-contrast: high)').matches)
 		return THEME.HIGH_CONTRAST;
-	if (window.matchMedia('(prefers-color-scheme: dark)')) return THEME.DARK;
-	if (window.matchMedia('(prefers-color-scheme: light)')) return THEME.LIGHT;
+	if (window.matchMedia('(prefers-color-scheme: dark)').matches) return THEME.DARK;
+	if (window.matchMedia('(prefers-color-scheme: light)').matches) return THEME.LIGHT;
 	return undefined;
 }
 
