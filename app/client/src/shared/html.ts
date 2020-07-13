@@ -78,7 +78,7 @@ export function icons() {
 	return _icons;
 }
 
-export const head = (theme: Theme) => html`
+export const head = (theme: Theme, dev: boolean) => html`
 	<!-- Essentials -->
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
@@ -87,7 +87,9 @@ export const head = (theme: Theme) => html`
 	<!-- CSP -->
 	<meta
 		http-equiv="Content-Security-Policy"
-		content="default-src 'self' 'unsafe-inline'"
+		content="${dev
+			? "default-src 'self' 'unsafe-inline'; connect-src *"
+			: "default-src 'self' 'unsafe-inline'"}"
 	/>
 
 	<!-- Meta info -->
