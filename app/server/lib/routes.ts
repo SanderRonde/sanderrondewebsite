@@ -128,14 +128,14 @@ export namespace Routes {
 
 		const serveImages = serve(path.join(CLIENT_DIR, 'images/icons'), {
 			extensions: ['pdf'],
-			prefix: '/images',
+			prefix: '/icons',
 			cache: true,
 		});
 		const serveSpecialImages = serve(
 			path.join(CLIENT_DIR, 'images/hat_icons'),
 			{
 				extensions: ['pdf'],
-				prefix: '/images',
+				prefix: '/icons',
 				cache: true,
 			}
 		);

@@ -5,71 +5,71 @@ const _icons = html`
 	<link
 		rel="apple-touch-icon"
 		sizes="57x57"
-		href="/images/apple-icon-57x57.png"
+		href="/icons/apple-icon-57x57.png"
 	/>
 	<link
 		rel="apple-touch-icon"
 		sizes="60x60"
-		href="/images/apple-icon-60x60.png"
+		href="/icons/apple-icon-60x60.png"
 	/>
 	<link
 		rel="apple-touch-icon"
 		sizes="72x72"
-		href="/images/apple-icon-72x72.png"
+		href="/icons/apple-icon-72x72.png"
 	/>
 	<link
 		rel="apple-touch-icon"
 		sizes="76x76"
-		href="/images/apple-icon-76x76.png"
+		href="/icons/apple-icon-76x76.png"
 	/>
 	<link
 		rel="apple-touch-icon"
 		sizes="114x114"
-		href="/images/apple-icon-114x114.png"
+		href="/icons/apple-icon-114x114.png"
 	/>
 	<link
 		rel="apple-touch-icon"
 		sizes="120x120"
-		href="/images/apple-icon-120x120.png"
+		href="/icons/apple-icon-120x120.png"
 	/>
 	<link
 		rel="apple-touch-icon"
 		sizes="144x144"
-		href="/images/apple-icon-144x144.png"
+		href="/icons/apple-icon-144x144.png"
 	/>
 	<link
 		rel="apple-touch-icon"
 		sizes="152x152"
-		href="/images/apple-icon-152x152.png"
+		href="/icons/apple-icon-152x152.png"
 	/>
 	<link
 		rel="apple-touch-icon"
 		sizes="180x180"
-		href="/images/apple-icon-180x180.png"
+		href="/icons/apple-icon-180x180.png"
 	/>
 	<link
 		rel="icon"
 		type="image/png"
 		sizes="192x192"
-		href="/images/android-icon-192x192.png"
+		href="/icons/android-icon-192x192.png"
 	/>
 	<link
 		rel="icon"
 		type="image/png"
 		sizes="32x32"
-		href="/images/favicon-32x32.png"
+		href="/icons/favicon-32x32.png"
 	/>
 	<link
 		rel="icon"
 		type="image/png"
 		sizes="96x96"
-		href="/images/favicon-96x96.png"
+		href="/icons/favicon-96x96.png"
 	/>
 	<link
 		rel="icon"
 		type="image/png"
 		sizes="16x16"
-		href="/images/favicon-16x16.png"
+		href="/icons/favicon-16x16.png"
 	/>
 	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png" />
 	<meta name="theme-color" content="#ffffff" />
@@ -88,8 +88,8 @@ export const head = (theme: Theme, dev: boolean) => html`
 	<meta
 		http-equiv="Content-Security-Policy"
 		content="${dev
-			? "default-src 'self' 'unsafe-inline'; connect-src *"
-			: "default-src 'self' 'unsafe-inline'"}"
+			? "default-src 'self' 'unsafe-inline'; img-src 'self' https://www.google-analytics.com; script-src-elem 'self' https://www.googletagmanager.com https://www.google-analytics.com; connect-src *"
+			: "default-src 'self' 'unsafe-inline'; img-src 'self' https://www.google-analytics.com; script-src-elem 'self' https://www.googletagmanager.com https://www.google-analytics.com"}"
 	/>
 
 	<!-- Meta info -->
@@ -134,7 +134,7 @@ export const head = (theme: Theme, dev: boolean) => html`
 		as="font"
 	/>
 	<link rel="manifest" href="/manifest.json" />
-	<link rel="icon" href="/images/favicon.ico" type="images/x-icon" />
+	<link rel="icon" href="/icons/favicon.ico" type="images/x-icon" />
 	<style>
 		@font-face {
 			font-family: 'Roboto';

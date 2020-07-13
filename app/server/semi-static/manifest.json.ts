@@ -31,13 +31,13 @@ export function manifestJSON(
 		description: 'Sander Ronde personal website',
 		icons: [
 			...dimensions.map((dimension) => ({
-				src: `images/${dimension}.png`,
+				src: `icons/${dimension}.png`,
 				sizes: `${dimension}x${dimension}`,
 				type: 'image/png',
 				purpose: 'badge any',
 			})),
 			...dimensions.map((dimension) => ({
-				src: `images/${dimension}_masked.png`,
+				src: `icons/${dimension}_masked.png`,
 				sizes: `${dimension}x${dimension}`,
 				type: 'image/png',
 				purpose: 'maskable',
