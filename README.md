@@ -38,6 +38,6 @@ My personal website, currently under construction
 -   [x] Lighthouse optimizations - Content when JS is not available
 -   [x] Lighthouse optimizations - Check offline
 -   [x] Check bottlenecks in project and wc-lib
--   [ ] 404 page
+-   [x] 404 page
 -   [ ] Google Search console
 -   [ ] ... Done?

@@ -145,7 +145,8 @@ export const head = (theme: Theme, dev: boolean) => html`
 				url('/fonts/Roboto-Regular.ttf');
 		}
 
-		span[data-type='html'] {
+		span[data-type='html'],
+		#main-text {
 			font-family: 'Roboto';
 		}
 	</style>

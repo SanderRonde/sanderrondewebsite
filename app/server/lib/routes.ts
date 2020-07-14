@@ -11,6 +11,10 @@ import express from 'express';
 import fs from 'fs-extra';
 import path from 'path';
 
+import notFoundHTML from '../../client/src/entrypoints/404/index.html.js';
+import { RequestVars } from './request-vars.js';
+import { IO } from './io.js';
+
 const THESIS_FILE = path.join(
 	ROOT_DIR,
 	'app/repos',
@@ -186,13 +190,33 @@ export namespace Routes {
 		);
 	}
 
-	export function init404({ app }: WebServer) {
-		app.get('/404', (_req, res) => {
-			// TODO: implement better 404 page
-			res.status(200).send('404');
+	async function render404(
+		req: express.Request,
+		res: SpdyExpressResponse,
+		io: IO.IO
+	) {
+		res.status(404);
+		res.contentType('.html');
+		res.set('Cache-Control', CACHE_HEADER);
+		const lang = RequestVars.getLang(req, res);
+		const theme = RequestVars.getTheme(req, res);
+
+		res.write(
+			await notFoundHTML({
+				autoReload: io.dev && !io.noAutoReload,
+				lang,
+				theme,
+			})
+		);
+		res.end();
+	}
+
+	export function init404({ app, io }: WebServer) {
+		app.get('/404', async (req, res: SpdyExpressResponse) => {
+			await render404(req, res, io);
 		});
-		app.use((_req, res, _next) => {
-			res.status(404).end();
+		app.use(async (req, res: SpdyExpressResponse) => {
+			await render404(req, res, io);
 		});
 	}
 }
