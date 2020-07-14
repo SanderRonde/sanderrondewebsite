@@ -10,9 +10,9 @@ import {
 } from '../build/modules/lit-html/lit-html.js';
 import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
-import { I18NGetMessage, LANGUAGE } from '../../i18n/i18n.js';
+import { I18NGetMessage, LANGUAGE, strToLanguage } from '../../i18n/i18n.js';
 import { CLIENT_DIR, CACHE_HEADER } from './constants.js';
-import { themes, THEME } from '../../shared/theme.js';
+import { themes, THEME, strToTheme } from '../../shared/theme.js';
 import { ENTRYPOINTS_TYPE } from '../../shared/types';
 import ENTRYPOINTS from '../../shared/entrypoints.js';
 import { SpdyExpressResponse } from './routes.js';
@@ -94,12 +94,87 @@ export namespace Entrypoints {
 				stored.theme === current.theme
 			);
 		});
+		const serverSideRenderCacheStore = Caching.createStore<
+			{
+				entrypoint: string;
+				lang: LANGUAGE;
+				theme: THEME;
+			},
+			string
+		>(true, (stored, current) => {
+			return (
+				stored.entrypoint === current.entrypoint &&
+				stored.lang === current.lang &&
+				stored.theme === current.theme
+			);
+		});
+
+		export async function getServerSideRendered(
+			info: ReturnType<typeof Info.getInfo>,
+			props: ReturnType<typeof Info.getProps>,
+			lang: LANGUAGE,
+			theme: THEME,
+			entrypoint: ENTRYPOINTS_TYPE,
+			res: SpdyExpressResponse,
+			cache: boolean = true
+		) {
+			if (cache) {
+				res.startTime('check-cache', 'Checking cache');
+				const cached = serverSideRenderCacheStore.get({
+					entrypoint,
+					lang,
+					theme,
+				});
+				res.endTime('check-cache');
+				if (cached) return cached;
+			}
+
+			const { Component } = info!;
+
+			if ('initComplexTemplateProvider' in Component) {
+				Component.initComplexTemplateProvider({
+					TemplateResult,
+					PropertyCommitter,
+					EventPart,
+					BooleanAttributePart,
+					AttributeCommitter,
+					NodePart,
+					isDirective,
+					noChange,
+				});
+			}
+
+			res.startTime('server-side-render', 'Server-side rendering');
+			const rendered = await ssr(Component as SSR.BaseTypes.BaseClass, {
+				props: props,
+				attributes: {
+					'server-side-rendered': true,
+				},
+				i18n: langFiles[lang],
+				getMessage: I18NGetMessage,
+				theme: themes[theme],
+				themeName: theme,
+				await: true,
+				lang,
+			});
+			res.endTime('server-side-render');
+
+			serverSideRenderCacheStore.set(
+				{ entrypoint, lang, theme },
+				rendered
+			);
+
+			return rendered;
+		}
+
 		async function getRenderedText(
 			info: ReturnType<typeof Info.getInfo>,
 			props: ReturnType<typeof Info.getProps>,
 			lang: LANGUAGE,
 			theme: THEME,
-			{ io }: WebServer
+			{ io }: WebServer,
+			entrypoint: ENTRYPOINTS_TYPE,
+			res: SpdyExpressResponse
 		) {
 			const { Component, getHTML } = info!;
 
@@ -116,18 +191,15 @@ export namespace Entrypoints {
 				});
 			}
 
-			const rendered = await ssr(Component as SSR.BaseTypes.BaseClass, {
-				props: props,
-				attributes: {
-					'server-side-rendered': true,
-				},
-				i18n: langFiles[lang],
-				getMessage: I18NGetMessage,
-				theme: themes[theme],
-				themeName: theme,
-				await: true,
+			const rendered = await getServerSideRendered(
+				info,
+				props,
 				lang,
-			});
+				theme,
+				entrypoint,
+				res,
+				false
+			);
 
 			const html = await getHTML({
 				theme,
@@ -167,15 +239,15 @@ export namespace Entrypoints {
 			const html = await (async () => {
 				if (cached) return cached;
 
-				res.startTime('server-side-render', 'Server-side rendering');
 				const renderedHTML = await getRenderedText(
 					info,
 					props,
 					lang,
 					theme,
-					server
+					server,
+					entrypoint,
+					res
 				);
-				res.endTime('server-side-render');
 				renderCacheStore.set({ entrypoint, lang, theme }, renderedHTML);
 				return renderedHTML;
 			})();
@@ -246,10 +318,63 @@ export namespace Entrypoints {
 							);
 						}
 					);
+					app.get(
+						`${route}/ssr/:lang/:theme`,
+						async (req, res: SpdyExpressResponse) => {
+							res.endTime('route-resolution');
+							const info = Info.getInfo(entrypoint);
+
+							const lang = strToLanguage(req.params['lang']);
+							const theme = strToTheme(req.params['theme']);
+
+							if (!lang) {
+								res.status(400).write('Invalid language');
+								res.end();
+								return;
+							}
+							if (!theme) {
+								res.status(400).write('Invalid theme');
+								res.end();
+								return;
+							}
+
+							const rendered = await Rendering.getServerSideRendered(
+								info,
+								Info.getProps(entrypoint, info, req),
+								lang,
+								theme,
+								entrypoint,
+								res,
+								true
+							);
+
+							res.status(200);
+							res.set('Cache-Control', CACHE_HEADER);
+							res.contentType('.txt');
+							res.write(rendered);
+							res.end();
+						}
+					);
 				}
 				app.get(route, async (req, res: SpdyExpressResponse, next) => {
 					res.endTime('route-resolution');
 					await renderHTMLFile(entrypoint, req, res, next, server);
+				});
+				app.post('/get_vars', async (req, res: SpdyExpressResponse) => {
+					res.endTime('route-resolution');
+
+					const lang = RequestVars.getLang(req, res);
+					const theme = RequestVars.getTheme(req, res);
+
+					res.status(200);
+					res.contentType('json');
+					res.write(
+						JSON.stringify({
+							lang,
+							theme,
+						})
+					);
+					res.end();
 				});
 			});
 		});
