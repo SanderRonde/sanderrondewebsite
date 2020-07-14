@@ -37,7 +37,7 @@ My personal website, currently under construction
 -   [x] Lighthouse optimizations - rel="canonical"
 -   [x] Lighthouse optimizations - Content when JS is not available
 -   [x] Lighthouse optimizations - Check offline
--   [ ] Check bottlenecks in project and wc-lib
+-   [x] Check bottlenecks in project and wc-lib
 -   [ ] 404 page
 -   [ ] Google Search console
 -   [ ] ... Done?
