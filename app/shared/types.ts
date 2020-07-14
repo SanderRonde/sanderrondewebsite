@@ -19,6 +19,10 @@ export const enum SERVE_STATEGY {
 
 export interface SWConfig {
 	/**
+	 * Server-side-rendered endpoints
+	 */
+	serverSideRendered: string[];
+	/**
 	 * Groups of to-be-cached files
 	 */
 	groups: {

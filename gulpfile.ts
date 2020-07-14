@@ -33,7 +33,7 @@ import * as esm from 'esm';
 };
 
 const ENTRYPOINTS: ENTRYPOINTS_TYPE[] = ['index'];
-const SEMI_STATIC_FILES = ['manifest.json']
+const SEMI_STATIC_FILES = ['manifest.json'];
 
 const json = (_json as unknown) as typeof _json.default;
 const resolve = (_resolve as unknown) as typeof _resolve.default;
@@ -49,7 +49,7 @@ const CACHE_EXTENSIONS = [
 	'png',
 	'jpg',
 	'jpeg',
-	'webp'
+	'webp',
 ];
 const EXTENSION_GLOB = `{${CACHE_EXTENSIONS.join(',')}}`;
 
@@ -513,12 +513,17 @@ gulp.task(
 				);
 
 				const swConfig: SWConfig = {
+					serverSideRendered: ENTRYPOINTS,
 					groups: [
 						{
 							// Static files
 							notifyOnUpdate: false,
 							serveStategy: SERVE_STATEGY.FASTEST,
-							files: [...staticFiles, ...imagesFiles, ...SEMI_STATIC_FILES],
+							files: [
+								...staticFiles,
+								...imagesFiles,
+								...SEMI_STATIC_FILES,
+							],
 						},
 						{
 							// Bundled files
