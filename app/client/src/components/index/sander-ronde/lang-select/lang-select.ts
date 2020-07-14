@@ -15,6 +15,7 @@ import { setCookie } from '../../../../shared/cookies';
 import { LangSelectHTML } from './lang-select.html';
 import { ToolTip } from '../../../shared/';
 import { config } from 'wc-lib';
+import { updateServiceworkerCookies } from '../../../../shared/sw';
 
 @config({
 	is: 'lang-select',
@@ -43,6 +44,7 @@ export class LangSelect extends BubbleSelect<
 	protected _setCurrent(current: LANGUAGE): void {
 		this.setLang(current as any);
 		setCookie(LANG_COOKIE_NAME, current);
+		updateServiceworkerCookies();
 	}
 
 	public preview(selected: LANGUAGE) {

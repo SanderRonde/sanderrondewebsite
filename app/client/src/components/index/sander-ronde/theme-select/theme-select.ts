@@ -15,6 +15,7 @@ import { ThemeSelectHTML } from './theme-select.html.js';
 import { setCookie } from '../../../../shared/cookies';
 import { ToolTip } from '../../../shared/';
 import { config } from 'wc-lib';
+import { updateServiceworkerCookies } from '../../../../shared/sw';
 
 @config({
 	is: 'theme-select',
@@ -43,6 +44,7 @@ export class ThemeSelect extends BubbleSelect<
 	protected _setCurrent(current: THEME): void {
 		this.setTheme(current as any);
 		setCookie(THEME_COOKIE_NAME, current);
+		updateServiceworkerCookies();
 	}
 
 	public preview(selected: THEME) {
