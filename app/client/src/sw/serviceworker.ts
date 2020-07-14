@@ -52,7 +52,7 @@ async function updateServerSideRenderedCache(force: boolean = false) {
 				set('lang', lang),
 				set('theme', theme),
 				set(
-					getSSRDBKey(lang, theme, entrypoint),
+					getSSRDBKey(lang, theme, `/${entrypoint}`),
 					JSON.stringify({
 						content: body,
 						expires,
@@ -66,7 +66,6 @@ async function updateServerSideRenderedCache(force: boolean = false) {
 self.addEventListener('install', (event) => {
 	self.skipWaiting();
 
-	console.log('install');
 	event.waitUntil(
 		(async () => {
 			const cache = await caches.open(CACHE_NAME);
@@ -214,18 +213,21 @@ async function serveEntrypoint(event: FetchEvent): Promise<Response> {
 
 	if (pathname === '/' || pathname === '/index') {
 		const serverSideRendered = (await get(
-			getSSRDBKey(lang, theme, pathname)
+			getSSRDBKey(lang, theme, '/index')
 		)) as string | void;
-		const renderedContent =
-			serverSideRendered ||
-			html`<sander-ronde
-				><noscript>
-					<span style="color: ${themes[theme].text.main};"
-						>Javascript is not enabled, please enable it to use this
-						website</span
-					></noscript
-				></sander-ronde
-			>`;
+		if (!serverSideRendered) {
+			updateServerSideRenderedCache();
+		}
+		const renderedContent = serverSideRendered
+			? JSON.parse(serverSideRendered).content
+			: html`<sander-ronde
+					><noscript>
+						<span style="color: ${themes[theme].text.main};"
+							>Javascript is not enabled, please enable it to use
+							this website</span
+						></noscript
+					></sander-ronde
+			  >`;
 		return new Response(
 			await indexHTML({
 				defer: true,
@@ -321,6 +323,7 @@ self.addEventListener<ServiceworkerMessages>('message', (event) => {
 					await Promise.all([
 						set('theme', event.data.data.theme),
 						set('lang', event.data.data.lang),
+						updateServerSideRenderedCache(),
 					]);
 					break;
 			}
