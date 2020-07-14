@@ -30,13 +30,13 @@ My personal website, currently under construction
 -   [x] Use prefers-color-scheme
 -   [x] Titles
 -   [x] Optimize images
--   [ ] Lighthouse optimizations
+-   [x] Lighthouse optimizations
 -   [x] Lighthouse optimizations - Text compression
 -   [x] Lighthouse optimizations - Links to cross-origin destinations unsafe
 -   [x] Lighthouse optimizations - Robots.txt
 -   [x] Lighthouse optimizations - rel="canonical"
 -   [x] Lighthouse optimizations - Content when JS is not available
--   [ ] Lighthouse optimizations - Check offline
+-   [x] Lighthouse optimizations - Check offline
 -   [ ] Check bottlenecks in project and wc-lib
 -   [ ] 404 page
 -   [ ] Google Search console
