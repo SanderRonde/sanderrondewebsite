@@ -30,7 +30,7 @@ import { WebComponent } from 'wc-lib';
 import en from '../../../../i18n/locales/en.json.js';
 import nl from '../../../../i18n/locales/nl.json.js';
 
-function getPreferredColorScheme() {
+export function getPreferredColorScheme() {
 	if (window.matchMedia('(prefers-contrast: high)').matches)
 		return THEME.HIGH_CONTRAST;
 	if (window.matchMedia('(prefers-color-scheme: dark)').matches) return THEME.DARK;
