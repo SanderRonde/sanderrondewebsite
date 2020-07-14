@@ -255,6 +255,7 @@ export namespace LifeTimeline {
 		skills: Skill.NameSkill[];
 		icon?: Icon[];
 		title: InternationalText;
+		titleLink?: string;
 		description: InternationalText;
 	}
 
@@ -385,6 +386,7 @@ export namespace LifeTimeline {
 			end: new Date(2018, 2).getTime(),
 			source: 'https://github.com/sanderronde/bachelor-thesis',
 			title: 'Bachelor Thesis',
+			titleLink: '/thesis',
 			icon: [
 				{
 					source: '/timeline/leiden_university.webp',

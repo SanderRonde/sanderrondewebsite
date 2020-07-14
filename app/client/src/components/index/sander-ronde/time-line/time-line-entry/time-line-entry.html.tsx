@@ -24,6 +24,22 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 	function (html, props) {
 		const lang = this.getLang();
 
+		const renderTitleLink = (title: string) => {
+			if (!props.entry.titleLink) return title;
+
+			return (
+				<a
+					href={props.entry.titleLink}
+					rel="noopener"
+					title={getInternationalText(props.entry.title, lang)}
+					target="_blank"
+					class="link light transition"
+				>
+					{title}
+				</a>
+			);
+		};
+
 		const renderTitle = () => {
 			const lang = this.getLang();
 			if (props.entry.type === LifeTimeline.TYPE.PERSONAL_PROJECT) {
@@ -132,7 +148,7 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 					<div id="content-col">
 						<div id="title-row">
 							<div id="title" class="transition">
-								{renderTitle()}
+								{renderTitleLink(renderTitle())}
 							</div>
 							<span
 								id="time"
