@@ -37,9 +37,16 @@ interface Clients {
 	openWindow(url: string): Promise<WindowClient>;
 }
 
+type Remove<T, K> = {
+	[P in Exclude<keyof T, K>]: T[P];
+}
+
 interface DedicatedWorkerGlobalScope {
 	addEventListener(type: 'install', callback: (event: ServiceworkerEvent) => void): void;
 	addEventListener(type: 'fetch', callback: (event: FetchEvent) => void): void;
+	addEventListener<T = any>(type: 'message', listener: (ev: Remove<MessageEvent, 'data'> & ServiceworkerEvent & {
+		data: T;
+	}) => void): void;
 
 	skipWaiting(): void;
 	clients: Clients;
