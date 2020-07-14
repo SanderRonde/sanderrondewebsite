@@ -2,30 +2,87 @@
 declare var self: DedicatedWorkerGlobalScope;
 export {};
 
+import { THEME, DEFAULT_THEME, themes } from '../../../shared/theme';
 import { SWConfig, SERVE_STATEGY } from '../../../shared/types';
+import { LANGUAGE, DEFAULT_LANG } from '../../../i18n/i18n';
+import indexHTML from '../entrypoints/index/index.html.js';
 import _config from '../../build/private/swconfig.json';
-import { flat } from '../../../shared/util.js';
+import { flat, html } from '../../../shared/util.js';
+import { get, set } from 'idb-keyval';
 
 const config = _config as SWConfig;
 
 const CACHE_NAME = 'sander-ronde-cache';
 
+function getSSRDBKey(lang: LANGUAGE, theme: THEME, entrypoint: string) {
+	return `ssr-${lang}-${theme}-${entrypoint}`;
+}
+
+async function updateServerSideRenderedCache(force: boolean = false) {
+	const { lang, theme } = (await (
+		await fetch('/get_vars', {
+			method: 'POST',
+			credentials: 'include',
+		})
+	).json()) as {
+		lang: LANGUAGE;
+		theme: THEME;
+	};
+
+	await Promise.all(
+		config.serverSideRendered.map(async (entrypoint) => {
+			const stored = (await get(
+				getSSRDBKey(lang, theme, entrypoint)
+			)) as string;
+			const parsed: {
+				expires: number;
+				content: string;
+			} = stored ? JSON.parse(stored) : undefined;
+			if (!force && stored && Date.now() <= parsed.expires) {
+				return;
+			}
+
+			const response = await fetch(`${entrypoint}/ssr/${lang}/${theme}`, {
+				credentials: 'include',
+			});
+			const body = await response.text();
+			const expires = Date.now() + 1000 * 60 * 60 * 24 * 14;
+
+			await Promise.all([
+				set('lang', lang),
+				set('theme', theme),
+				set(
+					getSSRDBKey(lang, theme, entrypoint),
+					JSON.stringify({
+						content: body,
+						expires,
+					})
+				),
+			]);
+		})
+	);
+}
+
 self.addEventListener('install', (event) => {
 	self.skipWaiting();
 
+	console.log('install');
 	event.waitUntil(
 		(async () => {
 			const cache = await caches.open(CACHE_NAME);
-			await cache.addAll([
-				...flat([
-					...config.groups.map((group) => {
-						return group.files;
-					}),
-					...config.routes.map((route) => {
-						return route.src;
-					}),
+			await Promise.all([
+				cache.addAll([
+					...flat([
+						...config.groups.map((group) => {
+							return group.files;
+						}),
+						...config.routes.map((route) => {
+							return route.src;
+						}),
+					]),
+					'/404',
 				]),
-				'/404',
+				updateServerSideRenderedCache(),
 			]);
 		})()
 	);
@@ -56,29 +113,10 @@ const pathMaps = [
 	),
 ];
 
-async function sendMessageToClients(message: string) {
-	const foundClients = await self.clients.matchAll({
-		includeUncontrolled: true,
-		type: 'window',
-	});
-	foundClients.forEach((client) => {
-		client.postMessage(message);
-	});
-}
-
-async function updateNotify() {
-	await sendMessageToClients('update-ready');
-}
-
-async function shouldNotify(file: string) {
-	const match = pathMaps.find((pathMap) => pathMap.src === file);
-	if (!match) return false;
-
-	return match.notifyOnUpdate;
-}
-
 async function updateVersions() {
-	const remoteVersionsFile = await fetch('/versions.json');
+	const remoteVersionsFile = await fetch('/versions.json', {
+		credentials: 'include',
+	});
 	const remoteVersions = await remoteVersionsFile
 		.clone()
 		.json()
@@ -97,7 +135,6 @@ async function updateVersions() {
 	};
 	const localVersions = await localVersionsFile.json();
 
-	let notify: boolean = false;
 	await Promise.all(
 		Object.getOwnPropertyNames(remoteVersions).map(async (file) => {
 			if (!(file in localVersions)) {
@@ -107,19 +144,11 @@ async function updateVersions() {
 				//Out of date, re-fetch
 				await cache.delete(file);
 				await cache.add(file);
-
-				// Check if we should notify
-				if (await shouldNotify(file)) {
-					notify = true;
-				}
 			}
 		})
 	);
+	await updateServerSideRenderedCache(true);
 	await cache.put('/versions.json', remoteVersionsFile);
-
-	if (notify) {
-		await updateNotify();
-	}
 }
 
 async function raceAll<T>(...promises: Promise<T>[]): Promise<T> {
@@ -178,12 +207,58 @@ async function networkOrFallback(
 	}
 }
 
+async function serveEntrypoint(event: FetchEvent): Promise<Response> {
+	const { pathname } = new URL(event.request.url);
+	const lang = ((await get('lang')) || DEFAULT_LANG) as LANGUAGE;
+	const theme = ((await get('theme')) || DEFAULT_THEME) as THEME;
+
+	if (pathname === '/' || pathname === '/index') {
+		const serverSideRendered = (await get(
+			getSSRDBKey(lang, theme, pathname)
+		)) as string | void;
+		const renderedContent =
+			serverSideRendered ||
+			html`<sander-ronde
+				><noscript>
+					<span style="color: ${themes[theme].text.main};"
+						>Javascript is not enabled, please enable it to use this
+						website</span
+					></noscript
+				></sander-ronde
+			>`;
+		return new Response(
+			await indexHTML({
+				defer: true,
+				autoReload: false,
+				theme: theme,
+				lang: lang,
+				content: renderedContent,
+			}),
+			{
+				headers: {
+					'Content-Type': 'text/html; charset=UTF-8',
+				},
+				status: 200,
+			}
+		);
+	}
+	return event.request.method === 'GET'
+		? cacheMatch(new Request('/404'))
+		: new Response(null, {
+				status: 404,
+		  });
+}
+
 self.addEventListener('fetch', async (event) => {
 	const { pathname, hostname } = new URL(event.request.url);
 
 	if (hostname !== location.hostname) {
 		// External requests, fetch them externally
-		event.respondWith(fetch(event.request));
+		event.respondWith(
+			fetch(event.request, {
+				credentials: 'include',
+			})
+		);
 		return;
 	}
 
@@ -201,10 +276,26 @@ self.addEventListener('fetch', async (event) => {
 	}
 
 	const { isEntrypoint, serveStrategy, src } = match;
-	switch (serveStrategy) {
-		case SERVE_STATEGY.FASTEST:
-			event.respondWith(fastest(new Request(src)));
-			break;
+
+	if (isEntrypoint) {
+		switch (serveStrategy) {
+			case SERVE_STATEGY.FASTEST:
+				event.respondWith(
+					raceAll(
+						serveEntrypoint(event),
+						fetch(new Request(src), {
+							credentials: 'include',
+						})
+					)
+				);
+				break;
+		}
+	} else {
+		switch (serveStrategy) {
+			case SERVE_STATEGY.FASTEST:
+				event.respondWith(fastest(new Request(src)));
+				break;
+		}
 	}
 
 	if (isEntrypoint && navigator.onLine) {
@@ -213,4 +304,26 @@ self.addEventListener('fetch', async (event) => {
 			await updateVersions();
 		} catch (e) {}
 	}
+});
+
+export type ServiceworkerMessages = {
+	type: 'setCookie';
+	data: {
+		theme: THEME;
+		lang: LANGUAGE;
+	};
+};
+self.addEventListener<ServiceworkerMessages>('message', (event) => {
+	event.waitUntil(
+		(async () => {
+			switch (event.data.type) {
+				case 'setCookie':
+					await Promise.all([
+						set('theme', event.data.data.theme),
+						set('lang', event.data.data.lang),
+					]);
+					break;
+			}
+		})()
+	);
 });
