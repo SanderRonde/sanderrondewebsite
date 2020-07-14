@@ -8,6 +8,14 @@ export default async function indexHTML({
 	autoReload,
 	theme,
 	lang,
+	content = html`<sander-ronde
+		><noscript>
+			<span style="color: ${themes[theme].text.main};"
+				>Javascript is not enabled, please enable it to use this
+				website</span
+			></noscript
+		></sander-ronde
+	>`,
 }: EntrypointHTMLFileOptions) {
 	return html`
 		<!DOCTYPE html>
@@ -20,22 +28,16 @@ export default async function indexHTML({
 				style="margin: 0; background-color: ${themes[theme].background
 					.main};"
 			>
-				${html`<sander-ronde
-					><noscript>
-						<span style="color: ${themes[theme].text.main};"
-							>Javascript is not enabled, please enable it to use
-							this website</span
-						></noscript
-					></sander-ronde
-				>`}
+				${content}
 				<script
 					${defer ? 'defer async' : ''}
 					type="module"
 					src="/entrypoints/index/index.js"
 				></script>
 				${autoReload
-					? (await import('@sanderronde/autoreload')).default
-							.includeHTML
+					? ((await eval("import('@sanderronde/autoreload')")) as {
+							default: typeof import('@sanderronde/autoreload');
+					  }).default.includeHTML
 					: ''}
 			</body>
 		</html>

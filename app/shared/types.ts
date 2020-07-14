@@ -7,6 +7,7 @@ export interface EntrypointHTMLFileOptions {
 	autoReload: boolean;
 	lang: LANGUAGE;
 	theme: THEME;
+	content?: string;
 }
 
 export const enum SERVE_STATEGY {
