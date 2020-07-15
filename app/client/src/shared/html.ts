@@ -94,9 +94,9 @@ export const head = (theme: Theme, hostname: string, dev: boolean) => html`
 	<!-- CSP -->
 	<meta
 		http-equiv="Content-Security-Policy"
-		content="${dev
-			? "default-src 'self' 'unsafe-inline'; img-src 'self' https://www.google-analytics.com; script-src-elem 'self' https://www.googletagmanager.com https://www.google-analytics.com; connect-src *"
-			: "default-src 'self' 'unsafe-inline'; img-src 'self' https://www.google-analytics.com; script-src-elem 'self' https://www.googletagmanager.com https://www.google-analytics.com"}"
+		content="default-src 'self' 'unsafe-inline'; img-src 'self' https://www.google-analytics.com; script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com${dev
+			? ';connect-src *'
+			: ''}"
 	/>
 
 	<!-- Meta info -->
@@ -170,7 +170,9 @@ export const head = (theme: Theme, hostname: string, dev: boolean) => html`
 	<script
 		async
 		defer
-		src="https://www.googletagmanager.com/gtag/js?id=UA-38781084-${getAnalyticsIndex(hostname)}"
+		src="https://www.googletagmanager.com/gtag/js?id=UA-38781084-${getAnalyticsIndex(
+			hostname
+		)}"
 	></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
