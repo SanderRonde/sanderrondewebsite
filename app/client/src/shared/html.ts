@@ -1,3 +1,4 @@
+import { LANGUAGES } from '../../../i18n/i18n.js';
 import { Theme } from '../../../shared/theme.js';
 import { html } from '../../../shared/util.js';
 
@@ -100,6 +101,14 @@ export const head = (theme: Theme, dev: boolean) => html`
 
 	<!-- Search result stuff -->
 	<link rel="canonical" href="https://sanderron.de/" />
+	${LANGUAGES.map((language) => {
+		return html`<link
+			rel="alternate"
+			hreflang="${language}"
+			href="https://sanderron.de/?lang=${language}"
+		/>`;
+	}).join('\n')}
+	<link rel="alternate" hreflang="x-default" href="https://sanderron.de/" />
 
 	<!-- Me -->
 	<link rel="me" href="mailto:sander@sanderron.de" />
