@@ -33,6 +33,30 @@ import * as esm from 'esm';
 };
 
 const ENTRYPOINTS: ENTRYPOINTS_TYPE[] = ['index'];
+const STATIC_FILES: {
+	src: string;
+	path: string;
+	langmap?: {
+		[lang: string]: string;
+	};
+}[] = [
+	{
+		src: path.join(__dirname, 'app/client/static/cv.pdf'),
+		path: '/cv',
+		langmap: {
+			en: '/cv.en.pdf',
+			nl: '/cv.nl.pdf',
+		},
+	},
+	{
+		src: path.join(
+			__dirname,
+			'app/repos/bachelor-thesis/docs/assets/thesis.pdf'
+		),
+		path: '/thesis',
+	},
+];
+
 const SEMI_STATIC_FILES = ['manifest.json'];
 
 const json = (_json as unknown) as typeof _json.default;
@@ -975,6 +999,98 @@ gulp.task('defs', async function generateCustomData() {
 	);
 });
 
+function fromEntries<V, A extends [string, V][]>(
+	arr: A
+): {
+	[key: string]: V;
+} {
+	const obj: {
+		[key: string]: V;
+	} = {};
+	for (const [key, value] of arr) {
+		obj[key] = value;
+	}
+	return obj;
+}
+
+gulp.task('sitemap', async function generateSitemap() {
+	const importES = esm(module, {
+		cjs: true,
+		mode: 'all',
+	});
+	const { LANGUAGES } = importES(
+		path.resolve('./app/i18n/i18n')
+	) as typeof import('./app/i18n/i18n');
+
+	const files: {
+		path: string;
+		lastmod: string;
+		langmap?: {
+			[lang: string]: string;
+		};
+	}[] = [
+		...['/', ...ENTRYPOINTS].map((entrypoint) => {
+			if (!entrypoint.endsWith('/')) {
+				entrypoint = `${entrypoint}/`;
+			}
+			return {
+				path: entrypoint,
+				lastmod: new Date().toISOString(),
+				langmap: fromEntries(
+					LANGUAGES.map((lang) => {
+						return [lang, `${entrypoint}?lang=${lang}`];
+					}) as [string, string][]
+				) as {
+					[lang: string]: string;
+				},
+			};
+		}),
+		...(await Promise.all(
+			STATIC_FILES.map(async (file) => {
+				return {
+					path: file.path,
+					lastmod: (
+						(await fs.stat(file.src)).mtime || new Date()
+					).toISOString(),
+					langmap: file.langmap || {},
+				};
+			})
+		)),
+	];
+
+	const xml = [
+		'<?xml version="1.0" encoding="UTF-8"?>',
+		'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+		...files.map((file) => {
+			return [
+				'<url>',
+				...[
+					`<loc>https://sanderron.de${file.path}</loc>`,
+					`<lastmod>${file.lastmod}</lastmod>`,
+					...Object.keys(file.langmap || {}).map((lang) => {
+						return `<xhtml:link rel="alternate" hreflang="${lang}" href="${
+							file.langmap![lang]
+						}" />`;
+					}),
+				].map((i) => `\t${i}`),
+				'</url>',
+			]
+				.map((i) => `\t${i}`)
+				.join('\n');
+		}),
+		'</urlset>',
+	].join('\n');
+
+	const sitemapPath = path.join(
+		__dirname,
+		'app/client/build/public/sitemap.xml'
+	);
+	await fs.mkdirp(path.dirname(sitemapPath));
+	await fs.writeFile(sitemapPath, xml, {
+		encoding: 'utf8',
+	});
+});
+
 /**
  * Tasks that you tend to run while developing to update definitions
  */
@@ -984,7 +1100,10 @@ gulp.task('dev', gulp.series('i18n', 'defs'));
  * Handle all pre-build stuff like modules for the
  * backend and some stubs
  */
-gulp.task('pre-build', gulp.series('defs', 'modules', 'stubs', 'i18n'));
+gulp.task(
+	'pre-build',
+	gulp.series('defs', 'modules', 'stubs', 'i18n', 'sitemap')
+);
 
 /**
  * Handle all frontend bundling etc
