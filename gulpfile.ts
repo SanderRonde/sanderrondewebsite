@@ -1033,6 +1033,9 @@ gulp.task('sitemap', async function generateSitemap() {
 			if (!entrypoint.endsWith('/')) {
 				entrypoint = `${entrypoint}/`;
 			}
+			if (!entrypoint.startsWith('/')) {
+				entrypoint = `/${entrypoint}`;
+			}
 			return {
 				path: entrypoint,
 				lastmod: new Date().toISOString(),
@@ -1068,7 +1071,7 @@ gulp.task('sitemap', async function generateSitemap() {
 					`<loc>https://sanderron.de${file.path}</loc>`,
 					`<lastmod>${file.lastmod}</lastmod>`,
 					...Object.keys(file.langmap || {}).map((lang) => {
-						return `<xhtml:link rel="alternate" hreflang="${lang}" href="${
+						return `<xhtml:link rel="alternate" hreflang="${lang}" href="https://sanderron.de${
 							file.langmap![lang]
 						}" />`;
 					}),
