@@ -10,7 +10,12 @@ import {
 } from '../build/modules/lit-html/lit-html.js';
 import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
-import { I18NGetMessage, LANGUAGE, strToLanguage } from '../../i18n/i18n.js';
+import {
+	I18NGetMessage,
+	LANGUAGE,
+	strToLanguage,
+	LANG_COOKIE_NAME,
+} from '../../i18n/i18n.js';
 import { CLIENT_DIR, CACHE_HEADER } from './constants.js';
 import { themes, THEME, strToTheme } from '../../shared/theme.js';
 import { ENTRYPOINTS_TYPE } from '../../shared/types';
@@ -214,11 +219,14 @@ export namespace Entrypoints {
 
 		export async function render(
 			entrypoint: ENTRYPOINTS_TYPE,
+			route: string,
 			req: express.Request,
 			res: SpdyExpressResponse,
 			next: express.NextFunction,
 			server: WebServer
 		) {
+			if (applyLangQueryParam(req, res, route)) return;
+
 			res.startTime('entrypoint-info', 'Getting entrypoint info');
 			const info = Info.getInfo(entrypoint);
 			if (!info) {
@@ -306,11 +314,12 @@ export namespace Entrypoints {
 			entrypointRoutes.forEach((route) => {
 				if (!io.noSSR) {
 					app.get(
-						route,
+						`${route}/`,
 						async (req, res: SpdyExpressResponse, next) => {
 							res.endTime('route-resolution');
 							await Rendering.render(
 								entrypoint,
+								route,
 								req,
 								res,
 								next,
@@ -356,10 +365,20 @@ export namespace Entrypoints {
 						}
 					);
 				}
-				app.get(route, async (req, res: SpdyExpressResponse, next) => {
-					res.endTime('route-resolution');
-					await renderHTMLFile(entrypoint, req, res, next, server);
-				});
+				app.get(
+					`${route}/`,
+					async (req, res: SpdyExpressResponse, next) => {
+						res.endTime('route-resolution');
+						await renderHTMLFile(
+							entrypoint,
+							route,
+							req,
+							res,
+							next,
+							server
+						);
+					}
+				);
 				app.post('/get_vars', async (req, res: SpdyExpressResponse) => {
 					res.endTime('route-resolution');
 
@@ -380,13 +399,32 @@ export namespace Entrypoints {
 		});
 	}
 
+	function applyLangQueryParam(
+		req: express.Request,
+		res: SpdyExpressResponse,
+		route: string
+	) {
+		if (req.query && req.query.lang) {
+			const lang = strToLanguage(req.query.lang);
+			if (lang) {
+				res.cookie(LANG_COOKIE_NAME, lang);
+			}
+			res.redirect(route, 302);
+			return true;
+		}
+		return false;
+	}
+
 	export async function renderHTMLFile(
 		entrypoint: ENTRYPOINTS_TYPE,
+		route: string,
 		req: express.Request,
 		res: SpdyExpressResponse,
 		next: express.NextFunction,
 		{ io }: WebServer
 	) {
+		if (applyLangQueryParam(req, res, route)) return;
+
 		const htmlRenderer = Info.getHTML(entrypoint);
 
 		// Hand control over to "next" function
