@@ -412,7 +412,7 @@ export namespace Entrypoints {
 			if (lang) {
 				res.cookie(LANG_COOKIE_NAME, lang);
 			}
-			res.redirect(route, 302);
+			res.redirect(302, route);
 			return true;
 		}
 		return false;
