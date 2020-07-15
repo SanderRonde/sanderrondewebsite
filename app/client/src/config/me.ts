@@ -548,9 +548,8 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.PERSONAL_PROJECT,
-			// TODO:
 			start: new Date(2020, 2).getTime(),
-			end: END_DATE.NEVER,
+			end: new Date(2020, 6).getTime(),
 			source: 'https://github.com/SanderRonde/sanderrondewebsite',
 			url: 'http://sanderron.de/',
 			skills: [
