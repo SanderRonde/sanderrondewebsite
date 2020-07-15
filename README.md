@@ -39,5 +39,5 @@ My personal website, currently under construction
 -   [x] Lighthouse optimizations - Check offline
 -   [x] Check bottlenecks in project and wc-lib
 -   [x] 404 page
--   [ ] Google Search console
--   [ ] ... Done?
+-   [x] Google Search console
+-   [x] ... Done?
