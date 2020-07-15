@@ -7,6 +7,7 @@ import {
 	strToLanguage,
 	DEFAULT_LANG,
 	LANG_COOKIE_NAME,
+	LANGUAGE,
 } from '../../i18n/i18n.js';
 import express from 'express';
 
@@ -18,7 +19,12 @@ export namespace RequestVars {
 		const languageStr = req.cookies[LANG_COOKIE_NAME];
 		const language = strToLanguage(languageStr);
 		if (!language) {
-			res.cookie(LANG_COOKIE_NAME, DEFAULT_LANG);
+			res.cookie(
+				LANG_COOKIE_NAME,
+				req.headers.host && req.headers.host.endsWith('.nl')
+					? LANGUAGE.NL
+					: DEFAULT_LANG
+			);
 			return DEFAULT_LANG;
 		}
 		return language;
