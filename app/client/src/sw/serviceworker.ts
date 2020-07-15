@@ -235,6 +235,7 @@ async function serveEntrypoint(event: FetchEvent): Promise<Response> {
 				theme: theme,
 				lang: lang,
 				content: renderedContent,
+				hostname: location.hostname,
 			}),
 			{
 				headers: {
