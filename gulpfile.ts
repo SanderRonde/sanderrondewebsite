@@ -1089,7 +1089,7 @@ gulp.task('sitemap', async function generateSitemap() {
 	}
 
 	const sitemapPath = path.join(__dirname, 'app/client/build/public/');
-	await fs.mkdirp(path.dirname(sitemapPath));
+	await fs.mkdirp(sitemapPath);
 	await Promise.all(
 		HOSTS.map(async (host) => {
 			await fs.writeFile(
