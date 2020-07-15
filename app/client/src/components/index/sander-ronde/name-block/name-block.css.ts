@@ -86,6 +86,10 @@ export const NameBlockCSS = new TemplateFn<NameBlock>(
 				margin: 10px;
 				cursor: pointer;
 			}
+
+			${css(this).$['document-link']} {
+				margin-top: 15px;
+			}
 		</style>`;
 	},
 	CHANGE_TYPE.THEME,

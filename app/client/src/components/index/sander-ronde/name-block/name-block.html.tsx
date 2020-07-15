@@ -6,6 +6,7 @@ import Github from '../../../icons/github';
 import Email from '../../../icons/email';
 import { NameBlock } from './name-block';
 import { render } from 'lit-html';
+import Document from '../../../icons/document';
 
 export const NameBlockHTML = new TemplateFn<NameBlock>(
 	function (html) {
@@ -137,6 +138,16 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									aria-label={'Email'}
 								>
 									<Email id="email" width={50} height={50} />
+								</a>
+								<a
+									id="document-link"
+									class="icon-link link color transition"
+									href="/cv"
+									title="CV"
+									rel="noopener"
+									aria-label={'CV'}
+								>
+									<Document id="cv" width={38} height={38} />
 								</a>
 							</div>
 						</div>

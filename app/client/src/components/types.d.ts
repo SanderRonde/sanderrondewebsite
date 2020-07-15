@@ -23,6 +23,7 @@ declare global {
 	type HTMLTimelineElement = TimeLine;
 	type HTMLTimeLineElement = TimeLine;
 	type HTMLNameblockElement = NameBlock;
+	type HTMLDocumentElement = SVGElement;
 	type HTMLNameBlockElement = NameBlock;
 	type HTMLInfoblockElement = InfoBlock;
 	type HTMLInfoBlockElement = InfoBlock;
