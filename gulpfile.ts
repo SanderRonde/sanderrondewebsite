@@ -33,6 +33,7 @@ import * as esm from 'esm';
 };
 
 const ENTRYPOINTS: ENTRYPOINTS_TYPE[] = ['index'];
+const HOSTS = ['sanderron.de', 'sanderronde.com', 'sanderronde.nl'];
 const STATIC_FILES: {
 	src: string;
 	path: string;
@@ -1061,37 +1062,45 @@ gulp.task('sitemap', async function generateSitemap() {
 		)),
 	];
 
-	const xml = [
-		'<?xml version="1.0" encoding="UTF-8"?>',
-		'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
-		...files.map((file) => {
-			return [
-				'<url>',
-				...[
-					`<loc>https://sanderron.de${file.path}</loc>`,
-					`<lastmod>${file.lastmod}</lastmod>`,
-					...Object.keys(file.langmap || {}).map((lang) => {
-						return `<xhtml:link rel="alternate" hreflang="${lang}" href="https://sanderron.de${
-							file.langmap![lang]
-						}" />`;
-					}),
-				].map((i) => `\t${i}`),
-				'</url>',
-			]
-				.map((i) => `\t${i}`)
-				.join('\n');
-		}),
-		'</urlset>',
-	].join('\n');
+	function generateHostSitemap(host: string) {
+		const schemedHost = `https://${host}`;
+		return [
+			'<?xml version="1.0" encoding="UTF-8"?>',
+			'<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml">',
+			...files.map((file) => {
+				return [
+					'<url>',
+					...[
+						`<loc>${schemedHost}${file.path}</loc>`,
+						`<lastmod>${file.lastmod}</lastmod>`,
+						...Object.keys(file.langmap || {}).map((lang) => {
+							return `<xhtml:link rel="alternate" hreflang="${lang}" href="${schemedHost}${
+								file.langmap![lang]
+							}" />`;
+						}),
+					].map((i) => `\t${i}`),
+					'</url>',
+				]
+					.map((i) => `\t${i}`)
+					.join('\n');
+			}),
+			'</urlset>',
+		].join('\n');
+	}
 
-	const sitemapPath = path.join(
-		__dirname,
-		'app/client/build/public/sitemap.xml'
-	);
+	const sitemapPath = path.join(__dirname, 'app/client/build/public/');
 	await fs.mkdirp(path.dirname(sitemapPath));
-	await fs.writeFile(sitemapPath, xml, {
-		encoding: 'utf8',
-	});
+	await Promise.all(
+		HOSTS.map(async (host) => {
+			await fs.writeFile(
+				path.join(sitemapPath, `sitemap.${host}.xml`),
+				generateHostSitemap(host),
+				{
+					encoding: 'utf8',
+				}
+			);
+		})
+	);
 });
 
 /**

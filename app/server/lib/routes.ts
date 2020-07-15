@@ -23,6 +23,8 @@ const THESIS_FILE = path.join(
 	'thesis.pdf'
 );
 
+const HOSTS = ['sanderron.de', 'sanderronde.com', 'sanderronde.nl'];
+
 export type SpdyExpressResponse = Partial<server.ServerResponse> &
 	express.Response;
 
@@ -183,6 +185,18 @@ export namespace Routes {
 				...staticSettings,
 			})
 		);
+		app.get('/sitemap.xml', async (req, res) => {
+			const host = req.headers.host || 'sanderron.de';
+			if (HOSTS.indexOf(host) === -1) {
+				res.status(400);
+				res.write('Nonexistent host');
+				res.end();
+				return;
+			}
+			res.sendFile(
+				path.join(CLIENT_DIR, `build/public/sitemap.${host}.xml`)
+			);
+		});
 		app.use(
 			serveStatic(path.join(CLIENT_DIR, 'build/public'), {
 				...staticSettings,
