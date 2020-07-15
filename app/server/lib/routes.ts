@@ -206,6 +206,7 @@ export namespace Routes {
 				autoReload: io.dev && !io.noAutoReload,
 				lang,
 				theme,
+				hostname: req.headers.host || '',
 			})
 		);
 		res.end();

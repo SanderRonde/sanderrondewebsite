@@ -179,6 +179,7 @@ export namespace Entrypoints {
 			theme: THEME,
 			{ io }: WebServer,
 			entrypoint: ENTRYPOINTS_TYPE,
+			req: express.Request,
 			res: SpdyExpressResponse
 		) {
 			const { Component, getHTML } = info!;
@@ -212,6 +213,7 @@ export namespace Entrypoints {
 				defer: true,
 				mainTag: rendered,
 				autoReload: io.dev && !io.noAutoReload,
+				hostname: req.headers.host || '',
 			});
 
 			return html;
@@ -254,6 +256,7 @@ export namespace Entrypoints {
 					theme,
 					server,
 					entrypoint,
+					req,
 					res
 				);
 				renderCacheStore.set({ entrypoint, lang, theme }, renderedHTML);
@@ -445,6 +448,7 @@ export namespace Entrypoints {
 			lang,
 			theme,
 			autoReload: io.dev && !io.noAutoReload,
+			hostname: req.headers.host || '',
 		});
 		res.endTime('html-render');
 		res.write(html);

@@ -7,13 +7,14 @@ export default async function notFoundHTML({
 	autoReload,
 	theme,
 	lang,
+	hostname,
 }: EntrypointHTMLFileOptions) {
 	return html`
 		<!DOCTYPE html>
 		<html lang="${lang}">
 			<head>
 				<title>Sander Ronde</title>
-				${head(themes[theme], autoReload)}
+				${head(themes[theme], hostname, autoReload)}
 				<style>
 					body {
 						margin: 0;

@@ -2,6 +2,12 @@ import { LANGUAGES } from '../../../i18n/i18n.js';
 import { Theme } from '../../../shared/theme.js';
 import { html } from '../../../shared/util.js';
 
+function getAnalyticsIndex(hostname: string) {
+	if (hostname.includes('sanderronde.nl')) return 6;
+	if (hostname.includes('sanderronde.com')) return 5;
+	return 7;
+}
+
 const _icons = html`
 	<link
 		rel="apple-touch-icon"
@@ -79,7 +85,7 @@ export function icons() {
 	return _icons;
 }
 
-export const head = (theme: Theme, dev: boolean) => html`
+export const head = (theme: Theme, hostname: string, dev: boolean) => html`
 	<!-- Essentials -->
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
@@ -159,4 +165,20 @@ export const head = (theme: Theme, dev: boolean) => html`
 			font-family: 'Roboto';
 		}
 	</style>
+
+	<!-- Google Analytics -->
+	<script
+		async
+		defer
+		src="https://www.googletagmanager.com/gtag/js?id=UA-38781084-${getAnalyticsIndex(hostname)}"
+	></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() {
+			dataLayer.push(arguments);
+		}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-38781084-${getAnalyticsIndex(hostname)}');
+	</script>
 `;
