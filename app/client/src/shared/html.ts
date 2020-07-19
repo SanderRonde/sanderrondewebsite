@@ -100,7 +100,7 @@ export const head = (theme: Theme, hostname: string, dev: boolean) => html`
 	/>
 
 	<!-- Meta info -->
-	<meta name="description" content="Sander Ronde" />
+	<meta name="description" content="Sander Ronde's personal website" />
 	<meta name="theme-color" content="${theme.primary.main}" />
 	<meta name="robots" content="index,follow" />
 	<meta name="googlebot" content="index,follow" />
