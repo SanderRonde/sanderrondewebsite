@@ -909,7 +909,7 @@ namespace I18N {
 				normalized
 			)
 				.map((key) => {
-					return `\t${key}: I18NMessage;`;
+					return `\t"${key}": I18NMessage;`;
 				})
 				.join('\n')}\n}\n`;
 			return text;
