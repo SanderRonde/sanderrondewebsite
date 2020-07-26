@@ -5,7 +5,7 @@ import { InfoBlock } from './index/sander-ronde/info-block/info-block';
 import { SkillRow } from './index/sander-ronde/info-block/skill-row';
 import { TimeLine } from './index/sander-ronde/time-line/time-line';
 import { RawHTML } from './shared/raw-html/raw-html';
-import { ElevatedCard } from './shared';
+import { ElevatedCard, ToolTip } from './shared';
 import { JSXBase } from 'wc-lib';
 
 declare global {
@@ -16,6 +16,7 @@ declare global {
 
 	type HTMLPinElement = SVGElement;
 	type HTMLRawhtmlElement = RawHTML;
+	type HTMLToolTipElement = ToolTip;
 	type HTMLEmailElement = SVGElement;
 	type HTMLGithubElement = SVGElement;
 	type HTMLSkillrowElement = SkillRow;

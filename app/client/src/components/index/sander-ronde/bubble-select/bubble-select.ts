@@ -40,6 +40,22 @@ export abstract class BubbleSelect<B, I, C, S> extends IndexBase<{
 		},
 	});
 
+	constructor() {
+		super();
+		this.listenGP<
+			{
+				lang: string;
+			},
+			'lang'
+		>('globalPropChange', (prop) => {
+			if (prop === 'lang') {
+				this.onLangChange();
+			}
+		});
+	}
+
+	protected abstract onLangChange(): void;
+
 	private _ignoreFocus: boolean = false;
 	mounted() {
 		this.addEventListener('focus', () => {

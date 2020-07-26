@@ -16,6 +16,7 @@ import { LangSelectHTML } from './lang-select.html';
 import { ToolTip } from '../../../shared/';
 import { config } from 'wc-lib';
 import { updateServiceworkerCookies } from '../../../../shared/sw';
+import { I18NKeys } from '../../../../../../i18n/i18n-keys';
 
 @config({
 	is: 'lang-select',
@@ -53,5 +54,23 @@ export class LangSelect extends BubbleSelect<
 
 	public endPreview() {
 		this.setLang(this.current as any);
+	}
+
+	protected async onLangChange() {
+		const tooltips = this.$$('.tooltip');
+		await Promise.all(
+			tooltips.map(async (tooltip) => {
+				tooltip.props.message = await this.__prom(
+					I18NKeys.shared.langSelect.changeLang,
+					{
+						lang: await this.__prom(
+							`${
+								I18NKeys.shared.langSelect._
+							}${tooltip.getAttribute('data-lang')}` as any
+						),
+					}
+				);
+			})
+		);
 	}
 }

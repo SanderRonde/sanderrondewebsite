@@ -5,13 +5,23 @@ import { ToolTip } from '../../../shared/index.js';
 import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { ThemeSelect } from './theme-select.js';
 import { render } from 'lit-html';
+import { I18NKeys } from '../../../../../../i18n/i18n-keys.js';
 
 export const ThemeSelectHTML = new TemplateFn<ThemeSelect>(
 	function (html) {
 		return BubbleSelectHTML<THEME>(html, this, THEMES, (themeName) => {
 			const theme = themes[themeName];
 			return (
-				<ToolTip direction={TOOLTIP_DIRECTION.LEFT} message={themeName}>
+				<ToolTip
+					class="tooltip"
+					direction={TOOLTIP_DIRECTION.LEFT}
+					message={this.__(I18NKeys.shared.themeSelect.changeTheme, {
+						theme: this.__prom(
+							`${I18NKeys.shared.themeSelect._}${themeName}` as any
+						),
+					})}
+					data-theme={themeName}
+				>
 					<div
 						class="theme-background"
 						style={{

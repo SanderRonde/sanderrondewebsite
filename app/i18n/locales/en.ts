@@ -1,5 +1,6 @@
 import { Skill, About } from '../../client/src/config/me';
-import { I18NRoot } from '../i18n';
+import { I18NRoot, LANGUAGE } from '../i18n';
+import { THEME } from '../../shared/theme';
 
 export const messages = {
 	generic: {
@@ -144,6 +145,33 @@ export const messages = {
 			},
 			update_ready: {
 				message: 'Page can be updated',
+			},
+		},
+		langSelect: {
+			changeLang: {
+				message: 'Set language to {{lang}}',
+			},
+			_: { message: '', blank: true },
+			[LANGUAGE.EN]: {
+				message: 'english',
+			},
+			[LANGUAGE.NL]: {
+				message: 'dutch',
+			},
+		},
+		themeSelect: {
+			changeTheme: {
+				message: 'Set theme to {{theme}}',
+			},
+			_: { message: '', blank: true },
+			[THEME.LIGHT]: {
+				message: 'light',
+			},
+			[THEME.DARK]: {
+				message: 'dark',
+			},
+			[THEME.HIGH_CONTRAST]: {
+				message: 'high contrast',
 			},
 		},
 	},

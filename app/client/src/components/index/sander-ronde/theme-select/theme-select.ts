@@ -16,6 +16,7 @@ import { setCookie } from '../../../../shared/cookies';
 import { ToolTip } from '../../../shared/';
 import { config } from 'wc-lib';
 import { updateServiceworkerCookies } from '../../../../shared/sw';
+import { I18NKeys } from '../../../../../../i18n/i18n-keys';
 
 @config({
 	is: 'theme-select',
@@ -53,5 +54,23 @@ export class ThemeSelect extends BubbleSelect<
 
 	public endPreview() {
 		this.setTheme(this.current as any);
+	}
+
+	protected async onLangChange() {
+		const tooltips = this.$$('.tooltip');
+		await Promise.all(
+			tooltips.map(async (tooltip) => {
+				tooltip.props.message = await this.__prom(
+					I18NKeys.shared.themeSelect.changeTheme,
+					{
+						theme: await this.__prom(
+							`${
+								I18NKeys.shared.themeSelect._
+							}${tooltip.getAttribute('data-theme')}` as any
+						),
+					}
+				);
+			})
+		);
 	}
 }
