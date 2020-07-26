@@ -67,6 +67,19 @@ export class ToolTip extends ComponentBase<{
 		},
 	});
 
+	constructor() {
+		super();
+		this.listenProp('propChange', (key) => {
+			if (key === 'message') {
+				this.fit();
+			}
+		});
+	}
+
+	fit() {
+		this._marginsUpdated = false;
+	}
+
 	private _marginsUpdated: boolean = false;
 	updateMargin() {
 		const contentBCR = this.$['slot-content']
