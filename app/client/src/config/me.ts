@@ -310,6 +310,19 @@ export namespace LifeTimeline {
 		return !isEET(entry);
 	}
 
+	const currentHost = typeof location !== 'undefined' && location.host;
+	const sanitizedHost =
+		currentHost &&
+		[
+			'sanderron.de',
+			'sanderronde.nl',
+			'sanderronde.com',
+			'www.sanderron.de',
+			'www.sanderronde.nl',
+			'www.sanderronde.com',
+		].includes(currentHost)
+			? currentHost
+			: 'sanderron.de';
 	export const lifeTimeline: LifeTimeline = [
 		{
 			type: TYPE.EDUCATION,
@@ -551,14 +564,14 @@ export namespace LifeTimeline {
 			start: new Date(2020, 2).getTime(),
 			end: new Date(2020, 6).getTime(),
 			source: 'https://github.com/SanderRonde/sanderrondewebsite',
-			url: 'http://sanderron.de/',
+			url: `http://${sanitizedHost}/`,
 			skills: [
 				Skill.SKILL.CSS,
 				Skill.SKILL.HTML,
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
 			].map((skill) => ({ name: skill })),
-			title: 'www.sanderron.de',
+			title: `www.${sanitizedHost}`,
 			icon: [{ source: '/timeline/me.webp', alt: "this website's icon" }],
 			description: {
 				en: "The website you're reading this on",
