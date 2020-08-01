@@ -207,9 +207,10 @@ export namespace Routes {
 	async function render404(
 		req: express.Request,
 		res: SpdyExpressResponse,
-		io: IO.IO
+		io: IO.IO,
+		status: number = 404
 	) {
-		res.status(404);
+		res.status(status);
 		res.contentType('.html');
 		res.set('Cache-Control', CACHE_HEADER);
 		const lang = RequestVars.getLang(req, res);
@@ -228,7 +229,7 @@ export namespace Routes {
 
 	export function init404({ app, io }: WebServer) {
 		app.get('/404', async (req, res: SpdyExpressResponse) => {
-			await render404(req, res, io);
+			await render404(req, res, io, 200);
 		});
 		app.use(async (req, res: SpdyExpressResponse) => {
 			await render404(req, res, io);
