@@ -203,7 +203,6 @@ async function updateHTMLTypings(changedFiles: string[]) {
 			const fileContent = await fs.readFile(file, {
 				encoding: 'utf8',
 			});
-			debugger;
 			const output = extractStringTypes(fileContent, {
 				fileType: FILE_TYPE.TSX,
 				getTypesObj: false,
