@@ -30,6 +30,10 @@ export const SanderRondeCSS = new TemplateFn<SanderRonde>(
 					display: flex;
 					flex-grow: 100;
 				}
+
+				${css(this).$['below-the-fold']} {
+					content-visibility: auto;
+				}
 			</style>
 		`;
 	},

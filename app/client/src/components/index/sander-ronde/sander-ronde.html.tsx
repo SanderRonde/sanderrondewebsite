@@ -40,7 +40,7 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 						<NameBlock id="name-block" />
 					</BackgroundBlock>
 					{!this.isSSR && (
-						<html.F>
+						<div id="below-the-fold">
 							<BackgroundBlock
 								id="info-background"
 								shade={
@@ -112,7 +112,7 @@ export const SanderRondeHTML = new TemplateFn<SanderRonde>(
 									);
 								})()
 							)}
-						</html.F>
+						</div>
 					)}
 				</div>
 			</div>
