@@ -25,15 +25,23 @@ export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
 		const lang = this.getLang();
 
 		const renderTitleLink = (title: string) => {
-			if (!props.entry.titleLink) return title;
+			if (!('source' in props.entry)) return title;
 
 			return (
 				<a
-					href={props.entry.titleLink}
+					href={props.entry.source}
 					rel="noopener"
 					title={getInternationalText(props.entry.title, lang)}
 					target="_blank"
 					class="link light transition"
+					{...{
+						'@': {
+							click: (e) => {
+								e.stopPropagation();
+								e.cancelBubble = true;
+							},
+						},
+					}}
 				>
 					{title}
 				</a>
