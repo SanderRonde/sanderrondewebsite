@@ -19,48 +19,63 @@ function getSSRDBKey(lang: LANGUAGE, theme: THEME, entrypoint: string) {
 }
 
 async function updateServerSideRenderedCache(force: boolean = false) {
-	const { lang, theme } = (await (
-		await fetch('/get_vars', {
+	return new Promise((resolve) => {
+		fetch('/get_vars', {
 			method: 'POST',
 			credentials: 'include',
 		})
-	).json()) as {
-		lang: LANGUAGE;
-		theme: THEME;
-	};
+			.catch(() => {
+				// Internet is offline, just quit early
+				resolve();
+			})
+			.then(async (response) => {
+				if (!response) {
+					// Internet is offline, just quit early
+					resolve();
+					return;
+				}
+				const { lang, theme } = (await response.json()) as {
+					lang: LANGUAGE;
+					theme: THEME;
+				};
 
-	await Promise.all(
-		config.serverSideRendered.map(async (entrypoint) => {
-			const stored = (await get(
-				getSSRDBKey(lang, theme, entrypoint)
-			)) as string;
-			const parsed: {
-				expires: number;
-				content: string;
-			} = stored ? JSON.parse(stored) : undefined;
-			if (!force && stored && Date.now() <= parsed.expires) {
-				return;
-			}
+				await Promise.all(
+					config.serverSideRendered.map(async (entrypoint) => {
+						const stored = (await get(
+							getSSRDBKey(lang, theme, entrypoint)
+						)) as string;
+						const parsed: {
+							expires: number;
+							content: string;
+						} = stored ? JSON.parse(stored) : undefined;
+						if (!force && stored && Date.now() <= parsed.expires) {
+							return;
+						}
 
-			const response = await fetch(`${entrypoint}/ssr/${lang}/${theme}`, {
-				credentials: 'include',
-			});
-			const body = await response.text();
-			const expires = Date.now() + 1000 * 60 * 60 * 24 * 14;
+						const response = await fetch(
+							`${entrypoint}/ssr/${lang}/${theme}`,
+							{
+								credentials: 'include',
+							}
+						);
+						const body = await response.text();
+						const expires = Date.now() + 1000 * 60 * 60 * 24 * 14;
 
-			await Promise.all([
-				set('lang', lang),
-				set('theme', theme),
-				set(
-					getSSRDBKey(lang, theme, `/${entrypoint}`),
-					JSON.stringify({
-						content: body,
-						expires,
+						await Promise.all([
+							set('lang', lang),
+							set('theme', theme),
+							set(
+								getSSRDBKey(lang, theme, `/${entrypoint}`),
+								JSON.stringify({
+									content: body,
+									expires,
+								})
+							),
+						]);
 					})
-				),
-			]);
-		})
-	);
+				);
+			});
+	});
 }
 
 self.addEventListener('install', (event) => {
