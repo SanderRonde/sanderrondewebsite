@@ -94,7 +94,7 @@ export const head = (theme: Theme, hostname: string, dev: boolean) => html`
 	<!-- CSP -->
 	<meta
 		http-equiv="Content-Security-Policy"
-		content="default-src 'self' 'unsafe-inline'; img-src 'self' https://www.google-analytics.com; script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com${dev
+		content="default-src 'self' 'unsafe-inline'; connect-src https://www.google-analytics.com; img-src 'self' https://www.google-analytics.com; script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com${dev
 			? ';connect-src *'
 			: ''}"
 	/>
