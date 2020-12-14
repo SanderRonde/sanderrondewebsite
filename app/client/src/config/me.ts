@@ -486,8 +486,28 @@ export namespace LifeTimeline {
 		},
 		{
 			type: TYPE.WORK,
-			start: new Date(2019, 7).getTime(),
+			start: new Date(2020, 10).getTime(),
 			end: END_DATE.TBD,
+			skills: [
+				Skill.SKILL.HTML,
+				Skill.SKILL.JAVASCRIPT,
+				Skill.SKILL.TYPESCRIPT,
+			].map((skill) => ({ name: skill })),
+			employer: '30MHz',
+			employerURL: 'https://www.30mhz.com/',
+			title: 'Internship (graduation)',
+			description: {
+				en:
+					'Creating a design library for third party developers based on internally used design components.',
+				nl:
+					'Maken van een design library voor ontwikkelaars van derde partijen op basis van intern gebruikte design components.',
+			},
+			icon: [{ source: '/timeline/30mhz.webp', alt: '30MHz logo' }],
+		},
+		{
+			type: TYPE.WORK,
+			start: new Date(2019, 7).getTime(),
+			end: new Date(2020, 10).getTime(),
 			skills: [
 				Skill.SKILL.CSS,
 				Skill.SKILL.DJANGO,

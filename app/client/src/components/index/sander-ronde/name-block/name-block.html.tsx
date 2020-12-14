@@ -58,15 +58,15 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									</a>
 								</div>
 								<div id="tagline-work" class="tagline">
-									{'Full-Stack software engineer @ '}
+									{'Doing my graduation internship @ '}
 									<a
-										href="https://nextupsoftware.com/"
+										href="https://www.30mhz.com/"
 										rel="noopener"
 										class="link color transition"
 										target="_blank"
-										title="NextUp website"
+										title="30MHz"
 									>
-										NextUp Software
+										30MHz
 									</a>
 								</div>
 							</div>
