@@ -21,7 +21,7 @@ const SKILL_GROUP_SIZE =
 	(typeof window === 'undefined' ? 1920 : window.innerWidth) < 500 ? 2 : 4;
 
 export const TimeLineEntryHTML = new TemplateFn<TimeLineEntry>(
-	function (html, props) {
+	function (html, { props }) {
 		const lang = this.getLang();
 
 		const renderTitleLink = (title: string) => {

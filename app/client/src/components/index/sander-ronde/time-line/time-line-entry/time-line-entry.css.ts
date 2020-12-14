@@ -10,7 +10,7 @@ import { render } from 'lit-html';
 export const IMAGE_DIMENSIONS = 40;
 
 export const TimeLineEntryCSS = new TemplateFn<TimeLineEntry>(
-	function (html, props, theme) {
+	function (html, { props, theme }) {
 		const lang = this.getLang();
 		const maxTextWidth = Math.min(
 			typeof window === 'undefined' ? 1920 : window.innerWidth - 150,

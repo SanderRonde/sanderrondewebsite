@@ -5,7 +5,7 @@ import { render } from 'lit-html';
 export const LinkCSS = new TemplateFn<
 	ConfigurableWebComponent<{ themes: typeof themes }>
 >(
-	function (html, _props, theme) {
+	function (html, { theme }) {
 		return html`<style>
 			.link {
 				color: ${theme.text.main};

@@ -21,7 +21,7 @@ export function getShadow(level: number) {
 }
 
 export const ElevatedCardCSS = new TemplateFn<ElevatedCard>(
-	function (html, props, theme) {
+	function (html, { props, theme }) {
 		return html`<style>
 			:host {
 				position: relative;

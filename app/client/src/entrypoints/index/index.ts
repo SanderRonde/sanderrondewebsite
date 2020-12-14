@@ -7,6 +7,7 @@ import {
 	NodePart,
 	isDirective,
 	noChange,
+	directive,
 } from 'lit-html';
 import {
 	THEME,
@@ -33,8 +34,10 @@ import nl from '../../../../i18n/locales/nl.json.js';
 export function getPreferredColorScheme() {
 	if (window.matchMedia('(prefers-contrast: high)').matches)
 		return THEME.HIGH_CONTRAST;
-	if (window.matchMedia('(prefers-color-scheme: dark)').matches) return THEME.DARK;
-	if (window.matchMedia('(prefers-color-scheme: light)').matches) return THEME.LIGHT;
+	if (window.matchMedia('(prefers-color-scheme: dark)').matches)
+		return THEME.DARK;
+	if (window.matchMedia('(prefers-color-scheme: light)').matches)
+		return THEME.LIGHT;
 	return undefined;
 }
 
@@ -48,6 +51,7 @@ function registerComponents() {
 		NodePart,
 		isDirective,
 		noChange,
+		directive,
 	});
 	WebComponent.initI18N({
 		urlFormat: '/i18n/locales/$LANG$.json',

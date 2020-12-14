@@ -7,6 +7,7 @@ import {
 	NodePart,
 	isDirective,
 	noChange,
+	directive,
 } from '../build/modules/lit-html/lit-html.js';
 import { SSR } from '../build/modules/wc-lib/build/es/lib/ssr/ssr.js';
 import { ssr } from '../build/modules/wc-lib/build/es/wc-lib-ssr.js';
@@ -146,6 +147,7 @@ export namespace Entrypoints {
 					NodePart,
 					isDirective,
 					noChange,
+					directive,
 				});
 			}
 
@@ -194,6 +196,7 @@ export namespace Entrypoints {
 					NodePart,
 					isDirective,
 					noChange,
+					directive,
 				});
 			}
 

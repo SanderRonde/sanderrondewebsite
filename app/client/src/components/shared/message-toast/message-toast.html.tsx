@@ -3,7 +3,7 @@ import { MessageToast } from './message-toast';
 import { render } from 'lit-html';
 
 export const MessageToastHTML = new TemplateFn<MessageToast>(
-	function (html, props) {
+	function (html, { props }) {
 		return (
 			<div id="toast">
 				<div id="text">{props.message}</div>

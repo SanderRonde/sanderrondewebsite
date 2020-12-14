@@ -4,7 +4,7 @@ import { BackgroundBlock } from './background-block';
 import { render } from 'lit-html';
 
 export const BackgroundBlockCSS = new TemplateFn<BackgroundBlock>(
-	function (html, props, theme) {
+	function (html, { props, theme }) {
 		return html`<style>
 			${css(this).$.block} {
 				width: 100vw;

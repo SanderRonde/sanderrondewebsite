@@ -87,7 +87,7 @@ function createYearGroups(sortedEntries: LifeTimeline.Entry[]) {
 }
 
 export const TimeLineHTML = new TemplateFn<TimeLine>(
-	function (html, props) {
+	function (html, { props }) {
 		const shouldRenderEntry = (
 			entry: LifeTimeline.Entry,
 			side:

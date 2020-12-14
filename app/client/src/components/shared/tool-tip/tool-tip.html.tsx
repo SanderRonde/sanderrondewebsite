@@ -3,7 +3,7 @@ import { TemplateFn, CHANGE_TYPE } from 'wc-lib';
 import { render } from 'lit-html';
 
 export const ToolTipHTML = new TemplateFn<ToolTip>(
-	function (html, props) {
+	function (html, { props }) {
 		return (
 			<div id="container">
 				<div id="content">

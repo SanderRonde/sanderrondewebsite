@@ -5,7 +5,7 @@ import { THEME_SHADE } from '../../../../../../shared/theme';
 import { mediaQueryRule } from '../../../../styles/media-query';
 
 export const TimeLineCSS = new TemplateFn<TimeLine>(
-	function (html, props, theme) {
+	function (html, { props, theme }) {
 		const cardWidth = Math.min(
 			typeof window === 'undefined' ? 1920 : window.innerWidth - 150,
 			500

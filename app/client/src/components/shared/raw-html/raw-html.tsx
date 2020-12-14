@@ -11,7 +11,7 @@ function templateStringsArray(...content: string[]) {
 @config({
 	is: 'raw-html',
 	html: new TemplateFn<RawHTML>(
-		function (html, props) {
+		function (html, { props }) {
 			return <div>{html(templateStringsArray(props.content))}</div>;
 		},
 		CHANGE_TYPE.PROP,

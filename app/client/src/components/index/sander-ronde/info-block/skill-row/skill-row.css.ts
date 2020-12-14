@@ -4,7 +4,7 @@ import { TemplateFn, CHANGE_TYPE, css } from 'wc-lib';
 import { render } from 'lit-html';
 
 export const SkillRowCSS = new TemplateFn<SkillRow>(
-	function (html, props, theme) {
+	function (html, { props, theme }) {
 		return html`<style>
 
 			${css(this).$['skill-group']} {

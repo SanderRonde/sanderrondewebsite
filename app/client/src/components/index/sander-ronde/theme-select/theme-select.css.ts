@@ -5,7 +5,7 @@ import { ThemeSelect } from './theme-select.js';
 import { render } from 'lit-html';
 
 export const ThemeBubbleSelectCSS = new TemplateFn<ThemeSelect>(
-	function (html, _props, theme) {
+	function (html, { theme }) {
 		return html`${BubbleSelectCSS(html, theme, THEMES.length)}`;
 	},
 	CHANGE_TYPE.THEME,

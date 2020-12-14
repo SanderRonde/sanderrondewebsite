@@ -3,7 +3,7 @@ import { InfoBlock } from './info-block';
 import { render } from 'lit-html';
 
 export const InfoBlockCSS = new TemplateFn<InfoBlock>(
-	function (html, _props, theme) {
+	function (html, { theme }) {
 		return html`<style>
 			${css(this).$.container} {
 				color: ${theme.text.main};

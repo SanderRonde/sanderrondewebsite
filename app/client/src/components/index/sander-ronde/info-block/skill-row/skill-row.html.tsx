@@ -5,7 +5,7 @@ import { SkillRow } from './skill-row.js';
 import { render } from 'lit-html';
 
 export const SkillRowHTML = new TemplateFn<SkillRow>(
-	function (html, props) {
+	function (html, { props }) {
 		return (
 			<div id="skill-group">
 				{props.group &&

@@ -4,7 +4,7 @@ import { NameBlock } from './name-block';
 import { render } from 'lit-html';
 
 export const NameBlockCSS = new TemplateFn<NameBlock>(
-	function (html, _props, theme) {
+	function (html, { theme }) {
 		return html`<style>
 			${css(this).$.block},
 			span[data-type='html'] {
