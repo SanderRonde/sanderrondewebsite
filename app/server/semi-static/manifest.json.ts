@@ -28,7 +28,7 @@ export function manifestJSON(
 		display: 'minimal-ui',
 		background_color: themes[theme].background.main,
 		theme_color: themes[theme].primary.main,
-		description: 'Sander Ronde personal website',
+		description: 'Sander Ronde - Full stack web developer',
 		icons: [
 			...dimensions.map((dimension) => ({
 				src: `icons/${dimension}.png`,

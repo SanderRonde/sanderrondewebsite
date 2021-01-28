@@ -1,6 +1,7 @@
 import { Skill, About } from '../../client/src/config/me';
 import { THEME } from '../../shared/theme';
 import { I18NRoot, LANGUAGE } from '../i18n';
+import { I18NKeys } from '../i18n-keys';
 
 export const messages = {
 	generic: {

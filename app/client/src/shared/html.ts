@@ -100,7 +100,7 @@ export const head = (theme: Theme, hostname: string, dev: boolean) => html`
 	/>
 
 	<!-- Meta info -->
-	<meta name="description" content="Sander Ronde's personal website" />
+	<meta name="description" content="Sander Ronde - Full stack web developer" />
 	<meta name="theme-color" content="${theme.primary.main}" />
 	<meta name="robots" content="index,follow" />
 	<meta name="googlebot" content="index,follow" />
@@ -125,18 +125,18 @@ export const head = (theme: Theme, hostname: string, dev: boolean) => html`
 	<meta property="og:title" content="Sander Ronde" />
 	<meta property="og:image" content="https://sanderron.de/icons/512.png" />
 	<meta property="og:image:alt" content="Sander Ronde" />
-	<meta property="og:description" content="Sander Ronde's personal website" />
+	<meta property="og:description" content="Sander Ronde - Full stack web developer" />
 	<meta property="og:site_name" content="Sander Ronde" />
 	<meta property="og:locale" content="en_US" />
 	<meta property="article:author" content="Sander Ronde" />
 
 	<!-- Twitter -->
-	<meta name="twitter:card" content="Sander Ronde's personal website" />
+	<meta name="twitter:card" content="Sander Ronde - Full stack web developer" />
 	<meta name="twitter:url" content="https://sanderron.de/" />
 	<meta name="twitter:title" content="Sander Ronde" />
 	<meta
 		name="twitter:description"
-		content="Sander Ronde's personal website"
+		content="Sander Ronde - Full stack web developer"
 	/>
 	<meta name="twitter:image" content="https://sanderron.de/icons/512.png" />
 	<meta name="twitter:image:alt" content="Sander Ronde" />
