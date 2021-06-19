@@ -47,6 +47,7 @@ export namespace Skill {
 		BROWSER_EXTENSIONS = 'browser_extensions',
 		BASH = 'bash',
 		REACT = 'react',
+		RUST = 'rust',
 	}
 
 	export const enum SKILL_GROUP {
@@ -164,6 +165,10 @@ export namespace Skill {
 				},
 				{
 					name: SKILL.BASH,
+					level: SKILL_LEVEL.GOOD,
+				},
+				{
+					name: SKILL.RUST,
 					level: SKILL_LEVEL.GOOD,
 				},
 			],
@@ -432,7 +437,7 @@ export namespace LifeTimeline {
 				},
 			],
 			start: new Date(2018, 3).getTime(),
-			end: END_DATE.TBD,
+			end: new Date(2021, 6).getTime(),
 			icon: [
 				{
 					source: '/timeline/uva.webp',
@@ -487,7 +492,7 @@ export namespace LifeTimeline {
 		{
 			type: TYPE.WORK,
 			start: new Date(2020, 10).getTime(),
-			end: END_DATE.TBD,
+			end: new Date(2021, 6).getTime(),
 			skills: [
 				Skill.SKILL.HTML,
 				Skill.SKILL.JAVASCRIPT,
