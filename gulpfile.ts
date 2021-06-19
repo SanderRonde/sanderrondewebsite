@@ -42,7 +42,7 @@ const STATIC_FILES: {
 	};
 }[] = [
 	{
-		src: path.join(__dirname, 'app/client/static/cv.pdf'),
+		src: path.join(__dirname, 'app/client/static/cv.en.pdf'),
 		path: '/cv',
 		langmap: {
 			en: '/cv.en.pdf',
