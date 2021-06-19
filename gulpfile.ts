@@ -54,7 +54,7 @@ const STATIC_FILES: {
 			__dirname,
 			'app/repos/bachelor-thesis/docs/assets/thesis.pdf'
 		),
-		path: '/thesis',
+		path: '/bachelor-thesis',
 	},
 ];
 

@@ -404,7 +404,7 @@ export namespace LifeTimeline {
 					alt: 'Leiden University logo',
 				},
 			],
-			url: '/thesis.pdf',
+			url: '/bachelor-thesis.pdf',
 			description: {
 				en:
 					'Bachelor thesis: Detecting anomalies with recurrent neural networks. Explores the application of recurrent neural networks in detecting anomalies in user behavior on computer networks',

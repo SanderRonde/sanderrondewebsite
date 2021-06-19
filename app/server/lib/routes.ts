@@ -168,7 +168,7 @@ export namespace Routes {
 			immutable: false,
 			maxAge: CACHE_MAX_AGE * 1000,
 		};
-		app.get('/thesis(.pdf)?', (_req, res, _next) => {
+		app.get(['/thesis(.pdf)?', '/bachelor-thesis(.pdf)?'], (_req, res, _next) => {
 			res.endTime('route-resolution');
 			res.startTime('send-file', 'Sending file');
 			res.sendFile(THESIS_FILE);
