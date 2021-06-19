@@ -272,6 +272,19 @@ cmd('build')
 	})
 	.run(async (exec, { dev }) => {
 		const env = setEnvVar('ENV', dev ? 'dev' : 'prod');
+		await exec('? Checking if submodule has been cloned');
+		if (
+			!(await fs.pathExists(
+				path.join(
+					__dirname,
+					'app/repos/bachelor-thesis/docs/assets/thesis.pdf'
+				)
+			))
+		) {
+			throw new Error(
+				'Submodule "bachelor-thesis" not found. Did you do a deep clone?\n(hint: "git submodule update --init" can be used to clone it)'
+			);
+		}
 		await exec('? cleaning');
 		await exec('@clean');
 
