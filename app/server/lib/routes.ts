@@ -22,6 +22,8 @@ const THESIS_FILE = path.join(
 	'docs/assets',
 	'thesis.pdf'
 );
+const CV_EN_FILE = path.join(ROOT_DIR, 'app/client', 'static', 'cv.en.pdf');
+const CV_NL_FILE = path.join(ROOT_DIR, 'app/client', 'static', 'cv.nl.pdf');
 
 const HOSTS = ['sanderron.de', 'sanderronde.com', 'sanderronde.nl'];
 
@@ -168,10 +170,20 @@ export namespace Routes {
 			immutable: false,
 			maxAge: CACHE_MAX_AGE * 1000,
 		};
-		app.get(['/thesis(.pdf)?', '/bachelor-thesis(.pdf)?'], (_req, res, _next) => {
+		app.get(['/thesis(.pdf)?', '/bachelor-thesis(.pdf)?'], (_req, res) => {
 			res.endTime('route-resolution');
 			res.startTime('send-file', 'Sending file');
 			res.sendFile(THESIS_FILE);
+		});
+		app.get(['/cv(.pdf)?', '/cv.en(.pdf)?'], (_req, res) => {
+			res.endTime('route-resolution');
+			res.startTime('send-file', 'Sending file');
+			res.sendFile(CV_EN_FILE);
+		});
+		app.get('/cv.nl(.pdf)?', (_req, res) => {
+			res.endTime('route-resolution');
+			res.startTime('send-file', 'Sending file');
+			res.sendFile(CV_NL_FILE);
 		});
 		app.use(
 			serveStatic(path.join(CLIENT_DIR, 'static'), {
