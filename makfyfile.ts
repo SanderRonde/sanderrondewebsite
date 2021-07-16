@@ -26,7 +26,7 @@ async function remove(
 		await Promise.all([
 			files.map(
 				(file) =>
-					new Promise((resolve, reject) => {
+					new Promise<void>((resolve, reject) => {
 						rimraf(file, (err) => {
 							if (err) {
 								reject(err);
