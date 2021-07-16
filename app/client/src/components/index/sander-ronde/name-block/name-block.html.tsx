@@ -58,16 +58,7 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 									</a>
 								</div>
 								<div id="tagline-work" class="tagline">
-									{'Doing my graduation internship @ '}
-									<a
-										href="https://www.30mhz.com/"
-										rel="noopener"
-										class="link color transition"
-										target="_blank"
-										title="30MHz"
-									>
-										30MHz
-									</a>
+									{'Currently looking for a job!'}
 								</div>
 							</div>
 							<div id="education">
@@ -106,7 +97,24 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 											I18NKeys.index.nameBlock.education
 												.uniLeiden
 										)}
+									</a>{' '}
+									(
+									<a
+										href="https://sanderron.de/bachelor-thesis"
+										rel="noopener"
+										class="link color transition"
+										target="_blank"
+										title={this.__(
+											I18NKeys.index.nameBlock.links
+												.bachelorThesis
+										)}
+									>
+										{this.__(
+											I18NKeys.index.nameBlock.links
+												.bachelorThesis
+										)}
 									</a>
+									)
 								</div>
 							</div>
 							<div id="links">

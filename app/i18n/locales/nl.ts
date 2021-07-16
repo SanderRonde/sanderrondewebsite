@@ -35,6 +35,12 @@ export const messages = {
 				scrollDown: {
 					message: 'scroll naar beneden',
 				},
+				bachelorThesis: {
+					message: 'Bachelor Scriptie',
+				},
+				masterThesis: {
+					message: 'Master Scriptie',
+				},
 			},
 			titles: {
 				master: {
