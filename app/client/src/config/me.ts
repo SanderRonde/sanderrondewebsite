@@ -48,6 +48,8 @@ export namespace Skill {
 		BASH = 'bash',
 		REACT = 'react',
 		RUST = 'rust',
+		WEB_COMPONENTS = 'web components',
+		ANGULAR = 'angular',
 	}
 
 	export const enum SKILL_GROUP {
@@ -402,7 +404,7 @@ export namespace LifeTimeline {
 			start: new Date(2014, 8).getTime(),
 			end: new Date(2018, 2).getTime(),
 			source: 'https://github.com/sanderronde/bachelor-thesis',
-			title: 'Bachelor\'s Thesis',
+			title: "Bachelor's Thesis",
 			icon: [
 				{
 					source: '/timeline/leiden_university.webp',
@@ -412,9 +414,9 @@ export namespace LifeTimeline {
 			url: '/bachelor-thesis.pdf',
 			description: {
 				en:
-					'Bachelor\'s thesis: Detecting anomalies with recurrent neural networks. Explores the application of recurrent neural networks in detecting anomalies in user behavior on computer networks',
+					"Bachelor's thesis: Detecting anomalies with recurrent neural networks. Explores the application of recurrent neural networks in detecting anomalies in user behavior on computer networks",
 				nl:
-					'Bachelor\'s thesis: Detecting anomalies with recurrent neural networks. Hierin wordt onderzocht hoe recurrente neurale netwerken gebruikt kunnen worden voor het detecteren van abnormaal gedrag in computernetwerken',
+					"Bachelor's thesis: Detecting anomalies with recurrent neural networks. Hierin wordt onderzocht hoe recurrente neurale netwerken gebruikt kunnen worden voor het detecteren van abnormaal gedrag in computernetwerken",
 			},
 			skills: [
 				Skill.SKILL.PYTHON,
@@ -853,7 +855,7 @@ export namespace LifeTimeline {
 			start: new Date(2020, 8).getTime(),
 			end: new Date(2021, 5).getTime(),
 			source: 'https://github.com/sanderronde/master-thesis',
-			title: 'Master\'s Thesis',
+			title: "Master's Thesis",
 			icon: [
 				{
 					source: '/timeline/uva.webp',
@@ -864,15 +866,17 @@ export namespace LifeTimeline {
 			url: '/master-thesis.pdf',
 			description: {
 				en:
-					'Master\'s thesis: Migrating Angular Components to Web Components. Explores the ability for components in an Angular code base to be migrated from a closed format (Angular) to a universally supported format (Web Components), thereby allowing for use in all browsers and frameworks.',
+					"Master's thesis: Migrating Angular Components to Web Components. Explores the ability for components in an Angular code base to be migrated from a closed format (Angular) to a universally supported format (Web Components), thereby allowing for use in all browsers and frameworks.",
 				nl:
-					'Master\'s thesis: Migrating Angular components to Web Components. Onderzoekt de mogelijkheid om Angular components van een gesloten format (Angular) te migreren naar een universeel ondersteund format (Web Components), waardoor deze componeten in alle browsers en frameworks bruikbaar worden.',
+					"Master's thesis: Migrating Angular components to Web Components. Onderzoekt de mogelijkheid om Angular components van een gesloten format (Angular) te migreren naar een universeel ondersteund format (Web Components), waardoor deze componeten in alle browsers en frameworks bruikbaar worden.",
 			},
 			skills: [
-				Skill.SKILL.PYTHON,
-				Skill.SKILL.BASH,
-				Skill.SKILL.LATEX,
-				Skill.SKILL.KERAS,
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.JAVASCRIPT,
+				Skill.SKILL.CSS,
+				Skill.SKILL.HTML,
+				Skill.SKILL.WEB_COMPONENTS,
+				Skill.SKILL.ANGULAR,
 			].map((skill) => ({ name: skill })),
 		},
 	];
