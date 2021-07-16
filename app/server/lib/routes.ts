@@ -15,12 +15,19 @@ import notFoundHTML from '../../client/src/entrypoints/404/index.html.js';
 import { RequestVars } from './request-vars.js';
 import { IO } from './io.js';
 
-const THESIS_FILE = path.join(
+const BACHELOR_THESIS_FILE = path.join(
 	ROOT_DIR,
 	'app/repos',
 	'bachelor-thesis',
 	'docs/assets',
 	'thesis.pdf'
+);
+const MASTER_THESIS_FILE = path.join(
+	ROOT_DIR,
+	'app/repos',
+	'master-thesis',
+	'paper/src',
+	'main.pdf'
 );
 const CV_EN_FILE = path.join(ROOT_DIR, 'app/client', 'static', 'cv.en.pdf');
 const CV_NL_FILE = path.join(ROOT_DIR, 'app/client', 'static', 'cv.nl.pdf');
@@ -170,10 +177,15 @@ export namespace Routes {
 			immutable: false,
 			maxAge: CACHE_MAX_AGE * 1000,
 		};
-		app.get(['/thesis(.pdf)?', '/bachelor-thesis(.pdf)?'], (_req, res) => {
+		app.get(['/bachelor-thesis(.pdf)?'], (_req, res) => {
 			res.endTime('route-resolution');
 			res.startTime('send-file', 'Sending file');
-			res.sendFile(THESIS_FILE);
+			res.sendFile(BACHELOR_THESIS_FILE);
+		});
+		app.get(['/thesis(.pdf)?', '/master-thesis(.pdf)?'], (_req, res) => {
+			res.endTime('route-resolution');
+			res.startTime('send-file', 'Sending file');
+			res.sendFile(MASTER_THESIS_FILE);
 		});
 		app.get(['/cv(.pdf)?', '/cv.en(.pdf)?'], (_req, res) => {
 			res.endTime('route-resolution');

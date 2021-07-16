@@ -56,6 +56,13 @@ const STATIC_FILES: {
 		),
 		path: '/bachelor-thesis',
 	},
+	{
+		src: path.join(
+			__dirname,
+			'app/repos/master-thesis/paper/src/main.pdf'
+		),
+		path: '/master-thesis',
+	},
 ];
 
 const SEMI_STATIC_FILES = ['manifest.json'];

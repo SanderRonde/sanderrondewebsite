@@ -285,6 +285,18 @@ cmd('build')
 				'Submodule "bachelor-thesis" not found. Did you do a deep clone?\n(hint: "git submodule update --init" can be used to clone it)'
 			);
 		}
+		if (
+			!(await fs.pathExists(
+				path.join(
+					__dirname,
+					'app/repos/master-thesis/paper/src/main.pdf'
+				)
+			))
+		) {
+			throw new Error(
+				'Submodule "master-thesis" not found. Did you do a deep clone?\n(hint: "git submodule update --init" can be used to clone it)'
+			);
+		}
 		await exec('? cleaning');
 		await exec('@clean');
 
