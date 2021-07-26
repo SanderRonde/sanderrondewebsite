@@ -57,6 +57,18 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										UVA
 									</a>
 								</div>
+								<div id="tagline-work" class="tagline">
+									{'Software Developer @ '}
+									<a
+										href="https://www.crisp.nl/"
+										rel="noopener"
+										class="link color transition"
+										target="_blank"
+										title="Crisp"
+									>
+										Crisp
+									</a>
+								</div>
 							</div>
 							<div id="education">
 								<div class="education-line">
@@ -112,13 +124,6 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										)}
 									</a>
 									)
-								</div>
-							</div>
-							<div id="looking-for-work">
-								<br />
-								<br />
-								<div id="tagline-work" class="tagline">
-									{'Currently looking for a job!'}
 								</div>
 							</div>
 							<div id="links">

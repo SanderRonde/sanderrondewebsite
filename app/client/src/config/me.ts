@@ -47,9 +47,11 @@ export namespace Skill {
 		BROWSER_EXTENSIONS = 'browser_extensions',
 		BASH = 'bash',
 		REACT = 'react',
+		REACT_NATIVE = 'react native',
 		RUST = 'rust',
 		WEB_COMPONENTS = 'web components',
 		ANGULAR = 'angular',
+		POSTGRESQL = 'postgresql',
 	}
 
 	export const enum SKILL_GROUP {
@@ -510,6 +512,31 @@ export namespace LifeTimeline {
 					'Maken van een design library voor ontwikkelaars van derde partijen op basis van intern gebruikte design components.',
 			},
 			icon: [{ source: '/timeline/30mhz.webp', alt: '30MHz logo' }],
+		},
+		{
+			type: TYPE.WORK,
+			start: new Date(2021, 7).getTime(),
+			end: END_DATE.TBD,
+			skills: [
+				Skill.SKILL.CSS,
+				Skill.SKILL.HTML,
+				Skill.SKILL.JAVASCRIPT,
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.REACT,
+				Skill.SKILL.REACT_NATIVE,
+				Skill.SKILL.PHP,
+				Skill.SKILL.POSTGRESQL,
+			].map((skill) => ({ name: skill })),
+			employer: 'Crisp',
+			employerURL: 'https://www.crisp.nl/',
+			title: 'Software Developer',
+			description: {
+				en:
+					'Working on the main app, with a frontend written in React Native and Typescript and a backend that uses PHP and PostgreSQL.',
+				nl:
+					'Werken aan de app, met een frontend geschreven in Typescript en React Native en een backend die gebruik maakt van PHP en PostgreSQL.',
+			},
+			icon: [{ source: '/timeline/crisp.webp', alt: 'Crisp Logo' }],
 		},
 		{
 			type: TYPE.WORK,
