@@ -19,44 +19,6 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 								<h1 id="name">Sander Ronde</h1>
 							</header>
 							<div id="tagline">
-								<div id="tagline-study" class="tagline">
-									<a
-										href="https://masters.vu.nl/en/programmes/computer-science-systems-security/index.aspx"
-										rel="noopener"
-										class="link color transition"
-										target="_blank"
-										title={this.__(
-											I18NKeys.index.nameBlock.titles
-												.master
-										)}
-									>
-										Computer Science Master
-									</a>
-									{"'s student @ "}
-									<a
-										href={this.__(
-											I18NKeys.index.nameBlock.links.vu
-										)}
-										rel="noopener"
-										class="link color transition"
-										target="_blank"
-										title="VU website"
-									>
-										VU
-									</a>
-									{' & '}
-									<a
-										href={this.__(
-											I18NKeys.index.nameBlock.links.uva
-										)}
-										rel="noopener"
-										class="link color transition"
-										target="_blank"
-										title="UVA website"
-									>
-										UVA
-									</a>
-								</div>
 								<div id="tagline-work" class="tagline">
 									{'Software Developer @ '}
 									<a
@@ -121,6 +83,64 @@ export const NameBlockHTML = new TemplateFn<NameBlock>(
 										{this.__(
 											I18NKeys.index.nameBlock.links
 												.bachelorThesis
+										)}
+									</a>
+									)
+								</div>
+								<div class="education-line">
+									<span title="graduated">🎓</span>
+									<a
+										href={
+											'https://masters.vu.nl/en/programmes/computer-science-systems-security/index.aspx'
+										}
+										rel="noopener"
+										class="link color transition"
+										target="_blank"
+										title={this.__(
+											I18NKeys.index.nameBlock.titles
+												.bachelor
+										)}
+									>
+										Master's degree in Computer Science
+									</a>
+									{' @ '}
+									<a
+										href={this.__(
+											I18NKeys.index.nameBlock.links.vu
+										)}
+										rel="noopener"
+										class="link color transition"
+										target="_blank"
+										title="VU website"
+									>
+										VU
+									</a>
+									{' & '}
+									<a
+										href={this.__(
+											I18NKeys.index.nameBlock.links.uva
+										)}
+										rel="noopener"
+										class="link color transition"
+										target="_blank"
+										title="UVA website"
+									>
+										UVA
+									</a>{' '}
+									(
+									<a
+										href="https://sanderron.de/master-thesis"
+										rel="noopener"
+										class="link color transition"
+										target="_blank"
+										title={this.__(
+											I18NKeys.index.nameBlock.links
+												.masterThesis
+										)}
+									>
+										{this.__(
+											I18NKeys.index.nameBlock.links
+												.masterThesis
 										)}
 									</a>
 									)
