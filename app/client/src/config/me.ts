@@ -45,6 +45,7 @@ export namespace Skill {
 		IDA_PRO = 'IDA pro',
 		KERAS = 'keras',
 		BROWSER_EXTENSIONS = 'browser_extensions',
+		VSCODE_EXTENSIONS = 'vscode_extensions',
 		BASH = 'bash',
 		REACT = 'react',
 		REACT_NATIVE = 'react native',
@@ -194,6 +195,11 @@ export namespace Skill {
 				},
 				{
 					name: SKILL.BROWSER_EXTENSIONS,
+					translate: true,
+					level: SKILL_LEVEL.GREAT,
+				},
+				{
+					name: SKILL.VSCODE_EXTENSIONS,
 					translate: true,
 					level: SKILL_LEVEL.GREAT,
 				},
@@ -905,6 +911,44 @@ export namespace LifeTimeline {
 				Skill.SKILL.WEB_COMPONENTS,
 				Skill.SKILL.ANGULAR,
 			].map((skill) => ({ name: skill })),
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2021, 11).getTime(),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/VSCode-Gerrit/',
+			url: 'https://marketplace.visualstudio.com/items?itemName=SanderRonde.vscode--gerrit',
+			skills: [
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.NODE,
+				Skill.SKILL.VSCODE_EXTENSIONS,
+			].map((skill) => ({ name: skill })),
+			title: 'VSCode-Gerrit',
+			description: {
+				en:
+					'VSCode extension for working with the Gerrit code review tool. Allows for easy access to the Gerrit dashboard, and provides a way to create and submit code reviews.',
+				nl:
+					'VSCode extensie voor het werken met de Gerrit code review tool. Maakt het mogelijk om gemakkelijk toegang te krijgen tot de Gerrit dashboard, en maakt het mogelijk om code reviews te maken en in te dienen.',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2022, 2).getTime(),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/phpstan-vscode',
+			url: 'https://marketplace.visualstudio.com/items?itemName=SanderRonde.phpstan-vscode',
+			skills: [
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.NODE,
+				Skill.SKILL.VSCODE_EXTENSIONS,
+			].map((skill) => ({ name: skill })),
+			title: 'PHPStan-VSCode',
+			description: {
+				en:
+					'VSCode extension for working with the PHPStan PHP Linter. Automatically runs PHPStan as you make changes to files, and provides a way to view the results of the PHPStan analysis.',
+				nl:
+					'VSCode extensie voor het werken met de PHPStan PHP Linter. Voert PHPStan automatisch uit terwijl je bestanden aanpast, en maakt het mogelijk om de resultaten van de PHPStan analyse te bekijken.',
+			},
 		},
 	];
 }
