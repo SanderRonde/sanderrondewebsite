@@ -36,10 +36,10 @@ export const messages = {
 					message: 'scroll down',
 				},
 				bachelorThesis: {
-					message: 'Bachelor\'s Thesis',
+					message: "Bachelor's Thesis",
 				},
 				masterThesis: {
-					message: 'Master\'s thesis',
+					message: "Master's thesis",
 				},
 			},
 			titles: {
@@ -94,9 +94,6 @@ export const messages = {
 				},
 				[Skill.SKILL.FRENCH]: {
 					message: 'French',
-				},
-				[Skill.SKILL.BROWSER_EXTENSIONS]: {
-					message: 'Browser extensions',
 				},
 			},
 			skillLevels: {

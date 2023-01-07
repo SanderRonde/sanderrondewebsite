@@ -95,9 +95,6 @@ export const messages = {
 				[Skill.SKILL.FRENCH]: {
 					message: 'Frans',
 				},
-				[Skill.SKILL.BROWSER_EXTENSIONS]: {
-					message: 'Browser extensies',
-				},
 			},
 			skillLevels: {
 				_: { message: '', blank: true },

@@ -44,8 +44,6 @@ export namespace Skill {
 		LINUX = 'linux',
 		IDA_PRO = 'IDA pro',
 		KERAS = 'keras',
-		BROWSER_EXTENSIONS = 'browser_extensions',
-		VSCODE_EXTENSIONS = 'vscode_extensions',
 		BASH = 'bash',
 		REACT = 'react',
 		REACT_NATIVE = 'react native',
@@ -192,16 +190,6 @@ export namespace Skill {
 				{
 					name: SKILL.KERAS,
 					level: SKILL_LEVEL.GOOD,
-				},
-				{
-					name: SKILL.BROWSER_EXTENSIONS,
-					translate: true,
-					level: SKILL_LEVEL.GREAT,
-				},
-				{
-					name: SKILL.VSCODE_EXTENSIONS,
-					translate: true,
-					level: SKILL_LEVEL.GREAT,
 				},
 			],
 		},
@@ -576,16 +564,10 @@ export namespace LifeTimeline {
 			url:
 				'https://chrome.google.com/webstore/detail/binder-app/jeolbigkboigkhlfhilmedbakkkcmeif',
 			skills: [
-				{
-					name: Skill.SKILL.BROWSER_EXTENSIONS,
-					translate: true,
-				},
-				...[
-					Skill.SKILL.CSS,
-					Skill.SKILL.HTML,
-					Skill.SKILL.JAVASCRIPT,
-				].map((skill) => ({ name: skill })),
-			],
+				Skill.SKILL.CSS,
+				Skill.SKILL.HTML,
+				Skill.SKILL.JAVASCRIPT,
+			].map((skill) => ({ name: skill })),
 			title: 'Binder App (browser app)',
 			description: {
 				en:
@@ -917,12 +899,11 @@ export namespace LifeTimeline {
 			start: new Date(2021, 11).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/VSCode-Gerrit/',
-			url: 'https://marketplace.visualstudio.com/items?itemName=SanderRonde.vscode--gerrit',
-			skills: [
-				Skill.SKILL.TYPESCRIPT,
-				Skill.SKILL.NODE,
-				Skill.SKILL.VSCODE_EXTENSIONS,
-			].map((skill) => ({ name: skill })),
+			url:
+				'https://marketplace.visualstudio.com/items?itemName=SanderRonde.vscode--gerrit',
+			skills: [Skill.SKILL.TYPESCRIPT, Skill.SKILL.NODE].map((skill) => ({
+				name: skill,
+			})),
 			title: 'VSCode-Gerrit',
 			description: {
 				en:
@@ -936,12 +917,11 @@ export namespace LifeTimeline {
 			start: new Date(2022, 2).getTime(),
 			end: END_DATE.NEVER,
 			source: 'https://github.com/SanderRonde/phpstan-vscode',
-			url: 'https://marketplace.visualstudio.com/items?itemName=SanderRonde.phpstan-vscode',
-			skills: [
-				Skill.SKILL.TYPESCRIPT,
-				Skill.SKILL.NODE,
-				Skill.SKILL.VSCODE_EXTENSIONS,
-			].map((skill) => ({ name: skill })),
+			url:
+				'https://marketplace.visualstudio.com/items?itemName=SanderRonde.phpstan-vscode',
+			skills: [Skill.SKILL.TYPESCRIPT, Skill.SKILL.NODE].map((skill) => ({
+				name: skill,
+			})),
 			title: 'PHPStan-VSCode',
 			description: {
 				en:
