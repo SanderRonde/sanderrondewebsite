@@ -51,6 +51,7 @@ export namespace Skill {
 		WEB_COMPONENTS = 'web components',
 		ANGULAR = 'angular',
 		POSTGRESQL = 'postgresql',
+		VSCODE = 'vscode',
 	}
 
 	export const enum SKILL_GROUP {
@@ -180,6 +181,10 @@ export namespace Skill {
 			group: SKILL_GROUP.SOFTWARE,
 			skills: [
 				{
+					name: SKILL.VSCODE,
+					level: SKILL_LEVEL.GREAT,
+				},
+				{
 					name: SKILL.LINUX,
 					level: SKILL_LEVEL.GOOD,
 				},
@@ -197,7 +202,10 @@ export namespace Skill {
 }
 
 export namespace About {
-	export type Paragraphs = 'par1' | 'par2' | 'par3';
+	export type Paragraphs =
+		| 'par1'
+		| 'par2'
+		| 'par3'
 
 	export type AboutConfig = {
 		[lang in LANGUAGE]: {
@@ -207,13 +215,13 @@ export namespace About {
 
 	export const about: AboutConfig = {
 		nl: {
-			par1: `Hoi ik ben Sander, en zoals je misschien al hebt gelezen ben ik een full-stack developer. Ik heb een passie voor het oplossen van moeilijke problemen op zowel de frontend als de backend.`,
-			par2: `Ik begon zo'n {{frontend}} jaar geleden met het ontwikkelen van chrome extensies en heb dat sindsdien uitgebreid naar full-stack development met verschillende database systemen en backends, systems/microcontrollers programmeren met voornamelijk C en een beetje machine learning.`,
-			par3: `Deze website dient zowel als online CV als een plek om te laten zien wat ik kan, aangezien de website ook volledig gebouwd is met mijn eigen {{wclib}} library. Je kunt hieronder meer leren over mijn portfolio of je kunt focusen op vaardigheden door erop te klikken.`,
+			par1: `Hoi, ik ben Sander, en ik ben een full-stack ontwikkelaar met een speciale interesse in developer experience. Ik heb een passie voor het oplossen van moeilijke problemen, zowel aan de frontend als de backend, en een zeer sterke drang om de workflows van mij en anderen te verbeteren. Dit doe ik door onder andere open source tools/extensies te maken of door inefficiënties te vinden en op te lossen.`,
+			par2: `Ik begon ongeveer {{frontend}} jaar geleden met het ontwikkelen van chrome-extensies en ben sindsdien uitgebreid naar full-stack ontwikkeling met verschillende databasesystemen en backends, systemen/microcontroller-programmering met voornamelijk C, en een beetje machine learning. In mijn vrije tijd bouw ik graag open source tools en libraries om mezelf en anderen te helpen, momenteel met een totaal van meer dan {{npminstalls}} downloads en {{vscodeext}} gebruikers van mijn VSCode-extensies.`,
+			par3: `Deze website dient zowel als een online cv als een manier om te laten zien wat ik kan, gebouwd met mijn eigen {{wclib}} library. Je kunt hieronder meer leren over mijn portfolio of je kunt focusen op vaardigheden door erop te klikken.`,
 		},
 		en: {
-			par1: `Hi I'm Sander, and as you might have already read, I'm a full-stack developer. I have a passion for solving hard problems in either the frontend or the backend.`,
-			par2: `I started out some {{frontend}} years ago with developing chrome extensions and have since expanded to full-stack development with various database systems and backends, systems/microcontroller programming with mostly C and a bit of machine learning.`,
+			par1: `Hi I'm Sander, and I'm a full-stack developer with a special interest in developer experience. I have a passion for solving hard problems in either the frontend or the backend and a very strong drive to improve mine and others' workflows. Either by creating open source tools/extensions or by finding inefficiencies and fixing them.`,
+			par2: `I started out some {{frontend}} years ago with developing chrome extensions and have since expanded to full-stack development with various database systems and backends, systems/microcontroller programming with mostly C, and a bit of machine learning. In my free time I like to create open source tools and libraries to help myself and others, currently sitting at a total of well over {{npminstalls}} installs and {{vscodeext}} users of my VSCode extensions.`,
 			par3: `This website serves as both a browsable resume and a way to show off what I can do, being built using my own {{wclib}} library. You can learn more about my portfolio down below or you can focus on the projects related to a skill by clicking on one.`,
 		},
 	};
@@ -901,15 +909,19 @@ export namespace LifeTimeline {
 			source: 'https://github.com/SanderRonde/VSCode-Gerrit/',
 			url:
 				'https://marketplace.visualstudio.com/items?itemName=SanderRonde.vscode--gerrit',
-			skills: [Skill.SKILL.TYPESCRIPT, Skill.SKILL.NODE].map((skill) => ({
+			skills: [
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.NODE,
+				Skill.SKILL.VSCODE,
+			].map((skill) => ({
 				name: skill,
 			})),
 			title: 'VSCode-Gerrit',
 			description: {
 				en:
-					'VSCode extension for working with the Gerrit code review tool. Allows for easy access to the Gerrit dashboard, and provides a way to create and submit code reviews.',
+					'VSCode extension for working with the Gerrit code review tool. Allows for easy access to the Gerrit dashboard, and provides a way to create and submit code reviews. Currently has about 10K installs.',
 				nl:
-					'VSCode extensie voor het werken met de Gerrit code review tool. Maakt het mogelijk om gemakkelijk toegang te krijgen tot de Gerrit dashboard, en maakt het mogelijk om code reviews te maken en in te dienen.',
+					'VSCode extensie voor het werken met de Gerrit code review tool. Maakt het mogelijk om gemakkelijk toegang te krijgen tot de Gerrit dashboard, en maakt het mogelijk om code reviews te maken en in te dienen. Heeft momenteel ongeveer 10K installs.',
 			},
 		},
 		{
@@ -919,15 +931,20 @@ export namespace LifeTimeline {
 			source: 'https://github.com/SanderRonde/phpstan-vscode',
 			url:
 				'https://marketplace.visualstudio.com/items?itemName=SanderRonde.phpstan-vscode',
-			skills: [Skill.SKILL.TYPESCRIPT, Skill.SKILL.NODE].map((skill) => ({
+			skills: [
+				Skill.SKILL.TYPESCRIPT,
+				Skill.SKILL.NODE,
+				Skill.SKILL.PHP,
+				Skill.SKILL.VSCODE,
+			].map((skill) => ({
 				name: skill,
 			})),
 			title: 'PHPStan-VSCode',
 			description: {
 				en:
-					'VSCode extension for working with the PHPStan PHP Linter. Automatically runs PHPStan as you make changes to files, and provides a way to view the results of the PHPStan analysis.',
+					'VSCode extension for working with the PHPStan PHP Linter. Automatically runs PHPStan as you make changes to files, and provides a way to view the results of the PHPStan analysis. Currently has about 40K installs.',
 				nl:
-					'VSCode extensie voor het werken met de PHPStan PHP Linter. Voert PHPStan automatisch uit terwijl je bestanden aanpast, en maakt het mogelijk om de resultaten van de PHPStan analyse te bekijken.',
+					'VSCode extensie voor het werken met de PHPStan PHP Linter. Voert PHPStan automatisch uit terwijl je bestanden aanpast, en maakt het mogelijk om de resultaten van de PHPStan analyse te bekijken. Heeft momenteel ongeveer 40K installs.',
 			},
 		},
 	];

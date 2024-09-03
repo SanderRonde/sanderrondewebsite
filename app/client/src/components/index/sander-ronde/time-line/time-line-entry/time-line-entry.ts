@@ -25,7 +25,7 @@ export const enum TIMELINE_ENTRY_TOGGLES {
 	PINNED = 'pinned',
 }
 
-const ANIMATION_DURATION = 350;
+const ANIMATION_DURATION = 150;
 
 @config({
 	is: 'time-line-entry',

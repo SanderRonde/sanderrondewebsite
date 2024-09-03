@@ -82,13 +82,33 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 									)}
 								</p>
 								<p>
-									{this.__(
-										I18NKeys.index.infoBlock.aboutMe.par2,
-										{
-											frontend:
-												new Date().getFullYear() - 2010,
-										}
-									)}
+									<RawHTML
+										custom-css={Templates.joinTemplates(
+											render,
+											LinkCSS,
+											TransitionCSS,
+											HighlightCSS
+										)}
+										content={this.__(
+											I18NKeys.index.infoBlock.aboutMe
+												.par2,
+											{
+												frontend:
+													new Date().getFullYear() -
+													2010,
+												npminstalls: `<a 
+												href="https://npm-stat.com/charts.html?author=SanderRonde&from=2018-01-04&to=2030-12-04" 
+												target="_blank" 
+												rel="noopener" 
+												class="link">${'500K'}</a>`,
+												vscodeext: `<a 
+												href="https://marketplace.visualstudio.com/publishers/SanderRonde" 
+												target="_blank" 
+												rel="noopener" 
+												class="link">${'50K'}</a>`,
+											}
+										)}
+									/>
 								</p>
 								<p>
 									<RawHTML
