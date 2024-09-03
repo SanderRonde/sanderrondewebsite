@@ -16,14 +16,13 @@ export default async function indexHTML({
 			></noscript
 		></sander-ronde
 	>`,
-	hostname
 }: EntrypointHTMLFileOptions) {
 	return html`
 		<!DOCTYPE html>
 		<html lang="${lang}">
 			<head>
 				<title>Sander Ronde</title>
-				${head(themes[theme], hostname, autoReload)}
+				${head(themes[theme], autoReload)}
 			</head>
 			<body
 				style="margin: 0; background-color: ${themes[theme].background

@@ -19,7 +19,7 @@ function getSSRDBKey(lang: LANGUAGE, theme: THEME, entrypoint: string) {
 }
 
 async function updateServerSideRenderedCache(force: boolean = false) {
-	return new Promise((resolve) => {
+	return new Promise<void>((resolve) => {
 		fetch('/get_vars', {
 			method: 'POST',
 			credentials: 'include',
@@ -174,7 +174,7 @@ async function raceAll<T>(...promises: Promise<T>[]): Promise<T> {
 		// When all of them reject, reject
 		Promise.all(
 			promises.map((promise) => {
-				return new Promise((resolve) => {
+				return new Promise<void>((resolve) => {
 					promise.catch(() => resolve());
 				});
 			})
@@ -250,7 +250,6 @@ async function serveEntrypoint(event: FetchEvent): Promise<Response> {
 				theme: theme,
 				lang: lang,
 				content: renderedContent,
-				hostname: location.hostname,
 			}),
 			{
 				headers: {

@@ -8,7 +8,6 @@ export interface EntrypointHTMLFileOptions {
 	lang: LANGUAGE;
 	theme: THEME;
 	content?: string;
-	hostname: string;
 }
 
 export const enum SERVE_STATEGY {

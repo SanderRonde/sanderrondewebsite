@@ -2,12 +2,6 @@ import { LANGUAGES } from '../../../i18n/i18n.js';
 import { Theme } from '../../../shared/theme.js';
 import { html } from '../../../shared/util.js';
 
-function getAnalyticsIndex(hostname: string) {
-	if (hostname.includes('sanderronde.nl')) return 6;
-	if (hostname.includes('sanderronde.com')) return 5;
-	return 7;
-}
-
 const _icons = html`
 	<link
 		rel="apple-touch-icon"
@@ -85,7 +79,7 @@ export function icons() {
 	return _icons;
 }
 
-export const head = (theme: Theme, hostname: string, dev: boolean) => html`
+export const head = (theme: Theme, dev: boolean) => html`
 	<!-- Essentials -->
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width" />
@@ -100,7 +94,10 @@ export const head = (theme: Theme, hostname: string, dev: boolean) => html`
 	/>
 
 	<!-- Meta info -->
-	<meta name="description" content="Sander Ronde - Full stack web developer" />
+	<meta
+		name="description"
+		content="Sander Ronde - Full stack web developer"
+	/>
 	<meta name="theme-color" content="${theme.primary.main}" />
 	<meta name="robots" content="index,follow" />
 	<meta name="googlebot" content="index,follow" />
@@ -125,13 +122,19 @@ export const head = (theme: Theme, hostname: string, dev: boolean) => html`
 	<meta property="og:title" content="Sander Ronde" />
 	<meta property="og:image" content="https://sanderron.de/icons/512.png" />
 	<meta property="og:image:alt" content="Sander Ronde" />
-	<meta property="og:description" content="Sander Ronde - Full stack web developer" />
+	<meta
+		property="og:description"
+		content="Sander Ronde - Full stack web developer"
+	/>
 	<meta property="og:site_name" content="Sander Ronde" />
 	<meta property="og:locale" content="en_US" />
 	<meta property="article:author" content="Sander Ronde" />
 
 	<!-- Twitter -->
-	<meta name="twitter:card" content="Sander Ronde - Full stack web developer" />
+	<meta
+		name="twitter:card"
+		content="Sander Ronde - Full stack web developer"
+	/>
 	<meta name="twitter:url" content="https://sanderron.de/" />
 	<meta name="twitter:title" content="Sander Ronde" />
 	<meta
@@ -165,22 +168,4 @@ export const head = (theme: Theme, hostname: string, dev: boolean) => html`
 			font-family: 'Roboto';
 		}
 	</style>
-
-	<!-- Google Analytics -->
-	<script
-		async
-		defer
-		src="https://www.googletagmanager.com/gtag/js?id=UA-38781084-${getAnalyticsIndex(
-			hostname
-		)}"
-	></script>
-	<script>
-		window.dataLayer = window.dataLayer || [];
-		function gtag() {
-			dataLayer.push(arguments);
-		}
-		gtag('js', new Date());
-
-		gtag('config', 'UA-38781084-${getAnalyticsIndex(hostname)}');
-	</script>
 `;
