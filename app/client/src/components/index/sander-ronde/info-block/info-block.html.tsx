@@ -97,15 +97,15 @@ export const InfoBlockHTML = new TemplateFn<InfoBlock>(
 													new Date().getFullYear() -
 													2010,
 												npminstalls: `<a 
-												href="https://npm-stat.com/charts.html?author=SanderRonde&from=2018-01-04&to=2030-12-04" 
+												href="https://npm-stat.com/charts.html?author=sanderronde&from=2018-01-04&to=2030-12-04" 
 												target="_blank" 
 												rel="noopener" 
-												class="link">${'500K'}</a>`,
+												class="link">${'1.5M'}</a>`,
 												vscodeext: `<a 
 												href="https://marketplace.visualstudio.com/publishers/SanderRonde" 
 												target="_blank" 
 												rel="noopener" 
-												class="link">${'50K'}</a>`,
+												class="link">${'90K'}</a>`,
 											}
 										)}
 									/>
