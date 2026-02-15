@@ -24,13 +24,11 @@ import * as fs from 'fs-extra';
 import * as path from 'path';
 import * as glob from 'glob';
 import * as gulp from 'gulp';
-// @ts-ignore
-import * as esm from 'esm';
+import { pathToFileURL } from 'url';
 
-(require as any).extensions['.js'] = function (module: any, filename: string) {
-	const content = fs.readFileSync(filename, 'utf8');
-	module._compile(content, filename);
-};
+/** Dynamic import that ts-node won't transpile to require() when module is CommonJS */
+const importDynamic = (path: string) =>
+	Function('path', 'return import(path)')(path) as Promise<any>;
 
 const ENTRYPOINTS: ENTRYPOINTS_TYPE[] = ['index'];
 const HOSTS = ['sanderron.de', 'sanderronde.com', 'sanderronde.nl'];
@@ -753,15 +751,23 @@ namespace I18N {
 				}
 				matches = matches.filter((m) => !m.includes('json'));
 
-				const importES = esm(module, {
-					cjs: true,
-					mode: 'all',
-				});
-				resolve(
-					matches.map((file) => {
-						return [importES(file).default, file] as [any, string];
-					})
-				);
+				try {
+					const results = await Promise.all(
+						matches.map(async (file) => {
+							const absPath = path.resolve(file);
+							const mod = await importDynamic(
+								pathToFileURL(absPath).href
+							);
+							return [
+								mod.default ?? (mod as { messages?: any }).messages,
+								file,
+							] as [any, string];
+						})
+					);
+					resolve(results);
+				} catch (e) {
+					reject(e);
+				}
 			});
 		});
 	}
@@ -973,27 +979,25 @@ gulp.task('defs', async function generateCustomData() {
 		'app/client/src/entrypoints/**/exports.js'
 	);
 
-	const customDatas = fileNames
-		.map((fileName) => {
-			const importES = esm(module, {
-				cjs: true,
-				mode: 'all',
-			});
-			const exports = importES(path.resolve(fileName));
-
-			const componentExport = exports['Component'];
-			if (
-				componentExport &&
-				'prototype' in componentExport &&
-				componentExport.prototype &&
-				componentExport.prototype instanceof ConfigurableWebComponent
-			) {
-				return generateHTMLCustomData(componentExport, true);
-			}
-
-			return null;
-		})
-		.filter((v) => v !== null) as HTMLCustomData[];
+	const customDatas = (
+		await Promise.all(
+			fileNames.map(async (fileName) => {
+				const exports = await importDynamic(
+					pathToFileURL(path.resolve(fileName)).href
+				);
+				const componentExport = exports['Component'];
+				if (
+					componentExport &&
+					'prototype' in componentExport &&
+					componentExport.prototype &&
+					componentExport.prototype instanceof ConfigurableWebComponent
+				) {
+					return generateHTMLCustomData(componentExport, true);
+				}
+				return null;
+			})
+		)
+	).filter((v) => v !== null) as HTMLCustomData[];
 
 	if (customDatas.length === 0) {
 		console.log('No custom data files generated');
@@ -1022,13 +1026,9 @@ function fromEntries<V, A extends [string, V][]>(
 }
 
 gulp.task('sitemap', async function generateSitemap() {
-	const importES = esm(module, {
-		cjs: true,
-		mode: 'all',
-	});
-	const { LANGUAGES } = importES(
-		path.resolve('./app/i18n/i18n')
-	) as typeof import('./app/i18n/i18n');
+	const { LANGUAGES } = (await importDynamic(
+		pathToFileURL(path.resolve('./app/i18n/i18n.js')).href
+	)) as typeof import('./app/i18n/i18n');
 
 	const files: {
 		path: string;

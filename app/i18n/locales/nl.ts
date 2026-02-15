@@ -1,6 +1,6 @@
-import { Skill, About } from '../../client/src/config/me';
-import { THEME } from '../../shared/theme';
-import { I18NRoot, LANGUAGE } from '../i18n';
+import { Skill, About } from '../../client/src/config/me.js';
+import { THEME } from '../../shared/theme.js';
+import { I18NRoot, LANGUAGE } from '../i18n.js';
 
 export const messages = {
 	generic: {
