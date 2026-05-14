@@ -53,7 +53,7 @@ export namespace Skill {
 		WEB_COMPONENTS = 'web components',
 		ANGULAR = 'angular',
 		POSTGRESQL = 'postgresql',
-		VSCODE = 'vscode',
+		CURSOR = 'cursor',
 	}
 
 	export const enum SKILL_GROUP {
@@ -183,7 +183,7 @@ export namespace Skill {
 			group: SKILL_GROUP.SOFTWARE,
 			skills: [
 				{
-					name: SKILL.VSCODE,
+					name: SKILL.CURSOR,
 					level: SKILL_LEVEL.GREAT,
 				},
 				{
@@ -191,12 +191,8 @@ export namespace Skill {
 					level: SKILL_LEVEL.GOOD,
 				},
 				{
-					name: SKILL.IDA_PRO,
-					level: SKILL_LEVEL.GOOD,
-				},
-				{
-					name: SKILL.KERAS,
-					level: SKILL_LEVEL.GOOD,
+					name: SKILL.CAD,
+					level: SKILL_LEVEL.GREAT,
 				},
 			],
 		},
@@ -911,7 +907,7 @@ export namespace LifeTimeline {
 			skills: [
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
-				Skill.SKILL.VSCODE,
+				Skill.SKILL.CURSOR,
 			].map((skill) => ({
 				name: skill,
 			})),
@@ -934,7 +930,7 @@ export namespace LifeTimeline {
 				Skill.SKILL.TYPESCRIPT,
 				Skill.SKILL.NODE,
 				Skill.SKILL.PHP,
-				Skill.SKILL.VSCODE,
+				Skill.SKILL.CURSOR,
 			].map((skill) => ({
 				name: skill,
 			})),
