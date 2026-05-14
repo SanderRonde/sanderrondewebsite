@@ -40,6 +40,8 @@ export namespace Skill {
 		ASSEMBLY = 'assembly',
 		LATEX = 'latex',
 		NODE = 'node',
+		CAD = 'cad',
+		SCAD = 'scad',
 		DJANGO = 'django',
 		LINUX = 'linux',
 		IDA_PRO = 'IDA pro',
@@ -202,10 +204,7 @@ export namespace Skill {
 }
 
 export namespace About {
-	export type Paragraphs =
-		| 'par1'
-		| 'par2'
-		| 'par3'
+	export type Paragraphs = 'par1' | 'par2' | 'par3';
 
 	export type AboutConfig = {
 		[lang in LANGUAGE]: {
@@ -945,6 +944,24 @@ export namespace LifeTimeline {
 					'VSCode extension for working with the PHPStan PHP Linter. Automatically runs PHPStan as you make changes to files, and provides a way to view the results of the PHPStan analysis. Currently has about 40K installs.',
 				nl:
 					'VSCode extensie voor het werken met de PHPStan PHP Linter. Voert PHPStan automatisch uit terwijl je bestanden aanpast, en maakt het mogelijk om de resultaten van de PHPStan analyse te bekijken. Heeft momenteel ongeveer 40K installs.',
+			},
+		},
+		{
+			type: TYPE.PERSONAL_PROJECT,
+			start: new Date(2025, 3).getTime(),
+			end: END_DATE.NEVER,
+			source: 'https://github.com/SanderRonde/led-scales',
+			skills: [Skill.SKILL.PYTHON, Skill.SKILL.CAD, Skill.SKILL.SCAD].map(
+				(skill) => ({
+					name: skill,
+				})
+			),
+			title: 'LED Scales',
+			description: {
+				en:
+					'A sculpture with LEDs vaguely representing the scales of a dragon. Models are parametrically generated using openSCAD (its code in turn generated in python) and printed using a 3D printer.',
+				nl:
+					'Een sculptuur met LEDs die de schaal van een draak benaderen. Modellen worden parametrisch gegenereerd met openSCAD (de code hiervoor wordt in python gegenereerd) en geprint met een 3D printer.',
 			},
 		},
 	];
