@@ -86,7 +86,24 @@ export namespace Routes {
 				return next();
 			}
 
-			const basePath = path.join(root, req.url.slice(prefix.length));
+			let relativePath: string;
+			try {
+				relativePath = decodeURIComponent(
+					req.path.slice(prefix.length)
+				);
+			} catch {
+				return next();
+			}
+			const resolvedRoot = path.resolve(root);
+			const basePath = path.join(resolvedRoot, relativePath);
+			// Prevent path traversal (e.g. /icons/../../etc/passwd)
+			if (
+				relativePath.includes('\0') ||
+				(basePath !== resolvedRoot &&
+					!basePath.startsWith(resolvedRoot + path.sep))
+			) {
+				return next();
+			}
 			const filePaths = [
 				basePath,
 				...extensions.map((extension) => {
